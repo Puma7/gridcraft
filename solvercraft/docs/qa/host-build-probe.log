@@ -1,0 +1,8 @@
+error: failed to load manifest for workspace member `C:\workspace\solvercraft-gridcraft\crates\core`
+referenced via `crates/*` by workspace at `C:\workspace\solvercraft-gridcraft\Cargo.toml`
+
+Caused by:
+  failed to read `C:\workspace\solvercraft-gridcraft\crates\core\Cargo.toml`
+
+Caused by:
+  Das System kann die angegebene Datei nicht finden. (os error 2)

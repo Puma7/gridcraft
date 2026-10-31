@@ -143,6 +143,11 @@ where
             return Err(SolverError::new("non_finite_output", format!("Evaluator returned a non-finite value at trial {trial}.")));
         }
         if trial == 0 {
+            // Output processing is work owned by this engine, even when a
+            // zero-input evaluator returns a wide constant vector.
+            if size_mul(options.trials, outputs.len() as u64)? > MAX_SAMPLE_WORK {
+                return Err(SolverError::new("work_limit", "Simulation exceeds 100,000,000 output samples."));
+            }
             let mut bytes = size_add(setup_bytes, size_mul(outputs.len() as u64, std::mem::size_of::<OnlineMoments>() as u64)?)?;
             // Include current output row and final summaries, even in streaming mode.
             bytes = size_add(bytes, size_mul(outputs.len() as u64, (std::mem::size_of::<SampleSummary>() + std::mem::size_of::<f64>()) as u64)?)?;

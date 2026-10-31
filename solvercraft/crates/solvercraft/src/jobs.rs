@@ -1,11 +1,16 @@
 //! Bounded native background jobs. WASM hosts must use direct cooperative engine callbacks.
 use solvercraft_types::*;
+#[cfg(not(target_arch = "wasm32"))]
+use std::sync::atomic::{AtomicU64, AtomicUsize};
 use std::sync::{
     Arc, Mutex,
-    atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering},
+    atomic::{AtomicBool, Ordering},
 };
+#[cfg(not(target_arch = "wasm32"))]
 static NEXT_ID: AtomicU64 = AtomicU64::new(1);
+#[cfg(not(target_arch = "wasm32"))]
 static ACTIVE: AtomicUsize = AtomicUsize::new(0);
+#[cfg(not(target_arch = "wasm32"))]
 const MAX_ACTIVE: usize = 4;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum JobStatus {
@@ -37,10 +42,12 @@ impl<T: Clone> JobHandle<T> {
         self.state.lock().map(|s| s.clone()).map_err(|_| SolverError::new("job_state", "Job state lock poisoned"))
     }
 }
+#[cfg(not(target_arch = "wasm32"))]
 struct Control<T: Clone + Send + Sync> {
     cancel: Arc<AtomicBool>,
     state: Arc<Mutex<JobSnapshot<T>>>,
 }
+#[cfg(not(target_arch = "wasm32"))]
 impl<T: Clone + Send + Sync> RunControl for Control<T> {
     fn is_cancelled(&self) -> bool {
         self.cancel.load(Ordering::Acquire)

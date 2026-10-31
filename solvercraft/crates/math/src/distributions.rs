@@ -111,7 +111,7 @@ impl PreparedDistribution {
                 if *std_dev == 0.0 {
                     *mean
                 } else {
-                    mean + std_dev * inverse_normal(p)?
+                    std_dev.mul_add(inverse_normal(p)?, *mean)
                 }
             }
             Distribution::Lognormal { log_mean, log_std_dev } => {
@@ -125,11 +125,32 @@ impl PreparedDistribution {
             }
             Distribution::Triangular { low, mode, high } => {
                 let span = high - low;
-                if span == 0.0 {
+                if span == 0.0 || p == 0.0 {
                     *low
+                } else if p == 1.0 {
+                    *high
                 } else {
                     let split = (mode - low) / span;
-                    if p <= split { low + span * (p * split).sqrt() } else { high - span * ((1.0 - p) * (1.0 - split)).sqrt() }
+                    if p <= split {
+                        let left_width = mode - low;
+                        let root = (p / split).sqrt();
+                        if p >= 0.5 {
+                            // Approach the mode without subtracting two
+                            // rounded, almost equal square roots.
+                            mode - (left_width * (split - p)) / (split * (1.0 + root))
+                        } else {
+                            left_width.mul_add(root, *low)
+                        }
+                    } else if p <= 0.5 {
+                        // Rationalize 1-sqrt((1-p)*(1-split)). Forming 1-p
+                        // first would erase tiny positive probabilities.
+                        let root = (1.0 - p).sqrt() * (1.0 - split).sqrt();
+                        let numerator = p.mul_add(1.0 - split, split);
+                        low + (span * numerator) / (1.0 + root)
+                    } else {
+                        let right_width = high - mode;
+                        (-right_width).mul_add(((1.0 - p) / (1.0 - split)).sqrt(), *high)
+                    }
                 }
             }
             Distribution::Bernoulli { probability } => {
@@ -169,8 +190,10 @@ impl PreparedDistribution {
             Distribution::Weibull { shape, scale } => {
                 if p == 1.0 {
                     return Err(unbounded_quantile());
+                } else if p == 0.0 {
+                    0.0
                 } else {
-                    scale * (-(-p).ln_1p()).powf(1.0 / shape)
+                    (scale.ln() + (-(-p).ln_1p()).ln() / shape).exp()
                 }
             }
             Distribution::Empirical { values } => {
@@ -178,7 +201,11 @@ impl PreparedDistribution {
                 *values.get(index).ok_or_else(|| error("Empty empirical distribution."))?
             }
         };
-        if !value.is_finite() {
+        if !value.is_finite()
+            || (value == 0.0
+                && p > 0.0
+                && matches!(&self.distribution, Distribution::Lognormal { .. } | Distribution::Exponential { .. } | Distribution::Weibull { .. }))
+        {
             return Err(SolverError::new("numerical_range", "Distribution quantile exceeds finite arithmetic."));
         }
         Ok(value)
@@ -213,7 +240,9 @@ impl PreparedDistribution {
                 if *std_dev == 0.0 {
                     if x < *mean { 0.0 } else { 1.0 }
                 } else {
-                    normal_cdf((x - mean) / std_dev)
+                    let difference = x - mean;
+                    let standardized = if difference.is_finite() || !x.is_finite() { difference / std_dev } else { x / std_dev - mean / std_dev };
+                    normal_cdf(standardized)
                 }
             }
             Distribution::Lognormal { log_mean, log_std_dev } => {
@@ -233,11 +262,11 @@ impl PreparedDistribution {
                 } else if x >= *high {
                     1.0
                 } else if x <= *mode {
-                    let z = (x - low) / (high - low);
-                    z * z / ((mode - low) / (high - low))
+                    let distance = x - low;
+                    (distance / (high - low)) * (distance / (mode - low))
                 } else {
-                    let z = (high - x) / (high - low);
-                    1.0 - z * z / ((high - mode) / (high - low))
+                    let distance = high - x;
+                    1.0 - (distance / (high - low)) * (distance / (high - mode))
                 }
             }
             Distribution::Bernoulli { probability } => {
@@ -280,7 +309,20 @@ impl PreparedDistribution {
                 if x <= 0.0 {
                     0.0
                 } else {
-                    -(-(x / scale).powf(*shape)).exp_m1()
+                    // Avoid overflow/underflow in x/scale before a small shape
+                    // can bring the exponent back into a representable range.
+                    let ratio = x / scale;
+                    let log_ratio = if (0.5..=2.0).contains(&ratio) {
+                        // Sterbenz-safe subtraction retains adjacent finite
+                        // values even when ln(x) and ln(scale) would be equal.
+                        ((x - scale) / scale).ln_1p()
+                    } else if ratio > 0.0 && ratio.is_finite() {
+                        ratio.ln()
+                    } else {
+                        x.ln() - scale.ln()
+                    };
+                    let log_power = shape * log_ratio;
+                    -(-log_power.exp()).exp_m1()
                 }
             }
             Distribution::Empirical { values } => values.partition_point(|v| *v <= x) as f64 / values.len() as f64,

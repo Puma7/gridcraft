@@ -2,7 +2,9 @@
 //! Each draw is a function of its complete address, independent of evaluation order.
 use solvercraft_types::{Result, SolverError};
 
-pub const SAMPLING_VERSION: &str = "solvercraft-addressed-mix64-v1";
+/// v2 deliberately changes seeded output sequences from alpha v1.
+/// This generator is deterministic and non-cryptographic, not statistically certified.
+pub const SAMPLING_VERSION: &str = "solvercraft-addressed-mix64-v2";
 
 fn mix(mut value: u64) -> u64 {
     value = (value ^ (value >> 30)).wrapping_mul(0xbf58_476d_1ce4_e5b9);
@@ -10,10 +12,13 @@ fn mix(mut value: u64) -> u64 {
     value ^ (value >> 31)
 }
 fn addressed_bits(seed: u64, binding: u64, trial: u64, subcounter: u64) -> u64 {
-    mix(mix(seed ^ 0x243f_6a88_85a3_08d3)
-        ^ mix(binding ^ 0x1319_8a2e_0370_7344)
-        ^ mix(trial ^ 0xa409_3822_299f_31d0)
-        ^ mix(subcounter ^ 0x082e_fa98_ec4e_6c89))
+    // Fold in tuple order rather than XORing independently mixed coordinates.
+    // The alpha-v1 form had a constructed coordinate-cancellation family;
+    // position-specific constants alone do not remove XOR commutativity.
+    let seed_state = mix(seed ^ 0x243f_6a88_85a3_08d3);
+    let binding_state = mix(seed_state ^ mix(binding ^ 0x1319_8a2e_0370_7344));
+    let trial_state = mix(binding_state ^ mix(trial ^ 0xa409_3822_299f_31d0));
+    mix(trial_state ^ mix(subcounter ^ 0x082e_fa98_ec4e_6c89))
 }
 /// An open-interval uniform value. Its 52-bit midpoint construction cannot round to 0 or 1.
 pub fn addressed_uniform(seed: u64, binding: u64, trial: u64, subcounter: u64) -> f64 {

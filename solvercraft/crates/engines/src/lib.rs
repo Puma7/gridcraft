@@ -8,7 +8,7 @@
 mod separable_qp;
 mod simplex;
 
-use solvercraft_model::{effective_bounds, evaluate_objective, validate, validate_solution};
+use solvercraft_model::{compensated_sum, effective_bounds, validate, validate_solution};
 use solvercraft_types::*;
 
 /// Capabilities describe implemented behavior, not aspirational backend names.
@@ -172,8 +172,42 @@ fn score(direction: Direction, value: f64) -> f64 {
 fn unscore(direction: Direction, value: f64) -> f64 {
     score(direction, value)
 }
-fn gap(incumbent: f64, bound: f64) -> f64 {
-    (incumbent - bound).max(0.0) / incumbent.abs().max(bound.abs()).max(1.0)
+fn gap(incumbent: f64, bound: f64, offset: f64) -> Option<f64> {
+    // Keep the numerator constant-free so a large irrelevant objective offset
+    // cannot round an unfinished search gap down to zero.
+    let difference = (incumbent - bound).max(0.0);
+    let a = incumbent + offset;
+    let b = bound + offset;
+    if !difference.is_finite() || !a.is_finite() || !b.is_finite() {
+        return None;
+    }
+    Some(difference / a.abs().max(b.abs()).max(1.0))
+}
+fn working_objective(model: &OptimizationModel, values: &[f64], options: &SolveOptions) -> Result<f64> {
+    let products = || model.objective.linear.iter().map(|term| term.coefficient * values[term.variable]);
+    let value = compensated_sum(products())?;
+    let lost = compensated_sum(products().chain(std::iter::once(-value)))?;
+    if lost.abs() > options.optimality_tolerance {
+        return Err(SolverError::new(
+            "numeric_range",
+            "Constant-free objective loses a term larger than the optimality tolerance; rescale the objective.",
+        ));
+    }
+    Ok(value)
+}
+fn restored_objective(model: &OptimizationModel, working_score: f64) -> Option<f64> {
+    compensated_sum([model.objective.offset, unscore(model.objective.direction, working_score)]).ok()
+}
+fn reported_bound(model: &OptimizationModel, working_score: f64) -> Option<(f64, bool)> {
+    let value = unscore(model.objective.direction, working_score);
+    let rounded = compensated_sum([model.objective.offset, value]).ok()?;
+    let lost = compensated_sum([model.objective.offset, value, -rounded]).ok()?;
+    let outward = match model.objective.direction {
+        Direction::Minimize if lost < 0.0 => rounded.next_down(),
+        Direction::Maximize if lost > 0.0 => rounded.next_up(),
+        _ => rounded,
+    };
+    outward.is_finite().then_some((outward, lost != 0.0))
 }
 
 fn frontier_bound(frontier: &[Node]) -> Option<f64> {
@@ -240,7 +274,14 @@ fn solve_mip(
                 break;
             }
         };
-        let relaxed_objective = evaluate_objective(model, &values)?;
+        let relaxed_objective = match working_objective(model, &values, options) {
+            Ok(value) => value,
+            Err(error) => {
+                termination = Termination::NumericalFailure;
+                warning = Some(error.to_string());
+                break;
+            }
+        };
         let bound = score(model.objective.direction, relaxed_objective);
         active_bound = Some(bound);
         if let Some((_, best)) = &incumbent {
@@ -269,7 +310,14 @@ fn solve_mip(
             }
             let check = validate_solution(model, &rounded, options)?;
             if check.feasible {
-                let candidate = score(model.objective.direction, check.objective);
+                let candidate = match working_objective(model, &rounded, options) {
+                    Ok(value) => score(model.objective.direction, value),
+                    Err(error) => {
+                        termination = Termination::NumericalFailure;
+                        warning = Some(error.to_string());
+                        break;
+                    }
+                };
                 if incumbent.as_ref().is_none_or(|(_, value)| candidate < *value) {
                     incumbent = Some((rounded, candidate));
                 }
@@ -316,9 +364,11 @@ fn solve_mip(
             }
             active_bound = None;
         }
-        budget.progress("branch_and_bound", incumbent.as_ref().map(|(_, s)| unscore(model.objective.direction, *s)));
+        budget.progress("branch_and_bound", incumbent.as_ref().and_then(|(_, s)| restored_objective(model, *s)));
         if let (Some((_, best)), Some(lower)) = (&incumbent, frontier_bound(&frontier)) {
-            if options.relative_gap > 0.0 && gap(*best, lower) <= options.relative_gap {
+            if options.relative_gap > 0.0
+                && gap(*best, lower, score(model.objective.direction, model.objective.offset)).is_some_and(|gap| gap <= options.relative_gap)
+            {
                 stopped_for_gap = true;
                 break;
             }
@@ -335,9 +385,22 @@ fn solve_mip(
         let done = termination == Termination::Completed && frontier.is_empty() && !stopped_for_gap;
         let mut r = verified_result(model, options, values, if done { Optimality::Optimal } else { Optimality::BestFound })?;
         r.termination = termination;
-        if !done {
-            r.best_bound = lower.map(|b| unscore(model.objective.direction, b));
-            r.relative_gap = lower.map(|b| gap(best, b));
+        let bound = if done { Some(best) } else { lower };
+        r.best_bound = bound.and_then(|b| reported_bound(model, b).map(|(value, _)| value));
+        r.relative_gap = bound.and_then(|b| gap(best, b, score(model.objective.direction, model.objective.offset)));
+        if let (Some(objective), Some(bound)) = (r.objective, r.best_bound) {
+            // Public bounds are rounded outwards. Retain the more conservative
+            // of the display-space and offset-free internal gap calculations.
+            if let Some(display_gap) = gap(score(model.objective.direction, objective), score(model.objective.direction, bound), 0.0) {
+                r.relative_gap = Some(r.relative_gap.map_or(display_gap, |g| g.max(display_gap)));
+            }
+        }
+        if bound.and_then(|b| reported_bound(model, b)).is_some_and(|(_, rounded)| rounded) {
+            r.warnings.push("Objective offset rounding affects displayed certificate values; the bound is rounded outwards and the reported gap includes that uncertainty.".into());
+        }
+        if bound.is_some() && r.best_bound.is_none() {
+            r.relative_gap = None;
+            r.warnings.push("The objective offset prevents a finite representable bound; bound and gap are unavailable.".into());
         }
         if stopped_for_gap {
             r.warnings.push("Stopped at the requested relative MIP gap; exact zero-gap optimality was not established.".into());

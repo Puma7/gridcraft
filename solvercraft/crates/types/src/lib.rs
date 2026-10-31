@@ -37,6 +37,7 @@ pub enum VariableKind {
     Binary,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Variable {
     pub name: String,
     /// None is an unbounded side. Infinity and NaN are invalid.
@@ -45,11 +46,13 @@ pub struct Variable {
     pub kind: VariableKind,
 }
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct LinearTerm {
     pub variable: usize,
     pub coefficient: f64,
 }
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct QuadraticTerm {
     pub left: usize,
     pub right: usize,
@@ -63,6 +66,7 @@ pub enum Relation {
     GreaterEqual,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct LinearConstraint {
     pub name: String,
     pub terms: Vec<LinearTerm>,
@@ -70,6 +74,7 @@ pub struct LinearConstraint {
     pub rhs: f64,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct Objective {
     pub direction: Direction,
     pub offset: f64,
@@ -79,6 +84,7 @@ pub struct Objective {
     pub quadratic: Vec<QuadraticTerm>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
 pub struct OptimizationModel {
     pub schema_version: u32,
     pub name: String,
@@ -97,7 +103,7 @@ pub enum SolveMethod {
     DifferentialEvolution,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(default)]
+#[serde(default, deny_unknown_fields)]
 pub struct SolveOptions {
     pub method: SolveMethod,
     pub max_evaluations: u64,
@@ -195,7 +201,7 @@ impl RunControl for NoControl {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "kind", rename_all = "snake_case")]
+#[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Distribution {
     Constant { value: f64 },
     Uniform { low: f64, high: f64 },
@@ -216,7 +222,7 @@ pub enum SamplingMethod {
     LatinHypercube,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(default)]
+#[serde(default, deny_unknown_fields)]
 pub struct SimulationOptions {
     pub trials: u64,
     #[serde(with = "decimal_seed")]

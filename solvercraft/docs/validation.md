@@ -3,6 +3,8 @@
 Validation baseline: Solvercraft alpha under development, 31 October 2026.
 The cases here are synthetic mathematical references authored for this project. Expected optima are derived from equations or complete finite enumeration, not obtained by running the backend.
 
+This document describes the original 39-case independent suite, which also passed in the later 265-test workspace run. See the [deep review](qa/README.md) for subsequent counterexamples, fixes, process E2E tests, release-oracle evidence and open host/platform gates. The earlier 136-test verification report is historical.
+
 ## Executed checks
 
 The final independent integration run used:

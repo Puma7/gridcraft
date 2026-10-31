@@ -13,6 +13,8 @@ pub const MAX_VARIABLES: usize = 10_000;
 pub const MAX_CONSTRAINTS: usize = 50_000;
 pub const MAX_TERMS: usize = 1_000_000;
 pub const MAX_NAME_BYTES: usize = 4096;
+/// At and above this magnitude f64 no longer represents every integer.
+pub const INTEGER_PRECISION_LIMIT: f64 = 9_007_199_254_740_992.0;
 
 /// A failed bound, integrality or row check in the untransformed model.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -93,6 +95,9 @@ pub fn effective_bounds(variable: &Variable) -> Result<(Option<f64>, Option<f64>
     if let Some(value) = variable.upper {
         finite(value, "upper bound")?;
     }
+    if variable.kind != VariableKind::Continuous && variable.lower.into_iter().chain(variable.upper).any(|x| x.abs() >= INTEGER_PRECISION_LIMIT) {
+        return Err(invalid("unsupported_integer_precision", "integer bounds must have magnitude below 2^53"));
+    }
     let (lower, upper) = if variable.kind == VariableKind::Binary {
         (Some(variable.lower.map_or(0.0, |v| v.max(0.0))), Some(variable.upper.map_or(1.0, |v| v.min(1.0))))
     } else {
@@ -105,6 +110,13 @@ pub fn effective_bounds(variable: &Variable) -> Result<(Option<f64>, Option<f64>
         return Err(invalid("infeasible_bounds", format!("domain contains no integer for variable '{}'", variable.name)));
     }
     Ok((lower, upper))
+}
+
+/// Validate a variable's name and representable nonempty domain.
+pub fn validate_variable(variable: &Variable) -> Result<()> {
+    check_name(&variable.name, "variable name")?;
+    effective_bounds(variable)?;
+    Ok(())
 }
 
 fn check_linear(terms: &[LinearTerm], variables: usize, label: &str) -> Result<()> {
@@ -136,9 +148,8 @@ pub fn validate(model: &OptimizationModel, options: &SolveOptions) -> Result<()>
         return Err(invalid("model_limit", "too many objective terms"));
     }
     for variable in &model.variables {
-        check_name(&variable.name, "variable name")?;
+        validate_variable(variable)?;
         add_size(&mut size, variable.name.len())?;
-        effective_bounds(variable)?;
     }
     finite(model.objective.offset, "objective offset")?;
     check_linear(&model.objective.linear, model.variables.len(), "objective coefficient")?;
@@ -170,21 +181,49 @@ pub fn validate(model: &OptimizationModel, options: &SolveOptions) -> Result<()>
     Ok(())
 }
 
-#[derive(Default)]
-struct Sum {
+#[derive(Default, Clone, Copy)]
+pub struct CompensatedSum {
     value: f64,
     correction: f64,
 }
-impl Sum {
-    fn add(&mut self, term: f64) -> Result<()> {
+impl CompensatedSum {
+    /// Neumaier compensation preserves a small addend even when a later term
+    /// cancels the large running sum. Every intermediate remains checked.
+    pub fn add(&mut self, term: f64) -> Result<()> {
         finite(term, "computed term")?;
-        let adjusted = term - self.correction;
-        let next = self.value + adjusted;
+        let next = self.value + term;
         finite(next, "computed sum")?;
-        self.correction = (next - self.value) - adjusted;
+        let residual = if self.value.abs() >= term.abs() { (self.value - next) + term } else { (term - next) + self.value };
+        let correction = self.correction + residual;
+        finite(correction, "summation correction")?;
         self.value = next;
+        self.correction = correction;
         Ok(())
     }
+    pub fn finish(self) -> Result<f64> {
+        let value = self.value + self.correction;
+        finite(value, "compensated sum")?;
+        Ok(value)
+    }
+}
+type Sum = CompensatedSum;
+
+/// Checked Neumaier summation for finite modeled terms. Products that overflow
+/// must be reported rather than silently canceling infinities.
+pub fn compensated_sum(values: impl IntoIterator<Item = f64>) -> Result<f64> {
+    let mut sum = Sum::default();
+    for value in values {
+        sum.add(value)?;
+    }
+    sum.finish()
+}
+
+/// Checked compensated dot product, with a strict length contract.
+pub fn compensated_dot(left: &[f64], right: &[f64]) -> Result<f64> {
+    if left.len() != right.len() {
+        return Err(invalid("invalid_values", "dot product lengths differ"));
+    }
+    compensated_sum(left.iter().zip(right).map(|(a, b)| a * b))
 }
 fn check_values(model: &OptimizationModel, values: &[f64]) -> Result<()> {
     if values.len() != model.variables.len() {
@@ -195,27 +234,21 @@ fn check_values(model: &OptimizationModel, values: &[f64]) -> Result<()> {
     }
     Ok(())
 }
-fn linear_value(terms: &[LinearTerm], values: &[f64]) -> Result<f64> {
-    let mut sum = Sum::default();
-    for term in terms {
-        let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid variable handle during evaluation"))?;
-        sum.add(term.coefficient * value)?;
-    }
-    Ok(sum.value)
-}
-
 /// Evaluate the objective exactly as represented, before any presolve or scaling.
 pub fn evaluate_objective(model: &OptimizationModel, values: &[f64]) -> Result<f64> {
     check_values(model, values)?;
     let mut sum = Sum::default();
     sum.add(model.objective.offset)?;
-    sum.add(linear_value(&model.objective.linear, values)?)?;
+    for term in &model.objective.linear {
+        let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid variable handle during evaluation"))?;
+        sum.add(term.coefficient * value)?;
+    }
     for term in &model.objective.quadratic {
         let left = values.get(term.left).ok_or_else(|| invalid("invalid_variable", "invalid quadratic variable"))?;
         let right = values.get(term.right).ok_or_else(|| invalid("invalid_variable", "invalid quadratic variable"))?;
         sum.add(term.coefficient * left * right)?;
     }
-    Ok(sum.value)
+    sum.finish()
 }
 
 /// Check every original bound, integer domain and row, without changing values.
@@ -227,6 +260,9 @@ pub fn validate_solution(model: &OptimizationModel, values: &[f64], options: &So
     let mut max_violation: f64 = 0.0;
     for (index, (variable, value)) in model.variables.iter().zip(values).enumerate() {
         let (lower, upper) = effective_bounds(variable)?;
+        if variable.kind != VariableKind::Continuous && value.abs() >= INTEGER_PRECISION_LIMIT {
+            return Err(invalid("unsupported_integer_precision", "integer candidate magnitude must be below 2^53"));
+        }
         let checks = [
             (ViolationKind::LowerBound, lower.map_or(0.0, |lo| (lo - value).max(0.0)), options.feasibility_tolerance),
             (ViolationKind::UpperBound, upper.map_or(0.0, |hi| (value - hi).max(0.0)), options.feasibility_tolerance),
@@ -245,7 +281,13 @@ pub fn validate_solution(model: &OptimizationModel, values: &[f64], options: &So
         }
     }
     for (index, row) in model.constraints.iter().enumerate() {
-        let residual = linear_value(&row.terms, values)? - row.rhs;
+        let mut sum = Sum::default();
+        for term in &row.terms {
+            let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid variable handle during evaluation"))?;
+            sum.add(term.coefficient * value)?;
+        }
+        sum.add(-row.rhs)?;
+        let residual = sum.finish()?;
         finite(residual, "constraint residual")?;
         let amount = match row.relation {
             Relation::LessEqual => residual.max(0.0),
@@ -265,7 +307,14 @@ fn aggregate_linear(terms: &[LinearTerm]) -> Result<Vec<LinearTerm>> {
     for term in terms {
         map.entry(term.variable).or_default().add(term.coefficient)?;
     }
-    Ok(map.into_iter().filter_map(|(variable, sum)| (sum.value != 0.0).then_some(LinearTerm { variable, coefficient: sum.value })).collect())
+    let mut result = Vec::with_capacity(map.len());
+    for (variable, sum) in map {
+        let coefficient = sum.finish()?;
+        if coefficient != 0.0 {
+            result.push(LinearTerm { variable, coefficient });
+        }
+    }
+    Ok(result)
 }
 /// Aggregate duplicates, sort variable handles and discard exact zero terms.
 /// This is algebraic normalization, never tolerance-based term dropping.
@@ -278,10 +327,13 @@ pub fn canonicalize(model: &OptimizationModel, options: &SolveOptions) -> Result
         let pair = (term.left.min(term.right), term.left.max(term.right));
         quadratic.entry(pair).or_default().add(term.coefficient)?;
     }
-    result.objective.quadratic = quadratic
-        .into_iter()
-        .filter_map(|((left, right), sum)| (sum.value != 0.0).then_some(QuadraticTerm { left, right, coefficient: sum.value }))
-        .collect();
+    result.objective.quadratic.clear();
+    for ((left, right), sum) in quadratic {
+        let coefficient = sum.finish()?;
+        if coefficient != 0.0 {
+            result.objective.quadratic.push(QuadraticTerm { left, right, coefficient });
+        }
+    }
     for row in &mut result.constraints {
         row.terms = aggregate_linear(&row.terms)?;
     }

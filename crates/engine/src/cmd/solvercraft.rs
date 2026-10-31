@@ -67,6 +67,7 @@ fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
             "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX"
         ],
         "unsupported_references": ["3D", "external workbooks", "dynamic references", "spills"],
+        "formula_semantics_limits": ["MIN/MAX over blank referenced cells is explicitly rejected"],
         "optimization_note": "The structural compiler and chosen engine may reject expressions outside their mathematical capabilities."
     }))
 }
@@ -126,40 +127,7 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
     };
     let nonnegative = p.get("nonNegative").and_then(Json::as_bool).unwrap_or(true);
     let source = p.get("variables").ok_or_else(|| bad(SOLVE, "variables is required"))?;
-    let mut bindings = Vec::new();
-    let mut vars = Vec::new();
-    for item in variable_entries(source)? {
-        let text =
-            item.as_str().or_else(|| item.get("cell").and_then(Json::as_str)).ok_or_else(|| bad(SOLVE, "Each variable needs a cell or range"))?;
-        for (sheet, cell) in cells(wb, base, text, MAX_BINDINGS)? {
-            if bindings.contains(&(sheet, cell)) {
-                return Err(bad(SOLVE, "Variable cells must not overlap"));
-            }
-            if bindings.len() >= MAX_BINDINGS {
-                return Err(bad(SOLVE, "Too many variable cells"));
-            }
-            let sh = wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
-            if sh.cell(cell).is_some_and(|c| c.formula.is_some()) {
-                return Err(bad(SOLVE, "Variable cells must contain constants, not formulas"));
-            }
-            numeric(&sh.value(cell))?;
-            let lower = finite_option(&item, "lower")?.or(if nonnegative { Some(0.0) } else { None });
-            let upper = finite_option(&item, "upper")?;
-            let kind = match item.get("kind").and_then(Json::as_str).unwrap_or("continuous") {
-                "continuous" => VariableKind::Continuous,
-                "integer" | "int" => VariableKind::Integer,
-                "binary" | "bin" => VariableKind::Binary,
-                _ => {
-                    return Err(bad(SOLVE, "Variable kind must be continuous, integer or binary"));
-                }
-            };
-            vars.push(Variable { name: binding_name(wb, sheet, cell)?, lower, upper, kind });
-            bindings.push((sheet, cell));
-        }
-    }
-    if bindings.is_empty() {
-        return Err(bad(SOLVE, "At least one variable cell is required"));
-    }
+    let (mut vars, bindings) = variable_bindings(wb, base, source)?;
     let mut tr = Translator::new(wb, &bindings);
     let objective_text = str_param(p, "objective").filter(|x| !x.trim().is_empty()).ok_or_else(|| bad(SOLVE, "objective is required"))?;
     let objective = tr.text(base, objective_text)?;
@@ -192,6 +160,15 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
             right: Expr::constant(target),
         });
     }
+    // The checkbox applies only to variables without an explicit lower bound.
+    // Applying it before constraints would erase legitimate negative bounds.
+    if nonnegative {
+        for variable in &mut vars {
+            if variable.lower.is_none() {
+                variable.lower = Some(0.0);
+            }
+        }
+    }
     let expr = ExpressionModel {
         name: str_param(p, "name").unwrap_or("Gridcraft model").to_string(),
         variables: vars,
@@ -220,6 +197,47 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
         .map(|(si, c)| Ok(Binding { sheet: wb.sheet(*si).ok_or(EngineError::NoDocument)?.name.clone(), cell: c.a1() }))
         .collect::<Result<Vec<_>>>()?;
     Ok(Prepared { model, expression: Some(expr), bindings, names, options: opt })
+}
+
+fn variable_bindings(wb: &Workbook, base: usize, source: &Json) -> Result<(Vec<Variable>, Vec<(usize, CellRef)>)> {
+    let mut bindings = Vec::new();
+    let mut vars = Vec::new();
+    for item in variable_entries(source)? {
+        let text =
+            item.as_str().or_else(|| item.get("cell").and_then(Json::as_str)).ok_or_else(|| bad(SOLVE, "Each variable needs a cell or range"))?;
+        for (sheet, cell) in cells(wb, base, text, MAX_BINDINGS)? {
+            if bindings.contains(&(sheet, cell)) {
+                return Err(bad(SOLVE, "Variable cells must not overlap"));
+            }
+            if bindings.len() >= MAX_BINDINGS {
+                return Err(bad(SOLVE, "Too many variable cells"));
+            }
+            let sh = wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
+            if sh.spill_anchor(cell).is_some() {
+                return Err(bad(SOLVE, "A variable cannot be a derived spill cell; choose an independent constant input"));
+            }
+            if sh.cell(cell).is_some_and(|c| c.formula.is_some()) {
+                return Err(bad(SOLVE, "Variable cells must contain constants, not formulas"));
+            }
+            numeric(&sh.value(cell))?;
+            let lower = finite_option(&item, "lower")?;
+            let upper = finite_option(&item, "upper")?;
+            let kind = match item.get("kind").and_then(Json::as_str).unwrap_or("continuous") {
+                "continuous" => VariableKind::Continuous,
+                "integer" | "int" => VariableKind::Integer,
+                "binary" | "bin" => VariableKind::Binary,
+                _ => {
+                    return Err(bad(SOLVE, "Variable kind must be continuous, integer or binary"));
+                }
+            };
+            vars.push(Variable { name: binding_name(wb, sheet, cell)?, lower, upper, kind });
+            bindings.push((sheet, cell));
+        }
+    }
+    if bindings.is_empty() {
+        return Err(bad(SOLVE, "At least one variable cell is required"));
+    }
+    Ok((vars, bindings))
 }
 
 fn variable_entries(source: &Json) -> Result<Vec<Json>> {
@@ -401,13 +419,16 @@ impl<'a> Translator<'a> {
     }
     fn cell(&mut self, sheet: usize, cell: CellRef, depth: usize) -> Result<Expr> {
         self.enter(depth)?;
+        let sh = self.wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
+        if sh.spill_anchor(cell).is_some() {
+            return Err(bad(SOLVE, "Derived spill references are not supported; their cached values are not independent constants"));
+        }
         if let Some(index) = self.bindings.get(&(sheet, cell)) {
             return Ok(Expr::variable(*index));
         }
         if !self.visiting.insert((sheet, cell)) {
             return Err(bad(SOLVE, "Circular formula reference"));
         }
-        let sh = self.wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
         let result = if let Some(formula) = sh.cell(cell).and_then(|c| c.formula.as_ref()) {
             let expr = formula.expr_arc().ok_or_else(|| bad(SOLVE, "A referenced formula cannot be parsed"))?;
             self.expr(sheet, &expr, depth + 1)
@@ -437,6 +458,38 @@ impl<'a> Translator<'a> {
             FormulaExpr::Paren(a) => self.expanded(base, a, depth + 1),
             _ => Ok(vec![self.expr(base, e, depth + 1)?]),
         }
+    }
+    fn extremum_argument(&mut self, base: usize, e: &FormulaExpr, depth: usize) -> Result<Vec<Expr>> {
+        self.enter(depth)?;
+        match e {
+            FormulaExpr::Paren(value) => return self.extremum_argument(base, value, depth + 1),
+            FormulaExpr::Name(name) => {
+                let defined = self.wb.name(name, base).ok_or_else(|| bad(SOLVE, format!("Unknown name: {name}")))?;
+                let expression = parse(&defined.formula)?;
+                return self.extremum_argument(base, &expression, depth + 1);
+            }
+            FormulaExpr::Ref(reference) => {
+                let sheet = reference_sheet(self.wb, base, reference)?;
+                let range = reference.range();
+                if range.count() > MAX_RANGE_CELLS {
+                    return Err(bad(SOLVE, "Range exceeds the Solvercraft expansion budget"));
+                }
+                let sh = self.wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
+                for cell in range.iter() {
+                    if !self.bindings.contains_key(&(sheet, cell))
+                        && sh.cell(cell).is_none_or(|stored| stored.formula.is_none())
+                        && matches!(sh.value(cell), Value::Empty)
+                    {
+                        return Err(bad(
+                            SOLVE,
+                            "MIN/MAX over blank referenced cells is not yet supported; blank references must not be coerced to zero",
+                        ));
+                    }
+                }
+            }
+            _ => {}
+        }
+        self.expanded(base, e, depth)
     }
     fn expr(&mut self, base: usize, e: &FormulaExpr, depth: usize) -> Result<Expr> {
         self.enter(depth)?;
@@ -531,7 +584,7 @@ impl<'a> Translator<'a> {
             "MIN" | "MAX" => {
                 let mut terms = Vec::new();
                 for arg in args {
-                    terms.extend(self.expanded(base, arg, depth + 1)?);
+                    terms.extend(self.extremum_argument(base, arg, depth + 1)?);
                 }
                 if terms.is_empty() {
                     return Err(bad(SOLVE, "MIN/MAX requires values"));
@@ -797,6 +850,9 @@ fn simulate(s: &mut Session, p: &Json) -> Result<Json> {
             return Err(bad(SOLVE, "Simulation input cells must be unique"));
         }
         let sh = wb.sheet(c.0).ok_or(EngineError::NoDocument)?;
+        if sh.spill_anchor(c.1).is_some() {
+            return Err(bad(SOLVE, "A simulation input cannot be a derived spill cell; choose an independent constant input"));
+        }
         if sh.cell(c.1).is_some_and(|c| c.formula.is_some()) {
             return Err(bad(SOLVE, "Simulation inputs must be constant cells"));
         }

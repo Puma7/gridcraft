@@ -1,0 +1,174 @@
+{
+  "date_utc": "2026-10-31",
+  "review_predecessor_commit": "690a098a6c4c9d966d66b6c30c036e0e42534bfd",
+  "gridcraft_base_commit": "981fad14e0b90a7906a02f29785a6d0eb214fee6",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "scope": "Native standalone SDK and actual CLI processes. Full Gridcraft/UI and WASM execution are blocked and are not passing gates.",
+  "source_inventory_sha256": "9c1c8e4ff13c82fe37f61dc078e7d5d1e06ee9a5c7533b4ca2f621a56dfe246d",
+  "checks": [
+    {
+      "name": "rustc-version",
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "exit_code": 0,
+      "seconds": 0.481
+    },
+    {
+      "name": "installed-targets",
+      "command": [
+        "rustup",
+        "target",
+        "list",
+        "--installed"
+      ],
+      "exit_code": 0,
+      "seconds": 0.342
+    },
+    {
+      "name": "format",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 1.714
+    },
+    {
+      "name": "host-format",
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "--config",
+        "skip_children=true",
+        "crates/engine/src/cmd/solvercraft.rs",
+        "crates/engine/tests/it/solvercraft_deep_review.rs",
+        "crates/engine/tests/it/main.rs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.585
+    },
+    {
+      "name": "workspace-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--no-fail-fast"
+      ],
+      "exit_code": 0,
+      "seconds": 20.612,
+      "passed": 265,
+      "failed": 0,
+      "ignored": 0,
+      "test_binaries": 24
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--offline",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "seconds": 1.499
+    },
+    {
+      "name": "release",
+      "command": [
+        "cargo",
+        "build",
+        "--release",
+        "--locked",
+        "--offline",
+        "-p",
+        "solvercraft-cli"
+      ],
+      "exit_code": 0,
+      "seconds": 1.012
+    },
+    {
+      "name": "linux-check",
+      "command": [
+        "cargo",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--target",
+        "x86_64-unknown-linux-gnu",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "seconds": 0.679
+    },
+    {
+      "name": "host-build-probe",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "gridcraft-engine",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 101,
+      "seconds": 0.368
+    }
+  ],
+  "rustc": "rustc 1.91.1 (ed61e7d7e 2025-11-07)",
+  "installed_targets": [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu"
+  ],
+  "host_gate": {
+    "status": "blocked",
+    "reason": "error: failed to load manifest for workspace member `C:\\workspace\\solvercraft-gridcraft\\crates\\core`\nreferenced via `crates/*` by workspace at `C:\\workspace\\solvercraft-gridcraft\\Cargo.toml`\n\nCaused by:\n  failed to read `C:\\workspace\\solvercraft-gridcraft\\crates\\core\\Cargo.toml`\n\nCaused by:\n  Das System kann die angegebene Datei nicht finden. (os error 2)",
+    "host_regression_tests_executed": false
+  },
+  "wasm_gate": {
+    "status": "blocked",
+    "reason": "WASM target and full browser/runtime harness unavailable; Linux cargo check is not WASM or Linux execution."
+  },
+  "release_binary_sha256": "64da29f0eda188fcb538fd05fa24d48027872cbed3366c297ba7cc3e4dd72b11",
+  "release_examples": {
+    "passed": 5,
+    "sampling_version": "solvercraft-addressed-mix64-v2"
+  },
+  "status": "native-gates-passed-host-and-wasm-blocked",
+  "executed_local_raw_source_inventory_sha256": "147b7b6015e437640a828b59a0ef7f4afc10274ea75c155df2e0c77747e2e1f1",
+  "source_hash_normalization": "SHA-256 of UTF-8 text with CRLF/CR normalized to LF",
+  "release_binary_hash_normalization": "Raw executable bytes",
+  "independent_release_oracle": {
+    "cases": 30,
+    "passed": 30,
+    "failed": 0,
+    "report": "linear-oracle-release-report.json"
+  },
+  "cli_process_tests": {
+    "passed": 40,
+    "included_in_workspace_test_count": true
+  },
+  "host_test_count": {
+    "existing_inline": 4,
+    "new_integration": 13,
+    "executed": 0
+  },
+  "parent_ci_sdk_test_gate": "Open: parent workspace exclusion means parent cargo test does not select nested SDK tests"
+}

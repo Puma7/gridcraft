@@ -5,12 +5,14 @@ use solvercraft::{compile::Expr, types::*};
 use std::io::{Read, Write};
 const MAX_INPUT: u64 = 16 * 1024 * 1024;
 #[derive(Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
 struct SolveRequest {
     model: OptimizationModel,
     #[serde(default)]
     options: SolveOptions,
 }
 #[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
 struct ExpressionRequest {
     model: solvercraft::compile::ExpressionModel,
     #[serde(default)]
@@ -19,6 +21,7 @@ struct ExpressionRequest {
     start: Option<Vec<f64>>,
 }
 #[derive(Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
 struct SimulationRequest {
     inputs: Vec<Distribution>,
     #[serde(default)]
@@ -27,6 +30,7 @@ struct SimulationRequest {
     outputs: Vec<Expr>,
 }
 #[derive(Deserialize, Serialize)]
+#[serde(deny_unknown_fields)]
 struct RiskRequest {
     problem: solvercraft::risk::ScenarioProblem,
     #[serde(default)]
@@ -55,7 +59,11 @@ fn input(path: Option<&String>) -> Result<Vec<u8>> {
     Ok(bytes)
 }
 fn read<T: serde::de::DeserializeOwned>(path: Option<&String>) -> Result<T> {
-    serde_json::from_slice(&input(path)?).map_err(|e| fail("invalid_json", e.to_string()))
+    let bytes = input(path)?;
+    if bytes.iter().copied().find(|byte| !byte.is_ascii_whitespace()) != Some(b'{') {
+        return Err(fail("invalid_json", "The JSON request must be an object, not a positional array or scalar"));
+    }
+    serde_json::from_slice(&bytes).map_err(|e| fail("invalid_json", e.to_string()))
 }
 fn write<T: Serialize>(value: &T) -> Result<()> {
     let mut output = std::io::stdout().lock();
@@ -87,8 +95,67 @@ fn example() -> SolveRequest {
         options: SolveOptions::default(),
     }
 }
+fn verify_original_expression_result(model: &solvercraft::compile::ExpressionModel, options: &SolveOptions, result: &mut SolveResult) -> Result<()> {
+    let Some(values) = result.values.as_deref() else {
+        return Ok(());
+    };
+    if values.len() != model.variables.len() || values.iter().any(|value| !value.is_finite()) {
+        return Err(fail("numerical_failure", "Original expression candidate has invalid decision values"));
+    }
+    let original = solvercraft::compile::evaluate(&model.objective, values)
+        .map_err(|error| fail("numerical_failure", format!("Original objective evaluation failed: {error}")))?;
+    let reported = result.objective.ok_or_else(|| fail("numerical_failure", "Original expression candidate has no reported objective"))?;
+    if !reported.is_finite() {
+        return Err(fail("numerical_failure", "Original expression candidate has a non-finite objective"));
+    }
+    // Scale by final objective values, never by large intermediate terms:
+    // doing the latter would hide catastrophic cancellation such as 1 vs 0.
+    let scale = original.abs().max(reported.abs()).max(1.0);
+    let difference = (original / scale - reported / scale).abs();
+    if difference > options.optimality_tolerance {
+        return Err(fail(
+            "numerical_failure",
+            "Compiled objective disagrees with the original expression at the candidate; rescale or reformulate the model",
+        ));
+    }
+    let mut max_violation = result.max_violation.unwrap_or(0.0);
+    for constraint in &model.constraints {
+        let left = solvercraft::compile::evaluate(&constraint.left, values)
+            .map_err(|error| fail("numerical_failure", format!("Original constraint evaluation failed: {error}")))?;
+        let right = solvercraft::compile::evaluate(&constraint.right, values)
+            .map_err(|error| fail("numerical_failure", format!("Original constraint evaluation failed: {error}")))?;
+        let residual = left - right;
+        if !residual.is_finite() {
+            return Err(fail("numerical_failure", "Original constraint residual exceeds finite arithmetic"));
+        }
+        let violation = match constraint.relation {
+            Relation::LessEqual => residual.max(0.0),
+            Relation::Equal => residual.abs(),
+            Relation::GreaterEqual => (-residual).max(0.0),
+        };
+        if violation > options.feasibility_tolerance {
+            return Err(fail("numerical_failure", "Compiled solution violates an original expression constraint"));
+        }
+        max_violation = max_violation.max(violation);
+    }
+    result.objective = Some(original);
+    result.max_violation = Some(max_violation);
+    Ok(())
+}
+
 fn run() -> Result<()> {
-    let args: Vec<_> = std::env::args().collect();
+    let args: Vec<String> = std::env::args_os()
+        .map(|arg| arg.into_string().map_err(|_| fail("invalid_arguments", "Command-line arguments must be valid Unicode")))
+        .collect::<Result<_>>()?;
+    let command = args.get(1).map(String::as_str);
+    let max_arguments = match command {
+        Some("solve" | "solve-expr" | "validate" | "compile" | "simulate" | "risk") => Some(3),
+        None | Some("help" | "--help" | "-h" | "capabilities" | "example-lp" | "demo") => Some(2),
+        _ => None,
+    };
+    if max_arguments.is_some_and(|limit| args.len() > limit) {
+        return Err(fail("invalid_arguments", "Unexpected command-line arguments; solver options belong in the JSON request"));
+    }
     match args.get(1).map(String::as_str) {
         Some("capabilities") => write(&solvercraft::capabilities()),
         Some("example-lp") => write(&example()),
@@ -98,7 +165,7 @@ fn run() -> Result<()> {
         }
         Some("solve-expr") => {
             let request: ExpressionRequest = read(args.get(2))?;
-            let result = match request.options.method {
+            let mut result = match request.options.method {
                 SolveMethod::ProjectedGradient => match request.start.as_deref() {
                     Some(start) => solvercraft::nonlinear::solve_from(&request.model, start, &request.options, &NoControl)?,
                     None => solvercraft::nonlinear::solve(&request.model, &request.options, &NoControl)?,
@@ -106,9 +173,20 @@ fn run() -> Result<()> {
                 SolveMethod::DifferentialEvolution => solvercraft::heuristic::solve(&request.model, &request.options, &NoControl)?,
                 _ => {
                     let model = solvercraft::compile::compile(&request.model, &request.options)?;
-                    solvercraft::solve(&model, &request.options, &NoControl)?
+                    let result = solvercraft::solve(&model, &request.options, &NoControl)?;
+                    if let Some(values) = result.values.as_deref() {
+                        let checked = solvercraft::model::validate_solution(&model, values, &request.options)?;
+                        if !checked.feasible {
+                            return Err(fail(
+                                "numerical_failure",
+                                "Compiled expression candidate failed original bounds and linear-constraint validation",
+                            ));
+                        }
+                    }
+                    result
                 }
             };
+            verify_original_expression_result(&request.model, &request.options, &mut result)?;
             write(
                 &serde_json::json!({"schema_version":SCHEMA_VERSION,"version":env!("CARGO_PKG_VERSION"),"model":request.model.name,"options":request.options,"result":result}),
             )
@@ -147,9 +225,10 @@ fn run() -> Result<()> {
             )?;
             write(&serde_json::json!({"optimization":optimized,"simulation":simulated}))
         }
-        _ => write(&serde_json::json!({"name":"Solvercraft","version":env!("CARGO_PKG_VERSION"),
+        None | Some("help" | "--help" | "-h") => write(&serde_json::json!({"name":"Solvercraft","version":env!("CARGO_PKG_VERSION"),
             "usage":["solvercraft-cli capabilities","solvercraft-cli example-lp","solvercraft-cli solve request.json","solvercraft-cli solve-expr expressions.json","solvercraft-cli validate request.json","solvercraft-cli compile expression-model.json","solvercraft-cli simulate simulation.json","solvercraft-cli risk scenarios.json","solvercraft-cli demo"],
             "stdin":"Use - or omit the path for JSON from stdin","scope":"Pure-Rust alpha; see docs/capabilities and validation."})),
+        Some(command) => Err(fail("unknown_command", format!("Unknown command '{command}'. Use help for supported commands"))),
     }
 }
 fn main() -> std::process::ExitCode {

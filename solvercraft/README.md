@@ -43,8 +43,10 @@ This nested workspace is excluded from automatic parent membership and is consum
 
 ## Validation and remaining gates
 
-The standalone workspace passed 136 tests, format checking, Clippy with -D warnings, release CLI examples and a Linux-target compile check using Rust 1.91.1. See [validation](docs/validation.md), [reference and limits](docs/reference.md), [acceptance cases](docs/acceptance.md) and the recorded [core verification report](docs/verification/report.json).
+The reviewed standalone workspace passed **265 tests**, including **40 real CLI process tests**, with zero failures or ignored tests. Format checking, all-target Clippy with -D warnings, release CLI examples and a Linux-target compile check passed using Rust 1.91.1. An independent NumPy vertex-enumeration oracle also passed 30 LP comparisons against the release executable. See the [deep review and remaining gates](docs/qa/README.md), [96-requirement coverage matrix](docs/qa/coverage-matrix.md), and [current verification report](docs/qa/verification-report.json). The earlier [136-test report](docs/verification/report.json) is historical.
 
-The complete Gridcraft build, the four new engine-level integration tests, visual UI validation and actual WASM execution have not been run. The development environment lacks Gridcraft's required Rust 1.95 and a complete downloadable dependency/source checkout. These are merge gates; the alpha must not be presented as full R1/R2 or Frontline parity.
+The complete Gridcraft build, 17 host tests (four existing plus 13 added during review), visual UI validation and actual WASM execution have not been run. The development environment lacks Gridcraft's required Rust 1.95 and a complete downloadable dependency/source checkout. The parent CI does not currently execute the excluded standalone workspace's test suite. These are merge gates; the alpha must not be presented as full R1/R2 or Frontline parity.
+
+Sampling now identifies itself as `solvercraft-addressed-mix64-v2`. Seeds intentionally produce different streams from the initial alpha's v1 algorithm; retain the version with reproducibility records. Integer domains at absolute values of 2^53 or above are explicitly unsupported because adjacent integers are not representable in f64.
 
 No proprietary Frontline code, documentation text or vendor artwork is included. Project license: MIT OR Apache-2.0.

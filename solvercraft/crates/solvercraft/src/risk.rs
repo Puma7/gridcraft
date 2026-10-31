@@ -3,18 +3,34 @@ use serde::{Deserialize, Serialize};
 use solvercraft_types::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Scenario {
     pub weight: f64,
     pub offset: f64,
     pub coefficients: Vec<f64>,
 }
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize)]
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum RiskMeasure {
     ExpectedLoss,
     ConditionalValueAtRisk { confidence: f64 },
 }
+impl<'de> Deserialize<'de> for RiskMeasure {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> std::result::Result<Self, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
+        enum Input {
+            ExpectedLoss {},
+            ConditionalValueAtRisk { confidence: f64 },
+        }
+        match Input::deserialize(deserializer)? {
+            Input::ExpectedLoss {} => Ok(Self::ExpectedLoss),
+            Input::ConditionalValueAtRisk { confidence } => Ok(Self::ConditionalValueAtRisk { confidence }),
+        }
+    }
+}
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ScenarioProblem {
     pub name: String,
     pub variables: Vec<Variable>,
@@ -56,7 +72,135 @@ impl Sum {
         if v.is_finite() { Ok(v) } else { Err(SolverError::new("numerical_failure", "Risk sum is not finite")) }
     }
 }
-fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Vec<f64>> {
+// Power-of-two scaling preserves input significands within the supported range.
+fn binary_scale(maximum: f64) -> f64 {
+    if maximum == 0.0 {
+        return 1.0;
+    }
+    let bits = maximum.to_bits();
+    let exponent = bits & 0x7ff0_0000_0000_0000;
+    if exponent != 0 { f64::from_bits(exponent) } else { f64::from_bits(1_u64 << (63 - bits.leading_zeros())) }
+}
+fn numerical(message: &str) -> SolverError {
+    SolverError::new("numerical_failure", message)
+}
+impl Sum {
+    fn product(&mut self, a: f64, b: f64) -> Result<()> {
+        let value = a * b;
+        if !value.is_finite() || (a != 0.0 && b != 0.0 && value.abs() < f64::MIN_POSITIVE) {
+            return Err(numerical("Risk product exceeds the supported finite precision range"));
+        }
+        self.add(value)?;
+        // FMA recovers the multiplication residual before compensated accumulation.
+        self.add(a.mul_add(b, -value))
+    }
+}
+struct WeightPlan {
+    scaled: Vec<f64>,
+    total: Sum,
+}
+impl WeightPlan {
+    fn new<I: ExactSizeIterator<Item = f64> + Clone>(weights: I) -> Result<Self> {
+        if weights.len() == 0 || weights.len() > 1_000_000 {
+            return Err(invalid("Invalid weight count"));
+        }
+        let mut maximum = 0.0_f64;
+        for w in weights.clone() {
+            if !w.is_finite() || w < 0.0 {
+                return Err(invalid("Weights must be finite and nonnegative"));
+            }
+            maximum = maximum.max(w);
+        }
+        if maximum == 0.0 {
+            return Err(invalid("Weights need positive total mass"));
+        }
+        let scale = binary_scale(maximum);
+        let mut scaled = Vec::new();
+        scaled.try_reserve_exact(weights.len()).map_err(|_| SolverError::new("allocation", "Cannot allocate risk weights"))?;
+        let mut total = Sum::default();
+        for w in weights {
+            let value = w / scale;
+            if w > 0.0 && value < f64::MIN_POSITIVE {
+                return Err(numerical("Weight dynamic range exceeds supported precision"));
+            }
+            scaled.push(value);
+            total.add(value)?;
+        }
+        Ok(Self { scaled, total })
+    }
+}
+fn scaled_loss(value: f64, scale: f64) -> Result<f64> {
+    let result = value / scale;
+    if value != 0.0 && result.abs() < f64::MIN_POSITIVE {
+        return Err(numerical("Loss dynamic range exceeds supported precision"));
+    }
+    Ok(result)
+}
+fn finish_average(area: &Sum, mass: &Sum, scale: f64, absolute_area: f64, terms: usize, minimum: f64, maximum: f64) -> Result<f64> {
+    let denominator = mass.total()?;
+    if denominator <= 0.0 {
+        return Err(numerical("Risk average has no positive tail mass"));
+    }
+    let mut result = (area.total()? / denominator) * scale;
+    if !result.is_finite() {
+        return Err(numerical("Risk average exceeds finite arithmetic"));
+    }
+    // Twofold products and compensated sums still have finite precision. Reject a
+    // severely cancelled result rather than silently return an unreliable risk number.
+    let error_bound =
+        ((192.0 * (terms as f64 + 1.0) * f64::EPSILON * f64::EPSILON) * absolute_area / denominator) * scale + 8.0 * f64::EPSILON * result.abs();
+    let tolerance = 1e-10 * result.abs().max(1.0);
+    if !error_bound.is_finite() || error_bound > tolerance {
+        return Err(numerical("Risk average is too ill-conditioned for a reliable f64 result"));
+    }
+    if result < minimum {
+        if minimum - result > tolerance {
+            return Err(numerical("Risk average fell below its loss support"));
+        }
+        result = minimum;
+    }
+    if result > maximum {
+        if result - maximum > tolerance {
+            return Err(numerical("Risk average exceeded its loss support"));
+        }
+        result = maximum;
+    }
+    Ok(result)
+}
+fn weighted_average<I: ExactSizeIterator<Item = f64> + Clone>(values: I, weights: &WeightPlan) -> Result<f64> {
+    if values.len() != weights.scaled.len() {
+        return Err(invalid("Loss and weight counts differ"));
+    }
+    let mut minimum = f64::INFINITY;
+    let mut maximum = f64::NEG_INFINITY;
+    for (value, weight) in values.clone().zip(&weights.scaled) {
+        if !value.is_finite() {
+            return Err(invalid("Losses must be finite"));
+        }
+        if *weight > 0.0 {
+            minimum = minimum.min(value);
+            maximum = maximum.max(value);
+        }
+    }
+    if minimum == maximum {
+        return Ok(minimum);
+    }
+    let scale = binary_scale(minimum.abs().max(maximum.abs()));
+    let mut area = Sum::default();
+    let mut absolute = Sum::default();
+    let mut terms = 0usize;
+    for (value, weight) in values.zip(&weights.scaled) {
+        if *weight == 0.0 {
+            continue;
+        }
+        let value = scaled_loss(value, scale)?;
+        area.product(value, *weight)?;
+        absolute.product(value.abs(), *weight)?;
+        terms += 1;
+    }
+    finish_average(&area, &weights.total, scale, absolute.total()?, terms, minimum, maximum)
+}
+fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Result<WeightPlan> {
     preflight(problem, options)?;
     if problem.scenarios.is_empty() || problem.scenarios.len() > 100_000 {
         return Err(invalid("Provide between 1 and 100000 scenarios"));
@@ -70,7 +214,6 @@ fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Resu
     if size as u64 > options.max_memory_bytes {
         return Err(SolverError::new("memory_limit", "Scenario model exceeds memory budget"));
     }
-    let mut total = Sum::default();
     for s in &problem.scenarios {
         if !s.weight.is_finite()
             || s.weight < 0.0
@@ -80,18 +223,18 @@ fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Resu
         {
             return Err(invalid("Scenario weights, dimensions and coefficients must be finite and valid"));
         }
-        total.add(s.weight)?;
     }
-    let total = total.total()?;
-    if total <= 0.0 {
-        return Err(invalid("Scenario weights must have a positive finite total"));
-    }
-    Ok(problem.scenarios.iter().map(|x| x.weight / total).collect())
+    WeightPlan::new(problem.scenarios.iter().map(|s| s.weight))
 }
 
 fn preflight(problem: &ScenarioProblem, options: &SolveOptions) -> Result<()> {
     use solvercraft_model::{MAX_CONSTRAINTS, MAX_NAME_BYTES, MAX_TERMS, MAX_VARIABLES};
     solvercraft_model::validate_options(options)?;
+    if let RiskMeasure::ConditionalValueAtRisk { confidence } = problem.measure {
+        if !confidence.is_finite() || !(0.0..1.0).contains(&confidence) {
+            return Err(invalid("CVaR confidence must be in [0,1)"));
+        }
+    }
     let n = problem.variables.len();
     let s = problem.scenarios.len();
     let extra = if matches!(problem.measure, RiskMeasure::ConditionalValueAtRisk { .. }) { s.saturating_add(1) } else { 0 };
@@ -115,6 +258,9 @@ fn preflight(problem: &ScenarioProblem, options: &SolveOptions) -> Result<()> {
         }
         names = names.checked_add(row.name.len()).ok_or_else(|| invalid("Name overflow"))?;
         terms = terms.checked_add(row.terms.len()).ok_or_else(|| invalid("Term overflow"))?;
+        if terms > MAX_TERMS {
+            return Err(SolverError::new("model_limit", "Risk counterpart exceeds term limit before coefficient traversal"));
+        }
         if row.terms.iter().any(|t| t.variable >= n || !t.coefficient.is_finite()) {
             return Err(invalid("Invalid base constraint coefficient"));
         }
@@ -145,17 +291,10 @@ pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Opti
     };
     match problem.measure {
         RiskMeasure::ExpectedLoss => {
-            let mut coefficients = vec![Sum::default(); problem.variables.len()];
-            let mut offset = Sum::default();
-            for (s, w) in problem.scenarios.iter().zip(&weights) {
-                offset.add(s.offset * w)?;
-                for (c, v) in coefficients.iter_mut().zip(&s.coefficients) {
-                    c.add(v * w)?;
-                }
-            }
-            model.objective.offset = offset.total()?;
-            for (variable, sum) in coefficients.into_iter().enumerate() {
-                let coefficient = sum.total()?;
+            model.objective.offset = weighted_average(problem.scenarios.iter().map(|s| s.offset), &weights)?;
+            for variable in 0..problem.variables.len() {
+                let coefficient =
+                    weighted_average(problem.scenarios.iter().map(|s| s.coefficients.get(variable).copied().unwrap_or(f64::NAN)), &weights)?;
                 if coefficient != 0.0 {
                     model.objective.linear.push(LinearTerm { variable, coefficient });
                 }
@@ -168,7 +307,7 @@ pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Opti
             let eta = model.variables.len();
             model.variables.push(Variable { name: "__solvercraft_var".into(), lower: None, upper: None, kind: VariableKind::Continuous });
             model.objective.linear.push(LinearTerm { variable: eta, coefficient: 1.0 });
-            for (i, (s, w)) in problem.scenarios.iter().zip(weights).enumerate() {
+            for (i, (s, w)) in problem.scenarios.iter().zip(&weights.scaled).enumerate() {
                 let excess = model.variables.len();
                 model.variables.push(Variable {
                     name: format!("__solvercraft_tail_{i}"),
@@ -176,7 +315,7 @@ pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Opti
                     upper: None,
                     kind: VariableKind::Continuous,
                 });
-                model.objective.linear.push(LinearTerm { variable: excess, coefficient: w / (1.0 - confidence) });
+                model.objective.linear.push(LinearTerm { variable: excess, coefficient: (w / weights.total.total()?) / (1.0 - confidence) });
                 let mut terms: Vec<_> = s
                     .coefficients
                     .iter()
@@ -202,34 +341,78 @@ pub fn weighted_upper_tail_cvar(losses: &[f64], weights: &[f64], confidence: f64
         || !confidence.is_finite()
         || !(0.0..1.0).contains(&confidence)
         || losses.iter().any(|x| !x.is_finite())
-        || weights.iter().any(|x| !x.is_finite() || *x < 0.0)
     {
         return Err(invalid("Invalid weighted tail data"));
     }
-    let mut weight_sum = Sum::default();
-    for weight in weights {
-        weight_sum.add(*weight)?;
+    let plan = WeightPlan::new(weights.iter().copied())?;
+    if confidence == 0.0 {
+        return weighted_average(losses.iter().copied(), &plan);
     }
-    let total = weight_sum.total()?;
-    if total <= 0.0 {
-        return Err(invalid("Invalid weight total"));
+    let mut minimum = f64::INFINITY;
+    let mut maximum = f64::NEG_INFINITY;
+    for (value, weight) in losses.iter().zip(&plan.scaled) {
+        if *weight > 0.0 {
+            minimum = minimum.min(*value);
+            maximum = maximum.max(*value);
+        }
     }
-    let mut ordered: Vec<_> = losses.iter().copied().zip(weights.iter().map(|w| w / total)).collect();
-    ordered.sort_by(|a, b| b.0.total_cmp(&a.0));
+    if minimum == maximum {
+        return Ok(minimum);
+    }
+    let scale = binary_scale(minimum.abs().max(maximum.abs()));
+    let mut ordered = Vec::new();
+    ordered.try_reserve_exact(losses.len()).map_err(|_| SolverError::new("allocation", "Cannot allocate ordered risk data"))?;
+    for (value, weight) in losses.iter().zip(&plan.scaled) {
+        if *weight > 0.0 {
+            ordered.push((scaled_loss(*value, scale)?, *weight));
+        }
+    }
+    ordered.sort_unstable_by(|a, b| b.0.total_cmp(&a.0));
+    // Preserve the residual of 1-alpha and the total-weight expansion. Repeated
+    // subtraction of rounded normalized probabilities can clip the last atom.
     let tail = 1.0 - confidence;
-    let mut remaining = tail;
-    let mut sum = Sum::default();
+    let tail_low = (1.0 - tail) - confidence;
+    let mut mass = Sum::default();
+    for a in [tail, tail_low] {
+        for b in [plan.total.value, plan.total.correction] {
+            mass.product(a, b)?;
+        }
+    }
+    let mut remaining = mass.clone();
+    let mut area = Sum::default();
+    let mut absolute = Sum::default();
+    let mut terms = 0usize;
+    let mut selected_minimum = f64::INFINITY;
     for (value, weight) in ordered {
-        let take = remaining.min(weight);
-        sum.add(value * (take / tail))?;
-        remaining = (remaining - take).max(0.0);
-        if remaining == 0.0 {
+        let mut difference = remaining.clone();
+        difference.add(-weight)?;
+        selected_minimum = selected_minimum.min(value);
+        terms += 1;
+        if difference.total()? >= 0.0 {
+            area.product(value, weight)?;
+            absolute.product(value.abs(), weight)?;
+            remaining = difference;
+            if remaining.total()? == 0.0 {
+                break;
+            }
+        } else {
+            for part in [remaining.value, remaining.correction] {
+                area.product(value, part)?;
+                absolute.product(value.abs(), part.abs())?;
+            }
+            remaining = Sum::default();
             break;
         }
     }
-    let result = sum.total()?;
-    if result.is_finite() { Ok(result) } else { Err(SolverError::new("numerical_failure", "Tail mean overflow")) }
+    if remaining.total()? > 0.0 {
+        return Err(numerical("Available scenario mass did not cover the requested tail"));
+    }
+    if selected_minimum * scale == maximum {
+        return Ok(maximum);
+    }
+    finish_average(&area, &mass, scale, absolute.total()?, terms, minimum, maximum)
 }
+
 pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn RunControl) -> Result<RiskResult> {
     let model = compile(problem, options)?;
     let solve = solvercraft_engines::solve(&model, options, control)?;
@@ -258,17 +441,19 @@ pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn
         if losses.iter().any(|x| !x.is_finite()) {
             return Err(SolverError::new("numerical_failure", "Scenario loss overflow"));
         }
-        let mut mean = Sum::default();
-        for (l, w) in losses.iter().zip(&weights) {
-            mean.add(l * w)?;
-        }
-        let mean = mean.total()?;
-        if !mean.is_finite() {
-            return Err(SolverError::new("numerical_failure", "Expected loss overflow"));
-        }
+        let mean = weighted_average(losses.iter().copied(), &weights)?;
         expected_loss = Some(mean);
         if let Some(alpha) = confidence {
-            cvar = Some(weighted_upper_tail_cvar(&losses, &weights, alpha)?);
+            let raw_weights: Vec<f64> = problem.scenarios.iter().map(|s| s.weight).collect();
+            cvar = Some(weighted_upper_tail_cvar(&losses, &raw_weights, alpha)?);
+        }
+        let original_measure = cvar.unwrap_or(mean);
+        if let Some(reported) = solve.objective {
+            let scale = reported.abs().max(original_measure.abs()).max(1.0);
+            let tolerance = options.optimality_tolerance.max(options.feasibility_tolerance);
+            if (reported / scale - original_measure / scale).abs() > tolerance + tolerance / scale {
+                return Err(numerical("Transformed objective disagrees with the original scenario risk measure"));
+            }
         }
         scenario_losses = Some(losses);
     }
@@ -284,6 +469,7 @@ pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct BoxUncertainty {
     pub constraint: usize,
     pub radii: Vec<f64>,

@@ -113,8 +113,10 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         for (a, c) in coefficients.iter_mut().zip(&columns) {
             *a = original[c.original] * c.sign;
         }
-        let shift = original.iter().zip(&offset).map(|(a, b)| a * b).sum::<f64>();
-        let mut rhs = constraint.rhs - shift;
+        // Keep rhs in the same compensated sum. Rounding a large shifted
+        // constant first can lose a small residual before rhs is subtracted.
+        let mut rhs = solvercraft_model::compensated_sum(std::iter::once(constraint.rhs).chain(original.iter().zip(&offset).map(|(a, b)| -a * b)))
+            .map_err(|e| Relaxation::Numerical(format!("Constraint translation: {e}")))?;
         if !rhs.is_finite() {
             return Err(Relaxation::Numerical("Constraint translation overflowed.".into()));
         }
@@ -201,12 +203,13 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         for value in phase.iter_mut().take(width).skip(non_artificial) {
             *value = 1.0;
         }
-        for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
-            if *basic >= non_artificial {
-                for (c, a) in phase.iter_mut().zip(row) {
-                    *c -= a;
-                }
-            }
+        for (column, value) in phase.iter_mut().enumerate() {
+            let initial = *value;
+            *value = solvercraft_model::compensated_sum(
+                std::iter::once(initial)
+                    .chain(tableau.rows.iter().zip(&tableau.basis).filter(|(_, basic)| **basic >= non_artificial).map(|(row, _)| -row[column])),
+            )
+            .map_err(|e| Relaxation::Numerical(format!("Phase-one cost aggregation: {e}")))?;
         }
         match simplex(&mut tableau, &mut phase, width, budget) {
             Step::Stopped(reason) => return Err(Relaxation::Stopped(reason)),
@@ -256,15 +259,27 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     for (j, c) in columns.iter().enumerate() {
         cost[j] = original_cost[c.original] * c.sign;
     }
-    let mut objective = cost.clone();
-    for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
-        let coefficient = cost[*basic];
-        if coefficient != 0.0 {
-            for (v, a) in objective.iter_mut().zip(row) {
-                *v -= coefficient * a;
+    let mut objective = allocated(width + 1, 0.0)?;
+    for (column, value) in objective.iter_mut().enumerate() {
+        *value = solvercraft_model::compensated_sum(
+            std::iter::once(cost[column]).chain(tableau.rows.iter().zip(&tableau.basis).map(|(row, basic)| -cost[*basic] * row[column])),
+        )
+        .map_err(|e| Relaxation::Numerical(format!("Reduced-cost aggregation: {e}")))?;
+    }
+    // Normalize after eliminating the current basis: a large cost on an already
+    // constrained variable must not erase a meaningful remaining small cost.
+    // Phase two does not use the objective constant for any stopping decision.
+    let cost_scale = objective.iter().take(non_artificial).map(|v| v.abs()).fold(0.0_f64, f64::max);
+    if cost_scale > 0.0 {
+        for value in objective.iter_mut().take(non_artificial) {
+            let original = *value;
+            *value /= cost_scale;
+            if !value.is_finite() || original != 0.0 && *value == 0.0 {
+                return Err(Relaxation::Numerical("Objective scaling loses a nonzero reduced cost; rescale the model.".into()));
             }
         }
     }
+    objective[width] = 0.0;
     let outcome = simplex(&mut tableau, &mut objective, non_artificial, budget);
     let unbounded = match outcome {
         Step::Optimal => false,
@@ -276,9 +291,22 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
         transformed[*basic] = row[width];
     }
-    let mut values = offset;
-    for (j, c) in columns.iter().enumerate() {
-        values[c.original] += c.sign * transformed[j];
+    let mut values = allocated(n, 0.0)?;
+    for (original, value) in values.iter_mut().enumerate() {
+        if original % 64 == 0 {
+            budget.check().map_err(Relaxation::Stopped)?;
+        }
+        let displacement =
+            || columns.iter().enumerate().filter(|(_, column)| column.original == original).map(|(j, column)| column.sign * transformed[j]);
+        *value = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()))
+            .map_err(|e| Relaxation::Numerical(format!("Original-coordinate reconstruction: {e}")))?;
+        let lost = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()).chain(std::iter::once(-*value)))
+            .map_err(|e| Relaxation::Numerical(format!("Reconstruction precision check: {e}")))?;
+        if lost.abs() > budget.options.feasibility_tolerance {
+            return Err(Relaxation::Numerical(
+                "Original-coordinate reconstruction loses a displacement larger than the feasibility tolerance; rescale the variable.".into(),
+            ));
+        }
     }
     if !finite(&values) {
         return Err(Relaxation::Numerical("Non-finite original-space LP solution.".into()));
@@ -290,13 +318,15 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         }
     }
     for row in &model.constraints {
-        let actual = row.terms.iter().map(|a| a.coefficient * values[a.variable]).sum::<f64>();
+        let residual =
+            solvercraft_model::compensated_sum(row.terms.iter().map(|a| a.coefficient * values[a.variable]).chain(std::iter::once(-row.rhs)))
+                .map_err(|e| Relaxation::Numerical(format!("Constraint verification: {e}")))?;
         let violation = match row.relation {
-            Relation::LessEqual => (actual - row.rhs).max(0.0),
-            Relation::GreaterEqual => (row.rhs - actual).max(0.0),
-            Relation::Equal => (actual - row.rhs).abs(),
+            Relation::LessEqual => residual.max(0.0),
+            Relation::GreaterEqual => (-residual).max(0.0),
+            Relation::Equal => residual.abs(),
         };
-        if !actual.is_finite() || violation > budget.options.feasibility_tolerance {
+        if !residual.is_finite() || violation > budget.options.feasibility_tolerance {
             return Err(Relaxation::Numerical("LP basis failed original constraint verification; rescale the model.".into()));
         }
     }
@@ -316,9 +346,7 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
     }
     let pivot_row = t.rows[r].clone();
     for (i, row) in t.rows.iter_mut().enumerate() {
-        if i % 64 == 0 {
-            budget.check().map_err(Relaxation::Stopped)?;
-        }
+        budget.check().map_err(Relaxation::Stopped)?;
         if i == r {
             continue;
         }
@@ -344,13 +372,15 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
 }
 
 fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, budget: &mut Budget<'_>) -> Step {
-    let epsilon = budget.options.optimality_tolerance.clamp(PIVOT_EPS, 1e-8);
     loop {
         if let Err(reason) = budget.step() {
             return Step::Stopped(reason);
         }
         // Bland's entering and tie-breaking rule avoids cycling on degenerate bases.
-        let entering = (0..allowed).find(|j| obj[*j] < -epsilon);
+        // A small reduced cost can still improve the objective substantially over
+        // a wide interval. Never turn it into a zero-gap optimality certificate
+        // merely by comparing its magnitude with an absolute gradient threshold.
+        let entering = (0..allowed).find(|j| obj[*j] < 0.0);
         let Some(j) = entering else {
             return Step::Optimal;
         };

@@ -24,7 +24,7 @@ const MAX_COMPILER_OPERATIONS: usize = 2_000_000;
 /// `{"op":"variable","index":0}`. Power has a nonnegative integer exponent;
 /// exponent zero is defined as one, including at a zero base.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(tag = "op", rename_all = "snake_case")]
+#[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Expr {
     Constant { value: f64 },
     Variable { index: usize },
@@ -52,6 +52,7 @@ impl Expr {
     }
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ExpressionConstraint {
     pub name: String,
     pub left: Expr,
@@ -59,6 +60,7 @@ pub struct ExpressionConstraint {
     pub right: Expr,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct ExpressionModel {
     pub name: String,
     pub variables: Vec<Variable>,
@@ -188,17 +190,45 @@ pub fn evaluate(expr: &Expr, values: &[f64]) -> Result<f64> {
     eval_inner(expr, values)
 }
 
-/// A monomial stores zero, one or two sorted variable handles. The empty vector
-/// is the constant. Higher degrees are never truncated.
+/// Two-component coefficients keep cancellation residuals through polynomial
+/// transformations instead of rounding away small terms before later sums.
+#[derive(Clone, Copy)]
+struct Coefficient {
+    main: f64,
+    correction: f64,
+}
+impl Coefficient {
+    fn new(value: f64) -> Self {
+        Self { main: value, correction: 0.0 }
+    }
+    fn add(&mut self, value: f64) -> Result<()> {
+        checked(value, "polynomial coefficient")?;
+        let next = checked(self.main + value, "polynomial coefficient aggregation")?;
+        let residual = if self.main.abs() >= value.abs() { (self.main - next) + value } else { (value - next) + self.main };
+        let correction = checked(self.correction + residual, "polynomial coefficient correction")?;
+        self.main = next;
+        self.correction = correction;
+        checked(self.value(), "polynomial coefficient total")?;
+        Ok(())
+    }
+    fn value(self) -> f64 {
+        self.main + self.correction
+    }
+    fn parts(self) -> [f64; 2] {
+        [self.main, self.correction]
+    }
+}
+/// A monomial has zero, one or two sorted variable handles. Higher degrees
+/// are never truncated, and zero terms are removed only after compensation.
 #[derive(Default)]
 struct Polynomial {
-    terms: BTreeMap<Vec<usize>, f64>,
+    terms: BTreeMap<Vec<usize>, Coefficient>,
 }
 impl Polynomial {
     fn constant(value: f64) -> Self {
         let mut terms = BTreeMap::new();
         if value != 0.0 {
-            terms.insert(Vec::new(), value);
+            terms.insert(Vec::new(), Coefficient::new(value));
         }
         Self { terms }
     }
@@ -206,7 +236,7 @@ impl Polynomial {
         self.terms.keys().map(Vec::len).max().unwrap_or(0)
     }
     fn as_constant(&self) -> Option<f64> {
-        if self.degree() == 0 { Some(self.terms.get(&Vec::new()).copied().unwrap_or(0.0)) } else { None }
+        if self.degree() == 0 { Some(self.terms.get(&Vec::new()).copied().map(Coefficient::value).unwrap_or(0.0)) } else { None }
     }
 }
 struct Budget {
@@ -230,8 +260,9 @@ impl Budget {
     fn insert(&mut self, result: &mut Polynomial, monomial: Vec<usize>, value: f64) -> Result<()> {
         self.charge()?;
         checked(value, "polynomial coefficient")?;
-        let coefficient = checked(result.terms.get(&monomial).copied().unwrap_or(0.0) + value, "polynomial coefficient aggregation")?;
-        if coefficient == 0.0 {
+        let mut coefficient = result.terms.get(&monomial).copied().unwrap_or_else(|| Coefficient::new(0.0));
+        coefficient.add(value)?;
+        if coefficient.value() == 0.0 {
             result.terms.remove(&monomial);
         } else {
             if !result.terms.contains_key(&monomial) && result.terms.len() >= self.max_terms {
@@ -245,14 +276,33 @@ impl Budget {
 fn add(left: Polynomial, right: Polynomial, right_scale: f64, budget: &mut Budget) -> Result<Polynomial> {
     let mut result = left;
     for (monomial, coefficient) in right.terms {
-        budget.insert(&mut result, monomial, coefficient * right_scale)?;
+        for part in coefficient.parts() {
+            if part != 0.0 {
+                budget.insert(&mut result, monomial.clone(), part * right_scale)?;
+            }
+        }
     }
     Ok(result)
 }
 fn scale(poly: Polynomial, factor: f64, budget: &mut Budget) -> Result<Polynomial> {
     let mut result = Polynomial::default();
     for (monomial, coefficient) in poly.terms {
-        budget.insert(&mut result, monomial, coefficient * factor)?;
+        for part in coefficient.parts() {
+            if part != 0.0 {
+                budget.insert(&mut result, monomial.clone(), part * factor)?;
+            }
+        }
+    }
+    Ok(result)
+}
+fn divide(poly: Polynomial, divisor: f64, budget: &mut Budget) -> Result<Polynomial> {
+    let mut result = Polynomial::default();
+    for (monomial, coefficient) in poly.terms {
+        for part in coefficient.parts() {
+            if part != 0.0 {
+                budget.insert(&mut result, monomial.clone(), checked(part / divisor, "division")?)?;
+            }
+        }
     }
     Ok(result)
 }
@@ -266,7 +316,13 @@ fn multiply(left: &Polynomial, right: &Polynomial, budget: &mut Budget) -> Resul
             let mut monomial = left_monomial.clone();
             monomial.extend(right_monomial.iter().copied());
             monomial.sort_unstable();
-            budget.insert(&mut result, monomial, left_coefficient * right_coefficient)?;
+            for left in left_coefficient.parts() {
+                for right in right_coefficient.parts() {
+                    if left != 0.0 && right != 0.0 {
+                        budget.insert(&mut result, monomial.clone(), left * right)?;
+                    }
+                }
+            }
         }
     }
     Ok(Some(result))
@@ -307,7 +363,7 @@ fn polynomial(expr: &Expr, budget: &mut Budget) -> Result<Option<Polynomial>> {
             let r = polynomial(right, budget)?;
             match (l, r.and_then(|p| p.as_constant())) {
                 (_, Some(0.0)) => Err(error("domain_error", "division by zero")),
-                (Some(l), Some(r)) => Ok(Some(scale(l, checked(1.0 / r, "division")?, budget)?)),
+                (Some(l), Some(r)) => Ok(Some(divide(l, r, budget)?)),
                 _ => Ok(None),
             }
         }
@@ -318,7 +374,9 @@ fn polynomial(expr: &Expr, budget: &mut Budget) -> Result<Option<Polynomial>> {
         Expr::Power { base, exponent } => {
             let p = polynomial(base, budget)?;
             if *exponent == 0 {
-                return Ok(Some(Polynomial::constant(1.0)));
+                // A variable-dependent unsupported base may restrict the domain.
+                // Preserve/reject that source behavior rather than erasing it.
+                return Ok(p.map(|_| Polynomial::constant(1.0)));
             }
             match p {
                 None => Ok(None),
@@ -373,6 +431,7 @@ fn require_polynomial(expr: &Expr, budget: &mut Budget, location: &str) -> Resul
 fn objective(poly: Polynomial, direction: Direction) -> Result<Objective> {
     let mut objective = Objective { direction, offset: 0.0, linear: Vec::new(), quadratic: Vec::new() };
     for (monomial, coefficient) in poly.terms {
+        let coefficient = checked(coefficient.value(), "objective coefficient")?;
         match monomial.as_slice() {
             [] => objective.offset = coefficient,
             [variable] => objective.linear.push(LinearTerm { variable: *variable, coefficient }),
@@ -390,13 +449,47 @@ pub fn compile(model: &ExpressionModel, options: &SolveOptions) -> Result<Optimi
     if model.variables.len() > solvercraft_model::MAX_VARIABLES || model.constraints.len() > solvercraft_model::MAX_CONSTRAINTS {
         return Err(error("model_limit", "too many expression variables or constraints"));
     }
+    // Validate output metadata before cloning it or doing polynomial work.
+    if model.name.len() > solvercraft_model::MAX_NAME_BYTES {
+        return Err(error("model_limit", "expression model name is too long"));
+    }
+    let mut metadata = std::mem::size_of::<OptimizationModel>();
+    let mut charge = |bytes: usize| -> Result<()> {
+        metadata = metadata.checked_add(bytes).ok_or_else(|| error("model_limit", "compiler metadata size overflow"))?;
+        Ok(())
+    };
+    charge(model.name.len())?;
+    charge(
+        model.variables.len().checked_mul(std::mem::size_of::<Variable>()).ok_or_else(|| error("model_limit", "variable metadata size overflow"))?,
+    )?;
+    charge(
+        model
+            .constraints
+            .len()
+            .checked_mul(std::mem::size_of::<LinearConstraint>())
+            .ok_or_else(|| error("model_limit", "constraint metadata size overflow"))?,
+    )?;
+    for variable in &model.variables {
+        solvercraft_model::validate_variable(variable)?;
+        charge(variable.name.len())?;
+    }
+    for row in &model.constraints {
+        if row.name.len() > solvercraft_model::MAX_NAME_BYTES {
+            return Err(error("model_limit", "expression constraint name is too long"));
+        }
+        charge(row.name.len())?;
+    }
+    let metadata = u64::try_from(metadata).map_err(|_| error("model_limit", "compiler metadata cannot be represented"))?;
+    let remaining_memory =
+        options.max_memory_bytes.checked_sub(metadata).ok_or_else(|| error("memory_limit", "compiler metadata exceeds memory budget"))?;
+    let compiler_options = SolveOptions { max_memory_bytes: remaining_memory, ..options.clone() };
     let mut remaining_nodes = MAX_EXPRESSION_NODES;
     preflight(&model.objective, model.variables.len(), &mut remaining_nodes)?;
     for constraint in &model.constraints {
         preflight(&constraint.left, model.variables.len(), &mut remaining_nodes)?;
         preflight(&constraint.right, model.variables.len(), &mut remaining_nodes)?;
     }
-    let mut budget = Budget::for_options(options)?;
+    let mut budget = Budget::for_options(&compiler_options)?;
     let compiled_objective = objective(require_polynomial(&model.objective, &mut budget, "objective")?, model.direction)?;
     let mut constraints = Vec::with_capacity(model.constraints.len());
     for (index, row) in model.constraints.iter().enumerate() {
@@ -409,6 +502,7 @@ pub fn compile(model: &ExpressionModel, options: &SolveOptions) -> Result<Optimi
         let mut terms = Vec::new();
         let mut rhs = 0.0;
         for (monomial, coefficient) in combined.terms {
+            let coefficient = checked(coefficient.value(), "constraint coefficient")?;
             match monomial.as_slice() {
                 [] => rhs = checked(-coefficient, "constraint rhs")?,
                 [variable] => terms.push(LinearTerm { variable: *variable, coefficient }),

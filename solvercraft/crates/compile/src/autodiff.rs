@@ -32,6 +32,12 @@ fn record(expr: &Expr, values: &[f64], tape: &mut Vec<Node>) -> Result<usize> {
             let value = values.get(*index).copied().ok_or_else(|| error("invalid_variable", "missing differentiation variable"))?;
             push(tape, value, [None, None], Some(*index))
         }
+        Expr::Power { base, exponent: 0 } => {
+            // Keep the value/domain evaluation of the base, without requiring
+            // a derivative for a subtree whose sensitivity is exactly zero.
+            super::eval_inner(base, values)?;
+            push(tape, 1.0, [None, None], None)
+        }
         Expr::Add { left, right }
         | Expr::Subtract { left, right }
         | Expr::Multiply { left, right }
@@ -142,7 +148,7 @@ pub fn evaluate_with_gradient(expr: &Expr, values: &[f64]) -> Result<(f64, Vec<f
     let mut adjoints = vec![0.0; tape.len()];
     let seed = adjoints.get_mut(root).ok_or_else(|| error("internal_error", "missing differentiation root"))?;
     *seed = 1.0;
-    let mut gradient = vec![0.0; values.len()];
+    let mut gradient = vec![solvercraft_model::CompensatedSum::default(); values.len()];
     for index in (0..tape.len()).rev() {
         let n = node(&tape, index)?;
         let adjoint = adjoints.get(index).copied().ok_or_else(|| error("internal_error", "missing adjoint"))?;
@@ -151,14 +157,14 @@ pub fn evaluate_with_gradient(expr: &Expr, values: &[f64]) -> Result<(f64, Vec<f
         }
         if let Some(variable) = n.variable {
             let g = gradient.get_mut(variable).ok_or_else(|| error("internal_error", "missing gradient variable"))?;
-            *g = checked(*g + adjoint, "gradient accumulation")?;
+            g.add(adjoint)?;
         }
         for (parent, coefficient) in n.parents.iter().flatten() {
             let target = adjoints.get_mut(*parent).ok_or_else(|| error("internal_error", "missing parent adjoint"))?;
             *target = checked(*target + adjoint * coefficient, "adjoint accumulation")?;
         }
     }
-    Ok((value, gradient))
+    Ok((value, gradient.into_iter().map(solvercraft_model::CompensatedSum::finish).collect::<Result<Vec<_>>>()?))
 }
 
 #[cfg(test)]
