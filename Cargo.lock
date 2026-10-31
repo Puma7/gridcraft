@@ -808,9 +808,9 @@ checksum = "c2459377285ad874054d797f3ccebf984978aa39129f6eafde5cdc8315b612f8"
 
 [[package]]
 name = "core-foundation"
-version = "0.9.4"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91e195e091a93c46f7102ec7818a2aa394e1e1771c3ab4825963fa03e45afb8f"
+checksum = "b2a6cd9ae233e7f62ba4e9353e81a88df7fc8a5987b8d445b4d90c879bd156f6"
 dependencies = [
  "core-foundation-sys",
  "libc",
@@ -818,9 +818,9 @@ dependencies = [
 
 [[package]]
 name = "core-foundation"
-version = "0.10.1"
+version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2a6cd9ae233e7f62ba4e9353e81a88df7fc8a5987b8d445b4d90c879bd156f6"
+checksum = "91e195e091a93c46f7102ec7818a2aa394e1e1771c3ab4825963fa03e45afb8f"
 dependencies = [
  "core-foundation-sys",
  "libc",
@@ -2025,6 +2025,7 @@ dependencies = [
  "log",
  "serde",
  "serde_json",
+ "solvercraft",
  "thiserror 2.0.21",
  "web-time",
  "zip 3.0.0",
@@ -2819,15 +2820,15 @@ checksum = "d4a5ff6bcca6c4867b1c4fd4ef63e4db7436ef363e0ad7531d1558856bae64f4"
 
 [[package]]
 name = "linux-raw-sys"
-version = "0.4.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d26c52dbd32dccf2d10cac7725f8eae5296885fb5703b261f7d0a0739ec807ab"
-
-[[package]]
-name = "linux-raw-sys"
 version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53"
+
+[[package]]
+name = "linux-raw-sys"
+version = "0.4.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d26c52dbd32dccf2d10cac7725f8eae5296885fb5703b261f7d0a0739ec807ab"
 
 [[package]]
 name = "litemap"
@@ -3913,15 +3914,15 @@ dependencies = [
 
 [[package]]
 name = "rand_core"
-version = "0.6.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
-
-[[package]]
-name = "rand_core"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
+
+[[package]]
+name = "rand_core"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 
 [[package]]
 name = "rand_pcg"
@@ -4813,6 +4814,66 @@ checksum = "c3d1e2c7f27f8d4cb10542a02c49005dbd6e93095799d6f3be745fae9f8fedd4"
 dependencies = [
  "libc",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "solvercraft"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solvercraft-compile",
+ "solvercraft-engines",
+ "solvercraft-math",
+ "solvercraft-model",
+ "solvercraft-simulation",
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-compile"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "solvercraft-model",
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-engines"
+version = "0.1.0"
+dependencies = [
+ "solvercraft-model",
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-math"
+version = "0.1.0"
+dependencies = [
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-model"
+version = "0.1.0"
+dependencies = [
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-simulation"
+version = "0.1.0"
+dependencies = [
+ "solvercraft-math",
+ "solvercraft-types",
+]
+
+[[package]]
+name = "solvercraft-types"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -6767,3 +6828,4 @@ source = "git+https://github.com/storytold/egui.git?rev=6d518fc799681571963842f9
 name = "egui_system_font_provider"
 version = "0.37.0"
 source = "git+https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc799681571963842f95b55a6b68431b15a"
+

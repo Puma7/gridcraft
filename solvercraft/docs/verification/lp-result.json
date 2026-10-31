@@ -1,0 +1,43 @@
+{
+  "manifest": {
+    "schema_version": 1,
+    "solvercraft_version": "0.1.0",
+    "model_fingerprint": "017bc6e3b722663e",
+    "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+    "options": {
+      "method": "auto",
+      "max_evaluations": 100000,
+      "max_iterations": 100000,
+      "max_nodes": 10000,
+      "max_memory_bytes": 268435456,
+      "feasibility_tolerance": 1e-07,
+      "integrality_tolerance": 1e-07,
+      "optimality_tolerance": 1e-08,
+      "relative_gap": 0.0,
+      "seed": "0"
+    },
+    "platform": "x86_64-windows"
+  },
+  "result": {
+    "termination": "completed",
+    "feasibility": "feasible",
+    "optimality": "optimal",
+    "values": [
+      2.0,
+      6.0
+    ],
+    "objective": 36.0,
+    "best_bound": 36.0,
+    "relative_gap": 0.0,
+    "max_violation": 0.0,
+    "statistics": {
+      "evaluations": 1,
+      "iterations": 4,
+      "nodes": 0
+    },
+    "engine": "solvercraft-dense-simplex-0.1",
+    "warnings": [
+      "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+    ]
+  }
+}

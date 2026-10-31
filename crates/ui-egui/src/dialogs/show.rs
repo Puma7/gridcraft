@@ -1,5 +1,5 @@
 use super::about::about;
-use super::analysis::{analysis_toolpak, goal_seek, solver, solver_results};
+use super::analysis::{analysis_toolpak, goal_seek, solver, solver_results, solvercraft, solvercraft_results};
 use super::charts::{recommended_charts, select_data};
 use super::command_search::command_search;
 use super::cond_format_rules::manage_rules;
@@ -19,6 +19,35 @@ use super::{Dialog, Field, Json, Key, Map, RefPick, SheetApp, json, vec2};
 pub(crate) fn build_params(d: &Dialog) -> Json {
     let mut v = Json::Object(d.values.clone());
     match d.name.as_str() {
+        "solvercraft" if d.tab == "simulation" => {
+            let number = |key: &str| {
+                d.values.get(key).and_then(|x| x.as_f64().or_else(|| x.as_str().and_then(|s| s.parse::<f64>().ok()))).filter(|x| x.is_finite())
+            };
+            let text = |key: &str| d.values.get(key).and_then(Json::as_str).unwrap_or("").to_string();
+            let family = text("distribution");
+            let distribution = match family.as_str() {
+                "normal" => {
+                    json!({"kind":"normal","mean":number("parameter1"),"std_dev":number("parameter2")})
+                }
+                "triangular" => {
+                    json!({"kind":"triangular","low":number("parameter1"),"mode":number("parameter2"),"high":number("parameter3")})
+                }
+                "exponential" => json!({"kind":"exponential","rate":number("parameter1")}),
+                "bernoulli" => json!({"kind":"bernoulli","probability":number("parameter1")}),
+                _ => {
+                    json!({"kind":"uniform","low":number("parameter1"),"high":number("parameter2")})
+                }
+            };
+            let trials = text("trials").parse::<u64>().unwrap_or(0);
+            let seed = text("seed");
+            v = json!({
+                "inputs":[{"cell":text("simulationInput"),"distribution":distribution}],
+                "sheet":d.values.get("sheet").cloned().unwrap_or(Json::Null),
+                "outputs":text("simulationOutputs"),
+                "options":{"trials":trials,"seed":seed,"retain_samples":true,
+                    "method":if d.values.get("latinHypercube").and_then(Json::as_bool)==Some(true) {"latin_hypercube"}else{"monte_carlo"}}
+            });
+        }
         "insertLink" => {
             if d.original_link_text.as_deref().is_some_and(|text| d.values.get("text").and_then(Json::as_str) == Some(text))
                 && let Some(m) = v.as_object_mut()
@@ -112,7 +141,9 @@ pub(crate) fn build_params(d: &Dialog) -> Json {
 
 /// Takes and draws the active dialog, dispatches its body by name, consumes picture-inbox results, runs OK/confirm commands, handles Esc/close and restores the back-dialog stack.
 pub fn show(app: &mut SheetApp, ctx: &egui::Context) {
-    let Some(mut d) = app.dialog.take() else { return };
+    let Some(mut d) = app.dialog.take() else {
+        return;
+    };
     let home = app.ui_window();
     // The macro step editor is a large resizable window of its own.
     if d.name == "macroEditor" {
@@ -143,6 +174,7 @@ pub fn show(app: &mut SheetApp, ctx: &egui::Context) {
         "recommendedCharts" => 600.0,
         "analysisToolPak" => 420.0,
         "solver" => 460.0,
+        "solvercraft" | "solvercraftResults" => 500.0,
         "zoom" => 220.0,
         "pasteSpecial" => 480.0,
         _ => 380.0,
@@ -183,6 +215,8 @@ pub fn show(app: &mut SheetApp, ctx: &egui::Context) {
                 "analysisToolPak" => analysis_toolpak(app, ui, &mut d, &mut confirm, &mut open),
                 "solver" => solver(ui, &mut d, &mut confirm, &mut open),
                 "solverResults" => solver_results(app, ui, &mut d, &mut open),
+                "solvercraft" => solvercraft(app, ui, &mut d, &mut confirm, &mut open),
+                "solvercraftResults" => solvercraft_results(app, ui, &mut d, &mut open),
                 "spelling" => spelling(app, ui, &mut d, &mut open),
                 "agents" => {
                     ui.label("GridCraft is fully drivable by agents. Every menu item, button and gesture is a command:");
@@ -389,6 +423,8 @@ pub fn show(app: &mut SheetApp, ctx: &egui::Context) {
                 open = false;
                 if d.name == "solver" {
                     app.open_dialog("solverResults", r);
+                } else if d.name == "solvercraft" {
+                    app.open_dialog("solvercraftResults", r);
                 } else if d.name == "openPassword" {
                     let path = d.values.get("path").and_then(Json::as_str).map(str::to_string);
                     app.after_open(path.as_deref(), &r);

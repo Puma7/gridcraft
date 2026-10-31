@@ -19,6 +19,7 @@ pub mod review;
 pub mod sheet;
 pub mod slicer;
 pub mod solver;
+pub mod solvercraft;
 pub mod spelling;
 pub mod stash;
 pub mod view;
@@ -148,6 +149,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
         v.extend(draw::specs());
         v.extend(spelling::specs());
         v.extend(solver::specs());
+        v.extend(solvercraft::specs());
         v.extend(pivot::specs());
         v.extend(slicer::specs());
         v.extend(whatif::specs());

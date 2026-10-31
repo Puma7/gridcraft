@@ -35,6 +35,14 @@ pub const TABLE: &[(&str, Class)] = &[
     ("calc", Class::Layer(2)),
     ("xlsx", Class::Layer(2)),
     ("chart", Class::Layer(3)),
+    ("solvercraft-types", Class::Layer(0)),
+    ("solvercraft-model", Class::Layer(1)),
+    ("solvercraft-math", Class::Layer(1)),
+    ("solvercraft-compile", Class::Layer(2)),
+    ("solvercraft-engines", Class::Layer(3)),
+    ("solvercraft-simulation", Class::Layer(3)),
+    ("solvercraft", Class::Layer(4)),
+    ("solvercraft-cli", Class::Layer(7)),
     ("engine", Class::Layer(5)),
     ("ui-egui", Class::Layer(6)),
     ("mcp", Class::Layer(6)),
@@ -220,6 +228,26 @@ mod tests {
         Crate { name: name.into(), deps: deps.iter().map(|(n, k, w)| Dep { name: (*n).into(), kind: *k, workspace: *w }).collect() }
     }
     use DepKind::*;
+
+    #[test]
+    fn solvercraft_is_below_engine_and_has_no_ui_dependency() {
+        let graph = [
+            c("solvercraft-types", &[("serde", Normal, false)]),
+            c("solvercraft-model", &[("solvercraft-types", Normal, true)]),
+            c("solvercraft-math", &[("solvercraft-types", Normal, true)]),
+            c("solvercraft-compile", &[("solvercraft-model", Normal, true), ("solvercraft-types", Normal, true)]),
+            c("solvercraft-engines", &[("solvercraft-model", Normal, true), ("solvercraft-types", Normal, true)]),
+            c("solvercraft-simulation", &[("solvercraft-math", Normal, true), ("solvercraft-types", Normal, true)]),
+            c(
+                "solvercraft",
+                &[("solvercraft-engines", Normal, true), ("solvercraft-simulation", Normal, true), ("solvercraft-compile", Normal, true)],
+            ),
+            c("gridcraft-engine", &[("solvercraft", Normal, true)]),
+            c("solvercraft-cli", &[("solvercraft", Normal, true)]),
+        ];
+        assert!(check(&graph).is_empty());
+        assert!(check(&[c("solvercraft", &[("egui", Normal, false)])]).iter().any(|v| matches!(v, Violation::UiBelowL6 { .. })));
+    }
 
     #[test]
     fn clean_downward_graph_passes() {

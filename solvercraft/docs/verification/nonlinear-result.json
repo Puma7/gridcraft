@@ -1,0 +1,39 @@
+{
+  "model": "Smooth exponential optimum",
+  "options": {
+    "feasibility_tolerance": 1e-07,
+    "integrality_tolerance": 1e-07,
+    "max_evaluations": 100000,
+    "max_iterations": 100000,
+    "max_memory_bytes": 268435456,
+    "max_nodes": 10000,
+    "method": "projected_gradient",
+    "optimality_tolerance": 1e-08,
+    "relative_gap": 0.0,
+    "seed": "42"
+  },
+  "result": {
+    "best_bound": null,
+    "engine": "solvercraft-projected-gradient-ad",
+    "feasibility": "feasible",
+    "max_violation": 0.0,
+    "objective": 2.7640218831192376e-18,
+    "optimality": "stationary",
+    "relative_gap": null,
+    "statistics": {
+      "evaluations": 12,
+      "iterations": 9,
+      "nodes": 0
+    },
+    "termination": "completed",
+    "values": [
+      0.6931471797286779
+    ],
+    "warnings": [
+      "Original-unit projected-gradient infinity norm: 6.6501391005288965e-9.",
+      "Bound-constrained local search; stationarity is not an optimality guarantee."
+    ]
+  },
+  "schema_version": 1,
+  "version": "0.1.0"
+}

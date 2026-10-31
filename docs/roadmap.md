@@ -1,6 +1,6 @@
 # Roadmap detail
 
-> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-23 · **Change:** minor (test command) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft alpha integration scope and pending gates) · **Target:** Microsoft Excel (Microsoft 365)
 
 Forward-looking plan. The one-page summary is [`ROADMAP.md`](../ROADMAP.md); the ranked work
 list is [`gaps.md`](gaps.md); numbers and method are in
@@ -109,10 +109,15 @@ to check our files, and Windows machines with the reported GPU drivers.
   it a CI number (1–2 h).
 - No `cargo xtask scorecard` or `bench` yet.
 
+## Solvercraft alpha integration
+
+The new [Solvercraft SDK and host integration](solvercraft.md) add explicit advanced optimization and simulation alongside the existing Solver. The independently tested core is an alpha; full Gridcraft, visual UI and WASM gates are pending. The initial dialog is modal with bounded synchronous calls. This does not close general solver parity, persistence, async sidebar or conic/global-engine gaps.
+
 ## Revision history
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-31 | minor | Document Solvercraft alpha integration and the remaining application/platform gates |
 | 2026-10-23 | minor | Measuring: tests run through `cargo xtask test` |
 | 2026-10-11 | minor | PivotTable calculated fields landed |
 | 2026-10-10 | minor | Current focus and M15 updated for the 10-10 merges |

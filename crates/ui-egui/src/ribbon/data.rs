@@ -136,4 +136,7 @@ pub(super) fn data(app: &mut SheetApp, ui: &mut Ui) {
     if big_button(ui, Icon::Function, "Solver", "Solver", false).clicked() {
         app.open_dialog("solver", json!({}));
     }
+    if big_button(ui, Icon::Function, "Solvercraft", "Advanced optimization and simulation", false).clicked() {
+        app.open_dialog("solvercraft", json!({}));
+    }
 }

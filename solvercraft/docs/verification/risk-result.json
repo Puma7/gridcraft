@@ -1,0 +1,37 @@
+{
+  "solve": {
+    "termination": "completed",
+    "feasibility": "feasible",
+    "optimality": "optimal",
+    "values": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "objective": 1.0,
+    "best_bound": 1.0,
+    "relative_gap": 0.0,
+    "max_violation": 0.0,
+    "statistics": {
+      "evaluations": 1,
+      "iterations": 4,
+      "nodes": 0
+    },
+    "engine": "solvercraft-dense-simplex-0.1",
+    "warnings": [
+      "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+    ]
+  },
+  "decision_values": [
+    1.0
+  ],
+  "scenario_losses": [
+    1.0,
+    1.0
+  ],
+  "expected_loss": 1.0,
+  "cvar": 1.0,
+  "confidence": 0.5,
+  "validation_note": "Exact finite-scenario formulation; scenario performance is in-sample, not an out-of-sample probability guarantee."
+}
