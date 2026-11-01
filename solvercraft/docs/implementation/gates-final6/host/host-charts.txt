@@ -1,0 +1,77 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+running 9 tests
+test solvercraft::tests::histogram_contract_places_boundaries_in_twenty_bins_and_retains_every_row ... ok
+test solvercraft::tests::quantile_band_contract_keeps_5_25_50_75_95_values_and_output_order ... ok
+test solvercraft::tests::box_contract_uses_full_run_quartiles_and_min_max_whiskers ... ok
+test solvercraft::tests::histogram_and_cdf_ignore_unrelated_output_magnitude_and_scatter_uses_independent_axes ... ok
+test solvercraft::tests::scatter_contract_keeps_same_trial_pairs_when_sorted_and_skips_incomplete_rows ... ok
+test solvercraft::tests::cdf_contract_orders_values_and_preserves_duplicate_probability_jumps ... ok
+test solvercraft::tests::charts_keep_tiny_close_large_and_overflowing_axis_ranges ... ok
+test solvercraft::tests::tornado_contract_uses_first_case_base_and_only_complete_single_factor_changes ... ok
+test solvercraft::tests::closed_document_releases_the_panes_retained_result ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 249 filtered out; finished in 0.00s
+

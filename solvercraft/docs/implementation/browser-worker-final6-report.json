@@ -1,0 +1,79 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/browser-worker-final6-report.json",
+  "full_local_report_sha256": "901bfc7e4d005538730f3cbd1630ba19ebd6823cbc80199d2d7e162b20b7ad57",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "unique_test_bodies": 8,
+  "aggregate_all_attempts_passed": false,
+  "attempts": [
+    {
+      "kind": "initial",
+      "passed": 7,
+      "failed": 1,
+      "ignored": 0,
+      "exit_code": 1,
+      "observed_max_window_heartbeat_gap_ms": 26
+    },
+    {
+      "kind": "controlled_repeat",
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "exit_code": 0,
+      "observed_max_window_heartbeat_gap_ms": 12.0
+    }
+  ],
+  "identical_test_wasm_sha256": "5ba714a0ea23de672b5c477cc754cba9b467fecaa6168b865f6f06e6368a5064",
+  "identical_production_assets": true,
+  "initial_report": "browser-worker-final6-initial-report.json",
+  "repeat_report": "browser-worker-final6-rerun-report.json",
+  "repeat_observed_metrics": {
+    "admission_ms": 0.8099999999999999,
+    "heartbeat_ticks": 152,
+    "max_observed_progress_gap_ms": 57.0,
+    "max_status_ms": 1.0,
+    "max_window_heartbeat_gap_ms": 12.0,
+    "observed_progress_updates": 30,
+    "startup_ms": 25.865,
+    "worker_compute_ms": 1480.335
+  },
+  "r081": {
+    "native_distinct_signature_tests": 19,
+    "native_policy_negative_test_groups": 6,
+    "real_browser_signatures": 19,
+    "worker_trials": 2048,
+    "worker_outputs": 19,
+    "unsupported_preserved": [
+      "nested Psi call",
+      "documented PsiStatic property"
+    ],
+    "vendor_display_context_implemented": false,
+    "conversion_policy": "explicitly lossy solvercraft_nominal; preserve_vendor refuses"
+  },
+  "strict_heartbeat_budget_ms": 25,
+  "initial_failure": "Additional heartbeat guard:26ms observed versus strict25ms, during concurrent native compilation. Cause unproven; no phase trace.",
+  "repeat_context": "Exactly one identical repeat after owned builds; same test WASM and product assets.",
+  "original_criteria": {
+    "R022": "Job ID and immutable snapshot revision; nonblocking admission.",
+    "R023": "Original normal-model status-access target 250 ms; see measured admission/status/progress separately.",
+    "additional_guard": "The 25 ms heartbeat guard is stricter than the original status-access criterion; no hard real-time guarantee is claimed."
+  }
+}

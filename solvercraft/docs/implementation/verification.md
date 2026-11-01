@@ -1,182 +1,142 @@
-# Reproducible verification
+# Solvercraft verification: final6
 
-Final candidate 5 passed the complete host CI, the separate SDK gates, actual
-Chrome/WASM tests, native UI interactions and independent numerical oracles.
-These results establish the stated test cases. They do not establish all 96
-requirements or Frontline feature parity; see
-[the current acceptance matrix](../qa/acceptance-current.md) and the immutable
-[original requirements](../masterplan/requirements.csv).
+This is the additional frozen-source run of 2026-11-01. Historical final5 gate logs and version-specific reports
+remain unchanged; the original shared entrypoints are preserved in the
+[final5 publication](https://github.com/Puma7/gridcraft/tree/2d6604429e1101cd30f1140263af212a26bbc607). All paths and counts are indexed explicitly in
+[final6-verification-summary.json](final6-verification-summary.json).
 
-## Tested source and tools
+The coherent copy contains 1,068 files / 27,906,601 bytes, raw all-file snapshot hash
+`fbb64773c50247a43878c495512fc174aad4941e2c25a0c5b51b62eb8ce106e8`.
+The host/SDK identity covers 791 source/build/data files,
+including 750 Rust files. Raw digest:
+`c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7`; LF-canonical digest:
+`0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76`. Every gate retained its source
+digest. All active identity files and the isolated worker test-source hash match the
+frozen copy after execution. The original compiled reference matrices and raw
+datasets remain unchanged. All six owner-freeze hashes matched before testing.
 
-The baseline is Gridcraft commit `95f7b46ff94fe833b2f3356db58dc6754916f43c`,
-with the reviewed Solvercraft changes. The frozen auxiliary Git checkout was
-copied with hash verification: 1,056 files, 24,572,232 bytes, all-file raw digest
-`e75ea4fcbbf6a621cc22b1bd284a72204858d386b96010f02e192b4e494451b5`.
-[The snapshot proof](frozen-final-source-report.json) records an unchanged source
-while copying and a matching destination. Reports and prose were added later;
-the tested code and compiled reference inputs remained frozen.
+## Native and SDK gates
 
-The host/SDK verifier identity covers 789 source/build/data files, including literal
-`include_str!`/`include_bytes!` inputs. All host/SDK gates retained raw source digest
-`fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe`.
-The LF-canonical digest is
-`9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb`.
-An independent post-run comparison found all 789 active and frozen file hashes
-identical. Raw hashes bind Windows worktree bytes; canonical hashes allow
-comparison to LF Git blobs without changing the tested files. Immutable datasets
-have explicit `-text` rules and must match their raw hashes, including
-`exact_products.txt` SHA-256
-`322362fe5fcc15e3a8bde984cbb90e22cded6d49949ee80ffa5d9761e2d0e491`.
+| Gate | Passed | Failed | Ignored |
+|---|---:|---:|---:|
+| Complete 10-stage host CI | 2873 | 0 | 1 |
+| Separate SDK fmt/Clippy/workspace tests | 630 | 0 | 0 |
+| Actual native UI interactions | 6 | 0 | 0 |
+| Chart module: 8 numeric contracts + 1 lifecycle | 9 | 0 | 0 |
+| Actual Chrome SDK/WASM | 13 | 0 | 0 |
 
-Actual tools: Rust/Cargo 1.95.0, Rustfmt 1.9.0, Clippy 0.1.95,
-`wasm-bindgen-test-runner` 0.2.130, Trunk 0.21.14, Chrome 156.0.8078.74 and
-ChromeDriver 156.0.8078.80. Both native MSVC and `wasm32-unknown-unknown`
-targets executed. Exact tool paths/versions and hashes are retained in the
-machine-readable reports. Rustfmt and Clippy resolve to the same 1.95 toolchain;
-the declared and tested SDK MSRV is 1.95.
+The host CI ran i18n-report, fmt, all-target Clippy with warnings denied, native
+tests, doctests, assets, layers, WASM, parity and keytips. It exited 0 in
+547.64 seconds. One pre-existing timing-sensitive release
+scaling test remains explicitly ignored. Scoped UI/chart reruns are not added
+again to the full-CI total. Native font inputs use the unchanged project pin.
 
-## Executed gates
+Actual Rust/Cargo 1.95.0, Rustfmt 1.9.0, Clippy 0.1.95, Chrome 156.0.8078.74,
+ChromeDriver 156.0.8078.80, wasm-bindgen 0.2.130 and Trunk 0.21.14 were used.
+The public reports retain versions, results and selected source/binary hashes. Full invocation and environment diagnostics remain in local archives; see the [public evidence format](public-evidence.md).
 
-| Gate | Actual result | Evidence |
-|---|---|---|
-| Host `cargo xtask ci` | All 10 stages passed; 2,827 tests passed, 0 failed, 1 existing ignored test | [Summary](gates-final/host/summary.json), [full log](gates-final/host/host-ci.txt) |
-| SDK fmt, Clippy, workspace tests | All passed; 630 tests passed, 0 failed, 0 ignored | [Summary](gates-final/sdk/summary.json), [full tests](gates-final/sdk/sdk-tests.txt) |
-| Native Solvercraft interactions | 6 test bodies passed, including EN/DE by light/dark keyboard/focus matrix and all five selectable charts plus Tornado | [UI report](native-ui-controls-report.json), [full log](gates-final/host/host-ui.txt) |
-| Chart-module tests | 8 numerical chart contracts plus 1 retained-result lifecycle test passed | [Full log](gates-final/host/host-charts.txt) |
-| Actual Chrome SDK/WASM | 13 test bodies passed | [Report](browser-smoke-final-report.json) |
-| Actual product worker and Trunk app | 7 test bodies passed against hash-matched, accepted production assets | [Report](browser-worker-final-report.json), [Trunk build](trunk-final-build-report.json), [test build](worker-browser-final-build-report.json) |
+## R081: actual import and worker execution
 
-The host stages are `i18n-report`, `fmt`, `clippy`, `test`, `doctest`, `assets`,
-`layers`, `wasm`, `parity`, and `keytips`. Full CI exited 0 in 722.25 seconds,
-including compilation. The test counts sum successful test-target summaries;
-the additional scoped UI/chart reruns are not added to that total. The existing
-ignored test is `recalc_with_range_formulas_scales_linearly`, documented upstream
-as timing-sensitive and intended for release execution. No doctests were skipped
-because of a failing build.
+The native suite contains 19 distinct asymmetric signature tests and 6 policy or
+negative groups. The new actual-browser body imports those 19 numeric signatures,
+checks declared parameter conventions and outside nominal values, discovers
+19 inputs / 19 outputs, and runs 2,048 seed-42 trials in the real product Worker.
+Independent analytic means/variances provide bounded sampling sanity checks;
+the heavy-tailed LogNorm2 case is not presented as a proof of its whole CDF.
 
-Native GUI tests use the project's existing font pin
-`b076417b5880bd4154bd22f00695b1d28c6bea83`: 13 allowed OFL font faces,
-43,390,680 bytes, with hashes and licenses retained. Disallowed font families
-were not downloaded. Required font inputs and task-local writable temp paths
-are recorded in the gate identity.
+Import preview, explicit apply, single-step Undo/Redo and untouched live-workbook
+revision/history all pass. Nested stochastic expressions and documented
+`PsiStatic` properties remain atomic unsupported originals. The default
+`solvercraft_nominal` policy explicitly reports lossy outside-value conversion;
+`preserve_vendor` refuses conversion instead of inventing a vendor display or
+PreRun context. `apply_requested` and actual `applied` are checked separately.
+This is evidence for the selected 19-signature scope, not all 272 catalog rows or
+full proprietary runtime compatibility. The original-scope audit and acceptance
+matrix judge requirements separately from these finite cases.
 
-The strict cross-platform `IMSQRT(i)` regression compares the parsed components
-with analytic `1/sqrt(2)` within `2e-15`; exact representable formatting cases
-remain exact. This test-only correction addresses the Windows final-decimal
-trigonometric difference. Async host fixtures also serialize their seven
-process-local job-quota consumers and await terminal cleanup. Production quotas
-and numerical semantics were not relaxed to make those tests pass.
+## Worker timing: both attempts remain visible
 
-## Browser responsiveness and native controls
+| Same 8 test bodies, same WASM and production assets | Passed | Failed | Ignored | Maximum window heartbeat gap |
+|---|---:|---:|---:|---:|
+| Initial attempt during native CI compilation | 7 | 1 | 0 | 26 ms |
+| One controlled repeat after owned build/test processes completed | 8 | 0 | 0 | 12.0 ms |
 
-The actual worker executes serialized workbook snapshots through the production
-Session command API. Tests cover preview/apply/Undo, stale and cross-document
-rejection, hard cancel/deadline with no invented incumbent, ordered Calc rounding,
-mixed-integer QP, and the exact scaled binary regression. The actual Trunk canvas
-loaded in 1,382 ms; its German dark-theme Solvercraft pane was opened through
-pointer input and visually inspected. The screenshot SHA-256 is
-`dc4c740aa6bd43b16439f81b9d2e7180d3a481f5d6dc295754f8aded1b12d4fa`.
-The raw PNG is retained as test evidence, not a product asset.
+[The composite worker report](browser-worker-final6-report.json) links both raw
+attempts. There is no aggregate all-pass claim across both attempts. The first
+failure was the additional strict `<25 ms` heartbeat assertion for a 10 ms timer in
+`actual_worker_simulation_reports_progress_while_window_timers_remain_responsive`,
+at worker.rs:459. Its window includes admission, cold startup, polling,
+computation and result retrieval. No phase trace identifies the 26 ms interval;
+concurrent compilation is context, while OS/build scheduling is an unproven
+possible cause. Initial status/progress maxima were not exported before panic.
+No product, test, threshold or security option changed for the single repeat.
 
-For the documented 2-million-trial streaming simulation, admission took 1.15 ms,
-cold worker startup 36.445 ms and computation 2,320.055 ms. There were 47 distinct
-visible progress updates; the **maximum** observed active progress gap was 65 ms,
-maximum window heartbeat gap 22 ms, and maximum status-query duration 1 ms.
-These are observed maxima, with polling resolution and a shared host, not
-hard real-time guarantees. Cold startup is separate from the admission budget.
+R022 concerns job IDs/snapshot revisions and nonblocking admission. R023's
+original normal-model status-access target is 250 ms; the additional 25 ms heartbeat
+guard is not that original criterion. In the repeat, admission was
+0.81 ms, maximum status query 1.0 ms,
+maximum observed active progress gap 57.0 ms,
+and there were 30 distinct updates. Startup
+(25.865 ms) and computation (1480.335 ms)
+are separate. These observations do not establish a hard real-time guarantee.
 
-Native tests also exercise saved-model controls, explicit single-step application,
-stale-result disabling, focus, Tab/Shift+Tab, draft typing and Ctrl+Enter in both
-languages and themes. Eight renderer-used numerical tests independently check
-histogram bin boundaries, duplicate CDF mass, same-trial scatter pairing,
-full-run Box/quantile summaries, single-factor Tornado ranking and very small,
-very large, adjacent and overflowing numeric ranges.
+The actual Trunk canvas and German/dark Solvercraft pane were also rendered and
+visually inspected. The official test runner adds `no-sandbox` and
+`disable-dev-shm-usage` itself; execution retains the outer managed OS boundary,
+and Chrome's own sandbox compatibility is not established. No manual disabling
+flag or product worker mock was introduced.
 
-The official WASM test runner itself adds `no-sandbox` and
-`disable-dev-shm-usage`. The actual browser runs retain the outer managed OS
-boundary; they do not prove Chrome's own sandbox compatibility. A separate
-normal-sandbox preview failed at startup. No manual browser security flag was
-added. A test-only restoration of the native Worker constructor avoids the
-runner's console-forwarding blob changing Trunk's relative loader resolution;
-the product worker and generated Trunk loader remain unchanged.
+## Release numerics and bounded measurements
 
-## Independent numerical oracles
-
-All cases below execute the same final release CLI, SHA-256
+The SDK's 153 source/manifest files are byte-identical to final5, and the newly
+bound release executable therefore retains SHA-256
 `68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1`.
-[The release build proof](release-final-build-report.json) binds it to unchanged
-source. The deterministic generated LP/QP/robust suites use seed `20261031` and
-NumPy 2.2.0; they do not call another Solvercraft backend as their oracle.
+The release proof binds the existing binary to the new coherent source. All
+oracles were actually rerun on 2026-11-01: 30 LP vertex cases, 20 QP KKT cases,
+20 robust uncertainty-vertex cases + 4 tiny infeasible regressions, 3 exact binary
+variants and 1 node-limit honesty control. They all pass. Large target offsets
+are checked with strict representable integer expectations, not a relative
+tolerance that hides the 500-unit improvement.
 
-| Oracle | Result and acceptance |
-|---|---|
-| [30 LP cases](linear-oracle-final-report.json) | Independent active-constraint vertex enumeration; min/max, equalities, bounds, negative ranges and row scaling |
-| [20 convex QPs](quadratic-oracle-final-report.json) | Independent active-set KKT systems; maximum original objective error `1.154e-8`, maximum original constraint violation `4.071e-10` |
-| [20 robust models plus 4 tiny infeasible cases](robust-oracle-final-report.json) | Explicit uncertainty vertices and original-space LP enumeration; maximum objective error `1.244e-14`, support violation `8.438e-15` |
-| [Exact binary enumeration](exact-binary-oracle-final-report.json) | All four binary points checked with integer arithmetic; optimum `(0,1)`/500, offset `1e16+500`, reversed minimization -500; one-node control reports an open bound and no false optimality |
+Five fresh release processes per workload were also measured after the owned
+gates/builds completed. No warmup was discarded; process startup, JSON and
+calculation are included. Shared-host observations do not imply an isolated
+performance comparison.
 
-The scaled binary case rejects the former false-optimal zero solution caused by
-treating a near-integer relaxation as a closed node. The robust tiny-variable
-cases reject the former false feasible point at `x=+/-1e-9` with radius `1e12`:
-the original support is 1,000. Both regressions are also executable CLI tests;
-the binary variants execute inside the real SDK WASM and product-worker tests.
+| Workload | Median wall time | Maximum OS peak working set |
+|---|---:|---:|
+| 100-variable / 500-row LP, analytic optimum 3,775 | 180.81 ms | 11677696 bytes |
+| 100,000-trial / 20-input / 10-output streaming MC, seed 42 | 527.52 ms | 6893568 bytes |
 
-Two independent Johnson tests additionally use six SU/SB fixtures generated by
-128/256-node NumPy Gauss-Hermite quadrature, including near-normal shapes,
-reflected skewness, heavy tails and large affine means. These finite examples
-do not establish rigorous quadrature bounds for every possible shape.
+Requests, engine/sampler identities, tolerances, errors, seeds, hardware
+dimensions, tool versions and memory observations are in the indexed JSON.
+Dependency inventories were refreshed separately for 56 SDK and 141 worker-harness
+resolved packages, with public package/version/SPDX lists; complete feature and local license/NOTICE metadata remain in the local archive. Reproduce with
+the unchanged `tests/e2e` helpers using the pinned 1.95 toolchain and separate task
+targets; the two Cargo workspaces and isolated browser manifests have independent
+locked gates. Finite acceptance cases do not prove every ill-conditioned model,
+global nonlinear optimality or untested platform.
 
-## Bounded release-process measurements
+## Original acceptance and public evidence
 
-[All ten samples](performance-final-report.json) preserve requests, seed 42,
-effective engine/sampler identities, errors, source/binary hashes and memory.
-Each measured sample starts a fresh process; startup, JSON and computation are
-included. No warmup was discarded. These samples ran after the owned builds
-finished while the native CI test executables were running. This is a shared-host
-baseline, not an isolated speed comparison or a claim against another product.
+The current [96-criterion assessment](../qa/acceptance-current.md) preserves the
+original CSV fields and distinguishes mathematical kernels, selected PSI imports
+and broader vendor compatibility. See the [original-scope audit](../qa/original-scope-audit.md)
+for the requirement-by-requirement interpretation and positive evidence.
 
-| Workload, five repetitions each | Median wall time | Maximum observed OS peak working set |
-|---|---|---|
-| LP, 100 variables and 500 rows; analytic optimum 3,775 | 260.20 ms | 11,759,616 bytes |
-| Streaming MC, 100,000 trials, 20 inputs, 10 outputs; analytic mean 1 and variance 1/6 | 712.77 ms | 6,799,360 bytes |
+Published diagnostics follow the [public-evidence policy](public-evidence.md).
+Source/binary identities and numerical observations are retained; local paths
+and nonessential environment metadata use portable placeholders. The initial
+worker heartbeat failure and its one unchanged controlled repeat remain explicit.
 
-The host is Windows 11 x86_64, 16 physical/24 logical CPUs and 68,442,624,000
-bytes RAM. Memory combines 5 ms RSS sampling with the OS peak working set; this
-is not an allocation-level memory proof. Statistical checks use the documented
-fixed seed and thresholds, rather than claiming exact Monte Carlo moments.
+## Compact public diagnostics and binary request provenance
 
-## Reproduction and limits
+Indexed diagnostics use the [fixed-field public evidence format](public-evidence.md),
+not complete stdout, environment, invocation or driver dumps. The test logs are
+line-stable public result excerpts. Package inventories expose name/version/SPDX;
+complete feature trees and local notice-hash metadata remain in private archives.
 
-Use Rust 1.95 and prepend its toolchain directory to PATH; set RUSTC, RUSTDOC and
-RUSTFMT to that same toolchain. Use task-local Cargo/toolchain/temp/target paths,
-the pinned permitted fonts, `CRAFT_FONTS_REQUIRED=1`, and
-`CARGO_NET_GIT_FETCH_WITH_CLI=true` where the Windows libgit2 revocation check
-fails. TLS verification is retained. From the nested `solvercraft` directory:
-
-```powershell
-python tests/e2e/verify.py --gate sdk-fmt --gate sdk-clippy --gate sdk-tests
-python tests/e2e/verify.py --gate host-ci --gate host-ui --gate host-charts
-python tests/e2e/linear_oracle.py $SolvercraftCli --report lp.json
-python tests/e2e/quadratic_oracle.py $SolvercraftCli --output qp.json
-python tests/e2e/robust_oracle.py $SolvercraftCli --report robust.json
-python tests/e2e/performance.py $SolvercraftCli --repeat 5 --output performance.json --work-dir $TaskTemp
-python tests/e2e/license_inventory.py --output dependency-inventory.json
-```
-
-`run_wasm_browser.py --help`, `build_trunk.py --help` and
-`build_worker_browser.py --help` expose the actual-browser commands. The isolated
-harnesses have their own locked manifests; the runner requires matching official
-wasm-bindgen and Chrome/ChromeDriver versions. Generated production assets must
-match an accepted unchanged-source Trunk build before worker tests run.
-[SDK dependency metadata](dependency-inventory.json) covers 56 resolved packages;
-[worker-harness metadata](worker-browser-dependency-inventory.json) covers 141,
-with features, SPDX fields and license/NOTICE hashes. The licensed Sobol direction
-data and BSL-1.0 text are recorded separately.
-
-Reports distinguish floating-point optimal bounds from local stationarity and
-limited/cancelled runs. This finite verification does not establish correctness
-for every ill-conditioned model, global nonlinear optimality, untested operating
-systems, or every original requirement. R046's two ambiguous legacy constructor
-arities and R081's proprietary vendor-import scope remain separately documented
-acceptance gaps. No proprietary algorithm source was assumed available.
+The [binary-oracle export erratum](binary-oracle-export-erratum.md) supersedes a
+historical mutable-request metadata error. Exactly 3+1 cases were rerun with
+immutable request records on the unchanged release binary; minimization -500 and
+the separate node 1 control now have correctly retained model/option identities.

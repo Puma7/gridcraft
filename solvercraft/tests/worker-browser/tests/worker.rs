@@ -210,6 +210,164 @@ async fn actual_worker_simulation_preserves_calc_rounding_for_each_output_and_tr
     assert_eq!(live_after, live_before, "all simulation values remain in the worker snapshot");
     session.execute("solvercraft.job.forget", json!({"id":id})).expect("release rounding fixture");
 }
+#[wasm_bindgen_test(async)]
+async fn actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals() {
+    // Independent population moments check the imported parameter conventions.
+    // The heavy LogNorm2 case is a bounded sampling sanity check, not a claim
+    // that a finite sample proves its CDF or every tail moment.
+    let cases = [
+        ("PsiUniform(-2,6)", 2.0, 16.0 / 3.0),
+        ("PsiIntUniform(-2,2)", 0.0, 2.0),
+        ("PsiNormal(2,3)", 2.0, 9.0),
+        ("PsiLogNormal(4,2)", 4.0, 4.0),
+        ("PsiLogNorm2(1,2)", 3.0_f64.exp(), (4.0_f64.exp() - 1.0) * 6.0_f64.exp()),
+        ("PsiTriangular(0,2,8)", 10.0 / 3.0, 26.0 / 9.0),
+        ("PsiPert(0,2,4)", 2.0, 4.0 / 7.0),
+        ("PsiBeta(2,3)", 0.4, 0.04),
+        ("PsiGamma(2,3)", 6.0, 18.0),
+        ("PsiExponential(2)", 2.0, 4.0),
+        ("PsiWeibull(2,3)", 1.5 * std::f64::consts::PI.sqrt(), 9.0 * (1.0 - std::f64::consts::PI / 4.0)),
+        ("PsiBernoulli(0.25)", 0.25, 3.0 / 16.0),
+        ("PsiBinomial(4,0.25)", 1.0, 0.75),
+        ("PsiPoisson(2)", 2.0, 2.0),
+        ("PsiNegBinomial(2,0.25)", 6.0, 24.0),
+        ("PsiGeometric(0.25)", 3.0, 12.0),
+        ("PsiDisUniform({1,2,6})", 3.0, 14.0 / 3.0),
+        ("PsiDiscrete({1,10},{3,1})", 3.25, 15.1875),
+        ("PsiCumul(0,10,{2,6},{0.2,0.8})", 4.2, 457.0 / 75.0),
+    ];
+    let mut session = workbook();
+    for (index, (formula, _, _)) in cases.iter().enumerate() {
+        let row = index + 1;
+        session.execute("cell.set", json!({"cell":format!("A{row}"),"input":format!("={formula}")})).expect("vendor input");
+        session.execute("cell.set", json!({"cell":format!("B{row}"),"input":format!("=SC.OUTPUT(A{row})")})).expect("declared output");
+    }
+    session.execute("cell.set", json!({"cell":"C1","input":"=1+2*PsiUniform(0,1)"})).expect("nested vendor formula");
+    session.execute("cell.set", json!({"cell":"C2","input":"=PsiNormal(0,1,PsiStatic(4))"})).expect("documented vendor pre-run property");
+    let formula = |s: &Session, cell: &str| {
+        s.active()
+            .expect("document")
+            .wb
+            .active()
+            .expect("sheet")
+            .cell(CellRef::parse(cell).expect("reference"))
+            .expect("cell")
+            .formula
+            .as_ref()
+            .expect("formula")
+            .text
+            .clone()
+    };
+    let original_inputs: Vec<String> = (1..=cases.len()).map(|row| formula(&session, &format!("A{row}"))).collect();
+    let unsupported_originals = [formula(&session, "C1"), formula(&session, "C2")];
+    let initial_revision = session.active().expect("document").revision;
+    let strict = session
+        .execute("solvercraft.worksheet.importPsi", json!({"apply":true,"outside_policy":"preserve_vendor"}))
+        .expect("honest vendor-context refusal");
+    assert!(strict["changes"].as_array().expect("changes").is_empty());
+    assert_eq!(strict["unsupported"].as_array().expect("refusals").len(), cases.len() + 2);
+    assert!(
+        strict["unsupported"]
+            .as_array()
+            .expect("refusals")
+            .iter()
+            .all(|entry| entry["reason"] == "vendor_display_context_unavailable" && entry["preserved"] == true)
+    );
+    assert_eq!(strict["outside_policy"], "preserve_vendor");
+    assert_eq!(strict["apply_requested"], true);
+    assert_eq!(strict["applied"], false, "a refused conversion is not an applied edit");
+    assert_eq!(strict["vendor_display_context_preserved"], false);
+    assert_eq!(session.active().expect("document").revision, initial_revision);
+    for (index, original) in original_inputs.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+    let preview = session.execute("solvercraft.worksheet.importPsi", json!({})).expect("read-only import preview");
+    assert_eq!(preview["apply_requested"], false);
+    assert_eq!(preview["applied"], false);
+    assert_eq!(preview["outside_policy"], "solvercraft_nominal");
+    assert_eq!(preview["vendor_display_context_preserved"], false);
+    assert_eq!(preview["changes"].as_array().expect("supported signatures").len(), cases.len());
+    assert_eq!(preview["unsupported"].as_array().expect("unsupported formulas").len(), 2);
+    assert!(
+        preview["unsupported"]
+            .as_array()
+            .expect("unsupported formulas")
+            .iter()
+            .all(|entry| entry["reason"] == "unsupported_nested_psi_or_property" && entry["preserved"] == true)
+    );
+    assert_eq!(session.active().expect("document").revision, initial_revision);
+    let applied = session.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).expect("explicit nominal-policy import");
+    assert_eq!(applied["apply_requested"], true);
+    assert_eq!(applied["applied"], true);
+    assert_eq!(session.active().expect("document").revision, initial_revision + 1, "all supported formulas are one edit");
+    session.execute("edit.undo", json!({})).expect("undo the complete import");
+    for (index, original) in original_inputs.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+    session.execute("edit.redo", json!({})).expect("redo the complete import");
+    for (index, (_, mean, _)) in cases.iter().enumerate() {
+        let Value::Number(nominal) = value(&session, &format!("A{}", index + 1)) else { panic!("imported nominal is numeric") };
+        assert!((nominal - mean).abs() <= 1e-10 * mean.abs().max(1.0), "incorrect imported nominal for {}: {nominal}", cases[index].0);
+    }
+    assert_eq!([formula(&session, "C1"), formula(&session, "C2")], unsupported_originals);
+    let discovered = session.execute("solvercraft.worksheet.discover", json!({})).expect("discover imported declarations");
+    assert_eq!(discovered["inputs"].as_array().expect("input bindings").len(), cases.len());
+    assert_eq!(discovered["outputs"].as_array().expect("output bindings").len(), cases.len());
+    let distribution = |row: usize| {
+        discovered["inputs"]
+            .as_array()
+            .expect("inputs")
+            .iter()
+            .find(|input| input["cell"].as_str().expect("input cell").ends_with(&format!("!A{row}")))
+            .expect("imported input")["distribution"]
+            .clone()
+    };
+    assert_eq!(distribution(3)["std_dev"], 3.0);
+    assert_eq!(distribution(5)["log_mean"], 1.0);
+    assert_eq!(distribution(5)["log_std_dev"], 2.0);
+    assert_eq!(distribution(9)["shape"], 2.0);
+    assert_eq!(distribution(9)["scale"], 3.0);
+    assert_eq!(distribution(15)["successes"], 2);
+    assert_eq!(distribution(15)["probability"], 0.25);
+    let live_before: Vec<Value> = (1..=cases.len()).map(|row| value(&session, &format!("A{row}"))).collect();
+    let live_revision = session.active().expect("document").revision;
+    let job = session
+        .execute("solvercraft.job.start", json!({"kind":"simulation","request":{"options":{"trials":2048,"seed":"42","retain_samples":true}}}))
+        .expect("real imported-PSI worker");
+    assert_eq!(job["execution"], "browser_worker_snapshot");
+    let id = &job["id"];
+    completed(&mut session, id).await;
+    let result = session.execute("solvercraft.job.result", json!({"id":id})).expect("imported simulation result");
+    assert_eq!(result["result"]["completed_trials"], 2048);
+    assert_eq!(result["result"]["termination"], "completed");
+    let outputs = result["outputs"].as_array().expect("captured output names");
+    assert_eq!(outputs.len(), cases.len());
+    let summaries = result["result"]["summaries"].as_array().expect("summaries");
+    assert_eq!(summaries.len(), cases.len());
+    for (output, summary) in outputs.iter().zip(summaries) {
+        let cell = output.as_str().expect("output reference").rsplit('!').next().expect("cell reference");
+        let index = cell.strip_prefix('B').expect("declared output column").parse::<usize>().expect("output row") - 1;
+        let (name, mean, variance) = cases[index];
+        assert_eq!(summary["count"], 2048);
+        assert!(
+            (summary["mean"].as_f64().expect("sample mean") - mean).abs() <= 8.0 * (variance / 2048.0).sqrt(),
+            "imported distribution sampling sanity failed for {name}: {summary}"
+        );
+        assert!(summary["variance"].as_f64().expect("sample variance") > 0.0, "stochastic input cannot be replaced by its outside nominal: {name}");
+    }
+    let rows = result["result"]["samples"].as_array().expect("retained rows");
+    assert_eq!(rows.len(), 2048);
+    assert!(rows.iter().all(|row| row.as_array().expect("output row").len() == cases.len()));
+    assert_eq!(session.active().expect("document").revision, live_revision);
+    assert_eq!((1..=cases.len()).map(|row| value(&session, &format!("A{row}"))).collect::<Vec<_>>(), live_before);
+    assert_eq!([formula(&session, "C1"), formula(&session, "C2")], unsupported_originals);
+    session.execute("solvercraft.job.forget", json!({"id":id})).expect("release imported-PSI worker");
+    session.execute("edit.undo", json!({})).expect("worker queries did not add workbook history");
+    for (index, original) in original_inputs.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+}
+
 impl Heartbeat {
     fn start() -> Self {
         let ticks = Rc::new(Cell::new(0_u32));

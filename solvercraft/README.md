@@ -1,6 +1,6 @@
 # Solvercraft
 
-Solvercraft is a workbook-independent Rust optimization, simulation and risk-analysis SDK with a JSON CLI and Gridcraft integration. It is a development alpha. The immutable [96 requirements](docs/masterplan/requirements.csv), [current acceptance review](docs/qa/acceptance-current.md) and [272-function inventory](docs/implementation/reference-implementation.json) describe its scope and remaining gaps. Full Frontline compatibility is not claimed.
+Solvercraft is a workbook-independent Rust optimization, simulation and risk-analysis SDK with a JSON CLI and Gridcraft integration. It is a development alpha. The immutable [96 requirements](docs/masterplan/requirements.csv), [current acceptance review](docs/qa/acceptance-current.md) and [272-function inventory](docs/implementation/reference-implementation.json) describe its scope and remaining gaps. All 96 original criteria have bounded final6 acceptance; this is not a product-completeness percentage or full Frontline/272-PSI compatibility.
 
 ## Implemented capabilities
 
@@ -40,10 +40,14 @@ Original worksheet evaluation, document identity/revision, domains, protection a
 
 ## Verification
 
-The [verification guide](docs/implementation/verification.md) links source-bound native, actual Chrome/WASM, production WebWorker, egui input, numerical oracle and release performance evidence. Full Gridcraft CI passed all ten stages on a recorded frozen snapshot; later changes require another frozen run. Original reports such as the 265-test review are historical evidence, not current counts.
+The [final6 verification](docs/implementation/verification-final6.md) and [current acceptance](docs/qa/acceptance-current.md) link source-bound evidence: host CI all ten stages (2873 passed, one existing ignored), SDK 630, actual Chrome SDK 13, native UI 6 and chart module 8 numerical+1 lifecycle. The worker report retains initial 7/1 at an extra heartbeat guard and exactly one identical repeat 8/0; its aggregate all-attempts result is false, with the first cause unproven. The nineteen-signature PSI case passed in both. Original R023 asks for 250 ms normal-model status access, not a 25 ms product guarantee. Final5 and other earlier reports remain historical.
+
+The [scope audit](docs/qa/original-scope-audit.md) distinguishes 111 positively tested mathematical capabilities from the nineteen supported PSI conversion forms and the wider 272-function inventory. Unsupported nesting/properties remain preserved, and the SC nominal outside-value conversion is explicitly lossy.
+
+Published final6 diagnostics are [fixed-field projections and strict test-result excerpts](docs/implementation/public-evidence.md), not complete local stdout/environment/driver dumps or feature trees. Full originals remain private; the [scope audit](docs/qa/original-scope-audit.md) preserves the 111+19 evidence locations. The current binary-oracle projection includes the corrected request metadata after a three-case/one-control recheck on the same binary; historical v1 remains unchanged.
 
 The [reference freeze](docs/implementation/reference-freeze.md) records official versions, hashes and documentation conflicts. The [function matrix](docs/implementation/reference-implementation.json) separates tested subsets from remaining functions/parameters. Unsupported functions do not count as implemented.
 
-Sampling records solvercraft-addressed-mix64-v2; randomized Sobol records its own version and licensed direction table. Preserve engine/sampler versions, inputs, seeds and tolerances. Integer domains at absolute values of 2^53 or above are rejected because adjacent integers are not representable in binary64.
+Sampling records solvercraft-addressed-mix64-v2; randomized Sobol records its own version and licensed direction table. Preserve engine/sampler versions, inputs, seeds and tolerances. Integer domains at absolute values of 2^53 or above are rejected because adjacent integers are not representable in binary 64.
 
 Project license: MIT OR Apache-2.0. Dependency and numerical-data notices accompany the implementation. No proprietary Frontline implementation or vendor artwork is included.

@@ -1,0 +1,78 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+running 6 tests
+test ribbon_opens_the_real_pane_after_solver ... ok
+test pane_command_honors_visibility_and_german_controls ... ok
+test pane_preview_requires_apply_and_reverts_in_one_undo_step ... ok
+test workbook_edit_disables_apply_for_a_stale_preview ... ok
+test pane_keyboard_focus_and_preview_shortcut_work_in_both_themes_and_languages ... ok
+test simulation_chart_choices_and_parameter_tornado_use_completed_preview_data ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+

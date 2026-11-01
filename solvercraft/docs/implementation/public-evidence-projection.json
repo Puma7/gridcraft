@@ -1,0 +1,252 @@
+{
+  "schema": "solvercraft.public-evidence-projection-audit.v1",
+  "candidate": "final6",
+  "reason": "Minimize public diagnostic disclosure after automatic review rejected the large dump. This is a materially different fixed-field export, not a different transport of rejected diagnostics.",
+  "omitted": [
+    "all local filesystem paths",
+    "environment",
+    "command lines",
+    "driver/session/capability dumps",
+    "arbitrary stdout/stderr",
+    "full model/request/manifests",
+    "repeated full source maps"
+  ],
+  "records": [
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/host/report.json",
+      "before_bytes": 389404,
+      "public_bytes": 2083,
+      "full_local_report_sha256": "e9972221b82002409660622955d1fa3d80782b2a478fc1f00c6962e346d28c37",
+      "public_sha256": "8cabb86fd514ce2a8bd8c67a2754867a6467d816457e22a09eacc71d8d905d7f"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/host/summary.json",
+      "before_bytes": 2686,
+      "public_bytes": 1467,
+      "full_local_report_sha256": "61e0d59b50efe741bf8a6c2ab3a14b2c9ddec579a4b117bc4130a4733a340d18",
+      "public_sha256": "2449e5685b48f08e65aa600fde3ce9e0b1f7d06aafafa19d298c650e91d6b87c"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/sdk/report.json",
+      "before_bytes": 389359,
+      "public_bytes": 1866,
+      "full_local_report_sha256": "84f33ae877ff4d37ca45c95f72d4bd60abb2c0fb2075aa822ca50931562120a9",
+      "public_sha256": "e67134eb078eb62761f30621ca90cec0c576ef6e8fe1b21818336c77f1a578b1"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/sdk/summary.json",
+      "before_bytes": 2233,
+      "public_bytes": 1248,
+      "full_local_report_sha256": "f7dc08a0c38e477556208b38d1e2e88a403a1664df2a2796ce8f22c745e70193",
+      "public_sha256": "970cca4d1c20e1aa3723826d0fa05242ff06667d2d0b03ee21c724120c4b8b61"
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-final6-report.json",
+      "before_bytes": 21489,
+      "public_bytes": 2433,
+      "full_local_report_sha256": "e4747c7f09bef9b2a1055136911252183ff648055683e7019ca3e513b9b987ef",
+      "public_sha256": "58ad0f2fecd4ffb4090fb50002bed5d83ceba470e2cc3c042daccda65e7f19b9"
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-final6-initial-report.json",
+      "before_bytes": 28098,
+      "public_bytes": 2782,
+      "full_local_report_sha256": "a7c855a7aaee0bf4e9a5357be4324affcd32de6b8920744460453d43579223a9",
+      "public_sha256": "b1068671165d4cecbdd1e5c5e2c4e4eef92f23411f6257c11543b6d8ea961eba"
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-final6-rerun-report.json",
+      "before_bytes": 22663,
+      "public_bytes": 3194,
+      "full_local_report_sha256": "47eeafa9d37fe1ac520c39c64a7c42d0c9f702b3eeb63c7accfdd52d0ea00f46",
+      "public_sha256": "a92c0f1195a4b4b3038ede1fe56335950f7cbf1d6256e96a073c029d3cda41f6"
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-final6-report.json",
+      "before_bytes": 3115,
+      "public_bytes": 3197,
+      "full_local_report_sha256": "901bfc7e4d005538730f3cbd1630ba19ebd6823cbc80199d2d7e162b20b7ad57",
+      "public_sha256": "ae3286cd9d588f84200bde55298d10407418c4fb2d026ef8c2843dee33b95ed3"
+    },
+    {
+      "path": "solvercraft/docs/implementation/linear-oracle-final6-report.json",
+      "before_bytes": 4558,
+      "public_bytes": 6017,
+      "full_local_report_sha256": "58e3a56a7ef451515a427e53242131519a4296d17124a182138202a921165d13",
+      "public_sha256": "8088ec08447b71fd154e7b3f395877b45fc20782304fa4c5811686e6acd1553b"
+    },
+    {
+      "path": "solvercraft/docs/implementation/quadratic-oracle-final6-report.json",
+      "before_bytes": 101683,
+      "public_bytes": 23642,
+      "full_local_report_sha256": "9f8526ec84e458d7da5286327158ac37ef2020255b01416241acac2c7abbffd4",
+      "public_sha256": "e94706c29fc2eeff08eb4f0f4c3d9ac21c52d51feca7776f297232b3b655e4b5"
+    },
+    {
+      "path": "solvercraft/docs/implementation/robust-oracle-final6-report.json",
+      "before_bytes": 48207,
+      "public_bytes": 10946,
+      "full_local_report_sha256": "758fea04feff1b0b3a7a9746beaf96ee8d892b599acf39b4c8ac2c66e76ba779",
+      "public_sha256": "faac9d0d433d45cef8fcc5db4e11afccda18ddee650e3e2cbff3a48b20b83e69"
+    },
+    {
+      "path": "solvercraft/docs/implementation/exact-binary-oracle-final6-report.json",
+      "before_bytes": 12672,
+      "public_bytes": 9202,
+      "full_local_report_sha256": "60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa",
+      "public_sha256": "061a7eae31fb57b132ed10eabb85e0ada69b5d163776faa01b30dcea982b39de"
+    },
+    {
+      "path": "solvercraft/docs/implementation/performance-final6-report.json",
+      "before_bytes": 2750285,
+      "public_bytes": 9778,
+      "full_local_report_sha256": "226ac27ee8ea334c7f7f241888813fb537948b9c15ecc23be69fa2784a93efe7",
+      "public_sha256": "950f22b08dbbbf69dd5b40e7aa28dc1884e750777edc79e77e0f8c6b70da62a8"
+    },
+    {
+      "path": "solvercraft/docs/implementation/trunk-final6-build-report.json",
+      "before_bytes": 95281,
+      "public_bytes": 2018,
+      "full_local_report_sha256": "d624b9f2a24298445510d776a1127a58d01bad4efda569f2b5bb7577715a7ce2",
+      "public_sha256": "93455e2afed19974e41ed1e9db36f8a98484430bd6abd73838677884acf05cd7"
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-final6-build-report.json",
+      "before_bytes": 94491,
+      "public_bytes": 1500,
+      "full_local_report_sha256": "ea557b0c59edf96e43373fd4c5a0d6de379ed19c65fe6013f3229711489e2b35",
+      "public_sha256": "e768ba4ac3194244bf6cbf55b31b2e3ba8d8c41ba33c48188c6f9e7d5b2047bb"
+    },
+    {
+      "path": "solvercraft/docs/implementation/release-final6-build-report.json",
+      "before_bytes": 387769,
+      "public_bytes": 1437,
+      "full_local_report_sha256": "ff9249d4e9ad413dc4a86e53081bb96e82bf954501ceda018f7d674d956f8c2c",
+      "public_sha256": "64270fb416b3a1a948a6a487157293725030c84d29e57e06a13b7e0cbcedfa9e"
+    },
+    {
+      "path": "solvercraft/docs/implementation/frozen-final6-source-report.json",
+      "before_bytes": 126010,
+      "public_bytes": 1367,
+      "full_local_report_sha256": "51f989a62c650b498238cabe77a591a19cb4e6f0abe831783ae2296ec5361cff",
+      "public_sha256": "a65dd12364e6a3c2aa9926aec9bb213932de52642b9f38004f157cb9ebea6aa7"
+    },
+    {
+      "path": "solvercraft/docs/implementation/final6-source-delta-report.json",
+      "before_bytes": 1575,
+      "public_bytes": 2707,
+      "full_local_report_sha256": "edb1954b0e806541a1490111cf3c5189915f3036db9a55c576d149512c08954d",
+      "public_sha256": "d786d1dab9600d487f098db99843e7edbde3063e55f39453c41d097dae60ec3c"
+    },
+    {
+      "path": "solvercraft/docs/implementation/dependency-final6-inventory.json",
+      "before_bytes": 59679,
+      "public_bytes": 7174,
+      "full_local_report_sha256": "13e1ea8e2a30e503e35182fd38c34f83c387ac501520d197ac2ea9d81cff55b1",
+      "public_sha256": "fb5a6eaeccfa968e4f6ea27ab8387b1cc05a8f5d78b8cebebcbb2b94773445d8"
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-final6-dependency-inventory.json",
+      "before_bytes": 153805,
+      "public_bytes": 16079,
+      "full_local_report_sha256": "a15f876b819ce8972ae7aa5d4a7da09053d39ca44eac4a96c6a58ec4f7792c12",
+      "public_sha256": "909d034ee24370c338650d698f41078ac1c01bb0a4981338cced35bb31736fbb"
+    },
+    {
+      "path": "solvercraft/docs/implementation/native-ui-controls-final6-report.json",
+      "before_bytes": 2100,
+      "public_bytes": 1328,
+      "full_local_report_sha256": "6600b245e5772e8f71344fcafd07178f0b829fdb26cd31ed7533d7f29234448c",
+      "public_sha256": "02a3bea53f896b75254d47d958d13cfceecb1c249817af944f1a7fed83fd319b"
+    },
+    {
+      "path": "solvercraft/docs/implementation/final6-verification-summary.json",
+      "before_bytes": 8108,
+      "public_bytes": 8060,
+      "full_local_report_sha256": "411d1fe3b6c146ddea179b074b2ad5efab7906dab80df7847e146723b1dd72c3",
+      "public_sha256": "99baa7fbbbe487b24706213929f9e514bf7f10324f1836482e4da4a8a1f81226"
+    },
+    {
+      "path": "solvercraft/docs/implementation/final-verification-summary.json",
+      "before_bytes": 8214,
+      "public_bytes": 8351,
+      "full_local_report_sha256": "64456d102992ba827fd19e888f19418cbfbe18da1fc1f2a6730991646b209217",
+      "public_sha256": "80e858c0b035c221ac35bf5ac99927a875048f86a984248a429135a162a8d3e4"
+    }
+  ],
+  "test_logs": [
+    {
+      "path": "solvercraft/docs/implementation/dependency-final6-inventory.features.txt",
+      "public_test_lines": 0,
+      "lines": 244,
+      "full_local_report_sha256": "e0a7db59ca0d64c4f5abef2b6d26508d433f44c4ea95d4f124fe390dd5b59e48",
+      "public_sha256": "db94a54779c4ebb9654ea4f61cede0410c2afdd27f76c7636495974b6cc07103"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/host/host-charts.txt",
+      "public_test_lines": 9,
+      "lines": 77,
+      "full_local_report_sha256": "a79376f57e5bb624eabe0e8f958b7d1ec4b758b0c05e6cdd1fb28df79993c557",
+      "public_sha256": "d8c81046eb320305dd2f0cdf3d0cfad8f92ea3d548177a442c5b88825ddca6ff"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/host/host-ci.txt",
+      "public_test_lines": 110,
+      "lines": 4591,
+      "full_local_report_sha256": "59d5a7a7730751bca8064d671e6a8e169577564e63bbbfa744160c844f1723f3",
+      "public_sha256": "65b3376b2b69b40f25fdb40d92d5f892ed48181fe8e2db150f20ac1b017cb41c"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/host/host-ui.txt",
+      "public_test_lines": 6,
+      "lines": 78,
+      "full_local_report_sha256": "bb7182a09278a8805f23b1dfd8146e806606ce0e76206ad431257133ed1807d6",
+      "public_sha256": "4da3af42d9036f5dea96f30448023a76c47e7d208edf8e739d22822cc6067943"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/sdk/sdk-clippy.txt",
+      "public_test_lines": 0,
+      "lines": 226,
+      "full_local_report_sha256": "183f009a7a1b94ded1e951a2734c22fbacd3a188f42cd5c44e5d68c0b9cc3e5f",
+      "public_sha256": "4239cde4c113cfe42f9fc967a62311c5b73b508f194732f47f45753014b6efe9"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/sdk/sdk-fmt.txt",
+      "public_test_lines": 0,
+      "lines": 0,
+      "full_local_report_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final6/sdk/sdk-tests.txt",
+      "public_test_lines": 630,
+      "lines": 1300,
+      "full_local_report_sha256": "26d18ff73700b58db1dd260e61ba31bb645711a06474fdd1381efc91523d59cf",
+      "public_sha256": "dec9422d0180c8e3960e97e8df072584c7cad0291f0e783f3ad6f197ecb1158b"
+    },
+    {
+      "path": "solvercraft/docs/implementation/release-final6-build.txt",
+      "public_test_lines": 0,
+      "lines": 1,
+      "full_local_report_sha256": "f97b9c509b12ce2bad693d654ac0156fc1ccdae57f4edbcb31319e37ecdd6417",
+      "public_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "solvercraft/docs/implementation/trunk-final6-build.txt",
+      "public_test_lines": 0,
+      "lines": 145,
+      "full_local_report_sha256": "6c804108992b34374004145ec1c4be98d2918fcfaa413bb799761b5d97012b9c",
+      "public_sha256": "0275758f7f20d0adb83e5fc20e55ebac68b28cabd4b4bb70a9ddcb43b727c98f"
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-final6-dependency-inventory.features.txt",
+      "public_test_lines": 0,
+      "lines": 680,
+      "full_local_report_sha256": "52c22d81f76250eee7f984e44482407448a8f1207e838a6b3da9b6e9cce006da",
+      "public_sha256": "8e7a53243d35ff51a0067a7603534f6ae3842a3234c36c8ac4ad4190d17028a4"
+    }
+  ],
+  "source_inputs_unchanged": 791,
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "worker_initial_failure_preserved": true
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/trunk-final6-build-report.json",
+  "full_local_report_sha256": "d624b9f2a24298445510d776a1127a58d01bad4efda569f2b5bb7577715a7ce2",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "results": {
+    "source_digest_sha256": "a56028e983425cb601ae449495630cdab6574d6d9b97a148869310cb4c650dc6",
+    "exit_code": 0,
+    "elapsed_seconds": 160.5283862000215,
+    "source_changed_during_build": false,
+    "accepted": true
+  },
+  "accepted": true,
+  "artifact_hashes": [
+    "1351a1216ad3c660a4ea899ec9ca71c7b22f0c816930ff668f7358024365debf",
+    "209f218e2c01516ef4e59b97ab73b879ff2180c73f4187fa152b15532e8eecae",
+    "22a98f9d0c5a0532d291bdc9a3050439420b3d11143b4568fcfd3c66fff36995",
+    "4930cb67ca96d8de5055e8d078b953f546ab5ee321cc1b357344f60f31e16979",
+    "5fbf473311c1b413dd7ff0c5a728ae506a79cf6480fb12adacd21ef34f2e89c6",
+    "9699b7df7c2121ae8bd66dac7df1f994da1f58663ac5ba60cdfa172c4c9a1016",
+    "a5f606767f1b9930073cb24371fdc359ede70c422904cdf90fc7644c2e72574d",
+    "d004d2d64d7da6fc5d7ee452a9e6f10879e43c9a4f68fff1ed3a01441995da2a",
+    "f5693fcf3f71695d5ab332d24377c80e0315f952c24ae1eb3b4203bad9ea7f07"
+  ]
+}

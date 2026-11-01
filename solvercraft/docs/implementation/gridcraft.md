@@ -291,3 +291,39 @@ production quota and the SDK's separate saturation test are unchanged. The
 engine all-target Clippy -Dwarnings check passed in54.31s after this fixture fix.
 Use task-local TEMP/TMP under $WORKSPACE_ROOT/solvercraft-temp/grid-host-tests;
 the sandbox's default package temp is outside the task's writable roots.
+
+## Selected PSI import contract (R081 follow-up)
+
+The converter advertises 19 selected top-level numeric signatures. Its default
+`outside_policy: "solvercraft_nominal"` deliberately converts their outside-run
+values to the existing SC analytic-nominal policy. Responses and each proposed
+change explicitly report that vendor display context is not preserved. The
+optional `preserve_vendor` policy refuses conversion instead of inventing a
+pre-run/random, selected-trial, sample-mean or base-case context.
+
+Nested PSI expressions and optional PSI property calls are retained as whole
+unsupported formulas. This fixes a false-success path: rewriting a nested
+declaration did not make it discoverable or simulatable. Parentheses around one
+top-level declaration are supported. Extra vendor arguments never become the
+SC-only optional numeric nominal override. Explicitly wrong `range`/`apply`
+types fail before scanning or editing; missing fields keep the existing defaults.
+
+Each selected signature has a separate native import-to-Calc-to-discovery-to-
+simulation test with an independent CDF anchor and asymmetric parameter checks.
+Gamma shape/scale, Normal sigma, LogNorm2 log-standard-deviation and negative-
+binomial success-probability checks are independent of mean-only assertions.
+Retained trial rows exercise the actual worksheet evaluator and full-width seed,
+and preview/apply rejection leaves the live workbook unchanged. Negative groups
+cover unsupported nesting/properties, required blanks, arity, parameter errors,
+domains, strict preservation, atomic mixed imports/undo, and rejected selection/
+apply types including revision and undo/redo invariance. These are bounded tests
+of the advertised subset; they do not assert all PSI functions or vendor display
+lifecycle parity. The independent final6 browser run is a separate acceptance
+gate and must not be inferred from these native tests.
+
+The follow-up passed all 704 engine library tests at default parallelism in
+11.29 seconds (including 25 new import contract tests), followed by engine
+all-target Clippy with `-D warnings` in 10.68 seconds under Rust 1.95. The
+separate Calc-owner suite passed its 21 selected-signature/nominal tests and
+all-target Clippy. Final6 full-host and eight-body real-browser-worker results
+are recorded separately by independent validation after this source freeze.

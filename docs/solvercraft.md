@@ -1,6 +1,6 @@
 # Solvercraft integration
 
-Last updated: 2026-10-31. Status: development alpha; evidence is scoped to named checks.
+Last updated: 2026-11-01. Status: development alpha; evidence is scoped to named checks.
 
 Solvercraft adds optimization and simulation beside the existing Solver. The ribbon button opens a right task pane; programmatic engine, CLI and MCP calls execute commands without dialogs. The [independent Rust SDK](../solvercraft/README.md) owns mathematics and portable models. The host owns workbook bindings, exact spreadsheet simulation semantics, saved models and transactional application.
 
@@ -10,12 +10,19 @@ Saved models use the owned OPC part `xl/solvercraft/models.json`, its content ty
 
 Simulation uses a bounded topological cell IR over immutable sampled inputs, evaluated with Gridcraft's actual value evaluator. It preserves SUM grouping and IEEE order, SUMPRODUCT, reference/text/boolean/blank coercion, errors, scoped/relative names and frozen NOW/TODAY. This differs deliberately from optimization's structural mathematical compiler, which remains protected by original-Calc candidate checks. Dynamic references, spills, legacy array cells and functions outside the declared subset are refused; cached values never stand in for unsupported formulas.
 
-The worksheet adapter supports17 SC distribution families plus verified numeric Psi shims. Unsupported properties and ambiguous reference domains remain explicit. Parameter comparisons, histogram/step CDF/scatter/box/quantile-band/tornado displays and checked LP answer/basis sensitivity reports use actual results. Every ordinary solve/simulation preview carries a bounded diagnostic manifest with effective options, lossless seed, SDK/host/platform versions, frozen document/revision/time, actual engine/sampler identity and bindings. Effective simulation requests are retained for reruns. Fingerprints and caller labels are not build attestations.
+The worksheet adapter supports 17 SC distribution families plus verified numeric Psi shims. Unsupported properties and ambiguous reference domains remain explicit. Parameter comparisons, histogram/step CDF/scatter/box/quantile-band/tornado displays and checked LP answer/basis sensitivity reports use actual results. Every ordinary solve/simulation preview carries a bounded diagnostic manifest with effective options, lossless seed, SDK/host/platform versions, frozen document/revision/time, actual engine/sampler identity and bindings. Effective simulation requests are retained for reruns. Fingerprints and caller labels are not build attestations.
 
-See [host implementation and test evidence](../solvercraft/docs/implementation/gridcraft.md), [browser transport measurements](../solvercraft/docs/implementation/browser-worker-native-transport-report.json) and [current acceptance review](../solvercraft/docs/qa/acceptance-current.md). Native host regression tests, actual egui input/render tests, WASM compilation and actual generated-worker Chrome tests are distinct evidence. The final rebuilt-worker/UI/full-CI checkpoint is recorded there; compile success alone is never browser execution or complete Excel/Frontline parity.
+See [host implementation and test evidence](../solvercraft/docs/implementation/gridcraft.md), [browser transport measurements](../solvercraft/docs/implementation/browser-worker-final6-report.json) and [current acceptance review](../solvercraft/docs/qa/acceptance-current.md). Native host regression tests, actual egui input/render tests, WASM compilation and actual generated-worker Chrome tests are distinct evidence. The final rebuilt-worker/UI/full-CI checkpoint is recorded there; compile success alone is never browser execution or complete Excel/Frontline parity.
+
+Current [final6 evidence](../solvercraft/docs/implementation/final6-verification-summary.json) supports bounded acceptance of the original 96 criteria. R046 is the 111-entry mathematical catalog; R081 is the nineteen advertised top-level import forms and explicit conversion policies. Full 272-PSI/Frontline compatibility remains unclaimed. The [scope audit](../solvercraft/docs/qa/original-scope-audit.md) records the original wording and per-function test evidence.
+
+Both worker attempts remain visible: initial 7/1 at an additional 26 ms heartbeat observation, then one identical repeat 8/0. The cause of the initial timing failure is unproven; R081 passed in both. This is not a 25 ms product timing guarantee. The default PSI outside-value conversion is explicitly lossy and unsupported nested/property forms are preserved rather than applied.
+
+Public final6 evidence is available as [compact fixed-field reports and strict test-result excerpts](../solvercraft/docs/implementation/public-evidence.md). Full local diagnostic originals stay private; line positions for the scoped test references remain stable. The current exact-binary oracle projection corrects v1 request-record aliasing after three cases plus one node-limit control were rechecked on the unchanged binary. See the [current scope audit](../solvercraft/docs/qa/original-scope-audit.md) and verification guide for the evidence boundary.
 
 ## Revision history
 
 | Date | Change | Summary |
 |---|---|---|
 | 2026-10-31 | minor | Replace obsolete modal/synchronous scope with async task pane, owned XLSX models, ordered Calc simulation and bounded manifests/evidence |
+| 2026-11-01 | documentation | Link final6 original-criterion acceptance and both worker attempts; retain explicit selected PSI conversion limits |

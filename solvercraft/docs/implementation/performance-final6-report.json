@@ -1,0 +1,259 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/performance-final6-report.json",
+  "full_local_report_sha256": "226ac27ee8ea334c7f7f241888813fb537948b9c15ecc23be69fa2784a93efe7",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "hardware": {
+    "logical_cpus": 24,
+    "physical_cpus": 16,
+    "ram_bytes": 68442624000,
+    "architecture": "x86_64"
+  },
+  "platform": "Windows11",
+  "seed_decimal": "42",
+  "measurement_scope": "Five fresh release processes per workload; startup/JSON/calculation included, no warmup discarded. Shared host, owned builds finished; no speedup comparison.",
+  "cases": [
+    {
+      "name": "continuous_lp_100_variables_500_rows",
+      "median_wall_seconds": 0.1808090999838896,
+      "max_os_peak_working_set_bytes": 11677696,
+      "measurements": [
+        {
+          "wall_seconds": 0.18517720000818372,
+          "peak_sampled_rss_bytes": 11653120,
+          "os_peak_working_set_bytes": 11665408,
+          "request_sha256": "c5ae3c9c7929c3deb33ce11500a868e90fe75643f10ef02c5d01d4342bb29f83",
+          "objective_error": 0.0,
+          "original_max_violation": 0.0,
+          "engine": "solvercraft-dense-simplex-0.1",
+          "statistics": {
+            "evaluations": 1,
+            "iterations": 51,
+            "nodes": 0
+          },
+          "effective_options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          }
+        },
+        {
+          "wall_seconds": 0.1877165000187233,
+          "peak_sampled_rss_bytes": 11665408,
+          "os_peak_working_set_bytes": 11677696,
+          "request_sha256": "c5ae3c9c7929c3deb33ce11500a868e90fe75643f10ef02c5d01d4342bb29f83",
+          "objective_error": 0.0,
+          "original_max_violation": 0.0,
+          "engine": "solvercraft-dense-simplex-0.1",
+          "statistics": {
+            "evaluations": 1,
+            "iterations": 51,
+            "nodes": 0
+          },
+          "effective_options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          }
+        },
+        {
+          "wall_seconds": 0.1808090999838896,
+          "peak_sampled_rss_bytes": 11665408,
+          "os_peak_working_set_bytes": 11677696,
+          "request_sha256": "c5ae3c9c7929c3deb33ce11500a868e90fe75643f10ef02c5d01d4342bb29f83",
+          "objective_error": 0.0,
+          "original_max_violation": 0.0,
+          "engine": "solvercraft-dense-simplex-0.1",
+          "statistics": {
+            "evaluations": 1,
+            "iterations": 51,
+            "nodes": 0
+          },
+          "effective_options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          }
+        },
+        {
+          "wall_seconds": 0.18004750000545755,
+          "peak_sampled_rss_bytes": 11661312,
+          "os_peak_working_set_bytes": 11673600,
+          "request_sha256": "c5ae3c9c7929c3deb33ce11500a868e90fe75643f10ef02c5d01d4342bb29f83",
+          "objective_error": 0.0,
+          "original_max_violation": 0.0,
+          "engine": "solvercraft-dense-simplex-0.1",
+          "statistics": {
+            "evaluations": 1,
+            "iterations": 51,
+            "nodes": 0
+          },
+          "effective_options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          }
+        },
+        {
+          "wall_seconds": 0.17085479997331277,
+          "peak_sampled_rss_bytes": 11661312,
+          "os_peak_working_set_bytes": 11661312,
+          "request_sha256": "c5ae3c9c7929c3deb33ce11500a868e90fe75643f10ef02c5d01d4342bb29f83",
+          "objective_error": 0.0,
+          "original_max_violation": 0.0,
+          "engine": "solvercraft-dense-simplex-0.1",
+          "statistics": {
+            "evaluations": 1,
+            "iterations": 51,
+            "nodes": 0
+          },
+          "effective_options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          }
+        }
+      ]
+    },
+    {
+      "name": "streaming_mc_100000_trials_20_inputs_10_outputs",
+      "median_wall_seconds": 0.5275173999834806,
+      "max_os_peak_working_set_bytes": 6893568,
+      "measurements": [
+        {
+          "wall_seconds": 0.45468770002480596,
+          "peak_sampled_rss_bytes": 6127616,
+          "os_peak_working_set_bytes": 6795264,
+          "request_sha256": "aa23da1441990e131ee5d945f226343540801978c32275005e88a46d2c9af6d6",
+          "max_mean_absolute_error": 0.001469193929023671,
+          "max_variance_absolute_error": 0.001059501190746992,
+          "sampling_version": "solvercraft-addressed-mix64-v2",
+          "effective_options": {
+            "trials": 100000,
+            "seed": "42",
+            "method": "monte_carlo",
+            "retain_samples": false,
+            "max_memory_bytes": 33554432
+          }
+        },
+        {
+          "wall_seconds": 0.5275173999834806,
+          "peak_sampled_rss_bytes": 6893568,
+          "os_peak_working_set_bytes": 6893568,
+          "request_sha256": "aa23da1441990e131ee5d945f226343540801978c32275005e88a46d2c9af6d6",
+          "max_mean_absolute_error": 0.001469193929023671,
+          "max_variance_absolute_error": 0.001059501190746992,
+          "sampling_version": "solvercraft-addressed-mix64-v2",
+          "effective_options": {
+            "trials": 100000,
+            "seed": "42",
+            "method": "monte_carlo",
+            "retain_samples": false,
+            "max_memory_bytes": 33554432
+          }
+        },
+        {
+          "wall_seconds": 0.487189200008288,
+          "peak_sampled_rss_bytes": 6209536,
+          "os_peak_working_set_bytes": 6803456,
+          "request_sha256": "aa23da1441990e131ee5d945f226343540801978c32275005e88a46d2c9af6d6",
+          "max_mean_absolute_error": 0.001469193929023671,
+          "max_variance_absolute_error": 0.001059501190746992,
+          "sampling_version": "solvercraft-addressed-mix64-v2",
+          "effective_options": {
+            "trials": 100000,
+            "seed": "42",
+            "method": "monte_carlo",
+            "retain_samples": false,
+            "max_memory_bytes": 33554432
+          }
+        },
+        {
+          "wall_seconds": 0.5275551000377163,
+          "peak_sampled_rss_bytes": 6225920,
+          "os_peak_working_set_bytes": 6893568,
+          "request_sha256": "aa23da1441990e131ee5d945f226343540801978c32275005e88a46d2c9af6d6",
+          "max_mean_absolute_error": 0.001469193929023671,
+          "max_variance_absolute_error": 0.001059501190746992,
+          "sampling_version": "solvercraft-addressed-mix64-v2",
+          "effective_options": {
+            "trials": 100000,
+            "seed": "42",
+            "method": "monte_carlo",
+            "retain_samples": false,
+            "max_memory_bytes": 33554432
+          }
+        },
+        {
+          "wall_seconds": 0.5666045999969356,
+          "peak_sampled_rss_bytes": 6795264,
+          "os_peak_working_set_bytes": 6795264,
+          "request_sha256": "aa23da1441990e131ee5d945f226343540801978c32275005e88a46d2c9af6d6",
+          "max_mean_absolute_error": 0.001469193929023671,
+          "max_variance_absolute_error": 0.001059501190746992,
+          "sampling_version": "solvercraft-addressed-mix64-v2",
+          "effective_options": {
+            "trials": 100000,
+            "seed": "42",
+            "method": "monte_carlo",
+            "retain_samples": false,
+            "max_memory_bytes": 33554432
+          }
+        }
+      ]
+    }
+  ]
+}

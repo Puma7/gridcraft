@@ -10,7 +10,7 @@ The machine-readable deliverable is [reference-catalog.json](reference-catalog.j
 
 | Reference family | Entries | Pages |
 |---|---:|---|
-| Optimization modeling and result access | 22 | 261-267, 421-423 |
+| Optimization modeling and result access | 22 | 261-267,421-423 |
 | Continuous distributions and alternate formulations | 77 | 270-320 |
 | Discrete analytic distributions | 8 | 321-328 |
 | Custom distributions | 6 | 329-333 |
@@ -61,7 +61,36 @@ The machine-readable errata list retains source locations and affected functions
 
 Each function has a unique planned signature/default test ID, source pages, signature evidence quality, implementation mapping, native/browser evidence and guarantee statement. Related SDK math is recorded separately from PSI worksheet import. A numerically similar family does not prove argument conversion, optional defaults, property order, result selection, or outside-simulation parity. Existing broad math tests are related evidence only; they are not relabeled as 272 individual PSI acceptance tests.
 
-At this freeze, **all 272 full-reference acceptance records remain open**. Executed host tests cover nineteen strict core PSI signatures and ten domain cases through SC.PSI shims, including arithmetic/log parameter conversions and the canonical PERT weight. The catalog records this subset separately from full-reference coverage: properties are unsupported, ambiguous custom-CDF endpoint atoms are rejected, and the deterministic outside value remains an explicit difference. Seven executed SDK constructor tests add independently checked parameter conversions and custom distribution subsets. Eleven Metalog/moment-fit tests cover a globally certified coefficient subset, CDF-OLS, SPT and normal/shifted-lognormal moment subfamilies. Five further Johnson tests exercise bounded genuine SN/SL/SU/SB population inversion against nine independent numeric fixtures and actual returned-moment postchecks. Ten time-series tests cover all nine Gaussian recurrence families, explicit startup/postprocessing, addressed prefixes and SIP replay. These are executable SDK subsets with documented numerical limits; unknown PSI properties/defaults and remaining Metalog/Johnson domains stay explicit. See [Johnson moment inversion](johnson-moments.md) and [time-series simulation](time-series.md). Forty typed reference-parameter tests now cover all28 Alt mathematical cores, native order/location conversions and corrected NormalSkew geometry; the Pearson6/Weibull vendor arities remain explicitly unresolved. Peer multivariate/resampling tests add covariance-vector and sequential SIP/SLURP cores. The executable272-row [implementation matrix](reference-implementation.json) separates111 R046 distribution/time-series functions from R081 host compatibility and retains all source hashes, test commands, platform scope and gaps. [Source-backed questions](reference-open-questions.md) preserve unresolved vendor behavior. Further imports and math additions must update individual entries only after their actual tests run. The inventory deliberately does not mark R046 or complete R081/R091 fulfilled merely because the source is now available.
+The 272 full-vendor acceptance records retain their exact signature/property/
+default limitations rather than being promoted to complete PSI parity. This is
+separate from the original criterion assessment. The final6 [scope audit](../qa/original-scope-audit.md)
+quotes the unchanged CSV, SC-14/SC-23 tasks and masterplan sections 10.1/12:
+R046 asks for individually tested mathematical catalog functions; R081 asks
+for separate verification of each supported signature/default, and SC-23
+explicitly selects signatures. Neither adds a mandatory 272-name import suite.
+
+All 111 frozen mathematical capabilities have individual positive associations
+to executed tests in final6 SDK 630, across 73 selected test bodies/13 source files.
+The two mathematical Pearson 6/Weibull Alt constructions are positively tested
+with explicit identifying claims. Their literal vendor arities/defaults remain
+open [source questions](reference-open-questions.md), not invented compatible
+worksheet calls. Numerical support limits remain in [reference-gaps.md](reference-gaps.md).
+
+The supported converter has nineteen top-level required-argument PSI forms with
+explicitly lossy `solvercraft_nominal` outside values and refusal under
+`preserve_vendor`. Unsupported nesting/properties/extra arguments are preserved
+whole. Final6 evidence contains 25 new native engine contract tests, 21 Calc tests
+and one actual Chrome worker body over nineteen signatures, 2048 trials and
+nineteen outputs. That body passed in both attempts. The initial overall worker
+attempt was 7/1 at an extra 26 ms-versus-below 25 ms heartbeat assertion; one unchanged
+repeat was 8/0. Both remain in the [composite report](browser-worker-final6-report.json),
+with aggregate all-attempts-passed=false and an unproven first-failure cause.
+
+Thus R046 and the selected R081 contract have bounded acceptance under the
+original criteria; full reference/default/property compatibility remains
+explicitly incomplete. The 111 mathematical entries, nineteen imported forms
+and 272 inventory records describe different scopes. SDK math or inventory
+checks are never relabelled as literal PSI or universal browser execution.
 
 `crates/compile/tests/reference_catalog.rs` checks source identity, all 272 unique entries/test IDs, page ranges, retained unsupported families, visible conflicts and open acceptance semantics. These are inventory-integrity tests, not distribution or import parity tests. Actual functional acceptance must exercise each claimed signature and default, an independent numerical oracle where appropriate, and the platform being claimed. A cross-compilation check is not a browser execution test.
 

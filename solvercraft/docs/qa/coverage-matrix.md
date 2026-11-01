@@ -2,6 +2,8 @@
 
 This is the historical 265-test baseline assessment. It is preserved for provenance and is superseded for current implementation decisions by [acceptance-current.md](acceptance-current.md). Statements below about absent features or unexecuted host/browser checks describe that earlier checkpoint, not the later implementation.
 
+Current decisions use the final6 [original-criterion assessment](acceptance-current.md) and [scope audit](original-scope-audit.md). All 96 original criteria have bounded acceptance there, with full-vendor gaps explicit and both worker timing attempts retained. The historical classifications and counts below are unchanged.
+
 Review date: 2026-10-31.
 
 The review started from PR predecessor **690a098a6c4c9d966d66b6c30c036e0e42534bfd**, on Gridcraft base **981fad14e0b90a7906a02f29785a6d0eb214fee6**. The local review tree is a materialized source snapshot without Git metadata. Local QA fixes, added tests and their source hashes are described in [runtime-review.md](runtime-review.md); the integrator must associate the resulting commit with this report.

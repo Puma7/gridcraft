@@ -1,0 +1,71 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/gates-final6/host/report.json",
+  "full_local_report_sha256": "e9972221b82002409660622955d1fa3d80782b2a478fc1f00c6962e346d28c37",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "results": {
+    "passed": 2873,
+    "failed": 0,
+    "ignored": 1,
+    "test_summary_targets": 38,
+    "elapsed_seconds": 547.6406820999691,
+    "accepted": true,
+    "ci_stages": [
+      "i18n-report",
+      "fmt",
+      "clippy",
+      "test",
+      "doctest",
+      "assets",
+      "layers",
+      "wasm",
+      "parity",
+      "keytips"
+    ]
+  },
+  "gates": [
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 547.6406820999691,
+      "source_changed_during_run": false,
+      "accepted": true,
+      "name": "host-ci"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 85.98636159999296,
+      "source_changed_during_run": false,
+      "accepted": true,
+      "name": "host-ui"
+    },
+    {
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 12.57833060005214,
+      "source_changed_during_run": false,
+      "accepted": true,
+      "name": "host-charts"
+    }
+  ],
+  "source_unchanged_before_after": true
+}

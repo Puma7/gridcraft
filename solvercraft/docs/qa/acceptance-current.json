@@ -1,16 +1,18 @@
 {
   "schema": "solvercraft.acceptance-current.v1",
-  "review_date": "2026-10-31",
-  "assessment_kind": "Final5 source-bound acceptance assessment; bounded executed contracts, not complete Frontline parity or an all-input/all-platform correctness certificate",
+  "review_date": "2026-11-01",
+  "assessment_kind": "Final6 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; all worker attempts retained",
   "original_csv": {
     "path": "docs/masterplan/requirements.csv",
     "sha256": "699e87ae50a62ff5605b0d40dee38f4b2f8b7200a4c92f825d2972a57e24de55",
     "encoding": "UTF-8 BOM",
     "row_count": 96,
-    "original_fields_preserved": true
+    "original_fields_preserved": true,
+    "original_field_comparisons": 768,
+    "original_field_mismatches": 0
   },
   "scope_rule": "Assess the original wording. Explicitly supported mathematical capability restrictions are not universal parity. A partial subset, source-only workflow, planned test ID or old green checkpoint does not close a missing original criterion.",
-  "source_state": "Frozen candidate final5: accepted reports bind 789 matching active/frozen code and compilation-input files. The materialized active checkout has no Git metadata; baseline commit and source digests are evidence identities, not an invented new commit.",
+  "source_state": "Frozen final6: 791 matching code/compilation-input files. Accepted native/SDK source-stable gates and actual Chrome execution are separately recorded; the controlled worker repeat passed after one failed additional timing guard, not an all-attempts-green assertion.",
   "statuses": {
     "accepted_bounded": "Original criterion has executed functional evidence within its explicit supported contract; no claim of all platforms/all inputs/commercial parity.",
     "partial": "An actual portion of the original criterion remains missing or in flight.",
@@ -18,19 +20,21 @@
     "broken_confirmed": "A valid-input executed counterexample remains unresolved; a pending source fix is not accepted before its regression passes."
   },
   "counts": {
-    "accepted_bounded": 94,
-    "partial": 2
+    "accepted_bounded": 96
   },
   "evidence_notes": [
-    "Final5 primary evidence: docs/implementation/final-verification-summary.json and accepted host/SDK gate summaries. The raw/canonical source digests and release binary SHA bind the execution; final4 and earlier checkpoints remain historical.",
-    "Host cargo xtask ci: all10 stages accepted unchanged;2827 passed,0failed,1pre-existing ignored (recalc_with_range_formulas_scales_linearly),722.25s. The ignored test is not counted as passed.",
-    "Nested SDK:630 passed,0failed,0ignored; formatting and all-target Clippy with warnings denied passed. CLI66 and engine89 scoped tests are included/related evidence, not added to630 to fabricate a total.",
-    "Final native UI6 passed. Chart module9 passed, comprising8 renderer-used numerical contracts and1 closed-document retained-result lifecycle case.",
-    "Actual final5 Chrome SDK13 and product worker7 passed, including exact binary objective500 variants. Maximum observed worker active progress gap65ms, window heartbeat22ms,status1ms.",
-    "Final release independent oracles:LP30,QP20,original-space robust20+4tiny signed cases,3 exact binary variants plus1node-limit control all passed on the final release binary.",
-    "Final performance:5 fresh processes for each stated workload, source/binary/hardware/seed/error/RAM/time recorded. Shared host and concurrent native regression processes are explicitly disclosed; no Frontline speed comparison or medium-class result is invented.",
-    "Original TEST-Rxxx IDs and all8 CSV fields remain unchanged historical planning fields. Actual test selectors and per-function missing tests/platform/guarantees remain in the separate reference matrix.",
-    "Scalar SciPy oracle remains its own source-hashed finite grid:150 parameterizations,1349quantile+1361CDF+1361logdensity=4071comparisons,0failures;1 independently warned reference excluded. It is not relabelled as final5 full-function parity."
+    "Final6 primary evidence is docs/implementation/final6-verification-summary.json with explicit report paths, raw/canonical source identities and release binary SHA. Final5 reports remain historical and unchanged.",
+    "Host cargo xtask ci: all 10 stages accepted, 2873 passed, 0 failed, 1 pre-existing ignored (recalc_with_range_formulas_scales_linearly), 547.6406820999691 s. The ignored test is not passed.",
+    "SDK: 630 passed, 0 failed, 0 ignored with formatting/all-target Clippy. Native UI 6; chart module 8 numerical+1 lifecycle. Scoped suites are not added again to fabricate totals.",
+    "Actual Chrome SDK 13 passed. Worker initial attempt 7 passed/1 failed at a 26 ms observation against an additional strictly-below 25 ms heartbeat guard. Exactly one unchanged controlled repeat passed 8/0. Aggregate all-attempts-passed=false; the initial cause is not demonstrated. R081 nineteen-signature body passed in both attempts.",
+    "Worker repeat observed admission 0.81 ms, status 1 ms, active progress gap 57 ms, heartbeat 12 ms. Original R023 normal-model status-access target is 250 ms; no 25 ms product or hard realtime guarantee is added.",
+    "R046: all 111 frozen mathematical capability names have individual positive SDK-test associations in the actual 630-test run; 73 distinct test bodies, 13 sourcefiles. Exact vendor Alt grammar remains separate and open.",
+    "R081: 19 supported top-level numeric calls have individually named native tests plus real-browser execution. There are 25 new engine contract tests and 21 Calc tests; default outside_policy=solvercraft_nominal is explicitly lossy, preserve_vendor refuses, nesting/properties remain unsupported and preserved.",
+    "Final release oracles LP 30, QP 20, robust 20+4 tiny signed cases, 3 exact binary variants and 1 node-limit control passed. Five fresh processes per LP/streaming-MC workload record hardware/seed/RAM/time/error. Same release binary and shared host; the quieter follow-up is not an engine speedup claim.",
+    "All 96 original CSV rows and all 8 fields each are copied directly with UTF-8-sig csv.DictReader and compared exactly. CSV SHA is unchanged. Original planned TEST-Rxxx labels remain historical; no repository encoding defect or repair is claimed.",
+    "Scalar SciPy grid is separate finite evidence: 150 parameterizations, 1349 quantile+1361 CDF+1361 logdensity=4071 comparisons, 0 failures; 1 independently warned reference excluded. It is not universal or vendor-function parity.",
+    "Public final6 diagnostics are fixed-field projections of actual local reports. Public text files are strict test/result/summary excerpts with omitted lines blanked so existing line numbers remain stable. Full original diagnostics stay private; arbitrary stdout/stderr, environment, argv, driver/session dumps, complete feature trees and local NOTICE-hash metadata are not published.",
+    "Binary-oracle provenance correction: v1 reused a mutable request dictionary, so the third case stored wrong request metadata although minimization to -500 was actually executed. Historical final5 v1 is unchanged. The validator reran only the three binary cases plus one node-limit control on the identical 68a6 release binary using deep-copied case snapshots and a separate node request. The current final6 projection records minimize/negative coefficients/-500, default seed 0 (not 42) and max_nodes=1 correctly; its private full-report SHA is 60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa."
   ],
   "evidence_index": {
     "MODEL": [
@@ -87,26 +91,28 @@
       "docs/implementation/host-checkpoint.json",
       "../crates/engine/src/cmd/solvercraft/host_tests.rs",
       "../crates/engine/tests/it/solvercraft_deep_review.rs",
-      "docs/implementation/gates-final/host/summary.json",
-      "docs/implementation/final-verification-summary.json"
+      "docs/implementation/gates-final6/host/summary.json",
+      "docs/implementation/final6-verification-summary.json"
     ],
     "WORKSHEET": [
       "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
       "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
-      "docs/implementation/gridcraft.md"
+      "docs/implementation/gridcraft.md",
+      "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+      "../crates/calc/src/eval/solvercraft/tests.rs"
     ],
     "UI": [
       "../crates/ui-egui/tests/solvercraft_acceptance.rs",
       "../crates/ui-egui/src/solvercraft.rs",
       "../crates/ui-egui/src/solvercraft/report.rs",
-      "docs/implementation/browser-app-solvercraft-pane-report.json",
-      "docs/implementation/native-ui-focus-matrix-report.json",
-      "docs/implementation/native-ui-controls-report.json"
+      "docs/implementation/native-ui-controls-final6-report.json"
     ],
     "WORKER": [
-      "docs/implementation/browser-worker-final-report.json",
-      "docs/implementation/trunk-final-build-report.json",
-      "docs/implementation/worker-browser-final-build-report.json"
+      "docs/implementation/browser-worker-final6-report.json",
+      "docs/implementation/trunk-final6-build-report.json",
+      "docs/implementation/worker-browser-final6-build-report.json",
+      "docs/implementation/browser-worker-final6-initial-report.json",
+      "docs/implementation/browser-worker-final6-rerun-report.json"
     ],
     "API": [
       "crates/solvercraft/tests/api_review.rs",
@@ -131,7 +137,7 @@
     "SOBOL": [
       "crates/math/src/sobol.rs",
       "crates/math/tests/numerical_review.rs",
-      "docs/implementation/browser-smoke-sobol64-report.json"
+      "docs/implementation/browser-smoke-final6-report.json"
     ],
     "FIT": [
       "crates/simulation/tests/numerical_review.rs",
@@ -164,7 +170,8 @@
       "crates/solvercraft/tests/runtime_review.rs",
       "docs/implementation/stochastic.md",
       "docs/qa/ellipsoid-precision.md",
-      "docs/implementation/robust-oracle-fixed-debug-report.json"
+      "docs/implementation/robust-oracle-fixed-debug-report.json",
+      "docs/implementation/robust-oracle-final6-report.json"
     ],
     "RECOURSE": [
       "crates/solvercraft/tests/stochastic.rs",
@@ -175,35 +182,40 @@
       "docs/implementation/reference-catalog.json",
       "docs/implementation/reference-implementation.json",
       "docs/implementation/reference-gaps.md",
-      "tests/e2e/reference_matrix.py"
+      "tests/e2e/reference_matrix.py",
+      "docs/qa/original-scope-audit.md"
     ],
     "DEPS": [
-      "docs/implementation/dependency-inventory.json",
-      "docs/implementation/dependency-inventory.features.txt",
-      "docs/implementation/engines.md"
+      "docs/implementation/dependency-final6-inventory.json",
+      "docs/implementation/engines.md",
+      "licenses/THIRD_PARTY.md",
+      "crates/math/third_party/BOOST_LICENSE_1_0.txt"
     ],
     "BROWSER": [
-      "docs/implementation/browser-smoke-final-report.json",
-      "docs/implementation/browser-worker-final-report.json",
-      "docs/implementation/trunk-final-build-report.json",
-      "docs/implementation/worker-browser-final-build-report.json"
+      "docs/implementation/browser-smoke-final6-report.json",
+      "docs/implementation/browser-worker-final6-report.json",
+      "docs/implementation/trunk-final6-build-report.json",
+      "docs/implementation/worker-browser-final6-build-report.json",
+      "docs/implementation/browser-worker-final6-initial-report.json",
+      "docs/implementation/browser-worker-final6-rerun-report.json"
     ],
     "PERF": [
-      "docs/implementation/performance-final-report.json",
-      "docs/implementation/linear-oracle-final-report.json",
-      "docs/implementation/quadratic-oracle-final-report.json",
-      "docs/implementation/robust-oracle-final-report.json",
-      "docs/implementation/exact-binary-oracle-final-report.json",
-      "docs/implementation/release-final-build-report.json"
+      "docs/implementation/performance-final6-report.json",
+      "docs/implementation/linear-oracle-final6-report.json",
+      "docs/implementation/quadratic-oracle-final6-report.json",
+      "docs/implementation/robust-oracle-final6-report.json",
+      "docs/implementation/exact-binary-oracle-final6-report.json",
+      "docs/implementation/release-final6-build-report.json"
     ],
     "GATES": [
-      "docs/implementation/verification.md",
-      "docs/implementation/final-verification-summary.json",
-      "docs/implementation/gates-final/host/summary.json",
-      "docs/implementation/gates-final/host/report.json",
-      "docs/implementation/gates-final/sdk/summary.json",
-      "docs/implementation/gates-final/sdk/report.json",
-      "docs/implementation/release-final-build-report.json"
+      "docs/implementation/verification-final6.md",
+      "docs/implementation/final6-verification-summary.json",
+      "docs/implementation/gates-final6/host/summary.json",
+      "docs/implementation/gates-final6/host/report.json",
+      "docs/implementation/gates-final6/sdk/summary.json",
+      "docs/implementation/gates-final6/sdk/report.json",
+      "docs/implementation/release-final6-build-report.json",
+      "docs/implementation/public-evidence.md"
     ],
     "MANIFEST": [
       "crates/solvercraft/tests/workflow_review.rs",
@@ -213,7 +225,7 @@
       "crates/solvercraft/src/workflow.rs",
       "docs/implementation/run-manifests.md",
       "docs/implementation/sdk-runtime.md",
-      "docs/implementation/verification.md"
+      "docs/implementation/verification-final6.md"
     ],
     "MIP": [
       "crates/engines/tests/integer_rounding.rs",
@@ -222,12 +234,26 @@
       "docs/implementation/engines.md"
     ],
     "FINAL": [
-      "docs/implementation/final-verification-summary.json",
-      "docs/implementation/gates-final/host/summary.json",
-      "docs/implementation/gates-final/host/report.json",
-      "docs/implementation/gates-final/sdk/summary.json",
-      "docs/implementation/gates-final/sdk/report.json",
-      "docs/implementation/release-final-build-report.json"
+      "docs/implementation/final6-verification-summary.json",
+      "docs/implementation/gates-final6/host/summary.json",
+      "docs/implementation/gates-final6/host/report.json",
+      "docs/implementation/gates-final6/sdk/summary.json",
+      "docs/implementation/gates-final6/sdk/report.json",
+      "docs/implementation/release-final6-build-report.json",
+      "docs/implementation/browser-worker-final6-report.json",
+      "docs/implementation/frozen-final6-source-report.json",
+      "docs/implementation/public-evidence.md"
+    ],
+    "PSI": [
+      "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+      "../crates/calc/src/eval/solvercraft/tests.rs",
+      "tests/worker-browser/tests/worker.rs",
+      "docs/implementation/gridcraft.md",
+      "docs/qa/original-scope-audit.md",
+      "docs/implementation/gates-final6/host/host-ci.txt",
+      "docs/implementation/browser-worker-final6-report.json",
+      "docs/implementation/browser-worker-final6-initial-report.json",
+      "docs/implementation/browser-worker-final6-rerun-report.json"
     ]
   },
   "requirements": [
@@ -253,7 +279,7 @@
         "guarantee": "Target adds equality requiring the original objective to equal the requested value; original units are preserved, and unreachable integer targets are infeasible.",
         "remaining_work": "None within the declared numeric range.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -268,13 +294,13 @@
           "crates/solvercraft/tests/run_manifest.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/solvercraft/tests/workflow_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
-          "docs/implementation/verification.md"
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -300,7 +326,7 @@
         "guarantee": "Invalid domains fail; finite mixed-conic integers stay in exactly distinguishable f64 range.",
         "remaining_work": "None within the supported domain contract.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -338,7 +364,7 @@
         "guarantee": "No JSON Infinity substitute; algorithms requiring finite boxes reject unsupported domains explicitly.",
         "remaining_work": "None within the declared algorithm/domain pairings.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -374,16 +400,18 @@
         "guarantee": "Supported formulas only; cycles, missing sheets and unsupported references fail explicitly.",
         "remaining_work": "None for the tested supported cross-sheet formulas.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -407,11 +435,11 @@
           "HOST",
           "API"
         ],
-        "guarantee": "Workbook quota32; SDK portable-library quota128; IDs/revisions are decimal strings.",
+        "guarantee": "Workbook quota 32; SDK portable-library quota 128; IDs/revisions are decimal strings.",
         "remaining_work": "None within the documented quotas and supported workbook format.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -420,8 +448,8 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -448,16 +476,16 @@
         "guarantee": "Supported expression grammar is explicit; cached samples never prove affinity.",
         "remaining_work": "None for the advertised structural grammar.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/compile/src/tests.rs",
           "crates/compile/tests/deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/qa/compiler-review.md"
@@ -486,7 +514,7 @@
         "guarantee": "Each coefficient multiplies x_i*x_j with no hidden half factor; unrepresentable raw duplicate aggregates are refused.",
         "remaining_work": "None within the supported grammar/numerical range.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -523,7 +551,7 @@
         "guarantee": "Unproved PSD remains unsupported/unknown; sampling is not a convexity proof.",
         "remaining_work": "None under the stated sufficient recognition rules.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -556,7 +584,7 @@
         "guarantee": "No finite probe set is used as a general linearity certificate.",
         "remaining_work": "None for the advertised expression classes.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -587,7 +615,7 @@
         "guarantee": "Smooth supported operators only; nonsmooth/domain branches are explicit.",
         "remaining_work": "None within the declared differentiable grammar.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -620,7 +648,7 @@
         "guarantee": "All probes count toward evaluation budgets; requested derivative mode is honored.",
         "remaining_work": "None within the declared differentiable grammar/range.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -652,7 +680,7 @@
         "guarantee": "Known optimal/infeasible/unbounded controls are distinct; unchecked rays remain Unknown rather than a false proof.",
         "remaining_work": "No unrestricted large-sparse performance claim; this is a scale limit, not a missing truthfulness condition.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -662,12 +690,12 @@
           "crates/engines/tests/exact_bridge.rs",
           "crates/model/README.md",
           "docs/implementation/engines.md",
-          "docs/implementation/exact-binary-oracle-final-report.json",
-          "docs/implementation/linear-oracle-final-report.json",
-          "docs/implementation/performance-final-report.json",
-          "docs/implementation/quadratic-oracle-final-report.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/robust-oracle-final-report.json"
+          "docs/implementation/exact-binary-oracle-final6-report.json",
+          "docs/implementation/linear-oracle-final6-report.json",
+          "docs/implementation/performance-final6-report.json",
+          "docs/implementation/quadratic-oracle-final6-report.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/robust-oracle-final6-report.json"
         ]
       }
     },
@@ -690,10 +718,10 @@
           "CERT",
           "MIP"
         ],
-        "guarantee": "Binary x,y with max 1e12*x+500*y and 1e9*x+y<=1 has exact optimum 500 at [0,1]. The old rounded-zero Optimal certificate is fixed; a material incumbent/relaxation gap keeps the node open even inside integer-distance tolerance.",
+        "guarantee": "Binary x, y with max 1e12*x+500*y and 1e9*x+y<=1 has exact optimum 500 at [0, 1]. The old rounded-zero Optimal certificate is fixed; a material incumbent/relaxation gap keeps the node open even inside integer-distance tolerance.",
         "remaining_work": "Exact min/max, offset 1e16 and one-node controls pass; mixed-conic unresolved leaves retain BestFound/valid bounds instead of fabricated Optimal. No branch-and-cut or unrestricted MIP claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -731,7 +759,7 @@
         "guarantee": "Warm state is revalidated; Clarabel warm starts are not advertised.",
         "remaining_work": "Sparse factor/tableau reuse is unavailable and explicitly unadvertised.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -763,10 +791,10 @@
           "QP",
           "CERT"
         ],
-        "guarantee": "Dense512 cap and sufficient curvature proof; valid original-unit bound required for Optimal.",
+        "guarantee": "Dense 512 cap and sufficient curvature proof; valid original-unit bound required for Optimal.",
         "remaining_work": "No universal PSD recognition or integer-QP claim from this continuous path.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -801,7 +829,7 @@
         "guarantee": "Continuous cone capability is separate from finite integer-conic search.",
         "remaining_work": "No arbitrary unsupported cones or unchecked-ray proof.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -814,6 +842,7 @@
           "crates/solvercraft/tests/runtime_review.rs",
           "crates/solvercraft/tests/saa_risk.rs",
           "docs/implementation/engines.md",
+          "docs/implementation/robust-oracle-final6-report.json",
           "docs/implementation/robust-oracle-fixed-debug-report.json",
           "docs/implementation/stochastic.md",
           "docs/qa/ellipsoid-precision.md"
@@ -841,7 +870,7 @@
         "guarantee": "Feasible/Stationary/stop reason separate; local method, no global or infeasibility proof.",
         "remaining_work": "No general nonsmooth/global NLP guarantee.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -876,8 +905,8 @@
         "guarantee": "No substitution labeled GRG; analytic QP progress no longer falsely says simplex.",
         "remaining_work": "None for current Solvercraft method labels.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -888,8 +917,8 @@
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/nonlinear_workflows.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/nonlinear.md"
@@ -917,7 +946,7 @@
         "guarantee": "Best feasible point found only; no infeasibility/global-optimality certificate.",
         "remaining_work": "No unrestricted finite-free-domain heuristic claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -926,8 +955,8 @@
           "crates/solvercraft/src/heuristic_tests.rs",
           "crates/solvercraft/src/multistart.rs",
           "crates/solvercraft/tests/nonlinear_workflows.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -954,7 +983,7 @@
         "guarantee": "Multiple starts require finite boxes; no global guarantee.",
         "remaining_work": "None within its bounded local-search contract.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -987,7 +1016,7 @@
         "guarantee": "Source compatibility and actual browser verification are distinct flags; unsupported selections fail.",
         "remaining_work": "Browser evidence applies to listed tested paths, not every engine/model.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -995,10 +1024,12 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/browser-smoke-final-report.json",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/browser-smoke-final6-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1020,22 +1051,24 @@
           "HOST",
           "WORKER"
         ],
-        "guarantee": "Native40+13 gate includes a deterministic threaded-barrier active-sheet race and nested parameter-job controls. No automatic apply or UI dialog.",
-        "remaining_work": "Final5 source-bound browser/full-CI evidence is accepted; arbitrary caller code is not preemptible.",
+        "guarantee": "Admission returns job ID/revision and pins the original sheet/snapshot. Final6 real-browser repeat measured 0.81 ms admission; native threaded-barrier/parameter-job controls pass. No automatic apply or UI dialog.",
+        "remaining_work": "Bounded supported native/browser jobs; arbitrary caller code is not preemptible.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1052,27 +1085,29 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Final5 actual product worker reports progress while window timers/status remain responsive",
+        "implementation": "Actual final6 product-worker progress and nonblocking status/admission, with both timing attempts retained",
         "evidence_keys": [
           "WORKER",
           "HOST"
         ],
-        "guarantee": "Observed maximum active progress gap 65 ms, window heartbeat 22 ms and status query 1 ms in the final product-worker run; the ordinary-case 250 ms target is met by measured evidence.",
-        "remaining_work": "Observed bounded Windows/Chrome workload, not a hard realtime or arbitrary-callback guarantee.",
+        "guarantee": "Unchanged controlled repeat observed maximum active progress gap 57 ms, status query 1 ms, admission 0.81 ms and heartbeat 12 ms. This meets the original normal-model 250 ms status-access target in the measured case.",
+        "remaining_work": "Initial attempt failed an additional strictly-below 25 ms heartbeat guard at 26 ms; cause unproven and aggregate_all_attempts_passed=false. First-attempt full progress/status maxima are unavailable. No 25 ms product, hard realtime or arbitrary-callback guarantee.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1098,8 +1133,8 @@
         "guarantee": "Partial incumbent only when verified/received; hard worker termination has Unknown feasibility if none received.",
         "remaining_work": "No hard realtime guarantee for uncooperative native callbacks/factorization.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "crates/cli/tests/api_review.rs",
@@ -1108,10 +1143,12 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/browser-worker-final-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/engines.md",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1137,8 +1174,8 @@
         "guarantee": "Preview never writes automatically; stale/foreign results cannot apply.",
         "remaining_work": "None for tested supported cell writes.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1146,16 +1183,16 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1181,8 +1218,8 @@
         "guarantee": "Invalid apply is refused atomically before live writes.",
         "remaining_work": "None for the documented host conflict guards.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1190,16 +1227,16 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -1225,8 +1262,8 @@
         "guarantee": "Executed native regression accepts valid rounded values and rejects original-row violations after rounding.",
         "remaining_work": "No feasible label is permitted from an unchecked repaired vector; only declared model classes/numeric ranges are accepted.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1238,8 +1275,8 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1267,7 +1304,7 @@
         "guarantee": "Cancelled/TimeLimit/Unknown/BestFound/Stationary are not conflated.",
         "remaining_work": "None in the tested result contracts.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -1307,7 +1344,7 @@
         "guarantee": "Exact constant-free comparison prevents a large additive objective offset from hiding the 500-unit binary improvement. A one-node stop retains incumbent 0 and an open bound/nonzero gap; the conic probe can retain BestFound at 500 with bound 500.0000009476 and one unresolved leaf.",
         "remaining_work": "The specific conic numeric bound is one executed probe, not a promised exact iteration result. Unknown/unresolved leaves prevent Optimal; no global bound from local/heuristic paths.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -1346,16 +1383,14 @@
         "guarantee": "Executed real egui input test and actual Trunk screenshot.",
         "remaining_work": "None for the tested ribbon layout.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
     },
@@ -1380,8 +1415,8 @@
         "guarantee": "Actual user interaction tested; supported fields/classes only.",
         "remaining_work": "Advanced SDK risk/decision modules are not implied to have complete custom workbook dialogs.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1389,13 +1424,11 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
     },
@@ -1419,16 +1452,14 @@
         "guarantee": "Principal accessible names and actual dark German browser pane; input changes only draft until explicit apply.",
         "remaining_work": "No complete screen-reader or arbitrary-platform conformance certification is inferred from the executed matrix.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
     },
@@ -1452,7 +1483,7 @@
         "guarantee": "Real processes test unknown/empty/invalid requests; no automatic result apply.",
         "remaining_work": "No unimplemented MCP service is inferred from the CLI.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -1484,8 +1515,8 @@
         "guarantee": "Requires matching workbook revision; no invented duals in plain solve results.",
         "remaining_work": "None for the supported answer-report fields.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1493,13 +1524,11 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
     },
@@ -1525,8 +1554,8 @@
         "guarantee": "Only actual validated data; unavailable reports are explicit errors/absent fields.",
         "remaining_work": "No complete sparse-simplex dual/basis suite is advertised.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1536,8 +1565,8 @@
           "crates/engines/tests/convex_qp.rs",
           "crates/engines/tests/mixed_conic.rs",
           "docs/implementation/engines.md",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1564,16 +1593,16 @@
         "guarantee": "One-at-a-time local allowable changes; simultaneous changes require revalidation.",
         "remaining_work": "64-variable/512-row/combination caps are explicit; no full commercial sensitivity suite.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/engines/tests/basis.rs",
           "crates/engines/tests/certificate_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1598,11 +1627,11 @@
           "HOST",
           "MANIFEST"
         ],
-        "guarantee": "Binary64/max-u64 fidelity and strict schemas tested.",
+        "guarantee": "Binary 64/max-u64 fidelity and strict schemas tested.",
         "remaining_work": "None within supported schemas/byte quotas.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -1616,13 +1645,13 @@
           "crates/solvercraft/tests/run_manifest.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/solvercraft/tests/workflow_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
-          "docs/implementation/verification.md"
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -1646,14 +1675,14 @@
         "guarantee": "Owned xl/solvercraft namespace; unsupported workbook semantics remain explicit.",
         "remaining_work": "No claim of full Excel/Frontline file compatibility.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1679,14 +1708,14 @@
         "guarantee": "Row/sheet edits and deleted references tested; unsupported table/dynamic formulas reject.",
         "remaining_work": "No silent migration of unsupported reference classes.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1712,14 +1741,14 @@
         "guarantee": "Nonrepresentable features/options reported; existing legacy names are preserved on import.",
         "remaining_work": "No lossless export of arbitrary nonlinear/advanced Solvercraft models.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1744,18 +1773,20 @@
           "WORKSHEET"
         ],
         "guarantee": "Deterministic native threaded-barrier regression verifies that changing shared active-tab view cannot retarget queued omitted-sheet or nested parameter requests.",
-        "remaining_work": "Final5 rebuilt browser proof is accepted; unsupported dynamic formulas remain explicit.",
+        "remaining_work": "Final6 rebuilt browser proof is accepted; unsupported dynamic formulas remain explicit.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1782,16 +1813,18 @@
         "guarantee": "1900/1904 date utility semantics; simulation uses declared addressed SC streams.",
         "remaining_work": "None within the supported clock/random policy.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1818,16 +1851,18 @@
         "guarantee": "INDIRECT/OFFSET/LAMBDA/unsupported arrays are not sampled and called linear.",
         "remaining_work": "These functions are unsupported capability entries, not silently emulated.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -1855,10 +1890,12 @@
         "guarantee": "Invalid trials require an explicit policy; missing cells do not silently become numerical zero.",
         "remaining_work": "None for the tested error contracts.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "crates/compile/src/tests.rs",
@@ -1884,19 +1921,21 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "All17 original R2 distribution families implemented with host declarations",
+        "implementation": "All 17 original R2 distribution families implemented with host declarations",
         "evidence_keys": [
           "MATH",
           "WORKSHEET",
           "ORACLE"
         ],
         "guarantee": "Parameter/support/edge semantics explicit; empirical discrete/continuous are distinct.",
-        "remaining_work": "No extra-catalog parity is inferred from the17-family baseline.",
+        "remaining_work": "No extra-catalog parity is inferred from the 17-family baseline.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "crates/math/tests/deep_review.rs",
@@ -1920,28 +1959,39 @@
         "test_id": "TEST-R046"
       },
       "assessment": {
-        "status": "partial",
-        "implementation": "111 frozen distribution/Alt/custom/special/time-series entries mapped: 109 unambiguous executable core subsets plus two tested mathematical variants",
+        "status": "accepted_bounded",
+        "implementation": "All 111 frozen distribution/Alt/custom/special/time-series mathematical capabilities have individually associated positive tests in final6 SDK 630",
         "evidence_keys": [
           "REF",
           "MATH",
-          "ORACLE"
+          "ORACLE",
+          "FINAL"
         ],
-        "guarantee": "R046 is the distribution mathematical catalog; worksheet signatures/defaults/properties belong R081. All 28 alternates have individual evidence, but mathematical variants are not automatically exact vendor signatures.",
-        "remaining_work": "Pearson6Alt and WeibullAlt retain unresolved published argument counts/defaults. Do not invent parameters or assert all 111 vendor functions complete; resolve source-backed semantics before closing.",
+        "guarantee": "SC-14 and masterplan 10.1 require mathematical capabilities and individually checked cores; all 111 names map to 73 positive SDK test bodies across 13 files. The 28Alt mathematical constructions are tested, including explicit 3-claim Pearson 6 and 2-claim Weibull alternatives.",
+        "remaining_work": "No missing positive mathematical-core case in the accepted bounded catalog. Literal Pearson 6Alt/WeibullAlt vendor arity/defaults, proprietary catalogs and full worksheet/property parity remain explicit separate compatibility gaps; no 111-vendor-contract or full-domain equivalence claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
           "crates/math/tests/deep_review.rs",
           "crates/math/tests/numerical_review.rs",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
           "docs/implementation/reference-catalog.json",
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
+          "docs/implementation/release-final6-build-report.json",
           "docs/implementation/simulation.md",
           "docs/qa/distribution-oracle-report.json",
+          "docs/qa/original-scope-audit.md",
           "tests/e2e/distribution_oracle.py",
           "tests/e2e/reference_matrix.py"
         ]
@@ -1968,7 +2018,7 @@
         "guarantee": "4071 finite comparisons; one warned reference excluded; stated numerical ranges, no universal relative-tail accuracy claim.",
         "remaining_work": "No all-parameter/all-tail mathematical error certificate.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2001,7 +2051,7 @@
         "guarantee": "Atoms/reflections and bounded preparation explicit; generic compound CDF/PDF unavailable rather than fabricated.",
         "remaining_work": "Unsupported generic compound queries are explicit capability limits.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2012,6 +2062,7 @@
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
           "docs/implementation/simulation.md",
+          "docs/qa/original-scope-audit.md",
           "tests/e2e/reference_matrix.py"
         ]
       }
@@ -2037,7 +2088,7 @@
         "guarantee": "Legacy goldens and immutable addressed identities retained; no mutable thread-order stream.",
         "remaining_work": "Only fixed version/seed/binding/trial contracts promise reproducibility.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2071,7 +2122,7 @@
         "guarantee": "Native host/server and real CLI simulation manifests disclose seed, sampler, effective configuration and diagnostic or real host snapshot identity.",
         "remaining_work": "Final rebuilt browser/release evidence remains separate under R088/R093.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2089,7 +2140,7 @@
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
           "docs/implementation/simulation.md",
-          "docs/implementation/verification.md"
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -2114,7 +2165,7 @@
         "guarantee": "Repeated seed is refused as an independent LHS replicate even if metadata labels differ.",
         "remaining_work": "No IID single-run interval is inferred from LHS samples.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2138,7 +2189,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Randomized64-dimensional Sobol-v2 with licensed Joe-Kuo directions and independent replicate intervals",
+        "implementation": "Randomized 64-dimensional Sobol-v2 with licensed Joe-Kuo directions and independent replicate intervals",
         "evidence_keys": [
           "SOBOL",
           "INTERVAL"
@@ -2146,7 +2197,7 @@
         "guarantee": "16384 independent SciPy point anchors; separate independent randomization identities.",
         "remaining_work": "No unrestricted dimensions or single-scramble IID error bar.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2154,7 +2205,7 @@
           "crates/math/tests/numerical_review.rs",
           "crates/simulation/src/intervals.rs",
           "crates/simulation/tests/numerical_review.rs",
-          "docs/implementation/browser-smoke-sobol64-report.json",
+          "docs/implementation/browser-smoke-final6-report.json",
           "docs/implementation/simulation.md"
         ]
       }
@@ -2180,7 +2231,7 @@
         "guarantee": "The matrix is not generally Pearson correlation of transformed nonnormal outputs; discrete ties need not reproduce target Spearman exactly. Invalid matrices reject; singular PSD/zero variance tested, no silent repair.",
         "remaining_work": "Parameter/dimension caps remain explicit.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2213,7 +2264,7 @@
         "guarantee": "Supported continuous/discrete marginal behavior and singular handling are explicit.",
         "remaining_work": "No universal empirical correlation exactness for finite samples.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2246,7 +2297,7 @@
         "guarantee": "Documented bivariate/multivariate theta and dimension ranges; analytic CDF/tau/margins controls.",
         "remaining_work": "No unrestricted Archimedean parameter/dimension support.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2278,7 +2329,7 @@
         "guarantee": "Streaming storage is not the trials-by-input-by-output full matrix; Skip warns of selection bias.",
         "remaining_work": "Retained exact statistics still require bounded retained rows.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2309,7 +2360,7 @@
         "guarantee": "No unlabeled sketch/external-sort claim; retained memory checked.",
         "remaining_work": "No exact quantiles from unretained arbitrary streams.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2343,7 +2394,7 @@
         "guarantee": "Unequal raw weights, permutations, alpha0 and tiny/extreme weights independently tested.",
         "remaining_work": "Unsupported conditioning/range returns errors.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2378,7 +2429,7 @@
         "guarantee": "Mixed PMF/PDF rankings refused; parameter-fit-aware GOF; generic fitting is local, not certified global MLE.",
         "remaining_work": "Weighted/censored fitting unavailable and explicitly outside this supported fit contract.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2409,7 +2460,7 @@
         "guarantee": "Gaussian/finiteness/independent-replicate assumptions explicit; large-df t critical value approximate; off-checkpoint adaptive cancellation has no fabricated CI.",
         "remaining_work": "No distribution-free coverage for arbitrary data-dependent stopping or Skip policy.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2440,10 +2491,12 @@
         "guarantee": "Means where available, labelled fallback for undefined means; not PSI display/default parity.",
         "remaining_work": "No full PSI property/outside-simulation equivalence.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "docs/implementation/gridcraft.md"
@@ -2463,7 +2516,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Six real native UI tests plus eight renderer-used numerical contracts and one retained-result lifecycle test passed final5",
+        "implementation": "Six real native UI tests plus eight renderer-used numerical contracts and one retained-result lifecycle test passed final6",
         "evidence_keys": [
           "UI",
           "HOST"
@@ -2471,8 +2524,8 @@
         "guarantee": "All five sample chart choices and parameter Tornado are exercised; tiny/large/subnormal/independent-axis data and retained quantiles are checked. The nine-test chart-module count includes one lifecycle case, not nine numerical oracles.",
         "remaining_work": "Only the declared data/display contracts and executed UI/browser scope are accepted; no complete PSI or arbitrary platform chart parity.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -2480,13 +2533,11 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
-          "docs/implementation/browser-app-solvercraft-pane-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
-          "docs/implementation/native-ui-controls-report.json",
-          "docs/implementation/native-ui-focus-matrix-report.json"
+          "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
     },
@@ -2511,16 +2562,16 @@
         "guarantee": "Parameters constant per run; run coordinates/seeds disclosed; combined trial/memory caps.",
         "remaining_work": "No automatic causal interpretation of parameter effects.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/simulation/tests/advanced.rs",
           "crates/simulation/tests/numerical_review.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/simulation.md"
@@ -2545,12 +2596,14 @@
           "WORKSHEET"
         ],
         "guarantee": "Six executed native controls include 29 formulas x100 addressed vectors with exact-bit Calc comparison, error/coercion/names/clock/history/cancel cases.",
-        "remaining_work": "The final5 product-worker differential check is accepted; no arbitrary unsupported formula semantics are inferred.",
+        "remaining_work": "The final6 product-worker differential check is accepted; no arbitrary unsupported formula semantics are inferred.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "docs/implementation/gridcraft.md"
@@ -2577,7 +2630,7 @@
         "guarantee": "Independent affine-loss marginals/deterministic feasible set; candidate order does not redraw.",
         "remaining_work": "No arbitrary endogenous or correlated uncertain-program compiler claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2607,7 +2660,7 @@
         "guarantee": "The holdout evaluates a fixed selected decision; no population-optimality/CVaR-interval certificate.",
         "remaining_work": "No adaptive reuse of the holdout as training.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2638,7 +2691,7 @@
         "guarantee": "Final coefficient-assembly allowance over finite boxes adjusts bounds/status; preceding moment checks are conditioning guards, not full interval proofs.",
         "remaining_work": "No unsupported unbounded coefficient-error/global statistical certificate.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2670,7 +2723,7 @@
         "guarantee": "Declared finite scenarios are the probability law; not a population confidence assertion.",
         "remaining_work": "No invented probability outside the finite model.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2701,7 +2754,7 @@
         "guarantee": "Original small RHS stays separate from huge M; equalities use two gates; expansion preflight.",
         "remaining_work": "No unrestricted unbounded-domain Big M.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2735,7 +2788,7 @@
         "guarantee": "Original support/objective is verified before retaining Feasible/bounds. Exact product ordering/fractional budgets and directed arithmetic prevent false support from auxiliary slack or formation loss.",
         "remaining_work": "Plain compilation alone is not original-risk tolerance certification. Twenty independent original-space LP vertex cases plus four tiny signed cases pass; no arbitrary robust nonlinear/uncertain-RHS claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2743,6 +2796,7 @@
           "crates/solvercraft/tests/ellipsoid.rs",
           "crates/solvercraft/tests/runtime_review.rs",
           "crates/solvercraft/tests/saa_risk.rs",
+          "docs/implementation/robust-oracle-final6-report.json",
           "docs/implementation/robust-oracle-fixed-debug-report.json",
           "docs/implementation/stochastic.md",
           "docs/qa/ellipsoid-precision.md"
@@ -2769,7 +2823,7 @@
         "guarantee": "Finite scenarios; zero-weight scenarios retain feasibility; integer stages supported by equivalent route.",
         "remaining_work": "No arbitrary multistage/endogenous/nonlinear recourse.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2798,7 +2852,7 @@
         "guarantee": "Independent newsvendor and two-resource/exhaustive controls prohibit scenario foresight.",
         "remaining_work": "No inferred arbitrary information structure.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2827,7 +2881,7 @@
         "guarantee": "Complete continuous nonnegative recourse subclass, finite first-stage bounds and cumulative budgets.",
         "remaining_work": "Integer/incomplete recourse rejected; no general L-shaped/MINLP solver claim.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2856,7 +2910,7 @@
         "guarantee": "Linear/CARA utility, edge costs, cycles/domains bounded and validated.",
         "remaining_work": "No arbitrary utility family or inferred spreadsheet tree.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2887,7 +2941,7 @@
         "guarantee": "Consistent normalized law fixes phantom VOI; linear/CARA analytic free/cost/revealing controls.",
         "remaining_work": "No unsupported information timing or arbitrary dynamic information model.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2921,7 +2975,7 @@
         "guarantee": "Actual normalized scalarization weights and imposed priority bounds disclosed; sequential budgets.",
         "remaining_work": "No complete nonconvex Pareto-front enumeration.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2952,7 +3006,7 @@
         "guarantee": "Original logical semantic validation before returning incumbents.",
         "remaining_work": "No arbitrary native commercial indicator/cut engine.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -2985,7 +3039,7 @@
         "guarantee": "Strict complements require a caller-supplied positive gap; unsupported equality disjunction explicit.",
         "remaining_work": "No invisible continuous strict-complement emulation.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3015,7 +3069,7 @@
         "guarantee": "Local stationary points never produce a global bound; unsupported global classes explicitly rejected.",
         "remaining_work": "No general constrained/nonpolynomial global optimizer.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3047,7 +3101,7 @@
         "guarantee": "Exhaustive independent optima/bounds and interrupted frontier checks; unknown leaves remain unresolved.",
         "remaining_work": "No general unbounded-domain MICP, cutting planes or parallel MIP.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3076,27 +3130,48 @@
         "test_id": "TEST-R081"
       },
       "assessment": {
-        "status": "partial",
-        "implementation": "19 individually checked core PSI imports and strict SC.PSI shims with explicit conversion/default limits",
+        "status": "accepted_bounded",
+        "implementation": "19 advertised top-level numeric PSI import forms and explicit conversion policies pass 25 new native engine contract tests, 21 Calc tests and the real-browser 19-signature body in both attempts",
         "evidence_keys": [
           "REF",
-          "WORKSHEET"
+          "PSI",
+          "WORKSHEET",
+          "WORKER",
+          "FINAL"
         ],
-        "guarantee": "Properties/ambiguous custom atoms remain preserved/unsupported; SDK constructors are not worksheet parity.",
-        "remaining_work": "Complete frozen supported-signature/default/property mapping and independent host cases per claimed reference entry; full-reference records remain open.",
+        "guarantee": "Original SC-23 selects supported signatures; it does not require 272 imports. Native per-signature cases verify asymmetric parameter/CDF oracles, discovery, actual trial evaluation, previews and undo. Default solvercraft_nominal is explicitly lossy; preserve_vendor refuses context loss. Unsupported nested/property/extra calls are preserved whole.",
+        "remaining_work": "No missing case within the advertised 19-form/policy contract. Full vendor display lifecycle, unadvertised defaults/properties/Alt calls and remaining worksheet names are unsupported compatibility backlog, not implemented capabilities. Browser evidence is one executed body over 19 signatures, 2048 trials, 19 outputs, not 19 separate browser bodies.",
         "platforms": [
-          "Windows native Rust1.95: executed host/unit/input suites for cited subset.",
-          "Final5 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
+          "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
+          "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
         ],
         "evidence": [
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/host-ci.txt",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
           "docs/implementation/gridcraft.md",
+          "docs/implementation/public-evidence.md",
           "docs/implementation/reference-catalog.json",
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
-          "tests/e2e/reference_matrix.py"
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json",
+          "docs/qa/original-scope-audit.md",
+          "tests/e2e/reference_matrix.py",
+          "tests/worker-browser/tests/worker.rs"
         ]
       }
     },
@@ -3120,7 +3195,7 @@
         "guarantee": "No listener without explicit bind/run; shutdown admission race fixed; bounded JSON and shared AST limits tested.",
         "remaining_work": "Remote TLS gateway and production deployment operations are separate host responsibilities.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3152,17 +3227,18 @@
         "guarantee": "Standalone core and native executable actually run.",
         "remaining_work": "No second GUI application implied.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
           "crates/cli/tests/api_review.rs",
+          "crates/math/third_party/BOOST_LICENSE_1_0.txt",
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/dependency-inventory.features.txt",
-          "docs/implementation/dependency-inventory.json",
-          "docs/implementation/engines.md"
+          "docs/implementation/dependency-final6-inventory.json",
+          "docs/implementation/engines.md",
+          "licenses/THIRD_PARTY.md"
         ]
       }
     },
@@ -3183,10 +3259,10 @@
         "evidence_keys": [
           "API"
         ],
-        "guarantee": "Clearly an example, not a shipped second ArtCraft application; optimum140 at widths20/100.",
+        "guarantee": "Clearly an example, not a shipped second ArtCraft application; optimum 140 at widths 20/100.",
         "remaining_work": "None for the original criterion's explicit example option.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3210,7 +3286,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Pinned full570-page Frontline2025Q1 scope, source hash and unfiltered272-function inventory",
+        "implementation": "Pinned full 570-page Frontline 2025Q1 scope, source hash and unfiltered 272-function inventory",
         "evidence_keys": [
           "REF"
         ],
@@ -3224,6 +3300,7 @@
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
+          "docs/qa/original-scope-audit.md",
           "tests/e2e/reference_matrix.py"
         ]
       }
@@ -3241,25 +3318,26 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Resolved production/test dependency feature/license inventories and licensed Sobol data notices",
+        "implementation": "Recorded dependency/license review with public Name/Version/SPDX projections and checked-in Rust/Sobol notices",
         "evidence_keys": [
           "DEPS",
           "SOBOL",
           "ORACLE"
         ],
-        "guarantee": "Clarabel0.11.1 Apache2; direct/transitive notices recorded; SciPy/NumPy test-only.",
-        "remaining_work": "Not a vulnerability audit or proprietary-engine license grant.",
+        "guarantee": "Clarabel 0.11.1 (Apache-2.0) and licensed direction data remain recorded; SciPy/NumPy are test-only. Public inventory JSON lists package names, versions and SPDX, rather than complete local feature trees or NOTICE-hash metadata.",
+        "remaining_work": "Complete local diagnostic metadata remain private. Checked-in notices are linked separately. This is not a vulnerability audit or a proprietary-engine license grant.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
           "crates/math/src/sobol.rs",
           "crates/math/tests/numerical_review.rs",
-          "docs/implementation/browser-smoke-sobol64-report.json",
-          "docs/implementation/dependency-inventory.features.txt",
-          "docs/implementation/dependency-inventory.json",
+          "crates/math/third_party/BOOST_LICENSE_1_0.txt",
+          "docs/implementation/browser-smoke-final6-report.json",
+          "docs/implementation/dependency-final6-inventory.json",
           "docs/implementation/engines.md",
           "docs/qa/distribution-oracle-report.json",
+          "licenses/THIRD_PARTY.md",
           "tests/e2e/distribution_oracle.py"
         ]
       }
@@ -3287,7 +3365,7 @@
         "guarantee": "Oracles compare actual original objective/bound/semantics, not only backend statuses.",
         "remaining_work": "Finite fixtures and tolerance grids do not prove all inputs.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3295,12 +3373,12 @@
           "crates/engines/tests/exact_bridge.rs",
           "crates/model/README.md",
           "crates/solvercraft/tests/stochastic.rs",
-          "docs/implementation/exact-binary-oracle-final-report.json",
-          "docs/implementation/linear-oracle-final-report.json",
-          "docs/implementation/performance-final-report.json",
-          "docs/implementation/quadratic-oracle-final-report.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/robust-oracle-final-report.json",
+          "docs/implementation/exact-binary-oracle-final6-report.json",
+          "docs/implementation/linear-oracle-final6-report.json",
+          "docs/implementation/performance-final6-report.json",
+          "docs/implementation/quadratic-oracle-final6-report.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/robust-oracle-final6-report.json",
           "docs/implementation/stochastic.md",
           "docs/qa/distribution-oracle-report.json",
           "tests/e2e/distribution_oracle.py"
@@ -3320,33 +3398,38 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Pure-Rust numerical default closure with actual final5 Chrome SDK13 and product-worker7 execution",
+        "implementation": "Pure-Rust numerical default closure: actual final6 Chrome SDK 13 and 8 worker bodies in the controlled repeat",
         "evidence_keys": [
           "BROWSER",
           "WORKER",
           "DEPS",
           "FINAL"
         ],
-        "guarantee": "Accepted Trunk/test-WASM builds and actual browser test reports are source-bound; host CI includes its WASM stage. Runtime execution is not inferred from cross-compilation.",
-        "remaining_work": "Only listed Chrome cases are browser-runtime evidence; no current Linux/macOS or universal browser execution claim.",
+        "guarantee": "Source-bound Trunk/test-WASM builds and actual browser execution are separate from compile checks. R081 passed in both attempts; controlled repeat 8/0 follows initial 7/1 on the additional heartbeat guard.",
+        "remaining_work": "Only listed Chrome cases are runtime evidence; aggregate all-attempts-passed=false and initial cause unproven. No universal browser/platform or hard timing guarantee.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
-          "docs/implementation/browser-smoke-final-report.json",
-          "docs/implementation/browser-worker-final-report.json",
-          "docs/implementation/dependency-inventory.features.txt",
-          "docs/implementation/dependency-inventory.json",
+          "crates/math/third_party/BOOST_LICENSE_1_0.txt",
+          "docs/implementation/browser-smoke-final6-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json",
+          "docs/implementation/dependency-final6-inventory.json",
           "docs/implementation/engines.md",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/trunk-final-build-report.json",
-          "docs/implementation/worker-browser-final-build-report.json"
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json",
+          "licenses/THIRD_PARTY.md"
         ]
       }
     },
@@ -3363,7 +3446,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Final5 source-bound resource/error/admission gates include AST/nonzero/trial/output/transform checks before expansion",
+        "implementation": "Final6 source-bound resource/error/admission gates include AST/nonzero/trial/output/transform checks before expansion",
         "evidence_keys": [
           "API",
           "CERT",
@@ -3371,10 +3454,10 @@
           "SIM",
           "FINAL"
         ],
-        "guarantee": "Corrected typed response preflight, per-output summary bounds, target/MICP admission and original robust support regressions pass within SDK630/host2827 and current CLI/browser controls.",
+        "guarantee": "AST/nonzero/trial/output/transform admission and original robust-support regressions pass within SDK 630/host 2873, including strict import range/apply types before scanning/editing. Quotas are checked accounting boundaries, not measured universal RSS ceilings.",
         "remaining_work": "Configured quotas are accounting/input/output bounds, not an OS-RSS quota or hard preemption guarantee; declared size/numeric limits remain.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3389,12 +3472,15 @@
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/types/src/lib.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
-          "docs/implementation/release-final-build-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/release-final6-build-report.json",
           "docs/implementation/simulation.md"
         ]
       }
@@ -3412,36 +3498,40 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Validated indices/shapes, structured errors and dependency-adapter failure paths pass final5 negative/regression gates",
+        "implementation": "Validated indices/shapes, structured errors and dependency-adapter failure paths pass final6 negative/regression gates",
         "evidence_keys": [
           "API",
           "CERT",
           "DEPS",
           "FINAL"
         ],
-        "guarantee": "SDK630 passed with zero failures/ignored; host2827 passed with zero failures and one pre-existing ignored performance test. Native evaluator panic containment and slot recovery are exercised.",
+        "guarantee": "SDK 630 and host 2873 passed with zero failures; one existing host performance test remains ignored. Panic containment/slot recovery and structured negative paths are exercised. The separate initial worker timing assertion is disclosed, not hidden as a product panic.",
         "remaining_work": "No universal no-panic theorem: abort/OOM/panic-abort and arbitrary nonreturning or panicking caller code remain outside recoverable direct-call guarantees.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
           "crates/cli/tests/api_review.rs",
           "crates/engines/tests/certificate_review.rs",
           "crates/engines/tests/exact_bridge.rs",
+          "crates/math/third_party/BOOST_LICENSE_1_0.txt",
           "crates/model/README.md",
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/dependency-inventory.features.txt",
-          "docs/implementation/dependency-inventory.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/dependency-final6-inventory.json",
           "docs/implementation/engines.md",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
-          "docs/implementation/release-final-build-report.json"
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/release-final6-build-report.json",
+          "licenses/THIRD_PARTY.md"
         ]
       }
     },
@@ -3458,12 +3548,12 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "96 original criteria plus audited272-function source/test/platform/guarantee matrix with executable exact-test runner",
+        "implementation": "96 original criteria plus audited 272-function source/test/platform/guarantee matrix with executable exact-test runner",
         "evidence_keys": [
           "REF"
         ],
-        "guarantee": "Missing implementations/tests and source conflicts remain explicit. Audit verifies source/test hashes and actual selectors; planned IDs are not counted as execution.",
-        "remaining_work": "Implementation gaps stay open under R046/R081; truthful matrix completeness is not full function parity.",
+        "guarantee": "All 272 frozen reference records retain test/platform/guarantee/source evidence and visible full-vendor gaps. An inventory record or planned ID is not execution; original 96 criteria have their own scoped acceptance.",
+        "remaining_work": "Full-reference compatibility gaps remain visible despite bounded acceptance of 111 math cores and 19 advertised imports. Matrix completeness is not 272-function implementation.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
@@ -3472,6 +3562,7 @@
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
+          "docs/qa/original-scope-audit.md",
           "tests/e2e/reference_matrix.py"
         ]
       }
@@ -3494,23 +3585,26 @@
           "PERF",
           "FINAL"
         ],
-        "guarantee": "The final release binary is source-bound. LP (100 variables/500 rows): median 260.2045 ms, peak 11,759,616 bytes, objective error 0. MC (100,000 trials/20 inputs/10 outputs): median 712.7748 ms, peak 6,799,360 bytes, maximum mean error 0.001469193929023671.",
-        "remaining_work": "Shared host with native regression executables running concurrently; no isolated speed comparison. Proposed medium 10,000-variable/50,000-row/500,000-nonzero class and time-to-first-feasible remain unmeasured and are not claimed as supported performance.",
+        "guarantee": "The same recorded release binary has five fresh processes per workload. LP 100 variables/500 rows median 180.8091 ms, peak 11,677,696 bytes, objective error 0; MC 100000 trials/20 inputs/10 outputs median 527.5174 ms, peak 6,893,568 bytes, maximum mean error 0.001469193929023671.",
+        "remaining_work": "Shared-host/quieter follow-up measurements, not a demonstrated engine speedup or Frontline comparison. Proposed medium 10000-variable/50000-row/500000-nonzero performance and time-to-first-feasible remain unmeasured.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
-          "docs/implementation/exact-binary-oracle-final-report.json",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
-          "docs/implementation/linear-oracle-final-report.json",
-          "docs/implementation/performance-final-report.json",
-          "docs/implementation/quadratic-oracle-final-report.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/robust-oracle-final-report.json"
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/exact-binary-oracle-final6-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/linear-oracle-final6-report.json",
+          "docs/implementation/performance-final6-report.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/quadratic-oracle-final6-report.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/robust-oracle-final6-report.json"
         ]
       }
     },
@@ -3527,24 +3621,27 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Final5 unchanged-source cargo xtask ci passed all 10 stages; nested SDK fmt/clippy/tests and actual UI/browser gates also passed",
+        "implementation": "Final6 unchanged-source cargo xtask ci passed all 10 stages; SDK fmt/clippy 630, UI 6/chart 8+1, ChromeSDK 13 and controlled-repeat Worker 8 are recorded",
         "evidence_keys": [
           "GATES",
           "FINAL"
         ],
-        "guarantee": "Host: 2827 passed/0 failed/1 pre-existing ignored in 722.25 s. SDK: 630 passed/0 failed/0 ignored. Native UI: 6; chart module: 8 numerical + 1 lifecycle; actual Chrome SDK: 13; product worker: 7, all source-bound.",
-        "remaining_work": "Ignored pre-existing recalc_with_range_formulas_scales_linearly remains visible and is not counted as passed. These finite tests do not imply full vendor parity.",
+        "guarantee": "Host 2873 passed/0 failed/1 existingignored in 547.64 s; SDK 630/0/0. Worker initial 7/1 and one identical repeat 8/0 are both retained; R081 case passed in both. All reported native/SDK code-input digests stayed unchanged.",
+        "remaining_work": "Existing ignored recalc_with_range_formulas_scales_linearly is not passed. Additional 25 ms heartbeat check failed once at 26 ms; cause unproven, aggregate_all_attempts_passed=false. This is not an all-attempts-green or universal parity certificate.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/verification.md"
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -3566,23 +3663,25 @@
           "REF",
           "GATES"
         ],
-        "guarantee": "Historical initial reports are labelled; exact target-equality semantics and current reference/import/platform gaps are reconciled.",
-        "remaining_work": "Current final5 reports are linked; historical builds remain labelled and no full-parity claim is made.",
+        "guarantee": "Current final6 links, original-scope audit and exact target/conversion semantics are reconciled; historical final5/265-test checkpoints remain labelled.",
+        "remaining_work": "Full vendor/import gaps stay explicit. The original CSV and all 768 fields are preserved; no historical repository-encoding repair is claimed.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/report.json",
-          "docs/implementation/gates-final/host/summary.json",
-          "docs/implementation/gates-final/sdk/report.json",
-          "docs/implementation/gates-final/sdk/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/public-evidence.md",
           "docs/implementation/reference-catalog.json",
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
-          "docs/implementation/release-final-build-report.json",
-          "docs/implementation/verification.md",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/verification-final6.md",
+          "docs/qa/original-scope-audit.md",
           "tests/e2e/reference_matrix.py"
         ]
       }
@@ -3606,9 +3705,9 @@
           "API"
         ],
         "guarantee": "Actual process tests verify one error JSON, empty stdout, original code/message, repeated/changed fingerprints, configuration/platform and honest unknown engine without a typed result. Latest scoped CLI package: 66 tests, Clippy and formatting passed after the integer-rounding correction.",
-        "remaining_work": "Raw decode failures stay bare because no typed run was admitted; low-level numerical APIs are wrapped by managed run entrypoints. Final5 browser/source gates are recorded; arbitrary external embeddings must use their managed run contract.",
+        "remaining_work": "Raw decode failures stay bare because no typed run was admitted; low-level numerical APIs are wrapped by managed run entrypoints. Final6 browser/source gates are recorded; arbitrary external embeddings must use their managed run contract.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3623,7 +3722,7 @@
           "crates/solvercraft/tests/workflow_review.rs",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
-          "docs/implementation/verification.md"
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -3648,7 +3747,7 @@
         "guarantee": "No guessed IDs/bindings/results; unknown schemas rejected; migration preserves model semantics/options.",
         "remaining_work": "Only declared migrations are supported; no invented arbitrary future-schema conversion.",
         "platforms": [
-          "Windows native Rust1.95: executed cited SDK/process suites.",
+          "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
@@ -3658,8 +3757,8 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final-verification-summary.json",
-          "docs/implementation/gates-final/host/summary.json",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
         ]
@@ -3667,35 +3766,130 @@
     }
   ],
   "final_verification": {
-    "candidate": "final5",
-    "summary": "docs/implementation/final-verification-summary.json",
-    "baseline_commit": "95f7b46ff94fe833b2f3356db58dc6754916f43c",
-    "raw_code_and_compilation_input_digest_sha256": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
-    "canonical_code_and_compilation_input_digest_sha256": "9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb",
+    "candidate": "final6",
+    "summary": "docs/implementation/final6-verification-summary.json",
+    "raw_code_and_compilation_input_digest_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+    "canonical_code_and_compilation_input_digest_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+    "source_and_compilation_input_files": 791,
     "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
-    "source_unchanged_during_all_gates": true,
+    "source_unchanged_during_native_and_sdk_gates": true,
     "host_ci": {
-      "stages_passed": 10,
-      "passed": 2827,
+      "passed": 2873,
       "failed": 0,
       "ignored": 1,
-      "summary": "gates-final/host/summary.json"
+      "test_summary_targets": 38,
+      "elapsed_seconds": 547.6406820999691,
+      "accepted": true,
+      "ci_stages": [
+        "i18n-report",
+        "fmt",
+        "clippy",
+        "test",
+        "doctest",
+        "assets",
+        "layers",
+        "wasm",
+        "parity",
+        "keytips"
+      ]
     },
     "sdk": {
       "passed": 630,
       "failed": 0,
       "ignored": 0,
-      "fmt": true,
-      "all_targets_clippy_warnings_denied": true,
-      "summary": "gates-final/sdk/summary.json"
+      "test_summary_targets": 74,
+      "all_gates_accepted": true
     },
-    "native_ui_tests": 6,
-    "chart_numerical_contracts": 8,
-    "chart_lifecycle_tests": 1,
-    "actual_chrome_sdk_tests": 13,
-    "actual_product_worker_tests": 7,
+    "native_ui": {
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "accepted": true
+    },
+    "chart_module": {
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0,
+      "accepted": true,
+      "numerical_tests": 8,
+      "lifecycle_tests": 1
+    },
+    "actual_chrome_sdk": {
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0,
+      "test_summary_targets": 1,
+      "exit_code": 0
+    },
+    "actual_worker": {
+      "unique_test_bodies": 8,
+      "aggregate_all_attempts_passed": false,
+      "attempts": [
+        {
+          "kind": "initial",
+          "passed": 7,
+          "failed": 1,
+          "ignored": 0,
+          "exit_code": 1,
+          "observed_max_window_heartbeat_gap_ms": 26
+        },
+        {
+          "kind": "controlled_repeat",
+          "passed": 8,
+          "failed": 0,
+          "ignored": 0,
+          "exit_code": 0,
+          "observed_max_window_heartbeat_gap_ms": 12.0
+        }
+      ]
+    },
+    "worker_repeat_observed_metrics": {
+      "admission_ms": 0.8099999999999999,
+      "heartbeat_ticks": 152,
+      "max_observed_progress_gap_ms": 57.0,
+      "max_status_ms": 1.0,
+      "max_window_heartbeat_gap_ms": 12.0,
+      "observed_progress_updates": 30,
+      "startup_ms": 25.865,
+      "worker_compute_ms": 1480.335
+    },
+    "r081": {
+      "native_distinct_signature_tests": 19,
+      "native_policy_negative_test_groups": 6,
+      "real_browser_signatures": 19,
+      "worker_trials": 2048,
+      "worker_outputs": 19,
+      "unsupported_preserved": [
+        "nested Psi call",
+        "documented PsiStatic property"
+      ],
+      "vendor_display_context_implemented": false,
+      "conversion_policy": "explicitly lossy solvercraft_nominal; preserve_vendor refuses"
+    },
     "performance_repetitions_per_workload": 5,
     "existing_ignored_test": "recalc_with_range_formulas_scales_linearly",
-    "scope": "Executed Windows Rust1.95 and actual Chrome cases. All original criteria retained; R046/R081 remain partial."
+    "scope": "Executed original criteria within bounded math/API contracts; 96 accepted_bounded does not mean full 272-PSI/Frontline parity or all worker attempts passed.",
+    "public_evidence_format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
+    "binary_oracle_provenance": {
+      "report": "docs/implementation/exact-binary-oracle-final6-report.json",
+      "private_corrected_full_report_sha256": "60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa",
+      "exact_optimal_cases": 3,
+      "node_limit_controls": 1,
+      "third_case_direction": "minimize",
+      "third_case_objective": -500,
+      "seed_supplied": false,
+      "effective_seed_decimal": "0",
+      "node_limit": 1,
+      "same_release_binary": true,
+      "historical_final5_v1_unchanged": true
+    }
+  },
+  "public_evidence": {
+    "format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
+    "complete_original_diagnostics_public": false,
+    "full_local_report_sha256_meaning": "Hash of the private complete diagnostic source, not a claim that its full stdout/metadata are published",
+    "sdk_test_excerpt_sha256": "dec9422d0180c8e3960e97e8df072584c7cad0291f0e783f3ad6f197ecb1158b",
+    "host_test_excerpt_sha256": "65b3376b2b69b40f25fdb40d92d5f892ed48181fe8e2db150f20ac1b017cb41c",
+    "guide": "docs/implementation/public-evidence.md"
   }
 }

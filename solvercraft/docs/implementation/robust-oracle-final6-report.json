@@ -1,0 +1,355 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/robust-oracle-final6-report.json",
+  "full_local_report_sha256": "758fea04feff1b0b3a7a9746beaf96ee8d892b599acf39b4c8ac2c66e76ba779",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "results": {
+    "seed": "20261031",
+    "executable_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+    "ordinary_cases_passed": 20,
+    "tiny_infeasible_cases_passed": 4,
+    "tiny_cases": [
+      {
+        "kind": "box",
+        "fixed_value": -1e-09,
+        "analytic_worst_case": 1000.0,
+        "outcome": {
+          "termination": "completed",
+          "feasibility": "infeasible",
+          "optimality": "unknown"
+        }
+      },
+      {
+        "kind": "box",
+        "fixed_value": 1e-09,
+        "analytic_worst_case": 1000.0,
+        "outcome": {
+          "termination": "completed",
+          "feasibility": "infeasible",
+          "optimality": "unknown"
+        }
+      },
+      {
+        "kind": "budget",
+        "fixed_value": -1e-09,
+        "analytic_worst_case": 500.0,
+        "outcome": {
+          "termination": "completed",
+          "feasibility": "infeasible",
+          "optimality": "unknown"
+        }
+      },
+      {
+        "kind": "budget",
+        "fixed_value": 1e-09,
+        "analytic_worst_case": 500.0,
+        "outcome": {
+          "termination": "completed",
+          "feasibility": "infeasible",
+          "optimality": "unknown"
+        }
+      }
+    ]
+  },
+  "case_results": [
+    {
+      "kind": "box",
+      "oracle_objective": 4.25,
+      "objective": 4.25,
+      "values": [
+        2.0,
+        -0.9999999999999998
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 0,
+      "synthetic_request_canonical_json_sha256": "c17942146445b3522d892aa85e748eb6198b0118298060cb20505c39831c4615"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": -5.083333333333334,
+      "objective": -5.08333333333333,
+      "values": [
+        0.0,
+        1.3333333333333326
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 0.0,
+      "objective_error": 3.552713678800501e-15,
+      "case_index": 1,
+      "synthetic_request_canonical_json_sha256": "b91c5937d8998f9f0d013edc301b2e6798259c465436d6a42fa3f8e946090959"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": 1.3928571428571428,
+      "objective": 1.3928571428571437,
+      "values": [
+        -4.440892098500626e-16,
+        -0.2857142857142858
+      ],
+      "feasible_vertices": 8,
+      "original_vertex_violation": 1.3322676295501878e-15,
+      "objective_error": 8.881784197001252e-16,
+      "case_index": 2,
+      "synthetic_request_canonical_json_sha256": "067ad7b3c3a82f3c4ff41ae3a6ea1da0bb7ec0dd14887e7932501c5977dd0ce6"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": -11.75,
+      "objective": -11.75,
+      "values": [
+        -3.0,
+        -1.5
+      ],
+      "feasible_vertices": 10,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 3,
+      "synthetic_request_canonical_json_sha256": "7691bd56940fb80f0fc2dbf565732cf81612ed532a279cb6b9da6e53822484ec"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": 7.75,
+      "objective": 7.750000000000005,
+      "values": [
+        -2.500000000000002,
+        -8.881784197001252e-16
+      ],
+      "feasible_vertices": 12,
+      "original_vertex_violation": 5.329070518200751e-15,
+      "objective_error": 5.329070518200751e-15,
+      "case_index": 4,
+      "synthetic_request_canonical_json_sha256": "9035f8579d73c6db0833d2d0a8af6feeab058b320ff7e96a4bdfd68918606586"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": -2.0357142857142856,
+      "objective": -2.0357142857142954,
+      "values": [
+        0.0,
+        0.5714285714285738
+      ],
+      "feasible_vertices": 12,
+      "original_vertex_violation": 8.43769498715119e-15,
+      "objective_error": 9.769962616701378e-15,
+      "case_index": 5,
+      "synthetic_request_canonical_json_sha256": "807432d244240641cc99dc71f373dd5f6e949585c363b0fdfd702727fdd3a10b"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": 6.25,
+      "objective": 6.249999999999993,
+      "values": [
+        1.9999999999999956,
+        -3.1086244689504383e-15
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 8.881784197001252e-16,
+      "objective_error": 7.105427357601002e-15,
+      "case_index": 6,
+      "synthetic_request_canonical_json_sha256": "a50fb2995ab9e5374a584af628b7b1e048a36cf34caf36a9c44279fad6ab2c66"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": -17.75,
+      "objective": -17.75,
+      "values": [
+        2.0,
+        4.0
+      ],
+      "feasible_vertices": 20,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 7,
+      "synthetic_request_canonical_json_sha256": "9ea5d52286804607b1288ab74647359dc8d1ed3c99790ed805264f67e87ac489"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": 6.25,
+      "objective": 6.25,
+      "values": [
+        2.0,
+        -2.0
+      ],
+      "feasible_vertices": 5,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 8,
+      "synthetic_request_canonical_json_sha256": "e3efd91547ef837d772e3c22c2bda45bed3f1f023cfb5ccf79e140531305dc89"
+    },
+    {
+      "kind": "box",
+      "oracle_objective": -5.75,
+      "objective": -5.75,
+      "values": [
+        2.0,
+        -2.0
+      ],
+      "feasible_vertices": 8,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 9,
+      "synthetic_request_canonical_json_sha256": "0666434bd1a9b2b6ac7497aeb3893efbac1f168ca85370b0128ab96fe31a0e62"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": 17.25,
+      "objective": 17.25,
+      "values": [
+        -3.0,
+        4.0
+      ],
+      "feasible_vertices": 4,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 10,
+      "synthetic_request_canonical_json_sha256": "ae76bda009e713e92864e706f7ae4f1644692935ba123c900a8b832d19623eac"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": -15.75,
+      "objective": -15.749999999999988,
+      "values": [
+        1.199040866595169e-14,
+        4.0
+      ],
+      "feasible_vertices": 7,
+      "original_vertex_violation": 0.0,
+      "objective_error": 1.2434497875801753e-14,
+      "case_index": 11,
+      "synthetic_request_canonical_json_sha256": "65446fd86a41d56c9f43521d992e008b62d9c3b2820b4d197ab341ce378e1bd5"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": 9.25,
+      "objective": 9.25,
+      "values": [
+        -3.0,
+        1.5
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 12,
+      "synthetic_request_canonical_json_sha256": "02d9c27d105f9e9d34d462fc067a074c04380a83e05e01663af8ae54569a094b"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": -12.178571428571429,
+      "objective": -12.17857142857143,
+      "values": [
+        -3.0,
+        2.3571428571428577
+      ],
+      "feasible_vertices": 8,
+      "original_vertex_violation": 1.7763568394002505e-15,
+      "objective_error": 1.7763568394002505e-15,
+      "case_index": 13,
+      "synthetic_request_canonical_json_sha256": "3503815fb3401f7040bc7f6f47299d4976e1f5da69b58e326f37a5d51b19802f"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": 17.25,
+      "objective": 17.25,
+      "values": [
+        -3.0,
+        -2.0
+      ],
+      "feasible_vertices": 13,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 14,
+      "synthetic_request_canonical_json_sha256": "65e100520d6ffde0650496392a34e867223bd2dcba000fcb6661677981a5e870"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": -14.75,
+      "objective": -14.75,
+      "values": [
+        -3.0,
+        3.0
+      ],
+      "feasible_vertices": 5,
+      "original_vertex_violation": 0.0,
+      "objective_error": 0.0,
+      "case_index": 15,
+      "synthetic_request_canonical_json_sha256": "76c06d47135531456bc277171286cae2844e5e66f4bce803881dbaeb51f6a4ae"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": 3.5,
+      "objective": 3.500000000000001,
+      "values": [
+        -3.0,
+        -0.12500000000000044
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 8.881784197001252e-16,
+      "objective_error": 8.881784197001252e-16,
+      "case_index": 16,
+      "synthetic_request_canonical_json_sha256": "d9ae4711e322e769cd69bc85751a338dcf8186cac1961f1313c468c6c799557a"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": -2.2142857142857144,
+      "objective": -2.2142857142857153,
+      "values": [
+        0.535714285714286,
+        -0.4285714285714286
+      ],
+      "feasible_vertices": 9,
+      "original_vertex_violation": 1.3322676295501878e-15,
+      "objective_error": 8.881784197001252e-16,
+      "case_index": 17,
+      "synthetic_request_canonical_json_sha256": "df6e52a0e811520bf9c08e74d518438e157f1e775a258698276b5978795c48a3"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": 5.05,
+      "objective": 5.049999999999999,
+      "values": [
+        0.5333333333333337,
+        1.0666666666666664
+      ],
+      "feasible_vertices": 11,
+      "original_vertex_violation": 8.881784197001252e-16,
+      "objective_error": 8.881784197001252e-16,
+      "case_index": 18,
+      "synthetic_request_canonical_json_sha256": "9cb25c476f37633d8b09e90358f73174f3b860be31799a90866f307ac358a364"
+    },
+    {
+      "kind": "budget",
+      "oracle_objective": -2.15,
+      "objective": -2.1499999999999995,
+      "values": [
+        0.0,
+        1.1999999999999997
+      ],
+      "feasible_vertices": 6,
+      "original_vertex_violation": 0.0,
+      "objective_error": 4.440892098500626e-16,
+      "case_index": 19,
+      "synthetic_request_canonical_json_sha256": "85950bde6302697d0e077f2111379ec775deb93c1435d87f401e2366d3b444be"
+    }
+  ],
+  "seed_decimal": "20261031"
+}

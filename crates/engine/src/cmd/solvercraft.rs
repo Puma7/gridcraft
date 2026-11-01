@@ -14,6 +14,8 @@ mod jobs;
 mod legacy;
 mod manifest;
 mod parameters;
+#[cfg(test)]
+mod psi_import_tests;
 mod registry;
 mod reports;
 mod simulation_ir;
@@ -105,7 +107,7 @@ fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
             "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX", "NOW", "TODAY", "SC.OUTPUT"
         ],
         "worksheet_declarations":["SC.UNIFORM","SC.DISCRETEUNIFORM","SC.NORMAL","SC.LOGNORMAL","SC.TRIANGULAR","SC.BETAPERT","SC.BETA","SC.GAMMA","SC.EXPONENTIAL","SC.WEIBULL","SC.BERNOULLI","SC.BINOMIAL","SC.POISSON","SC.NEGATIVEBINOMIAL","SC.GEOMETRIC","SC.EMPIRICAL","SC.EMPIRICALCONTINUOUS","SC.OUTPUT"],
-        "psi_import":{"core_numeric_signatures":19,"property_modifiers":false,"ordinary_cell_policy":"SC finite analytic mean; explicit labelled median fallback for undefined/unavailable means","cumul_subset":"unambiguous strictly increasing knots; no endpoint atoms"},
+        "psi_import":{"core_numeric_signatures":19,"top_level_declarations_only":true,"nested_and_property_calls":"preserved as unsupported","outside_policy_default":"solvercraft_nominal","outside_policies":["solvercraft_nominal","preserve_vendor"],"vendor_display_context_preserved":false,"property_modifiers":false,"ordinary_cell_policy":"SC finite analytic mean; explicit labelled median fallback for undefined/unavailable means","cumul_subset":"unambiguous strictly increasing knots; no endpoint atoms"},
         "reports":{"answer":true,"lp_checked_basis_shadow_prices_and_intervals":true,"simultaneous_parameter_changes":"must revalidate basis"},
         "worksheet_statistics":{"SC.MEAN":"explicit finite sample range","SC.QUANTILE":"empirical lower inverse CDF","SC.CVAR":"fractional upper loss tail"},
         "saved_models":{"schema_version":1,"xlsx_part":"xl/solvercraft/models.json","binding_migration":"hidden formula names; invalidated bindings fail explicitly"},

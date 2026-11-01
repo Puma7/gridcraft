@@ -1,7 +1,7 @@
 //! Worksheet declarations and explicit, signature-aware legacy formula import.
 use super::{
     Cell, CellRef, CommandSpec, Distribution, FormulaExpr, Json, MAX_BINDINGS, Result, SOLVE, Session, Value, Workbook, bad, binding_name, cells,
-    cmd, edit, has_doc, json, sdk_error, str_param,
+    cmd, edit, has_doc, json, sdk_error,
 };
 
 const SCAN_CELLS: usize = 200_000;
@@ -13,14 +13,17 @@ pub(super) fn specs() -> Vec<CommandSpec> {
             "Import supported Psi formulas",
             [],
             None,
-            "{range?:reference,apply?:false} -> proposed changes and unsupported signatures. Nineteen individually checked numeric Psi core signatures map to strict SC.PSI shims; modifiers/unknown calls are preserved. apply:true commits supported cells as one undo step. Outside-simulation values follow explicit SC nominal policy, not Frontline ValueToDisplay settings.",
+            "{range?:reference,apply?:false,outside_policy?:solvercraft_nominal|preserve_vendor} -> proposed changes and unsupported signatures. Selected top-level numeric Psi calls map to SC.PSI shims; nested stochastic calls, properties and unknown calls are preserved. apply:true commits supported cells as one undo step. Default solvercraft_nominal is an explicitly lossy outside-value conversion; preserve_vendor refuses conversion because vendor display state is unavailable.",
             has_doc,
             import_psi
         ),
     ]
 }
 fn top_call(wb: &Workbook, sheet: usize, cell: CellRef) -> Option<(String, Vec<FormulaExpr>)> {
-    let expression = wb.sheet(sheet)?.cell(cell)?.formula.as_ref()?.expr()?;
+    let mut expression = wb.sheet(sheet)?.cell(cell)?.formula.as_ref()?.expr()?;
+    while let FormulaExpr::Paren(inner) = expression {
+        expression = *inner;
+    }
     match expression {
         FormulaExpr::Call(name, args) => Some((name, args)),
         _ => None,
@@ -69,9 +72,60 @@ fn discover_command(s: &mut Session, _: &Json) -> Result<Json> {
     )
 }
 
+enum PsiContext {
+    Absent,
+    Core,
+    Unsupported(&'static str),
+}
+fn psi_context(expression: &FormulaExpr, outside_policy: &str) -> PsiContext {
+    let mut count = 0usize;
+    expression.walk(&mut |node| {
+        if let FormulaExpr::Call(name, _) = node
+            && name.strip_prefix("_xludf.").unwrap_or(name).to_ascii_uppercase().starts_with("PSI")
+        {
+            count = count.saturating_add(1);
+        }
+    });
+    if count == 0 {
+        return PsiContext::Absent;
+    }
+    let mut root = expression;
+    while let FormulaExpr::Paren(inner) = root {
+        root = inner;
+    }
+    let root_is_psi =
+        matches!(root, FormulaExpr::Call(name, _) if name.strip_prefix("_xludf.").unwrap_or(name).to_ascii_uppercase().starts_with("PSI"));
+    if outside_policy == "preserve_vendor" {
+        PsiContext::Unsupported("vendor_display_context_unavailable")
+    } else if !root_is_psi || count != 1 {
+        PsiContext::Unsupported("unsupported_nested_psi_or_property")
+    } else if matches!(root, FormulaExpr::Call(_, args) if args.iter().any(|arg| matches!(arg, FormulaExpr::Missing))) {
+        PsiContext::Unsupported("unsupported_missing_required_argument")
+    } else {
+        PsiContext::Core
+    }
+}
 fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
+    let range = match p.get("range") {
+        None => None,
+        Some(Json::String(range)) => Some(range.as_str()),
+        Some(_) => return Err(bad(SOLVE, "range must be a reference string")),
+    };
+    let apply = match p.get("apply") {
+        None => false,
+        Some(Json::Bool(apply)) => *apply,
+        Some(_) => return Err(bad(SOLVE, "apply must be a boolean")),
+    };
+    let outside_policy = match p.get("outside_policy") {
+        None => "solvercraft_nominal",
+        Some(Json::String(policy)) => policy.as_str(),
+        Some(_) => return Err(bad(SOLVE, "outside_policy must be a named policy")),
+    };
+    if !matches!(outside_policy, "solvercraft_nominal" | "preserve_vendor") {
+        return Err(bad(SOLVE, "outside_policy must be solvercraft_nominal or preserve_vendor"));
+    }
     let wb = &s.doc()?.wb;
-    let selected = if let Some(range) = str_param(p, "range") {
+    let selected = if let Some(range) = range {
         cells(wb, wb.active_sheet(), range, SCAN_CELLS)?
     } else {
         if wb.sheets.iter().map(|s| s.cells.len()).fold(0usize, usize::saturating_add) > SCAN_CELLS {
@@ -84,6 +138,14 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
     for (si, cell) in selected {
         let Some(original) = wb.sheet(si).and_then(|sh| sh.cell(cell)).and_then(|c| c.formula.as_ref()) else { continue };
         let Some(expression) = original.expr() else { continue };
+        match psi_context(&expression, outside_policy) {
+            PsiContext::Absent => continue,
+            PsiContext::Unsupported(reason) => {
+                unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":reason,"preserved":true}));
+                continue;
+            }
+            PsiContext::Core => {}
+        }
         let mut rejected = Vec::new();
         let mut changed = false;
         let converted = expression.map(&mut |node| {
@@ -102,7 +164,7 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
             FormulaExpr::Call(name, args)
         });
         if !rejected.is_empty() {
-            unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"signatures":rejected,"preserved":true}));
+            unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":"unsupported_signature","signatures":rejected,"preserved":true}));
             continue;
         }
         if changed {
@@ -111,10 +173,10 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
     }
     let proposed = changes
         .iter()
-        .map(|(si, cell, formula)| Ok(json!({"cell":binding_name(wb,*si,*cell)?,"formula":format!("={formula}")})))
+        .map(|(si, cell, formula)| Ok(json!({"cell":binding_name(wb,*si,*cell)?,"formula":format!("={formula}"),"outside_policy":outside_policy,"vendor_display_context_preserved":false})))
         .collect::<Result<Vec<_>>>()?;
-    let apply = p.get("apply").and_then(Json::as_bool).unwrap_or(false);
-    if apply && !changes.is_empty() {
+    let applied = apply && !changes.is_empty();
+    if applied {
         edit(s, |cx| {
             for (si, cell, text) in changes {
                 let sh = cx.sheet_mut(si)?;
@@ -126,6 +188,6 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
         })?;
     }
     Ok(
-        json!({"applied":apply,"changes":proposed,"unsupported":unsupported,"notes":["Core numeric signatures use individually validated SC.PSI shims; optional Psi property modifiers are preserved as unsupported.","LogNormal uses arithmetic mean/std; LogNorm2 uses underlying-normal parameters. Exponential uses mean/scale; Gamma/Weibull use shape/scale. Pert weight is fixed4. Geometric/NegBinomial count failures.","SC nominal values use finite analytic means (documented median fallback where unavailable), distinct from Frontline ValueToDisplay settings.","PsiCumul supports strictly increasing probability/value knots and unambiguous endpoints; ambiguous endpoint atoms and improper p=0 geometric/negative-binomial parameters fail explicitly."]}),
+        json!({"applied":applied,"apply_requested":apply,"changes":proposed,"unsupported":unsupported,"outside_policy":outside_policy,"vendor_display_context_preserved":false,"notes":["Core numeric signatures use SC.PSI shims. Nested stochastic calls, omitted required arguments and optional Psi property modifiers are preserved as unsupported.","LogNormal uses arithmetic mean/std; LogNorm2 uses underlying-normal parameters. Exponential uses mean/scale; Gamma/Weibull use shape/scale. Pert weight is fixed4. Geometric/NegBinomial count failures.","SC nominal values use finite analytic means (documented median fallback where unavailable), distinct from Frontline ValueToDisplay settings. No vendor pre-run random, displayed-trial, sample-mean or base-case context is preserved.","PsiCumul supports strictly increasing probability/value knots and unambiguous endpoints; ambiguous endpoint atoms and improper p=0 geometric/negative-binomial parameters fail explicitly."]}),
     )
 }

@@ -6,13 +6,42 @@ The review started from PR predecessor **690a098a6c4c9d966d66b6c30c036e0e42534bf
 
 Scope: facade risk.rs, jobs.rs, provenance.rs, seed codecs, advertised README guarantees and the 96 masterplan requirements. This was functional/numerical QA, not a security certification or a claim of complete solver parity.
 
-## Accepted final5 verification
+## Current final6 scope
+
+The [current acceptance review](acceptance-current.md) and [original-scope audit](original-scope-audit.md) supersede the checkpoint counts below. Final6 [source-bound evidence](../implementation/final6-verification-summary.json) records all ten host CI stages with **2873 passed, 0 failed, 1 existing ignored**, SDK **630/0/0**, native UI **6**, chart module **8 numerical + 1 lifecycle**, and actual Chrome SDK **13**. All **96 original criteria** have bounded acceptance; mathematical R046 and the advertised nineteen-form R081 converter are separately justified, without claiming full 272-function/vendor compatibility.
+
+The [worker composite](../implementation/browser-worker-final6-report.json) deliberately retains an initial **7 passed/1 failed** observation of 26 ms against an additional strictly-below-25-ms heartbeat guard, and exactly one identical controlled repeat of **8 passed/0 failed**. `aggregate_all_attempts_passed=false`; the first failure's cause is unproven. The R081 nineteen-signature body passed in both attempts. The repeat observed admission **0.81 ms**, status **1 ms**, active progress gap **57 ms** and heartbeat **12 ms**; original R023 asks for 250 ms normal-model status access, not a new 25 ms or hard realtime guarantee.
+
+Final5 reports and the numerical counterexample history below remain historical evidence with their original source identities. No repository encoding defect or repair is asserted; all 768 original CSV fields are preserved exactly as UTF-8 data.
+
+## Current public diagnostic format and oracle provenance
+
+The final6 evidence links now expose fixed-field JSON projections and strict
+line-preserved test/result/summary excerpts; complete local diagnostics remain
+private. They are not full stdout/stderr, feature trees or driver/environment
+dumps. Public package inventories give Name/Version/SPDX; actual checked-in
+[notices](../../licenses/THIRD_PARTY.md) and [Sobol license](../../crates/math/third_party/BOOST_LICENSE_1_0.txt)
+remain separate. The [scope audit](original-scope-audit.md) identifies the current
+public excerpt hashes and verifies the unchanged 111+19 log positions.
+
+Binary-oracle v1 had a mutable-dictionary provenance defect: the third saved
+request metadata changed after execution, although the actual minimization
+returned -500. Historical final5 v1 remains unchanged. The validator reran only
+the 3+1 binary/control cases on the same release binary with deep-copied case
+snapshots and an independent node request. The [current compact report](../implementation/exact-binary-oracle-final6-report.json)
+records min/negative coefficients/-500, omitted seed resolving to 0 rather than 42,
+and node limit 1 correctly. Its private corrected full-report hash is
+`60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa`.
+No solver source or historical execution record is silently replaced by this
+metadata correction.
+
+## Historical accepted final5 verification
 
 The completed source-bound entry is [final-verification-summary.json](../implementation/final-verification-summary.json). The final host `cargo xtask ci` accepted all ten stages on unchanged source: **2827 passed, 0 failed, 1 pre-existing ignored**, in 722.25 seconds. The ignored `recalc_with_range_formulas_scales_linearly` is explicitly retained and is not counted as passed. The separate SDK accepted formatting, all-target Clippy with warnings denied, and **630 tests passed, 0 failed, 0 ignored**. The scoped suites described below are not added to those totals again.
 
 Actual final5 Chrome execution passed **13 SDK tests and 7 production-worker tests**. Native UI passed **6**; the chart module passed **8 numerical contracts plus 1 retained-result lifecycle case**, rather than nine numerical tests. The final worker observed maximum active progress/status/heartbeat gaps of **65/1/22 ms**. Release oracles passed **30 LP, 20 QP, 20 ordinary robust + 4 tiny signed cases, 3 exact binary variants and 1 node-limit control**. Five fresh release processes per performance workload retain hardware, seed, memory, time and numerical-error evidence with shared-host activity disclosed.
 
-The code/compilation-input raw SHA-256 is `fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe`; canonical SHA-256 is `9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb`. The release CLI SHA-256 is `68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1`. These source/binary identities differ in purpose from historical diagnostic fingerprints. The original 96-criterion assessment now records **94 bounded-accepted and 2 partial (R046/R081)**. All original wording remains intact, and full Frontline/PSI parity is not claimed.
+The code/compilation-input raw SHA-256 is `fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe`; canonical SHA-256 is `9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb`. The release CLI SHA-256 is `68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1`. These source/binary identities differ in purpose from historical diagnostic fingerprints. At that final5 checkpoint, the original 96-criterion assessment recorded **94 bounded-accepted and 2 partial (R046/R081)**. All original wording remains intact, and full Frontline/PSI parity is not claimed.
 
 ## Subsequent implementation and independent engine review
 

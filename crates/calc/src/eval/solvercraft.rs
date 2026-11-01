@@ -4,7 +4,11 @@ use super::{CellError, Ev, Evaluator, Expr, Value, err};
 use solvercraft_types::Distribution as D;
 
 /// A worksheet declaration is metadata plus a deterministic ordinary-cell value.
-/// Sampling is performed once per declared cell/trial by the host.
+/// Sampling is performed once per declared cell/trial by the host. `nominal` is
+/// Solvercraft's explicit ordinary-cell policy: a supplied trailing numeric
+/// override, otherwise the SDK's finite analytic mean/labelled median fallback.
+/// It is neither a stored simulation sample mean nor Frontline ValueToDisplay,
+/// PsiStatic, PsiBaseCase or a pre-run random sample.
 pub struct WorksheetDistribution {
     pub distribution: D,
     pub nominal: f64,
@@ -59,7 +63,10 @@ fn integer(value: f64) -> Result<i64, CellError> {
     if value.fract() == 0.0 && value.abs() < 9_007_199_254_740_992.0 { Ok(value as i64) } else { Err(CellError::Num) }
 }
 /// Decode the documented SC scalar/range signatures through canonical SDK
-/// validation. No state or RNG is consulted here.
+/// validation. No state or RNG is consulted here. The required arguments may be
+/// followed by one numeric Solvercraft nominal override, including for internal
+/// SC.PSI shims. That extra argument is not a legacy PSI property/default;
+/// legacy import must validate its original signature separately.
 pub fn worksheet_distribution(name: &str, args: &[Value]) -> Result<Option<WorksheetDistribution>, CellError> {
     if let Some(name) = name.strip_prefix("SC.PSI.") {
         return psi_distribution(name, args);
@@ -140,6 +147,7 @@ pub fn worksheet_distribution(name: &str, args: &[Value]) -> Result<Option<Works
     }
     Ok(Some(WorksheetDistribution { distribution, nominal }))
 }
+
 fn psi_distribution(name: &str, args: &[Value]) -> Result<Option<WorksheetDistribution>, CellError> {
     let Some(count) = distribution_arity(&format!("SC.PSI.{name}")) else { return Ok(None) };
     if args.len() != count && args.len() != count + 1 {
@@ -306,3 +314,6 @@ impl Evaluator<'_> {
         if result.is_finite() { Ev::V(Value::number(result)) } else { err(CellError::Num) }
     }
 }
+
+#[cfg(test)]
+mod tests;
