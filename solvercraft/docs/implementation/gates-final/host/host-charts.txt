@@ -1,0 +1,77 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3rpekje5pjrf5\s-hnqcq2exra-1vks3it-working`
+
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_core-04zi80jghcqtb\s-hnq7korrni-12sad8v-working`
+
+warning: `gridcraft-core` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_formula-1uu6tx2gwi19k\s-hnq7krk0hs-1ray7a7-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-33yrrw6azndrh\s-hnqcq3gxzg-1t4vnqv-working`
+
+warning: `gridcraft-formula` (lib) generated 1 warning
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_model-2upsn5j9ui6k0\s-hnq7ktn1ui-1evh710-working`
+
+warning: `gridcraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-2krwrrfs8m899\s-hnqcq71yog-0jxwxqc-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_functions-1g1xxp2hrdtr2\s-hnq8j48r1l-07ahuc8-working`
+
+warning: `gridcraft-functions` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_numfmt-1cnhoqyz4h02i\s-hnq7krsq20-1vi1z60-working`
+
+warning: `gridcraft-numfmt` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-2kx8v0jfvvh7q\s-hnqcq7t8sp-1vytmgj-working`
+
+warning: `gridcraft-calc` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_engines-0t02of9nhg7nl\s-hnqecd9dn1-15166o8-working`
+
+warning: `solvercraft-engines` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zg09wcl4hjot\s-hnqcr1xi3u-1avie5f-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-390x0hpilwrkq\s-hnqcr318ke-07exax8-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft-0omgn7gbqn50i\s-hnqeceqg8n-0l85kut-working`
+
+warning: `solvercraft` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_xlsx-3pd3pbw3gl2gf\s-hnqc6iwc5w-11n086h-working`
+
+warning: `gridcraft-xlsx` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-3k5nlxhpdvnu0\s-hnqcrqui18-18q9f54-working`
+
+warning: `gridcraft-chart` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_engine-3d7o2kdu6gp7t\s-hnqecilg9n-150zufr-working`
+
+warning: `gridcraft-engine` (lib) generated 1 warning
+warning: gridcraft-ui-egui@0.14.2: craft-fonts: not embedding Noto Sans CJK SC Regular (repository asset policy)
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_ui_egui-2n5qgcwcc0k77\s-hnqeeg6dyw-0vnjspg-working`
+
+warning: `gridcraft-ui-egui` (lib test) generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 14.37s
+     Running unittests src\lib.rs ($BUILD_OUTPUT\host-validation\debug\deps\gridcraft_ui_egui-8e23f346765e356d.exe)
+
+running 9 tests
+test solvercraft::tests::cdf_contract_orders_values_and_preserves_duplicate_probability_jumps ... ok
+test solvercraft::tests::box_contract_uses_full_run_quartiles_and_min_max_whiskers ... ok
+test solvercraft::tests::charts_keep_tiny_close_large_and_overflowing_axis_ranges ... ok
+test solvercraft::tests::histogram_contract_places_boundaries_in_twenty_bins_and_retains_every_row ... ok
+test solvercraft::tests::histogram_and_cdf_ignore_unrelated_output_magnitude_and_scatter_uses_independent_axes ... ok
+test solvercraft::tests::quantile_band_contract_keeps_5_25_50_75_95_values_and_output_order ... ok
+test solvercraft::tests::scatter_contract_keeps_same_trial_pairs_when_sorted_and_skips_incomplete_rows ... ok
+test solvercraft::tests::closed_document_releases_the_panes_retained_result ... ok
+test solvercraft::tests::tornado_contract_uses_first_case_base_and_only_complete_single_factor_changes ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 249 filtered out; finished in 0.00s
+

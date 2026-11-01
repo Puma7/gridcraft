@@ -14,6 +14,12 @@ use std::collections::BTreeMap;
 
 mod autodiff;
 pub use autodiff::evaluate_with_gradient;
+mod finite_difference;
+pub use finite_difference::{FiniteDifferenceResult, finite_difference_gradient};
+mod target;
+pub use target::{preflight_target, preflight_target_named, with_target, with_target_with_options};
+mod curvature;
+pub use curvature::{Curvature, curvature};
 
 pub const MAX_EXPRESSION_DEPTH: usize = 64;
 pub const MAX_EXPRESSION_NODES: usize = 100_000;
@@ -445,6 +451,7 @@ fn objective(poly: Polynomial, direction: Direction) -> Result<Objective> {
 /// Compile a model with an affine/quadratic objective and affine rows. Convexity
 /// is not inferred merely because an expression is quadratic.
 pub fn compile(model: &ExpressionModel, options: &SolveOptions) -> Result<OptimizationModel> {
+    validate_expression_model(model, options)?;
     solvercraft_model::validate_options(options)?;
     if model.variables.len() > solvercraft_model::MAX_VARIABLES || model.constraints.len() > solvercraft_model::MAX_CONSTRAINTS {
         return Err(error("model_limit", "too many expression variables or constraints"));
@@ -520,6 +527,86 @@ pub fn compile(model: &ExpressionModel, options: &SolveOptions) -> Result<Optimi
     };
     solvercraft_model::validate(&compiled, options)?;
     Ok(compiled)
+}
+
+/// Validate expression metadata, variable handles, options, and one shared
+/// node/memory budget without requiring a polynomial model or an evaluable point.
+///
+/// APIs with multiple borrowed outputs can use [`validate_expressions`] before
+/// allocating a model or cloning these ASTs.
+pub fn validate_expression_model(model: &ExpressionModel, options: &SolveOptions) -> Result<()> {
+    solvercraft_model::validate_options(options)?;
+    if model.variables.len() > solvercraft_model::MAX_VARIABLES || model.constraints.len() > solvercraft_model::MAX_CONSTRAINTS {
+        return Err(error("model_limit", "too many expression variables or constraints"));
+    }
+    let mut metadata = model.name.len();
+    if metadata > solvercraft_model::MAX_NAME_BYTES {
+        return Err(error("model_limit", "expression model name is too long"));
+    }
+    for variable in &model.variables {
+        if variable.name.len() > solvercraft_model::MAX_NAME_BYTES {
+            return Err(error("model_limit", "expression variable name is too long"));
+        }
+        metadata = metadata.checked_add(variable.name.len()).ok_or_else(|| error("memory_limit", "expression metadata overflow"))?;
+        solvercraft_model::validate_variable(variable)?;
+    }
+    let mut remaining = MAX_EXPRESSION_NODES;
+    preflight(&model.objective, model.variables.len(), &mut remaining)?;
+    for (index, row) in model.constraints.iter().enumerate() {
+        if row.name.len() > solvercraft_model::MAX_NAME_BYTES {
+            return Err(error("model_limit", "expression constraint name is too long"));
+        }
+        metadata = metadata.checked_add(row.name.len()).ok_or_else(|| error("memory_limit", "expression metadata overflow"))?;
+        preflight(&row.left, model.variables.len(), &mut remaining).map_err(|e| error(&e.code, format!("constraint {index} left: {}", e.message)))?;
+        preflight(&row.right, model.variables.len(), &mut remaining)
+            .map_err(|e| error(&e.code, format!("constraint {index} right: {}", e.message)))?;
+    }
+    let nodes = MAX_EXPRESSION_NODES - remaining;
+    let estimated = nodes
+        .checked_mul(160)
+        .and_then(|v| v.checked_add(metadata))
+        .and_then(|v| model.variables.len().checked_mul(256).and_then(|n| v.checked_add(n)))
+        .and_then(|v| model.constraints.len().checked_mul(128).and_then(|n| v.checked_add(n)))
+        .ok_or_else(|| error("memory_limit", "expression memory estimate overflow"))?;
+    if u64::try_from(estimated).map_or(true, |bytes| bytes > options.max_memory_bytes) {
+        return Err(error("memory_limit", "expression model exceeds its memory budget"));
+    }
+    Ok(())
+}
+
+/// Preflight a borrowed set of output ASTs before cloning/compiling them. Node
+/// and memory limits apply to the entire slice. The model contract's estimates
+/// of160 bytes per AST node and256 bytes per variable are retained; callers
+/// should subtract separately retained metadata from their available budget.
+/// No polynomial classification or valid evaluation point is required.
+pub fn validate_expressions(expressions: &[Expr], variable_count: usize, options: &SolveOptions) -> Result<()> {
+    solvercraft_model::validate_options(options)?;
+    if variable_count > solvercraft_model::MAX_VARIABLES {
+        return Err(error("model_limit", "too many expression variables"));
+    }
+    let variable_bytes = variable_count.checked_mul(256).ok_or_else(|| error("memory_limit", "expression memory estimate overflow"))?;
+    let check_memory = |nodes: usize| -> Result<()> {
+        let bytes = nodes
+            .checked_mul(160)
+            .and_then(|n| n.checked_add(variable_bytes))
+            .ok_or_else(|| error("memory_limit", "expression memory estimate overflow"))?;
+        if u64::try_from(bytes).map_or(true, |n| n > options.max_memory_bytes) {
+            return Err(error("memory_limit", "expression outputs exceed their shared memory budget"));
+        }
+        Ok(())
+    };
+    // Every root consumes a node; reject impossible budgets before allocating
+    // the bounded traversal stack used by preflight.
+    if expressions.len() > MAX_EXPRESSION_NODES {
+        return Err(error("expression_limit", "expression depth or node budget exceeded"));
+    }
+    check_memory(expressions.len())?;
+    let mut remaining = MAX_EXPRESSION_NODES;
+    for (index, expression) in expressions.iter().enumerate() {
+        preflight(expression, variable_count, &mut remaining).map_err(|e| error(&e.code, format!("output {index}: {}", e.message)))?;
+        check_memory(MAX_EXPRESSION_NODES - remaining)?;
+    }
+    Ok(())
 }
 
 #[cfg(test)]

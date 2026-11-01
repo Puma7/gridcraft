@@ -32,6 +32,19 @@ fn options() -> SolveOptions {
     SolveOptions { method: SolveMethod::ProjectedGradient, ..SolveOptions::default() }
 }
 #[test]
+fn finite_difference_mode_counts_all_probes_and_respects_tiny_bounds() {
+    let m = model(square(sub(mul(c(1e7), x(0)), c(4.0))), vec![variable("x", Some(0.0), Some(5e-7))]);
+    let o = SolveOptions { optimality_tolerance: 1e-2, ..options() };
+    let r = solve_from_with_derivatives(&m, &[0.0], &o, &NoControl, DerivativeMode::FiniteDifference, 1e-6).unwrap();
+    assert!(r.objective.unwrap() < 1e-15, "{r:?}");
+    assert!(r.statistics.evaluations > r.statistics.iterations);
+    let o = SolveOptions { max_evaluations: 2, ..o };
+    let r = solve_from_with_derivatives(&m, &[0.0], &o, &NoControl, DerivativeMode::FiniteDifference, 1e-6).unwrap();
+    assert_eq!(r.termination, Termination::EvaluationLimit);
+    assert_eq!(r.statistics.evaluations, 2);
+    assert!(r.values.is_none());
+}
+#[test]
 fn narrow_bounds_do_not_become_a_zero_gradient() {
     let m = model(square(sub(mul(c(1e7), x(0)), c(4.0))), vec![variable("x", Some(0.0), Some(5e-7))]);
     let r = solve(&m, &options(), &NoControl).unwrap();

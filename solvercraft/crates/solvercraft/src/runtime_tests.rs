@@ -91,7 +91,7 @@ fn a_tiny_constant_tail_mean_stays_constant() -> Result<()> {
 #[test]
 fn background_solve_is_observable_and_returns_a_real_solution() -> Result<()> {
     let handle = jobs::start_solve(small(), SolveOptions::default())?;
-    let start = std::time::Instant::now();
+    let start = runtime::monotonic_now();
     loop {
         let snapshot = handle.snapshot()?;
         if let Some(result) = snapshot.result {
@@ -126,7 +126,7 @@ fn background_simulation_can_cancel_after_a_trial_has_started() -> Result<()> {
     started_rx.recv_timeout(std::time::Duration::from_secs(10)).map_err(|e| SolverError::new("test_channel", e.to_string()))?;
     handle.cancel();
     release_tx.send(()).map_err(|e| SolverError::new("test_channel", e.to_string()))?;
-    let start = std::time::Instant::now();
+    let start = runtime::monotonic_now();
     loop {
         let snapshot = handle.snapshot()?;
         if let Some(result) = snapshot.result {

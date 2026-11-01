@@ -98,21 +98,27 @@ fn min_and_max_do_not_coerce_blank_references_to_zero() {
         set(&mut s, "A1", "1");
         set(&mut s, "B1", &format!("={function}(A1:A2)"));
         let before = s.doc().unwrap().wb.clone();
-        // This alpha subset explicitly rejects this coercion case instead of
-        // silently returning zero. Correct native aggregate support may replace
-        // this rejection later, with numerical equivalence to Calc.
-        let err = s.execute("solvercraft.simulate", constant_simulation("A1", "B1", input)).unwrap_err();
+        // The ordered simulation IR now reuses Calc's aggregate provenance:
+        // blank references are ignored, including for negative MAX inputs.
+        let result = s.execute("solvercraft.simulate", constant_simulation("A1", "B1", input)).unwrap();
+        assert_eq!(result["result"]["summaries"][0]["mean"], json!(input));
+        assert!(result["result"]["samples"].as_array().unwrap().iter().all(|row| row == &json!([input])));
+        // Optimization's mathematical compiler still rejects this case.
+        let err = s.execute("solvercraft.validate", json!({"objective":"B1","variables":"A1"})).unwrap_err();
         assert!(err.to_string().to_lowercase().contains("blank"), "{err}");
         assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
     }
 }
 #[test]
-fn named_blank_min_argument_is_also_rejected() {
+fn named_blank_min_keeps_calc_provenance_and_optimization_remains_explicit() {
     let mut s = session();
     set(&mut s, "A1", "1");
     s.execute("formulas.defineName", json!({"name":"BlankInput","refersTo":"=Sheet1!A2"})).unwrap();
     set(&mut s, "B1", "=MIN(A1,BlankInput)");
-    let error = s.execute("solvercraft.simulate", constant_simulation("A1", "B1", 5.0)).unwrap_err();
+    let result = s.execute("solvercraft.simulate", constant_simulation("A1", "B1", 5.0)).unwrap();
+    assert_eq!(result["result"]["summaries"][0]["mean"], json!(5.0));
+    assert!(result["result"]["samples"].as_array().unwrap().iter().all(|row| row == &json!([5.0])));
+    let error = s.execute("solvercraft.validate", json!({"objective":"B1","variables":"A1"})).unwrap_err();
     assert!(error.to_string().to_lowercase().contains("blank"));
 }
 #[test]

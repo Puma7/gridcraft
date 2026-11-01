@@ -8,6 +8,8 @@ license.workspace = true
 [dependencies]
 solvercraft-types.workspace = true
 solvercraft-model.workspace = true
+serde.workspace = true
+clarabel = { version = "=0.11.1", default-features = false, features = ["serde"] }
 
 [lints]
 workspace = true

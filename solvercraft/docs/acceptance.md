@@ -4,7 +4,7 @@ Last updated: 2026-10-31. Status: acceptance specification.
 
 These cases define independent checks for the initial core and later host integration. A row below is not a passing-test claim. Executed test names, results, code revision, toolchain and target belong in the integration test report. Features outside the implemented capability set must return an explicit unsupported error rather than a placeholder answer.
 
-The current scope and unresolved gates are described in [reference.md](reference.md).
+The current implementation assessment and unresolved gates are described in [acceptance-current.md](qa/acceptance-current.md) and the [pinned reference freeze](implementation/reference-freeze.md). [reference.md](reference.md) preserves the initial historical dependency/scope observations.
 
 ## Numerical comparison rules
 
@@ -42,7 +42,7 @@ Serialization tests must cover semantic validation. Serde deriving alone is not 
 | SC-L08 | R027 | Integer-rounding/big-M trap | A value within integrality tolerance is not blindly rounded into a violated constraint |
 | SC-L09 | R024 | Limited search with and without a feasible incumbent | Honest partial result; no proof created by budget exhaustion |
 | SC-L10 | R089 | Large proposed tableau/nonzero expansion and checked arithmetic boundaries | Reject before allocation when the configured budget is exceeded |
-| SC-L11 | R012-R013 | Permuted constraints/variables and duplicate linear terms | Equivalent objective/feasibility; stable origin mapping and no foreign-index aliasing |
+| SC-L11 | R012-R013 | Permuted constraints/variables and exactly representable duplicate linear aggregates | Equivalent objective/feasibility; stable origin mapping and no foreign-index aliasing; nonrepresentable raw aggregates fail explicitly with numeric_range |
 
 For SC-L08, a simple validation trap is x<=10^7*b with a reported tiny positive binary value. Rounding b to zero changes the allowed x. Validate exactly the assignment that would be displayed/applied. The test need not rely on a particular backend actually producing that assignment.
 

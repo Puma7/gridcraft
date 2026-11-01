@@ -67,6 +67,21 @@ const MAX_POPULATION: usize = 1000;
 const PRECISION: f64 = 1e-6;
 const EPS: f64 = 1e-9;
 
+/// Metadata-only compatibility export. Reuses the legacy parser/writer without
+/// running an optimization or changing the legacy Solver command's behavior.
+pub(crate) fn export_saved_model(s: &mut Session, params: &Json, apply: bool) -> Result<Json> {
+    let model = parse_model(s, params)?;
+    let canonical = model_params(&s.doc()?.wb, &model);
+    if apply {
+        edit(s, |cx| {
+            save_model(&mut cx.wb, &model);
+            cx.structural = true;
+            Ok(())
+        })?;
+    }
+    Ok(canonical)
+}
+
 pub fn specs() -> Vec<CommandSpec> {
     vec![
         cmd!(

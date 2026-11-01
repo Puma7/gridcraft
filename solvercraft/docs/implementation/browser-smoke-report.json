@@ -1,0 +1,37 @@
+{
+  "schema": "solvercraft.browser-smoke.v1",
+  "driver_sha256": "95ae04aebd7daf845dce58d42139f0acbf1a5172fd480db328ea70bdc6301790",
+  "runner_sha256": "c7b8d6109c485cee209ca616e500efc5311bb47e56eac5888c3afcb342dacbd9",
+  "browser": "$BROWSER_ROOT\\chrome.exe",
+  "endpoint": "$LOCAL_ENDPOINT",
+  "actual_browser": true,
+  "webdriver": {
+    "build": {
+      "version": "156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705})"
+    },
+    "message": "ChromeDriver ready for new sessions.",
+    "os": {
+      "arch": "x86_64",
+      "name": "Windows NT",
+      "version": "10.0.26200"
+    },
+    "ready": true
+  },
+  "command": [
+    "$TOOLCHAINS_ROOT\\toolchains\\1.95.0-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+    "test",
+    "--manifest-path",
+    "$SDK_ROOT\\tests\\wasm-smoke\\Cargo.toml",
+    "--target",
+    "wasm32-unknown-unknown",
+    "--locked",
+    "--test",
+    "browser",
+    "--",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "output": "   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\\crates\\math)\n   Compiling solvercraft-compile v0.1.0 ($SDK_ROOT\\crates\\compile)\n   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\\crates\\engines)\n   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\\crates\\simulation)\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_compile-39ei5vesle1hm\\s-hnq6vhxmt0-1wpiptq-working`\n\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_engines-2ntb7vcxoj93c\\s-hnq6vicnxb-0ky9tzr-working`\n\nwarning: `solvercraft-compile` (lib) generated 1 warning\n   Compiling solvercraft v0.1.0 ($SDK_ROOT\\crates\\solvercraft)\nwarning: `solvercraft-engines` (lib) generated 1 warning\n   Compiling solvercraft-wasm-smoke v0.1.0 ($SDK_ROOT\\tests\\wasm-smoke)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.07s\n     Running tests\\browser.rs ($BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\deps\\browser-5869458c33285398.wasm)\nSet WASM_BINDGEN_TEST_TIMEOUT to 60 seconds...\nRunning headless tests in Chrome on `$LOCAL_ENDPOINT/`\nTry find `webdriver.json` for configure browser's capabilities:\nOk\n[2026-10-31T14:33:54Z WARN  ureq::unversioned::transport::no_proxy] Enable feature socks-proxy to use proxy\n                                    configured by environment variables\nLoading Wasm module...\nusing deprecated parameters for the initialization function; pass a single object instead\n\nrunning 8 tests\nInvoking test: browser_solves_wyndor_and_validates_original_constraints\ntest browser_solves_wyndor_and_validates_original_constraints ... ok\nInvoking test: browser_samples_deterministically_with_loss_tail_statistics\ntest browser_samples_deterministically_with_loss_tail_statistics ... ok\nInvoking test: browser_rejects_native_thread_jobs_without_panicking\ntest browser_rejects_native_thread_jobs_without_panicking ... ok\nInvoking test: browser_optimizes_finite_scenario_tail_risk\ntest browser_optimizes_finite_scenario_tail_risk ... ok\nInvoking test: browser_latin_hypercube_preserves_all_strata\ntest browser_latin_hypercube_preserves_all_strata ... ok\nInvoking test: browser_honors_binary_domains\ntest browser_honors_binary_domains ... ok\nInvoking test: browser_handles_large_seed_json_without_javascript_precision_loss\ntest browser_handles_large_seed_json_without_javascript_precision_loss ... ok\nInvoking test: browser_autodiff_rejects_a_nondifferentiable_point\ntest browser_autodiff_rejects_a_nondifferentiable_point ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 filtered out; finished in 0.05s\n\n",
+  "driver_output": "Starting ChromeDriver 156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705}) on port 53444\nOnly local connections are allowed.\nPlease see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.\nChromeDriver was started successfully on port 53444.\n",
+  "elapsed_seconds": 17.656074800004717
+}

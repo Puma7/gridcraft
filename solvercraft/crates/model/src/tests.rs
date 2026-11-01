@@ -126,7 +126,7 @@ fn lengths_nonfinite_values_and_overflow_are_structured_errors() {
     assert_eq!(evaluate_objective(&model(), &[f64::NAN, 0.0]).unwrap_err().code, "non_finite");
     let mut m = model();
     m.objective.linear[0].coefficient = 1e308;
-    assert_eq!(evaluate_objective(&m, &[10.0, 0.0]).unwrap_err().code, "non_finite");
+    assert_eq!(evaluate_objective(&m, &[10.0, 0.0]).unwrap_err().code, "numeric_range");
 }
 #[test]
 fn large_finite_objective_is_valid_arithmetic() {

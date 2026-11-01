@@ -1,0 +1,457 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+ Downloading crates ...
+  Downloaded smol_str v0.2.2
+  Downloaded wgpu-naga-bridge v30.0.1
+  Downloaded windows-threading v0.2.1
+  Downloaded windows-numerics v0.3.1
+  Downloaded xml-rs v0.8.29
+  Downloaded presser v0.3.1
+  Downloaded litrs v1.0.0
+  Downloaded half v2.7.1
+  Downloaded wgpu-types v30.0.1
+  Downloaded glow v0.17.0
+  Downloaded dpi v0.1.2
+  Downloaded codespan-reporting v0.13.1
+  Downloaded allocator-api2 v0.2.21
+  Downloaded accesskit_consumer v0.39.1
+  Downloaded unicode-width v0.2.2
+  Downloaded windows-core v0.62.2
+  Downloaded wgpu v30.0.1
+  Downloaded static_assertions v1.1.0
+  Downloaded spirv v0.4.0+sdk-1.4.341.0
+  Downloaded range-alloc v0.1.5
+  Downloaded getopts v0.2.24
+  Downloaded dify v0.8.0
+  Downloaded colored v2.2.0
+  Downloaded bit-vec v0.9.1
+  Downloaded wgpu-hal v30.0.1
+  Downloaded wgpu-core v30.0.1
+  Downloaded windows-interface v0.59.3
+  Downloaded windows-implement v0.60.2
+  Downloaded windows-future v0.3.2
+  Downloaded tracing v0.1.44
+  Downloaded ash v0.38.0+1.3.281
+  Downloaded windows-collections v0.3.2
+  Downloaded wgpu-core-deps-windows-linux-android v30.0.1
+  Downloaded type-map v0.5.1
+  Downloaded tracing-attributes v0.1.31
+  Downloaded khronos_api v3.1.0
+  Downloaded rustc-hash v2.1.3
+  Downloaded renderdoc-sys v1.1.0
+  Downloaded raw-window-handle v0.6.2
+  Downloaded ordered-float v5.5.0
+  Downloaded open v5.4.4
+  Downloaded gpu-allocator v0.28.0
+  Downloaded glutin_wgl_sys v0.6.1
+  Downloaded gl_generator v0.14.0
+  Downloaded cfg_aliases v0.2.2
+  Downloaded bit-set v0.10.0
+  Downloaded tracing-core v0.1.36
+  Downloaded libc v0.2.190
+  Downloaded termcolor v1.4.1
+  Downloaded rustc-hash v1.1.0
+  Downloaded naga v30.0.1
+  Downloaded pollster v1.0.1
+  Downloaded pkg-config v0.3.34
+  Downloaded naga-types v30.0.1
+  Downloaded libloading v0.8.9
+  Downloaded kittest v0.5.0
+  Downloaded khronos-egl v6.0.0
+  Downloaded document-features v0.2.12
+  Downloaded cursor-icon v1.2.0
+  Downloaded windows-sys v0.52.0
+  Downloaded windows v0.62.2
+    Blocking waiting for file lock on package cache
+   Compiling libm v0.2.16
+   Compiling log v0.4.34
+   Compiling foldhash v0.2.0
+   Compiling smallvec v1.16.2
+   Compiling once_cell v1.21.4
+   Compiling arrayvec v0.7.8
+   Compiling stable_deref_trait v1.2.1
+   Compiling zerocopy v0.8.61
+   Compiling cfg_aliases v0.2.2
+   Compiling num-traits v0.2.19
+   Compiling windows-strings v0.5.1
+   Compiling windows-result v0.4.1
+   Compiling writeable v0.6.4
+   Compiling serde_core v1.0.229
+   Compiling scopeguard v1.2.0
+   Compiling profiling v1.0.18
+   Compiling khronos_api v3.1.0
+   Compiling zerocopy-derive v0.8.61
+   Compiling thiserror v2.0.21
+   Compiling bytemuck v1.25.2
+   Compiling windows-implement v0.60.2
+   Compiling windows-interface v0.59.3
+   Compiling zerofrom v0.1.8
+   Compiling linebender_resource_handle v0.1.1
+   Compiling unicode-width v0.2.2
+   Compiling parking_lot_core v0.9.12
+   Compiling hashbrown v0.17.1
+   Compiling rustc-hash v1.1.0
+   Compiling polycool v0.4.0
+   Compiling xml-rs v0.8.29
+   Compiling fearless_simd v0.4.1
+   Compiling naga v30.0.1
+   Compiling windows-threading v0.2.1
+   Compiling lock_api v0.4.14
+   Compiling libloading v0.8.9
+   Compiling libc v0.2.190
+   Compiling cobs v0.3.0
+   Compiling font-types v0.12.6
+   Compiling yoke v0.8.4
+   Compiling color v0.3.3
+   Compiling serde v1.0.229
+   Compiling litemap v0.8.3
+   Compiling serde_json v1.0.154
+   Compiling emath v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling indexmap v2.14.2
+   Compiling kurbo v0.13.1
+   Compiling parking_lot v0.12.5
+   Compiling ash v0.38.0+1.3.281
+   Compiling bit-vec v0.9.1
+   Compiling uuid v1.27.0
+   Compiling unicode-bidi v0.3.18
+   Compiling codespan-reporting v0.13.1
+   Compiling read-fonts v0.41.0
+   Compiling unicode-general-category v1.1.0
+   Compiling windows_x86_64_msvc v0.52.6
+   Compiling zerovec v0.11.9
+   Compiling postcard v1.1.3
+   Compiling ecolor v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+   Compiling naga-types v30.0.1
+   Compiling windows-sys v0.61.2
+   Compiling peniko v0.6.1
+   Compiling gl_generator v0.14.0
+   Compiling accesskit v0.25.1
+   Compiling bit-set v0.10.0
+   Compiling spirv v0.4.0+sdk-1.4.341.0
+   Compiling raw-window-handle v0.6.2
+   Compiling nohash-hasher v0.2.0
+   Compiling unicode-properties v0.1.4
+   Compiling self_cell v1.3.0
+   Compiling epaint_default_fonts v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling unicode-segmentation v1.13.3
+   Compiling static_assertions v1.1.0
+   Compiling allocator-api2 v0.2.21
+   Compiling khronos-egl v6.0.0
+   Compiling tinystr v0.8.4
+   Compiling zerotrie v0.2.5
+   Compiling potential_utf v0.1.6
+   Compiling crossbeam-utils v0.8.23
+   Compiling windows-targets v0.52.6
+   Compiling euclid v0.22.14
+   Compiling chrono v0.4.45
+   Compiling wgpu-hal v30.0.1
+   Compiling getrandom v0.2.17
+   Compiling presser v0.3.1
+   Compiling untrusted v0.9.0
+   Compiling crossbeam-epoch v0.9.21
+   Compiling wgpu-types v30.0.1
+   Compiling windows-core v0.62.2
+   Compiling hashbrown v0.16.1
+   Compiling glutin_wgl_sys v0.6.1
+   Compiling zeroize v1.9.1
+   Compiling icu_locale_core v2.3.0
+   Compiling zopfli v0.8.3
+   Compiling windows-sys v0.59.0
+   Compiling moxcms v0.8.1
+   Compiling ordered-float v5.5.0
+   Compiling generic-array v0.14.7
+   Compiling guillotiere v0.7.0
+   Compiling itertools v0.15.0
+   Compiling glow v0.17.0
+   Compiling harfrust v0.12.0
+   Compiling gridcraft-core v0.14.2 ($CHECKOUT_ROOT\crates\core)
+   Compiling skrifa v0.44.0
+   Compiling windows-future v0.3.2
+   Compiling windows-collections v0.3.2
+   Compiling windows-numerics v0.3.1
+   Compiling rustls-pki-types v1.15.1
+   Compiling icu_provider v2.3.1
+   Compiling vello_common v0.2.0
+   Compiling gridcraft-formula v0.14.2 ($CHECKOUT_ROOT\crates\formula)
+   Compiling ring v0.17.14
+   Compiling windows v0.62.2
+   Compiling crossbeam-deque v0.8.8
+   Compiling renderdoc-sys v1.1.0
+   Compiling range-alloc v0.1.5
+   Compiling utf8_iter v1.0.4
+   Compiling getrandom v0.4.3
+   Compiling icu_locale_fallback_data v2.3.0
+   Compiling image v0.25.10
+   Compiling amd v0.2.2
+   Compiling vello_cpu v0.2.0
+   Compiling gridcraft-model v0.14.2 ($CHECKOUT_ROOT\crates\model)
+   Compiling solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+   Compiling serde-big-array v0.5.1
+   Compiling icu_collections v2.3.0
+   Compiling fixed_decimal v0.7.3
+   Compiling wgpu-core v30.0.1
+   Compiling rustls-webpki v0.103.16
+   Compiling bytes v1.12.1
+   Compiling rayon-core v1.13.0
+   Compiling litrs v1.0.0
+   Compiling subtle v2.6.1
+   Compiling clarabel v0.11.1
+   Compiling http v1.5.0
+   Compiling rustls v0.23.46
+   Compiling icu_locale_fallback v2.3.0
+   Compiling gridcraft-functions v0.14.2 ($CHECKOUT_ROOT\crates\functions)
+   Compiling icu_normalizer_data v2.3.0
+   Compiling icu_properties_data v2.3.0
+   Compiling httparse v1.10.1
+   Compiling gridcraft-numfmt v0.14.2 ($CHECKOUT_ROOT\crates\numfmt)
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling document-features v0.2.12
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+   Compiling wgpu v30.0.1
+   Compiling fastrand v2.5.0
+   Compiling base64 v0.23.1
+   Compiling utf16_iter v1.0.5
+   Compiling anyhow v1.0.104
+   Compiling write16 v1.0.0
+   Compiling tempfile v3.27.0
+   Compiling digest v0.10.7
+   Compiling ureq-proto v0.6.5
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+   Compiling icu_normalizer v2.3.0
+   Compiling icu_properties v2.3.0
+   Compiling gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+   Compiling rustls-platform-verifier v0.7.1
+   Compiling icu_provider_adapters v2.3.0
+   Compiling ahash v0.8.12
+   Compiling half v2.7.1
+   Compiling icu_plurals v2.3.0
+   Compiling icu_decimal v2.3.0
+   Compiling solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+   Compiling epaint v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling gpu-allocator v0.28.0
+   Compiling icu_provider_blob v2.3.0
+   Compiling zip v3.0.0
+   Compiling windows-registry v0.6.1
+   Compiling utf8-zero v0.8.1
+   Compiling typed-path v0.13.0
+   Compiling sys-locale v0.3.2
+   Compiling cpufeatures v0.2.17
+   Compiling rustc-hash v2.1.3
+   Compiling percent-encoding v2.3.2
+   Compiling craft-i18n v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+   Compiling sha2 v0.10.9
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+   Compiling egui v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling zip v9.1.0
+   Compiling ureq v3.5.0
+   Compiling type-map v0.5.1
+   Compiling rayon v1.12.0
+   Compiling gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+   Compiling getrandom v0.3.4
+   Compiling winreg v0.55.0
+   Compiling colored v2.2.0
+   Compiling verifysign v1.0.1
+   Compiling accesskit_consumer v0.39.1
+   Compiling toml_parser v1.1.3+spec-1.1.0
+   Compiling getopts v0.2.24
+   Compiling semver v1.0.28
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling winsafe v0.0.29
+   Compiling craft-fonts-build v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling dunce v1.0.5
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+   Compiling toml v1.1.6+spec-1.1.0
+   Compiling dify v0.8.0
+   Compiling kittest v0.5.0
+   Compiling craft-ui v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling wgpu-naga-bridge v30.0.1
+   Compiling craft-window v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling pollster v1.0.1
+   Compiling open v5.4.4
+   Compiling craft-update v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+   Compiling egui-wgpu v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling egui_kittest v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 51s
+     Running tests\solvercraft_acceptance.rs ($BUILD_OUTPUT\host-validation\debug\deps\solvercraft_acceptance-02cff7c4772d03df.exe)
+
+running 3 tests
+test pane_command_honors_visibility_and_german_controls ... FAILED
+test ribbon_opens_the_real_pane_after_solver ... FAILED
+test pane_preview_requires_apply_and_reverts_in_one_undo_step ... FAILED
+
+failures:
+
+---- pane_command_honors_visibility_and_german_controls stdout ----
+
+thread 'pane_command_honors_visibility_and_german_controls' (131936) panicked at crates\ui-egui\tests\solvercraft_acceptance.rs:68:15:
+Found two or more nodes matching the query: 
+By {
+    label: "Zielzelle oder Formel",
+}
+
+First node:
+Node {
+    id: FullNodeId(
+        TreeIndex(
+            0,
+        ),
+        #14706653735471952988,
+    ),
+    role: Label,
+    value: "Zielzelle oder Formel",
+    focused: false,
+    hidden: false,
+    disabled: false,
+    children: [
+        Node {
+            id: FullNodeId(
+                TreeIndex(
+                    0,
+                ),
+                #16453103845459658148,
+            ),
+            role: TextRun,
+            value: "Zielzelle oder Formel",
+            focused: false,
+            hidden: false,
+            disabled: false,
+            children: [],
+        },
+    ],
+}
+
+Second node: Node {
+    id: FullNodeId(
+        TreeIndex(
+            0,
+        ),
+        #15420656790253900113,
+    ),
+    role: TextInput,
+    label: "Zielzelle oder Formel",
+    value: "B1",
+    focused: false,
+    hidden: false,
+    disabled: false,
+    children: [
+        Node {
+            id: FullNodeId(
+                TreeIndex(
+                    0,
+                ),
+                #11547881533272301200,
+            ),
+            role: TextRun,
+            value: "B1",
+            focused: false,
+            hidden: false,
+            disabled: false,
+            children: [],
+        },
+    ],
+}
+
+If you were expecting multiple nodes, use query_all instead of query.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ribbon_opens_the_real_pane_after_solver stdout ----
+
+thread 'ribbon_opens_the_real_pane_after_solver' (127248) panicked at crates\ui-egui\tests\solvercraft_acceptance.rs:35:15:
+Found two or more nodes matching the query: 
+By {
+    label: "Objective cell or formula",
+}
+
+First node:
+Node {
+    id: FullNodeId(
+        TreeIndex(
+            0,
+        ),
+        #14706653735471952988,
+    ),
+    role: Label,
+    value: "Objective cell or formula",
+    focused: false,
+    hidden: false,
+    disabled: false,
+    children: [
+        Node {
+            id: FullNodeId(
+                TreeIndex(
+                    0,
+                ),
+                #16453103845459658148,
+            ),
+            role: TextRun,
+            value: "Objective cell or formula",
+            focused: false,
+            hidden: false,
+            disabled: false,
+            children: [],
+        },
+    ],
+}
+
+Second node: Node {
+    id: FullNodeId(
+        TreeIndex(
+            0,
+        ),
+        #15420656790253900113,
+    ),
+    role: TextInput,
+    label: "Objective cell or formula",
+    value: "B1",
+    focused: false,
+    hidden: false,
+    disabled: false,
+    children: [
+        Node {
+            id: FullNodeId(
+                TreeIndex(
+                    0,
+                ),
+                #11547881533272301200,
+            ),
+            role: TextRun,
+            value: "B1",
+            focused: false,
+            hidden: false,
+            disabled: false,
+            children: [],
+        },
+    ],
+}
+
+If you were expecting multiple nodes, use query_all instead of query.
+
+---- pane_preview_requires_apply_and_reverts_in_one_undo_step stdout ----
+
+thread 'pane_preview_requires_apply_and_reverts_in_one_undo_step' (139020) panicked at crates\ui-egui\tests\solvercraft_acceptance.rs:54:5:
+assertion `left == right` failed
+  left: Number(2.0)
+ right: Number(10.0)
+
+
+failures:
+    pane_command_honors_visibility_and_german_controls
+    pane_preview_requires_apply_and_reverts_in_one_undo_step
+    ribbon_opens_the_real_pane_after_solver
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+error: test failed, to rerun pass `-p gridcraft-ui-egui --test solvercraft_acceptance`

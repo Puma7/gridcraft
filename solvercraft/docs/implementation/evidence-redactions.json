@@ -1,0 +1,554 @@
+{
+  "mode": "applied",
+  "files": 77,
+  "policy": [
+    "portable path placeholders",
+    "no user/device identity or ephemeral endpoint",
+    "nonessential environment omitted",
+    "requested nonidentifying hardware dimensions retained",
+    "test outcomes, versions, seeds, errors, source/binary hashes preserved"
+  ],
+  "records": [
+    {
+      "path": "solvercraft/docs/implementation/browser-app-canvas-ready-report.json",
+      "raw_sha256": "9b0d6d8d8ce961a9a41ac939c405a85856d565ff267cb30c5631d04606c2feb0",
+      "public_sha256": "6c0207226e1a5895f0a9f7856eeec8cf986f513fa9746b8bf5145c1680616547",
+      "raw_bytes": 18486,
+      "public_bytes": 18179
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-app-canvas-report.json",
+      "raw_sha256": "6230f84f073be7bb5b615f428bed3cbc095587c48d5ba8454a4b25f5ddd89d2b",
+      "public_sha256": "6c6270d402ba0f9dd7a491c6df1e1c2c5cc5d8b5d8cc6e035ebce0131d32a508",
+      "raw_bytes": 18479,
+      "public_bytes": 18172
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-app-data-ribbon-report.json",
+      "raw_sha256": "3d87a528771018515921405fcdda0127b7dbd251a4a299ee66f9fc80ddee4f1c",
+      "public_sha256": "eedd176f04adee772f14258a6f4745d4fcde95675d5a54a82eb3ecb931bc7aaf",
+      "raw_bytes": 18646,
+      "public_bytes": 18335
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-app-solvercraft-pane-report.json",
+      "raw_sha256": "b277451f331632787b99b24cb44b92ff3fb348d62289c0d7fc0aab90869abfc3",
+      "public_sha256": "7ecfe422d9077670becdec2e90e3d9cb27681389ad559bdfbe8ea1558d4b06d9",
+      "raw_bytes": 18669,
+      "public_bytes": 18357
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-clarabel-report.json",
+      "raw_sha256": "11af6223b98efb913816a8cbbd26248d496239331e1198dc1908a28f5dcb07d0",
+      "public_sha256": "a1850268902cb80867d54eb29ef6a9cd5d0d7234e2697315e103ea91c07c6da4",
+      "raw_bytes": 7876,
+      "public_bytes": 7279
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-expanded-report.json",
+      "raw_sha256": "dfb2b00be808167fef5c35decbd3921d9e9c0f6eda4a7f65c0ef1f82d5b33135",
+      "public_sha256": "17760ce0659645f900cb5f95ccdcedd9590ac6f46d32e4ab410107bfd25aeb42",
+      "raw_bytes": 20302,
+      "public_bytes": 19623
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-final-report.json",
+      "raw_sha256": "c5aece380bc6a7a6dd2cb7fb6fea31a8c6ca6cf69bea029f7d76c25b4b176011",
+      "public_sha256": "22530d649884b27f8a168d168dd72dab952ec2d6e990cec3ad55507ddb03100b",
+      "raw_bytes": 22597,
+      "public_bytes": 21884
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-report.json",
+      "raw_sha256": "f0803150b30568b9f22bae5c4ceef5474012f8afba9b25d4b1aa733a1a01f121",
+      "public_sha256": "eb71c1d53d67dbe99fa374315154deec346d58a54de81675646b9da6563fde1d",
+      "raw_bytes": 4880,
+      "public_bytes": 4426
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-smoke-sobol64-report.json",
+      "raw_sha256": "d068ce75fab695ed100bbdb2077020e585c4ccccc6ba3db412eb7a4e7779a73e",
+      "public_sha256": "8099b96513666c9e3402ad096c79b4665f067944e20c1f1e2f02288ea0334236",
+      "raw_bytes": 25266,
+      "public_bytes": 24384
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-app-report.json",
+      "raw_sha256": "91792dd7946c56cff67246c2122f3bda8edd70c9e9725b334fa7907c8b1eda39",
+      "public_sha256": "12c55204170d479088b7e815093cb3a01617c4e87cad76a56ab63545231d8d49",
+      "raw_bytes": 19195,
+      "public_bytes": 18890
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-final-report.json",
+      "raw_sha256": "55bcc1d79fa3c6d71ae138989b559a3dce8163564e4874c5affbfcd8e951c244",
+      "public_sha256": "f0a993df76f6e7cf4238b3a0fe31eec170525b057fb3c8d78dee44d93b959e84",
+      "raw_bytes": 22794,
+      "public_bytes": 22404
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-native-transport-report.json",
+      "raw_sha256": "608205d3ea162d61aedaf0b66186be6a5762579f364e406760dcd6b6d02065b9",
+      "public_sha256": "9df052cbf91558be6c98978e5473fcf868d8ea80331e3511ddef309cf9fa4076",
+      "raw_bytes": 18344,
+      "public_bytes": 18069
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-ordered-preview-report.json",
+      "raw_sha256": "844e6605534e5f89867c1e593258691d869b360ba2699efce446eef1968cbdf7",
+      "public_sha256": "14635b43ca77738b9126afbc348b8374c0fab1554d5deaf1879cbf605409de46",
+      "raw_bytes": 22009,
+      "public_bytes": 21681
+    },
+    {
+      "path": "solvercraft/docs/implementation/browser-worker-report.json",
+      "raw_sha256": "1209b181f9282fc934484c3f20a46e72320d4a1ebc928c9a3efd0f7fc8348fc8",
+      "public_sha256": "6b7cc5a23ae477f77bb74392730cf4b90ee76956774aef5088bfa99cb9d974b6",
+      "raw_bytes": 38172,
+      "public_bytes": 37267
+    },
+    {
+      "path": "solvercraft/docs/implementation/dependency-inventory.features.txt",
+      "raw_sha256": "b0a2114c2dfbef4f9c17734042d56ffe77064184aa8901f68dbc870b3f561613",
+      "public_sha256": "e0a7db59ca0d64c4f5abef2b6d26508d433f44c4ea95d4f124fe390dd5b59e48",
+      "raw_bytes": 23759,
+      "public_bytes": 23219
+    },
+    {
+      "path": "solvercraft/docs/implementation/dependency-inventory.json",
+      "raw_sha256": "cc04f06b5e1d74cb3a6e533534316bdb7848376323f289b6500aa1f441ba5765",
+      "public_sha256": "389e773e1ef6f9262c1f3d1f98999157dbfe2b9cce2794c55475b5e1f643e34b",
+      "raw_bytes": 63716,
+      "public_bytes": 59679
+    },
+    {
+      "path": "solvercraft/docs/implementation/frozen-final-source-report.json",
+      "raw_sha256": "4069343017fe44b69f4ca5548955d17929c0a3d045e76905995c8a5466a30f32",
+      "public_sha256": "471373d206a6efb48c54027537c9db45e4aa3925703a5703155064072cac53a0",
+      "raw_bytes": 122738,
+      "public_bytes": 121601
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/host/host-charts.txt",
+      "raw_sha256": "f1f7f37968bf82f2a783d51bf3016fe9c9c7738cd5f7ed35f2fb96a8918d6c08",
+      "public_sha256": "143fd0cdc5dcaea82a1ba7f771fd902d9c282517ac499ec67c91a98b0a453dc2",
+      "raw_bytes": 8908,
+      "public_bytes": 8547
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/host/host-ci.txt",
+      "raw_sha256": "6a81c52f2779ec226c5029ec78b2532fc24cd59cd4712404b3198e4a0998bd1b",
+      "public_sha256": "fcac6800eef406621463412df45c0b662c0523721b0393649c5fa9a7d4bfb89f",
+      "raw_bytes": 284927,
+      "public_bytes": 281001
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/host/host-ui.txt",
+      "raw_sha256": "61d68817b3ed626e1cd7fccd3297fde2f8bdae5359bffc0070028fa3780e6238",
+      "public_sha256": "4b5cdd200d40190139b51a4941a3ad07ab7e9c03c52102ea4eb14665360b1ea2",
+      "raw_bytes": 9132,
+      "public_bytes": 8661
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/host/report.json",
+      "raw_sha256": "87adb1f3e5e64f64a30f1f008ea273d1ad847e211ed6ce308c645023fb9a050f",
+      "public_sha256": "672985d2334492bba9d4fb90066bb8e19994a5e7123375366f5763c7e4b3013e",
+      "raw_bytes": 393434,
+      "public_bytes": 388406
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/host/summary.json",
+      "raw_sha256": "edd46c9fab1ec69bb57552afc8aef9bbc812e553da263466f953fd2f72774d63",
+      "public_sha256": "2f67a8b3f6ea01e9af269f12e516c42577f64f10e3f95794872fc0dce16e05a3",
+      "raw_bytes": 2906,
+      "public_bytes": 2688
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/sdk/report.json",
+      "raw_sha256": "41de405cf39e39c8407ab97a1fb8ff59a177680d36b5241887294d46830a6fc3",
+      "public_sha256": "7e31a9850c86886a1d4cdf7584fe78d70e06e1db6058f6bc0fb957793410e0a2",
+      "raw_bytes": 393431,
+      "public_bytes": 388359
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/sdk/sdk-clippy.txt",
+      "raw_sha256": "345f9f39fc17b9e9138767b6415e4990eea17ef9768c70bab760e27f29caff5f",
+      "public_sha256": "92f383241260005e0ad76fe582a8b71db28d7dcf21d772ec76dfc527ae5837ae",
+      "raw_bytes": 29343,
+      "public_bytes": 27810
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/sdk/sdk-tests.txt",
+      "raw_sha256": "540fcc9b84d3173008c8173a820afc85ee41b06a51abba3a04f03634c9804889",
+      "public_sha256": "d6e9c9b8a8ebd496246d02bbfa1844f927c5f0b645b754f09605d10eaa6d3d35",
+      "raw_bytes": 93672,
+      "public_bytes": 90866
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-final/sdk/summary.json",
+      "raw_sha256": "2c2572a1384bb381725a9d2a21e8c5559894eb2aa408aef57a4a67b111647a49",
+      "public_sha256": "323624141c97bf9be5d43d4be6ac8ef93ecee4487eed628dc825395cdd8e13d6",
+      "raw_bytes": 2485,
+      "public_bytes": 2233
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host/host-ci.log",
+      "raw_sha256": "c9e07735d9937a93ed63132aebb2d04c9c184be535f394c6e6600df9e118cb75",
+      "public_sha256": "8a82a4ce472dde104d73ae081187718af13689d33a1db6977ecb782e5b2bcca6",
+      "raw_bytes": 5727,
+      "public_bytes": 5255
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host/host-ui.log",
+      "raw_sha256": "8e50fd8dbfb874bf0775bc03f644e17ec82680f536f2ca7398a84a8aab0306e4",
+      "public_sha256": "8f791d260b639eba9dc9d063bbdb74584b61c9547d7ab091df986b0f93d642f7",
+      "raw_bytes": 16546,
+      "public_bytes": 16068
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host/report.json",
+      "raw_sha256": "ec49fad608b0e978a0c554aa2e6a8d272204f8808564c9d89d8e92d9a7d19a9c",
+      "public_sha256": "9ae894d4a915925b4af51f0abc662334d45ac4de09409687e51ca279db4160f8",
+      "raw_bytes": 82860,
+      "public_bytes": 82043
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-assets.log",
+      "raw_sha256": "9043777ce3eff13c824000fbccd3ac21d64bb19de62738efe1a4c650c4c20d0e",
+      "public_sha256": "c1f3ede0abb9444365367d14998b06b5987000c4d95c517cb89c5ef9276ca015",
+      "raw_bytes": 9117,
+      "public_bytes": 8408
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-clippy.log",
+      "raw_sha256": "97de95397b7c95a039cfe1da7235e51644c997470f75fafcca107a2e0b12ca6f",
+      "public_sha256": "b50ff9444fac5f9c0afec4abd3079ad45bd5365ac6a58534bbe26e0ceedb5ad2",
+      "raw_bytes": 27238,
+      "public_bytes": 25637
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-doctests.log",
+      "raw_sha256": "c04933782ef19c0569e55dc299020415f0eb255140663526dc21bf5e97b6cac4",
+      "public_sha256": "b1e97654baa644e39e3c9aa7d7acad2df08379074fd93c7e5c7e6b605fbedd8b",
+      "raw_bytes": 10472,
+      "public_bytes": 9882
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-layers.log",
+      "raw_sha256": "d88cbdb35246be06a5f901e969faf8509808986813daa587e66d2d340cabca77",
+      "public_sha256": "eecf357f3001f110bed56430b4de53052eb5ad6b30cacead3be0bf015d1d208a",
+      "raw_bytes": 9486,
+      "public_bytes": 8916
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-tests.log",
+      "raw_sha256": "b195f0f77b538f4b34adefba25e628af003a7374216c35e16b486adcf72406f6",
+      "public_sha256": "1272f1990cc81a7fc9767279a700c389fbcbc78d3e4797e537de07140de27ab8",
+      "raw_bytes": 17516,
+      "public_bytes": 15854
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/host-ui.log",
+      "raw_sha256": "c3f6c18ffc61c8362481e3b80983fe6b21a5d6c1b4c65ae6b100541beb896104",
+      "public_sha256": "7c1419f9dbf3547bf3ad8b8ea37dcb52715144297659652b4e11bbf26c6e84bc",
+      "raw_bytes": 6535,
+      "public_bytes": 6079
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-fourth/report.json",
+      "raw_sha256": "14b6f1f009fbc2c1e7a54cc108cc1f428c9eedf7c1e007821507d4ad9eac0948",
+      "public_sha256": "e74736d2abb91fff1d338bc8e91e8be51cc606987998742728b554d5ea9ed6c4",
+      "raw_bytes": 175256,
+      "public_bytes": 173159
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-second/host-ci.log",
+      "raw_sha256": "e2304972c8653b4b1619694d5880d93b2b24395855b55045b36078bc781eaaec",
+      "public_sha256": "b5ad38e468a0e88d9a5aad584c9a19ecf1cb8b9392a472bccb5a77a85104fcdc",
+      "raw_bytes": 145391,
+      "public_bytes": 143237
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-second/host-ui.log",
+      "raw_sha256": "4913d5d05c853eea53f306c6d4619b892b163abf20a544918a437b252dbd9017",
+      "public_sha256": "809d0cd017001380a17d83cbc96323b5175f0c7d09ae1236e8b7636338fb02a3",
+      "raw_bytes": 4815,
+      "public_bytes": 4475
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-second/report.json",
+      "raw_sha256": "2dbb6e83071dd6e3d906cc84fb69f6400f5a0c656c182e61bbae7468cf0e1070",
+      "public_sha256": "f745fa51c99e942319c7bcf2611277d37b7af36ff7db16fe1b5f129fbdc0e6aa",
+      "raw_bytes": 84026,
+      "public_bytes": 83200
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-third/host-clippy.log",
+      "raw_sha256": "8c9c22572cfea657344b41e523ed4f79189027d3109f14fb96f92e20bf3ae3c6",
+      "public_sha256": "dd706c5ac55ba8bd6b8fbb8982c378a3171add5632c1f8ba8bf358d746a0335f",
+      "raw_bytes": 1240,
+      "public_bytes": 1220
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-third/host-ui.log",
+      "raw_sha256": "8c9c22572cfea657344b41e523ed4f79189027d3109f14fb96f92e20bf3ae3c6",
+      "public_sha256": "dd706c5ac55ba8bd6b8fbb8982c378a3171add5632c1f8ba8bf358d746a0335f",
+      "raw_bytes": 1240,
+      "public_bytes": 1220
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-third/host-wasm.log",
+      "raw_sha256": "897dc8b90689e5c2d77dacc3b5d49b7d3497c68b4785963b4ec48bbfdd9978a7",
+      "public_sha256": "3bc5fa7ec7a808cb8e4fd701ba9628807063746d6bcb49b504cbb0b5b42d5a36",
+      "raw_bytes": 15918,
+      "public_bytes": 14928
+    },
+    {
+      "path": "solvercraft/docs/implementation/gates-host-third/report.json",
+      "raw_sha256": "e5c35377388d9f7acc9130eb2331a62ae3eb7b814a1c41b9b041238e1430628c",
+      "public_sha256": "99bf1aecf80e8537bafa44e07d619cc53d3e0f53933a1ce78586a6836a948ca0",
+      "raw_bytes": 86155,
+      "public_bytes": 85117
+    },
+    {
+      "path": "solvercraft/docs/implementation/gridcraft.md",
+      "raw_sha256": "0f8c9c49953056453c22a43ef9838ac748cb3b1a70a0441b021541077a8b596b",
+      "public_sha256": "9d5d2eb7935159675d7ea935530161454e9cb1961f1afd727cafd903b4ef93d0",
+      "raw_bytes": 18853,
+      "public_bytes": 18856
+    },
+    {
+      "path": "solvercraft/docs/implementation/host-checkpoint.json",
+      "raw_sha256": "109c5e96b6a6ecf619a2fa019185e21d8ef21708fa76d47fbb2f164db661c8a5",
+      "public_sha256": "3ef1b865fcfaef4cdc1b24b31c6ab16ec05d83afdeaa281b72cbe040da201f27",
+      "raw_bytes": 12516,
+      "public_bytes": 12241
+    },
+    {
+      "path": "solvercraft/docs/implementation/linear-oracle-final-report.json",
+      "raw_sha256": "fbd8ca7835ef4d22885890981b68be7714871990f3bda6c1f87327caf1efc00b",
+      "public_sha256": "91f31e1052afd1f51395f42e2099880e64e51b032dd6064aea5bb6675660e960",
+      "raw_bytes": 4764,
+      "public_bytes": 4558
+    },
+    {
+      "path": "solvercraft/docs/implementation/linear-oracle-frozen-release-report.json",
+      "raw_sha256": "1bddb1521b5c1eade2333c853bfd374d2fa55a0d4abfe1472c9dafedd56dd420",
+      "public_sha256": "c10a1be84300e2ed40a4aed953dd758d2d6213947cf9edaee8fb84c7ea106d58",
+      "raw_bytes": 4751,
+      "public_bytes": 4545
+    },
+    {
+      "path": "solvercraft/docs/implementation/native-ui-controls-report.json",
+      "raw_sha256": "fd3f610db8cca12d021995f0d9fd4b0c86ac8af58a985604651167e48e4f1027",
+      "public_sha256": "49c597094802b0f127b85cc78e1c5f03e5ea90b751ff74f945ce8b0d9b147bcc",
+      "raw_bytes": 3262,
+      "public_bytes": 3088
+    },
+    {
+      "path": "solvercraft/docs/implementation/native-ui-focus-matrix-report.json",
+      "raw_sha256": "fd3f610db8cca12d021995f0d9fd4b0c86ac8af58a985604651167e48e4f1027",
+      "public_sha256": "49c597094802b0f127b85cc78e1c5f03e5ea90b751ff74f945ce8b0d9b147bcc",
+      "raw_bytes": 3262,
+      "public_bytes": 3088
+    },
+    {
+      "path": "solvercraft/docs/implementation/performance-debug-check.json",
+      "raw_sha256": "7df0023b96009c755791625a84389f9d690f33999b98538e5536bbe32931ab48",
+      "public_sha256": "f367f693f0ab240c0019d297465e0a110cf8aa64f126dbf245f71739f0878b2f",
+      "raw_bytes": 2836138,
+      "public_bytes": 2734391
+    },
+    {
+      "path": "solvercraft/docs/implementation/performance-final-report.json",
+      "raw_sha256": "af3aa4784554dccaee833e46025087a915ae1546bf1a2db5f7a35280d0e90a7f",
+      "public_sha256": "11f2feac8aa4d63008686707b401462e20c4809805026ba85f9473b614a0d6be",
+      "raw_bytes": 2852954,
+      "public_bytes": 2750777
+    },
+    {
+      "path": "solvercraft/docs/implementation/performance-frozen-release-report.json",
+      "raw_sha256": "86bc2216eae73c32a05d87690b76995533d692cbd67ed4da7eb1d53491791e0a",
+      "public_sha256": "530e7dced742d3372d5c543be8fa11a000098e9e0da06a0694dd7d504acd8baf",
+      "raw_bytes": 2844917,
+      "public_bytes": 2742941
+    },
+    {
+      "path": "solvercraft/docs/implementation/quadratic-oracle-debug-report.json",
+      "raw_sha256": "5aaf84076d9f276b029c1b12c408a8720e2a92d8e57472b6a301769278449aca",
+      "public_sha256": "daa08f60ccde81cc1d98db75ab8551b0cee520c7c527f11c081129bec50398dc",
+      "raw_bytes": 99669,
+      "public_bytes": 96152
+    },
+    {
+      "path": "solvercraft/docs/implementation/quadratic-oracle-final-report.json",
+      "raw_sha256": "54e77d821636f0ebf0d825eedfdc5680624e73ee8910ac30f77a95bc485f5e2a",
+      "public_sha256": "f4225b45ab5b3f4062d5993206022e920c8ce8b662a732c64c259054420cf440",
+      "raw_bytes": 105340,
+      "public_bytes": 101683
+    },
+    {
+      "path": "solvercraft/docs/implementation/quadratic-oracle-frozen-release-report.json",
+      "raw_sha256": "830e8ef81648a97b43b46e9b67ac4e90bfff48d03e57dfd0907b32f874dd72f1",
+      "public_sha256": "f64764e3e042e7f97f165ba1d1de1d1a63307c05c6fb44e69e64ced522f06c91",
+      "raw_bytes": 99696,
+      "public_bytes": 96179
+    },
+    {
+      "path": "solvercraft/docs/implementation/release-final-build-report.json",
+      "raw_sha256": "827a9793c51584ed429d9162cf9a0afcdb974e74fe56a865da7ebdaffe027d7a",
+      "public_sha256": "4d8bff1be69a6107f7b63d6b7acc80df17839b8b21abc9d79a905c06fd8bc473",
+      "raw_bytes": 391672,
+      "public_bytes": 386769
+    },
+    {
+      "path": "solvercraft/docs/implementation/robust-oracle-final-report.json",
+      "raw_sha256": "3f26f0d0b763e965e3d268a7d4d7025efd652137ced56702ac1abf9683a1ffe9",
+      "public_sha256": "ade7c87d9a48c492e8d64617f0976e0bee2887ebf6887e23b691603dee5e75b5",
+      "raw_bytes": 50269,
+      "public_bytes": 48207
+    },
+    {
+      "path": "solvercraft/docs/implementation/robust-oracle-fixed-debug-report.json",
+      "raw_sha256": "e1454520e59c1f27761958bbd0fba6a96b0e6003ab3cba5cc6f2cc8fc8fb5c77",
+      "public_sha256": "50169d1c8c9f657294cbd72b417f4cdc35e322f669adc1988d7961d25a099613",
+      "raw_bytes": 50269,
+      "public_bytes": 48207
+    },
+    {
+      "path": "solvercraft/docs/implementation/stochastic.md",
+      "raw_sha256": "a90e3e3b1f192880add7078bb2da9458541d8323566425ff9a36bbb589b4ac05",
+      "public_sha256": "dfe95d16615589de78f62a7cc6cb5fb02552321f60f745575e1a55073e0898e3",
+      "raw_bytes": 12854,
+      "public_bytes": 12822
+    },
+    {
+      "path": "solvercraft/docs/implementation/trunk-final-build-report.json",
+      "raw_sha256": "2e5403c0c10c05c0b7d15b5014013471a060127e530574a37e146f42c374c152",
+      "public_sha256": "bf36b1b4f018dfd505444d1d600d17664822ad86ab582a3b94dcf670ad1ac876",
+      "raw_bytes": 96462,
+      "public_bytes": 95036
+    },
+    {
+      "path": "solvercraft/docs/implementation/wasm-test-dependency-inventory.features.txt",
+      "raw_sha256": "f769097cfdef137c5fa63610ef072c7b8e5df7ef252cd5fcb436e62a9a3bee8a",
+      "public_sha256": "a19e1d942148319f176c37400c5f111cc9ed9e1dde972b22bad0786d22b5ea35",
+      "raw_bytes": 25071,
+      "public_bytes": 24775
+    },
+    {
+      "path": "solvercraft/docs/implementation/wasm-test-dependency-inventory.json",
+      "raw_sha256": "84c97c4ef5fc433123b5f0c8b58c4caeedc7e037371ccb711fac8262c2475628",
+      "public_sha256": "77290fea4935d77dfe97eee476f6d730ac984cf3fc4bdb50a351b939ee456b60",
+      "raw_bytes": 48417,
+      "public_bytes": 45784
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-dependency-inventory.features.txt",
+      "raw_sha256": "21ec62c4f9e4ad49a8d1fa059910f7b1bd29ad95d4639bd6d1831dc5fcfd73bc",
+      "public_sha256": "52c22d81f76250eee7f984e44482407448a8f1207e838a6b3da9b6e9cce006da",
+      "raw_bytes": 78932,
+      "public_bytes": 78454
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-dependency-inventory.json",
+      "raw_sha256": "a50207df97d6c0ee89ce62244c465fb346a9795a18086e5be5024d7ab1341524",
+      "public_sha256": "374f028e29ee7a73b79c425261afe8eb3421ec33125d7a56027215851a49449c",
+      "raw_bytes": 163630,
+      "public_bytes": 153805
+    },
+    {
+      "path": "solvercraft/docs/implementation/worker-browser-final-build-report.json",
+      "raw_sha256": "0687f96e9bd7227c4d9ecb09a42253390208de050f42c759f45bdb04cda2d51a",
+      "public_sha256": "b4c130061345e02eefc34e3e5f30ce29dfd8e4cdca03904c1a5622fd24366062",
+      "raw_bytes": 95134,
+      "public_bytes": 94245
+    },
+    {
+      "path": "solvercraft/docs/qa/compiler-review.md",
+      "raw_sha256": "1503b063cc589bdb9f57d76d8ab9fcb74c8dfca74b7d1e0c100ab394d65d83a4",
+      "public_sha256": "5b1a5b27feb893ebb75c9d6495715cd3ecff3ea1069382503d747be07f17f1dc",
+      "raw_bytes": 10522,
+      "public_bytes": 10503
+    },
+    {
+      "path": "solvercraft/docs/qa/distribution-oracle-report.json",
+      "raw_sha256": "93dda1fcaca606da69ee28c6c168bf05c60c5498ba169c058127f4b1b624035b",
+      "public_sha256": "58b287cfdb3a8c2a9605b2f14980f623e061a98b74b4eb9102ca9299386de149",
+      "raw_bytes": 58565,
+      "public_bytes": 56223
+    },
+    {
+      "path": "solvercraft/docs/qa/e2e-review.md",
+      "raw_sha256": "1011c207979fdbaa679428000a11e3f9cce1001d956774ccb2e0aac221c93dc8",
+      "public_sha256": "defa5f94a8273cc68f2166b3de451f2cfa02fc5afc05ecec77edd9dfbc8b9916",
+      "raw_bytes": 7682,
+      "public_bytes": 7663
+    },
+    {
+      "path": "solvercraft/docs/qa/host-build-probe.log",
+      "raw_sha256": "8cfc7735895dcbe70372e34e78bff13b1f6e77f8da34a518ab78b4f6a89078eb",
+      "public_sha256": "67aa26543fc571213cd12c9d1ea40537e2664b5d2603d05f0d344aac965b358a",
+      "raw_bytes": 366,
+      "public_bytes": 306
+    },
+    {
+      "path": "solvercraft/docs/qa/linear-oracle-release-report.json",
+      "raw_sha256": "3bf251fd5f77d50cf869915fa737069756a81c5c2933b8cba74f480a1017c379",
+      "public_sha256": "507b1846f89e3adad724e5ebf05293dc6addd2830ac7d9e840302bf84085410f",
+      "raw_bytes": 4751,
+      "public_bytes": 4545
+    },
+    {
+      "path": "solvercraft/docs/qa/linear-oracle-report.json",
+      "raw_sha256": "9cc42b84d9d6c4e1915291571fc08418941f6bf0825a71a162bd9294914ab4d3",
+      "public_sha256": "952fb1cf9dd65368327b75967113985562fda6630e40de306f9e50522c6b40cd",
+      "raw_bytes": 4751,
+      "public_bytes": 4545
+    },
+    {
+      "path": "solvercraft/docs/qa/runtime-review.md",
+      "raw_sha256": "4929ad8c2de4421ab8418695bfccdca745e254b2baa1d17e629b841a13fbfaf2",
+      "public_sha256": "525ba3efa6271be25323de4f6a2ef40a64507e63ad85cbe4d2cd9513d689dd47",
+      "raw_bytes": 32596,
+      "public_bytes": 32558
+    },
+    {
+      "path": "solvercraft/docs/qa/verification-report.json",
+      "raw_sha256": "4b792ea8250d6462cb822d85c53bbd1132fdfe1faa13630605a3fa69947ff249",
+      "public_sha256": "b10baf9bdc07de96d93311c1368f48d96564602561320a9be92bd67ec34de40f",
+      "raw_bytes": 4792,
+      "public_bytes": 4544
+    },
+    {
+      "path": "solvercraft/docs/qa/workspace-tests.log",
+      "raw_sha256": "216b508e4d1cea7ffd1da0b01683ba6db5ad27d123203c32a11e3f4a6ae68f4f",
+      "public_sha256": "1db3c642ebb91a57ac934598931073e3c58d8c3f4079cc779e2998856c165d95",
+      "raw_bytes": 24121,
+      "public_bytes": 23798
+    },
+    {
+      "path": "solvercraft/docs/verification/clippy.log",
+      "raw_sha256": "1ff9c751c996af94339635b7da5bd24d279146ebb7b0fcdd3d8b83731c210a5d",
+      "public_sha256": "777b3ef733f225905c461acfcb3d675ae5b35fa1c951312e826d00d9a7936998",
+      "raw_bytes": 893,
+      "public_bytes": 597
+    },
+    {
+      "path": "solvercraft/docs/verification/release.log",
+      "raw_sha256": "3099b7ccb023c78498fab52d423028c1fa92a5bffec8afd90a4f67dcf21971fa",
+      "public_sha256": "aa4910f602d204268592b05a024c822ad42d8e030d72533ae0c2b5f331b088b9",
+      "raw_bytes": 1225,
+      "public_bytes": 929
+    },
+    {
+      "path": "solvercraft/docs/verification/tests.log",
+      "raw_sha256": "0dc0367f06a81ff28d27b10f1a76616da057c8cbb204f97ef074c542a7e5b64b",
+      "public_sha256": "37db44a8bbc4786b222d9868d9b22d7920f6e58ccc6146e78b29eb8385b30d2b",
+      "raw_bytes": 13687,
+      "public_bytes": 13220
+    }
+  ],
+  "immutable_reference_and_oracle_inputs_modified": false,
+  "repository_relative_source_hash_maps_preserved": true
+}

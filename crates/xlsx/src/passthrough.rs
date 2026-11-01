@@ -93,6 +93,9 @@ const CT_VML: &str = "application/vnd.openxmlformats-officedocument.vmlDrawing";
 const PACKAGE_ROOTS: &[&str] = &["custom-properties", "extensibility", "webextensiontaskpanes"];
 /// Relationship kinds kept from the workbook without a workbook element.
 const WORKBOOK_ROOTS: &[&str] = &["customXml", "connections", "xmlMaps"];
+/// Gridcraft's owned, versioned Solvercraft model relationship. Match the full
+/// URI rather than treating arbitrary relationships ending in `v1` as trusted.
+const SOLVERCRAFT_MODELS_REL: &str = "https://solvercraft.org/relationships/workbook-models/v1";
 /// Relationship kinds kept from a sheet without a sheet element.
 const SHEET_ROOTS: &[&str] = &["queryTable", "tableSingleCells"];
 /// Sheet relationship kinds that mean the sheet XML may hold elements worth keeping.
@@ -169,6 +172,7 @@ const OWN_DIRS: &[&str] = &[
     "xl/activex/",
     "xl/webextensions/",
     "xl/printersettings/",
+    "xl/solvercraft/",
 ];
 
 fn kind(rel_type: &str) -> &str {

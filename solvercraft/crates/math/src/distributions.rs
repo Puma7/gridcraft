@@ -21,6 +21,9 @@ fn is_probability(value: f64) -> bool {
 }
 
 pub fn validate_distribution(distribution: &Distribution) -> Result<()> {
+    crate::extended::validate_tree(distribution)
+}
+pub(crate) fn validate_leaf(distribution: &Distribution) -> Result<()> {
     match distribution {
         Distribution::Constant { value } if value.is_finite() => Ok(()),
         Distribution::Uniform { low, high } if finite(&[*low, *high]) && low <= high && (high - low).is_finite() => Ok(()),
@@ -55,13 +58,16 @@ pub fn validate_distribution(distribution: &Distribution) -> Result<()> {
         Distribution::Empirical { values } if !values.is_empty() && values.len() <= MAX_EMPIRICAL_SAMPLES && values.iter().all(|v| v.is_finite()) => {
             Ok(())
         }
-        _ => Err(error("Invalid, non-finite or excessive distribution parameters.")),
+        _ => crate::extended::validate_scalar(distribution),
     }
 }
 
 /// Extra heap storage required by a prepared distribution, excluding the caller's original data.
 pub fn prepared_storage_bytes(distribution: &Distribution) -> Result<u64> {
     validate_distribution(distribution)?;
+    if crate::extended::is_extended(distribution) {
+        return crate::extended::storage(distribution);
+    }
     let elements = match distribution {
         Distribution::Empirical { values } => values.len() as u64,
         Distribution::Binomial { trials, probability } if *probability > 0.0 && *probability < 1.0 => u64::from(*trials) + 1,
@@ -78,15 +84,23 @@ pub fn prepared_storage_bytes(distribution: &Distribution) -> Result<u64> {
 pub struct PreparedDistribution {
     distribution: Distribution,
     cumulative: Vec<f64>,
+    extra: Option<Box<crate::extended::PreparedExtra>>,
 }
 impl PreparedDistribution {
     pub fn new(distribution: &Distribution) -> Result<Self> {
         validate_distribution(distribution)?;
+        if crate::extended::is_extended(distribution) {
+            return Ok(Self {
+                distribution: Distribution::Constant { value: 0.0 },
+                cumulative: Vec::new(),
+                extra: Some(Box::new(crate::extended::prepare(distribution)?)),
+            });
+        }
         let distribution = match distribution {
             Distribution::Empirical { values } => {
                 let mut copy = allocate(values.len())?;
                 copy.copy_from_slice(values);
-                copy.sort_by(f64::total_cmp);
+                copy.sort_unstable_by(f64::total_cmp);
                 Distribution::Empirical { values: copy }
             }
             other => other.clone(),
@@ -98,9 +112,12 @@ impl PreparedDistribution {
             Distribution::Poisson { rate } if *rate > 0.0 => poisson_table(*rate)?,
             _ => Vec::new(),
         };
-        Ok(Self { distribution, cumulative })
+        Ok(Self { distribution, cumulative, extra: None })
     }
     pub fn quantile(&self, p: f64) -> Result<f64> {
+        if let Some(extra) = &self.extra {
+            return extra.quantile(p);
+        }
         if !is_probability(p) {
             return Err(error("Quantile probability must lie in [0,1]."));
         }
@@ -200,6 +217,7 @@ impl PreparedDistribution {
                 let index = ((p * values.len() as f64).ceil() as usize).saturating_sub(1).min(values.len().saturating_sub(1));
                 *values.get(index).ok_or_else(|| error("Empty empirical distribution."))?
             }
+            _ => return Err(error("Distribution preparation is inconsistent.")),
         };
         if !value.is_finite()
             || (value == 0.0
@@ -218,6 +236,9 @@ impl PreparedDistribution {
         Ok(index as f64)
     }
     pub fn cdf(&self, x: f64) -> Result<f64> {
+        if let Some(extra) = &self.extra {
+            return extra.cdf(x);
+        }
         if x.is_nan() {
             return Err(error("CDF value must not be NaN."));
         }
@@ -326,11 +347,15 @@ impl PreparedDistribution {
                 }
             }
             Distribution::Empirical { values } => values.partition_point(|v| *v <= x) as f64 / values.len() as f64,
+            _ => return Err(error("Distribution preparation is inconsistent.")),
         };
         Ok(value.clamp(0.0, 1.0))
     }
     fn discrete_cdf(&self, x: f64) -> f64 {
         if x < 0.0 { 0.0 } else { self.cumulative.get(x.floor() as usize).copied().unwrap_or(1.0) }
+    }
+    pub fn sample(&self, seed: u64, binding: u64, trial: u64) -> Result<f64> {
+        if let Some(extra) = &self.extra { extra.sample(seed, binding, trial) } else { self.quantile(addressed_uniform(seed, binding, trial, 0)) }
     }
 }
 pub fn quantile(distribution: &Distribution, p: f64) -> Result<f64> {
@@ -340,7 +365,7 @@ pub fn cdf(distribution: &Distribution, x: f64) -> Result<f64> {
     PreparedDistribution::new(distribution)?.cdf(x)
 }
 pub fn sample(distribution: &Distribution, seed: u64, binding: u64, trial: u64) -> Result<f64> {
-    PreparedDistribution::new(distribution)?.quantile(addressed_uniform(seed, binding, trial, 0))
+    PreparedDistribution::new(distribution)?.sample(seed, binding, trial)
 }
 fn unbounded_quantile() -> SolverError {
     SolverError::new("unbounded_quantile", "Endpoint quantile is infinite; request a probability strictly inside (0,1).")
@@ -428,7 +453,7 @@ fn poisson_table(rate: f64) -> Result<Vec<f64>> {
     }
     cumulative_table(values)
 }
-fn inverse_normal(p: f64) -> Result<f64> {
+pub(crate) fn inverse_normal(p: f64) -> Result<f64> {
     if p <= 0.0 || p >= 1.0 {
         return Err(unbounded_quantile());
     }
@@ -463,7 +488,7 @@ fn inverse_normal(p: f64) -> Result<f64> {
         Ok(poly(&a, r) * q / (poly(&b, r) * r + 1.0))
     }
 }
-fn normal_cdf(x: f64) -> f64 {
+pub(crate) fn normal_cdf(x: f64) -> f64 {
     if x == f64::NEG_INFINITY {
         return 0.0;
     }

@@ -38,6 +38,14 @@ fn record(expr: &Expr, values: &[f64], tape: &mut Vec<Node>) -> Result<usize> {
             super::eval_inner(base, values)?;
             push(tape, 1.0, [None, None], None)
         }
+        Expr::Power { base, exponent: 2 } if positive_part_argument(base).is_some() => {
+            let inner = positive_part_argument(base).ok_or_else(|| error("internal_error", "missing positive-part argument"))?;
+            let ci = record(inner, values, tape)?;
+            let v = node(tape, ci)?.value;
+            let positive = v.max(0.0);
+            // max(0,g)^2 is C1 even at g=0. Raw max ties remain errors.
+            push(tape, positive * positive, [Some((ci, 2.0 * positive)), None], None)
+        }
         Expr::Add { left, right }
         | Expr::Subtract { left, right }
         | Expr::Multiply { left, right }
@@ -129,6 +137,16 @@ fn record(expr: &Expr, values: &[f64], tape: &mut Vec<Node>) -> Result<usize> {
     }
 }
 
+fn positive_part_argument(expr: &Expr) -> Option<&Expr> {
+    match expr {
+        Expr::Maximum { left, right } => match (left.as_ref(), right.as_ref()) {
+            (Expr::Constant { value: 0.0 }, other) | (other, Expr::Constant { value: 0.0 }) => Some(other),
+            _ => None,
+        },
+        _ => None,
+    }
+}
+
 /// Evaluate an expression and its exact operator-chain gradient (up to floating
 /// point arithmetic), using reverse mode. No finite-difference step is used.
 /// Nonsmooth ties, active abs(0), and active sqrt(0) return `nondifferentiable`;
@@ -170,6 +188,15 @@ pub fn evaluate_with_gradient(expr: &Expr, values: &[f64]) -> Result<(f64, Vec<f
 #[cfg(test)]
 #[allow(clippy::unwrap_used)]
 mod tests {
+    #[test]
+    fn squared_positive_part_is_smooth_at_zero_but_raw_maximum_is_not() {
+        let hinge = super::Expr::Maximum { left: Box::new(super::Expr::constant(0.0)), right: Box::new(super::Expr::variable(0)) };
+        assert_eq!(super::evaluate_with_gradient(&hinge, &[0.0]).unwrap_err().code, "nondifferentiable");
+        let squared = super::Expr::Power { base: Box::new(hinge), exponent: 2 };
+        assert_eq!(super::evaluate_with_gradient(&squared, &[0.0]).unwrap(), (0.0, vec![0.0]));
+        assert_eq!(super::evaluate_with_gradient(&squared, &[2.0]).unwrap(), (4.0, vec![4.0]));
+        assert_eq!(super::evaluate_with_gradient(&squared, &[-2.0]).unwrap(), (0.0, vec![0.0]));
+    }
     use super::*;
     fn x(i: usize) -> Expr {
         Expr::variable(i)

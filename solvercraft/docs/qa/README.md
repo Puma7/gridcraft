@@ -1,4 +1,6 @@
-# Solvercraft deep review, 31 October 2026
+# Historical initial Solvercraft deep review, 31 October 2026
+
+This page preserves the **earlier 265-test checkpoint** and its then-open environment/feature gaps. Its counts and unexecuted-host statements are historical. Current implementations, actual host/browser runs and remaining acceptance work are recorded in [acceptance-current.md](acceptance-current.md), the [SDK README](../../README.md) and [current verification guide](../implementation/verification.md). Later source changes need their own source-bound gates; historical results are not silently reassigned.
 
 The original alpha was not ready for merge approval. Independent source review and executed counterexamples exposed incorrect numerical answers, false optimality claims and permissive input handling. This review corrected those failures and added regression coverage. It does not certify general numerical correctness or Frontline feature parity.
 

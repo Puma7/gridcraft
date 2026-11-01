@@ -2,7 +2,7 @@
   "date_utc": "2026-10-31",
   "review_predecessor_commit": "690a098a6c4c9d966d66b6c30c036e0e42534bfd",
   "gridcraft_base_commit": "981fad14e0b90a7906a02f29785a6d0eb214fee6",
-  "platform": "Windows-11-10.0.26200-SP0",
+  "platform": "Windows-11-x86_64",
   "scope": "Native standalone SDK and actual CLI processes. Full Gridcraft/UI and WASM execution are blocked and are not passing gates.",
   "source_inventory_sha256": "9c1c8e4ff13c82fe37f61dc078e7d5d1e06ee9a5c7533b4ca2f621a56dfe246d",
   "checks": [
@@ -139,7 +139,7 @@
   ],
   "host_gate": {
     "status": "blocked",
-    "reason": "error: failed to load manifest for workspace member `C:\\workspace\\solvercraft-gridcraft\\crates\\core`\nreferenced via `crates/*` by workspace at `C:\\workspace\\solvercraft-gridcraft\\Cargo.toml`\n\nCaused by:\n  failed to read `C:\\workspace\\solvercraft-gridcraft\\crates\\core\\Cargo.toml`\n\nCaused by:\n  Das System kann die angegebene Datei nicht finden. (os error 2)",
+    "reason": "error: failed to load manifest for workspace member `$CHECKOUT_ROOT\\crates\\core`\nreferenced via `crates/*` by workspace at `$CHECKOUT_ROOT\\Cargo.toml`\n\nCaused by:\n  failed to read `$CHECKOUT_ROOT\\crates\\core\\Cargo.toml`\n\nCaused by:\n  Das System kann die angegebene Datei nicht finden. (os error 2)",
     "host_regression_tests_executed": false
   },
   "wasm_gate": {

@@ -1,4 +1,6 @@
-# Solvercraft reference scope and dependency baseline
+# Historical Solvercraft initial reference and dependency baseline
+
+This document preserves the initial implementation/dependency observations. Later adoption of Clarabel, Rust 1.95, additional distributions, constrained NLP, risk modules and actual host/browser execution supersedes the initial availability statements below. Current evidence is in [the acceptance assessment](qa/acceptance-current.md), [the pinned 2025 Q1 reference freeze](implementation/reference-freeze.md), and the implementation documents for [engines](implementation/engines.md), [simulation](implementation/simulation.md) and [stochastic models](implementation/stochastic.md). Initial unavailable-cache and older-toolchain statements are historical, not current release claims.
 
 Last updated: 2026-10-31. Status: implementation baseline, not a release certificate.
 

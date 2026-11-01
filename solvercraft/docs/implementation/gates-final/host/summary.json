@@ -1,0 +1,92 @@
+{
+  "schema": "solvercraft.gate-summary.v1",
+  "candidate": "final5",
+  "all_gates_accepted": true,
+  "raw_source_digest_sha256": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+  "canonical_source_digest_sha256": "9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb",
+  "gates": [
+    {
+      "name": "host-ci",
+      "command": [
+        "cargo",
+        "xtask",
+        "ci"
+      ],
+      "cwd": "$CHECKOUT_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-host\\host-ci.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 722.2486355000001,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true,
+      "passed": 2827,
+      "failed": 0,
+      "ignored": 1,
+      "test_summary_targets": 38,
+      "ci_stages": [
+        "i18n-report",
+        "fmt",
+        "clippy",
+        "test",
+        "doctest",
+        "assets",
+        "layers",
+        "wasm",
+        "parity",
+        "keytips"
+      ]
+    },
+    {
+      "name": "host-ui",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "gridcraft-ui-egui",
+        "--test",
+        "solvercraft_acceptance",
+        "--locked"
+      ],
+      "cwd": "$CHECKOUT_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-host\\host-ui.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 126.91628149998724,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true,
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0,
+      "test_summary_targets": 1
+    },
+    {
+      "name": "host-charts",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "gridcraft-ui-egui",
+        "--lib",
+        "solvercraft::tests",
+        "--locked"
+      ],
+      "cwd": "$CHECKOUT_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-host\\host-charts.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 21.728011700004572,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true,
+      "passed": 9,
+      "failed": 0,
+      "ignored": 0,
+      "test_summary_targets": 1
+    }
+  ]
+}

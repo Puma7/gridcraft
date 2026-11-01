@@ -3,7 +3,7 @@ use serde_json::{Value, json};
 use std::error::Error;
 use std::io::{Read, Write};
 use std::process::{Command, Output, Stdio};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 type TestResult<T = ()> = Result<T, Box<dyn Error>>;
 const CAPTURE_LIMIT: u64 = 4 * 1024 * 1024;
@@ -28,7 +28,7 @@ fn run_os(args: &[std::ffi::OsString], input: Vec<u8>) -> TestResult<Output> {
     });
     let out_reader = std::thread::spawn(move || drain(stdout));
     let err_reader = std::thread::spawn(move || drain(stderr));
-    let started = Instant::now();
+    let started = solvercraft::runtime::monotonic_now();
     let status = loop {
         if let Some(status) = child.try_wait()? {
             break status;
@@ -279,14 +279,10 @@ fn invalid_variable_reference_is_a_structured_model_error() -> TestResult {
 }
 
 #[test]
-fn explicit_unsupported_quadratic_is_not_routed_to_a_heuristic() -> TestResult {
+fn nonconvex_quadratic_is_explicitly_rejected_without_heuristic_substitution() -> TestResult {
     let mut request = example()?;
     request["model"]["objective"]["quadratic"] = json!([{"left":0,"right":1,"coefficient":1.0}]);
-    let output = run(&["solve", "-"], &request)?;
-    assert!(!output.status.success());
-    assert!(output.stdout.is_empty());
-    let error: Value = serde_json::from_slice(&output.stderr)?;
-    assert!(error["code"].as_str().is_some_and(|s| s.starts_with("unsupported")));
+    failure(run(&["solve", "-"], &request)?, "convexity_not_proven")?;
     Ok(())
 }
 
@@ -559,5 +555,44 @@ fn original_expression_constraints_are_rechecked_before_publishing_feasibility()
     }]);
     let error = failure(run(&["solve-expr", "-"], &json!({"model":model}))?, "numerical_failure")?;
     assert!(error["message"].as_str().is_some_and(|s| s.to_lowercase().contains("original")));
+    Ok(())
+}
+
+#[test]
+fn near_integer_relaxation_does_not_close_a_node_before_the_exact_binary_gap() -> TestResult {
+    // Exact integer arithmetic enumerates all four points, independently of
+    // the solver's integrality tolerance, relaxation or branch selection.
+    for (direction, sign, offset) in [("maximize", 1_i128, 0_i128), ("maximize", 1, 10_000_000_000_000_000), ("minimize", -1, 0)] {
+        let mut enumerated = Vec::new();
+        for x in 0_i128..=1 {
+            for y in 0_i128..=1 {
+                if 1_000_000_000 * x + y <= 1 {
+                    enumerated.push((offset + sign * (1_000_000_000_000 * x + 500 * y), [x, y]));
+                }
+            }
+        }
+        let (optimum, point) = if direction == "maximize" {
+            enumerated.into_iter().max_by_key(|(objective, _)| *objective)
+        } else {
+            enumerated.into_iter().min_by_key(|(objective, _)| *objective)
+        }
+        .ok_or("no enumerated point")?;
+        assert_eq!((optimum, point), (offset + sign * 500, [0, 1]));
+        let request = json!({"model":{"schema_version":1,"name":"exact binary enumeration",
+            "variables":[{"name":"x","lower":0,"upper":1,"kind":"binary"},{"name":"y","lower":0,"upper":1,"kind":"binary"}],
+            "objective":{"direction":direction,"offset":offset,"linear":[{"variable":0,"coefficient":sign*1_000_000_000_000},{"variable":1,"coefficient":sign*500}],"quadratic":[]},
+            "constraints":[{"name":"capacity","terms":[{"variable":0,"coefficient":1e9},{"variable":1,"coefficient":1}],"relation":"less_equal","rhs":1}]
+        }});
+        let payload = success(run(&["solve", "-"], &request)?)?;
+        let result = &payload["result"];
+        assert_eq!(result["feasibility"], "feasible");
+        assert_eq!(result["optimality"], "optimal");
+        assert_eq!(result["values"], json!([0.0, 1.0]));
+        // Every expected integer is exactly representable; a relative tolerance
+        // scaled by the offset would hide the entire 500-unit improvement.
+        assert_eq!(result["objective"].as_f64(), Some(optimum as f64));
+        assert_eq!(result["best_bound"].as_f64(), Some(optimum as f64));
+        assert_eq!(result["relative_gap"].as_f64(), Some(0.0));
+    }
     Ok(())
 }

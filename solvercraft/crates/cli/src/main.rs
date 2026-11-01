@@ -4,6 +4,16 @@ use serde::{Deserialize, Serialize};
 use solvercraft::{compile::Expr, types::*};
 use std::io::{Read, Write};
 const MAX_INPUT: u64 = 16 * 1024 * 1024;
+// Each invocation creates a statically typed, borrowed configuration. In
+// particular it never turns models/results into a duplicate JSON value tree.
+macro_rules! configuration {
+    ($($field:ident : $kind:ident = $value:expr),+ $(,)?) => {{
+        #[derive(Clone, serde::Serialize)]
+        struct Configuration<$($kind),+> { $($field: $kind),+ }
+        Configuration { $($field: $value),+ }
+    }};
+}
+mod advanced;
 #[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 struct SolveRequest {
@@ -11,7 +21,7 @@ struct SolveRequest {
     #[serde(default)]
     options: SolveOptions,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 struct ExpressionRequest {
     model: solvercraft::compile::ExpressionModel,
@@ -33,6 +43,14 @@ struct SimulationRequest {
 #[serde(deny_unknown_fields)]
 struct RiskRequest {
     problem: solvercraft::risk::ScenarioProblem,
+    #[serde(default)]
+    options: SolveOptions,
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct MigrationRequest {
+    model: OptimizationModel,
+    id: String,
     #[serde(default)]
     options: SolveOptions,
 }
@@ -69,6 +87,40 @@ fn write<T: Serialize>(value: &T) -> Result<()> {
     let mut output = std::io::stdout().lock();
     serde_json::to_writer_pretty(&mut output, value).map_err(|e| fail("output", e.to_string()))?;
     output.write_all(b"\n").map_err(|e| fail("output", e.to_string()))
+}
+static ERROR_REPORTED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+/// Configuration clones here contain borrowed fields and scalar limits only.
+/// Keep the request alive while writing its trace, without a JSON value tree or
+/// owned copy of model data. The marker also prevents nested scopes/main from
+/// appending a second error document after the original structured error.
+fn traced<T, C: Clone + Serialize>(manifest: &solvercraft::run_manifest::PreparedManifest<C>, operation: impl FnOnce() -> Result<T>) -> Result<T> {
+    let outcome = operation();
+    if let Err(error) = &outcome
+        && !ERROR_REPORTED.load(std::sync::atomic::Ordering::Acquire)
+        && let Ok(run) = manifest.clone().complete(error, "unknown", "stderr:$")
+    {
+        let mut output = std::io::stderr().lock();
+        if !ERROR_REPORTED.swap(true, std::sync::atomic::Ordering::AcqRel) {
+            let _ = serde_json::to_writer(&mut output, &run);
+            let _ = output.write_all(b"\n");
+        }
+    }
+    outcome
+}
+#[derive(Serialize)]
+struct VersionedOutput<'a, O, R> {
+    schema_version: u32,
+    version: &'static str,
+    options: &'a O,
+    result: &'a R,
+}
+#[derive(Serialize)]
+struct ExpressionOutput<'a> {
+    schema_version: u32,
+    version: &'static str,
+    model: &'a str,
+    options: &'a SolveOptions,
+    result: &'a SolveResult,
 }
 fn example() -> SolveRequest {
     SolveRequest {
@@ -149,8 +201,9 @@ fn run() -> Result<()> {
         .collect::<Result<_>>()?;
     let command = args.get(1).map(String::as_str);
     let max_arguments = match command {
-        Some("solve" | "solve-expr" | "validate" | "compile" | "simulate" | "risk") => Some(3),
+        Some("solve" | "solve-expr" | "validate" | "compile" | "simulate" | "risk" | "serve" | "project-roundtrip" | "migrate-v1") => Some(3),
         None | Some("help" | "--help" | "-h" | "capabilities" | "example-lp" | "demo") => Some(2),
+        Some(command) if advanced::supports(command) => Some(3),
         _ => None,
     };
     if max_arguments.is_some_and(|limit| args.len() > limit) {
@@ -159,37 +212,77 @@ fn run() -> Result<()> {
     match args.get(1).map(String::as_str) {
         Some("capabilities") => write(&solvercraft::capabilities()),
         Some("example-lp") => write(&example()),
+        Some("project-roundtrip") => {
+            let library: solvercraft::project::ModelLibrary = read(args.get(2))?;
+            library.validate()?;
+            write(&library)
+        }
+        Some("migrate-v1") => {
+            let request: MigrationRequest = read(args.get(2))?;
+            let bytes = serde_json::to_vec(&request.model).map_err(|e| fail("serialization", e.to_string()))?;
+            write(&solvercraft::project::migrate_v1_algebraic(&bytes, request.id, request.options)?)
+        }
+        Some("serve") => {
+            #[cfg(not(target_arch = "wasm32"))]
+            {
+                let config: solvercraft::server::ServerConfig = read(args.get(2))?;
+                let server = solvercraft::server::Server::bind(config)?;
+                write(
+                    &serde_json::json!({"schema_version":1,"service":"solvercraft_json_lines","address":server.address()?.to_string(),"authentication":"required"}),
+                )?;
+                server.run(&std::sync::atomic::AtomicBool::new(false))
+            }
+            #[cfg(target_arch = "wasm32")]
+            {
+                Err(fail("unsupported_host", "The TCP service requires a native host"))
+            }
+        }
         Some("solve") => {
             let request: SolveRequest = read(args.get(2))?;
-            write(&solvercraft::provenance::solve_run(&request.model, &request.options, &NoControl)?)
+            let manifest = solvercraft::run_manifest::prepare("solve", &request, configuration!(options: O = &request.options), MAX_INPUT)?;
+            traced(&manifest, || write(&solvercraft::provenance::solve_run_owned(&request.model, &request.options, std::sync::Arc::new(NoControl))?))
         }
         Some("solve-expr") => {
             let request: ExpressionRequest = read(args.get(2))?;
-            let mut result = match request.options.method {
-                SolveMethod::ProjectedGradient => match request.start.as_deref() {
-                    Some(start) => solvercraft::nonlinear::solve_from(&request.model, start, &request.options, &NoControl)?,
-                    None => solvercraft::nonlinear::solve(&request.model, &request.options, &NoControl)?,
-                },
-                SolveMethod::DifferentialEvolution => solvercraft::heuristic::solve(&request.model, &request.options, &NoControl)?,
-                _ => {
-                    let model = solvercraft::compile::compile(&request.model, &request.options)?;
-                    let result = solvercraft::solve(&model, &request.options, &NoControl)?;
-                    if let Some(values) = result.values.as_deref() {
-                        let checked = solvercraft::model::validate_solution(&model, values, &request.options)?;
-                        if !checked.feasible {
-                            return Err(fail(
-                                "numerical_failure",
-                                "Compiled expression candidate failed original bounds and linear-constraint validation",
-                            ));
+            let nonlinear_defaults = solvercraft::nonlinear::NlpOptions::default();
+            let manifest = solvercraft::run_manifest::prepare(
+                "solve-expr",
+                &request,
+                configuration!(options: O = &request.options, start: S = &request.start, nonlinear: N = &nonlinear_defaults),
+                MAX_INPUT,
+            )?;
+            traced(&manifest, || {
+                let mut result = match request.options.method {
+                    SolveMethod::ProjectedGradient => match request.start.as_deref() {
+                        Some(start) => solvercraft::nonlinear::solve_from(&request.model, start, &request.options, &NoControl)?,
+                        None => solvercraft::nonlinear::solve(&request.model, &request.options, &NoControl)?,
+                    },
+                    SolveMethod::DifferentialEvolution => solvercraft::heuristic::solve(&request.model, &request.options, &NoControl)?,
+                    _ => {
+                        let model = solvercraft::compile::compile(&request.model, &request.options)?;
+                        let result = solvercraft::engines::solve_owned(&model, &request.options, std::sync::Arc::new(NoControl))?;
+                        if let Some(values) = result.values.as_deref() {
+                            let checked = solvercraft::model::validate_solution(&model, values, &request.options)?;
+                            if !checked.feasible {
+                                return Err(fail(
+                                    "numerical_failure",
+                                    "Compiled expression candidate failed original bounds and linear-constraint validation",
+                                ));
+                            }
                         }
+                        result
                     }
-                    result
-                }
-            };
-            verify_original_expression_result(&request.model, &request.options, &mut result)?;
-            write(
-                &serde_json::json!({"schema_version":SCHEMA_VERSION,"version":env!("CARGO_PKG_VERSION"),"model":request.model.name,"options":request.options,"result":result}),
-            )
+                };
+                verify_original_expression_result(&request.model, &request.options, &mut result)?;
+                let output = ExpressionOutput {
+                    schema_version: SCHEMA_VERSION,
+                    version: env!("CARGO_PKG_VERSION"),
+                    model: &request.model.name,
+                    options: &request.options,
+                    result: &result,
+                };
+                write(&manifest.clone().complete(&output, &result.engine, "stdout:$.result")?)
+            })
         }
         Some("validate") => {
             let request: SolveRequest = read(args.get(2))?;
@@ -202,32 +295,76 @@ fn run() -> Result<()> {
         }
         Some("simulate") => {
             let request: SimulationRequest = read(args.get(2))?;
-            let result = solvercraft::simulation::simulate(&request.inputs, &request.options, &NoControl, |values| {
-                if request.outputs.is_empty() {
-                    return Ok(values.to_vec());
-                }
-                request.outputs.iter().map(|e| solvercraft::compile::evaluate(e, values)).collect()
-            })?;
-            write(&serde_json::json!({"schema_version":SCHEMA_VERSION,"version":env!("CARGO_PKG_VERSION"),"options":request.options,"result":result}))
+            let manifest = solvercraft::run_manifest::prepare(
+                "simulate",
+                &request,
+                configuration!(options: O = &request.options, output_count: E = request.outputs.len()),
+                MAX_INPUT,
+            )?;
+            traced(&manifest, || {
+                advanced::expressions(&request.outputs, request.inputs.len(), request.options.max_memory_bytes)?;
+                let result = solvercraft::simulation::simulate(&request.inputs, &request.options, &NoControl, |values| {
+                    if request.outputs.is_empty() {
+                        return Ok(values.to_vec());
+                    }
+                    request.outputs.iter().map(|e| solvercraft::compile::evaluate(e, values)).collect()
+                })?;
+                let output = VersionedOutput {
+                    schema_version: SCHEMA_VERSION,
+                    version: env!("CARGO_PKG_VERSION"),
+                    options: &request.options,
+                    result: &result,
+                };
+                write(&manifest.clone().complete(&output, &result.sampling_version, "stdout:$.result")?)
+            })
         }
         Some("risk") => {
             let request: RiskRequest = read(args.get(2))?;
-            write(&solvercraft::risk::optimize(&request.problem, &request.options, &NoControl)?)
+            let manifest = solvercraft::run_manifest::prepare(
+                "risk",
+                &request,
+                configuration!(options: O = &request.options, measure: M = &request.problem.measure),
+                MAX_INPUT,
+            )?;
+            traced(&manifest, || {
+                let result = solvercraft::risk::optimize(&request.problem, &request.options, &NoControl)?;
+                write(&manifest.clone().complete(&result, &result.solve.engine, "stdout:$")?)
+            })
         }
         Some("demo") => {
             let lp = example();
-            let optimized = solvercraft::solve(&lp.model, &lp.options, &NoControl)?;
-            let simulated = solvercraft::simulation::simulate(
-                &[Distribution::Normal { mean: 100.0, std_dev: 10.0 }],
-                &SimulationOptions { trials: 10_000, seed: 42, ..SimulationOptions::default() },
-                &NoControl,
-                |x| Ok(x.to_vec()),
+            let inputs = [Distribution::Normal { mean: 100.0, std_dev: 10.0 }];
+            let simulation_options = SimulationOptions { trials: 10_000, seed: 42, ..SimulationOptions::default() };
+            #[derive(Serialize)]
+            struct DemoRequest<'a> {
+                optimization: &'a SolveRequest,
+                inputs: &'a [Distribution],
+                simulation_options: &'a SimulationOptions,
+            }
+            #[derive(Serialize)]
+            struct DemoOutput<'a> {
+                optimization: &'a SolveResult,
+                simulation: &'a SimulationResult,
+            }
+            let request = DemoRequest { optimization: &lp, inputs: &inputs, simulation_options: &simulation_options };
+            let manifest = solvercraft::run_manifest::prepare(
+                "demo",
+                &request,
+                configuration!(optimization_options: O = &lp.options, simulation_options: S = &simulation_options),
+                MAX_INPUT,
             )?;
-            write(&serde_json::json!({"optimization":optimized,"simulation":simulated}))
+            traced(&manifest, || {
+                let optimized = solvercraft::solve(&lp.model, &lp.options, &NoControl)?;
+                let simulated = solvercraft::simulation::simulate(&inputs, &simulation_options, &NoControl, |x| Ok(x.to_vec()))?;
+                let engine = format!("{}; {}", optimized.engine, simulated.sampling_version);
+                write(&manifest.clone().complete(&DemoOutput { optimization: &optimized, simulation: &simulated }, &engine, "stdout:$")?)
+            })
         }
         None | Some("help" | "--help" | "-h") => write(&serde_json::json!({"name":"Solvercraft","version":env!("CARGO_PKG_VERSION"),
             "usage":["solvercraft-cli capabilities","solvercraft-cli example-lp","solvercraft-cli solve request.json","solvercraft-cli solve-expr expressions.json","solvercraft-cli validate request.json","solvercraft-cli compile expression-model.json","solvercraft-cli simulate simulation.json","solvercraft-cli risk scenarios.json","solvercraft-cli demo"],
-            "stdin":"Use - or omit the path for JSON from stdin","scope":"Pure-Rust alpha; see docs/capabilities and validation."})),
+            "advanced_commands":advanced::commands(),"other_commands":["serve","project-roundtrip","migrate-v1"],
+            "stdin":"Use - or omit the path for JSON from stdin","scope":"Pure-Rust alpha; see per-engine capabilities and recorded validation."})),
+        Some(command) if advanced::supports(command) => advanced::run(command, args.get(2)),
         Some(command) => Err(fail("unknown_command", format!("Unknown command '{command}'. Use help for supported commands"))),
     }
 }
@@ -235,8 +372,10 @@ fn main() -> std::process::ExitCode {
     match run() {
         Ok(()) => std::process::ExitCode::SUCCESS,
         Err(e) => {
-            let _ = serde_json::to_writer(std::io::stderr().lock(), &e);
-            eprintln!();
+            if !ERROR_REPORTED.load(std::sync::atomic::Ordering::Acquire) {
+                let _ = serde_json::to_writer(std::io::stderr().lock(), &e);
+                eprintln!();
+            }
             std::process::ExitCode::FAILURE
         }
     }

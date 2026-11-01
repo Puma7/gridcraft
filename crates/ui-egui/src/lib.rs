@@ -46,6 +46,7 @@ pub mod pivot_pane;
 pub mod printing;
 pub mod ribbon;
 pub mod selection_glide;
+pub mod solvercraft;
 pub mod tabs;
 pub mod text_box;
 pub mod theme;

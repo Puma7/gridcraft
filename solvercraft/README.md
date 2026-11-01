@@ -1,21 +1,20 @@
-# Solvercraft alpha
+# Solvercraft
 
-Solvercraft adds a workbook-independent Rust optimization and simulation SDK, a JSON CLI and an initial Gridcraft integration. The existing data.solver command remains available.
+Solvercraft is a workbook-independent Rust optimization, simulation and risk-analysis SDK with a JSON CLI and Gridcraft integration. It is a development alpha. The immutable [96 requirements](docs/masterplan/requirements.csv), [current acceptance review](docs/qa/acceptance-current.md) and [272-function inventory](docs/implementation/reference-implementation.json) describe its scope and remaining gaps. Full Frontline compatibility is not claimed.
 
-## Implemented scope
+## Implemented capabilities
 
-- Budgeted floating-point LP/MILP with original-model validation. Sparse input coefficients currently feed a dense two-phase tableau.
-- Analytic continuous separable convex QP over variable bounds.
-- Bound-constrained smooth nonlinear optimization with reverse automatic differentiation, projected steps, Armijo line search and BB updates. Results identify stationarity, not a proof of a local/global minimum.
-- Finite-bound differential evolution with nonlinear constraints and integer/binary repair. Results identify the best feasible point found.
-- Monte Carlo and Latin Hypercube simulation, addressed deterministic streams, streaming moments and optional exact empirical risk summaries.
-- Finite-scenario expected-loss/CVaR optimization, a box-robust linear counterpart, native background SDK jobs and structured cancellation/budget results.
+- Dense two-phase LP/MILP, sparse primal-dual LP/QP/SOCP through Clarabel, coupled convex QP, finite-domain MIQP/MISOCP, checked LP basis warm starts and sensitivity, SOS/indicators and finite-domain constraints.
+- Structural affine/quadratic extraction, reverse AD, bounded finite differences, constrained augmented-Lagrangian NLP, seeded multistart, differential evolution and a bounded polynomial-box interval certificate. Local and heuristic results remain distinct from global guarantees.
+- Monte Carlo, Latin hypercube and randomized Sobol with versioned addressed streams, copulas, distribution modifiers, online moments, empirical risk, likelihood fitting with refit-bootstrap diagnostics, sampling-aware intervals and parameter grids.
+- Sample-average training and independent holdout, expected-loss/variance/CVaR objectives, scenario chance constraints, box/budget/ellipsoid counterparts, two-stage recourse, checked Benders, decision trees, information value and multiple objectives.
+- Portable versioned model libraries, execution manifests, cooperative deadlines, bounded native jobs and an authenticated, quota-controlled loopback service.
 
-General QP/SOCP, certified global nonlinear optimization, smooth general nonlinear constraints, copulas, Sobol, recourse, decision trees, XLSX model persistence and complete Frontline compatibility remain open.
+Each capability has finite numerical, dimension and resource limits. Consult the [engine registry](crates/solvercraft/src/registry.rs), the CLI capabilities command and the [implementation documents](docs/implementation/verification.md). A method's existence does not imply unrestricted classes or identical native/browser performance.
 
-## Build and run the standalone workspace
+## Build and run
 
-From this directory:
+Rust **1.95** or newer is required. From this directory:
 
 ~~~sh
 cargo test --workspace --locked
@@ -24,29 +23,27 @@ cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo run --release -p solvercraft-cli -- capabilities
 cargo run --release -p solvercraft-cli -- solve examples/lp.json
 cargo run --release -p solvercraft-cli -- solve-expr examples/nonlinear.json
-cargo run --release -p solvercraft-cli -- solve-expr examples/evolution.json
 cargo run --release -p solvercraft-cli -- simulate examples/simulation.json
 cargo run --release -p solvercraft-cli -- risk examples/risk.json
+cargo run -p solvercraft --example artcraft_layout
 ~~~
 
-Add --offline to Cargo commands when all locked dependencies are cached. CLI input/output is JSON; omit the input path or use - for stdin. Errors are structured JSON on stderr with a nonzero exit code.
+Use --offline when the locked dependencies are cached. Requests/responses are JSON; omit the input path or use - for stdin. Errors are structured JSON on stderr with a nonzero exit status. The [SDK/runtime guide](docs/implementation/sdk-runtime.md) describes modern execution, advanced commands, model migration and the optional service.
+
+This nested workspace has its own lockfile and is excluded from parent membership. Gridcraft consumes path dependencies. Run both the SDK checks and parent cargo xtask ci; parent tests do not execute all excluded SDK tests.
 
 ## Gridcraft integration
 
-The Data ribbon places Solvercraft immediately after Solver. The initial UI is a modal optimization/simulation dialog with summaries, a retained-sample histogram and explicit result application. Engine commands are solvercraft.capabilities, solvercraft.validate, solvercraft.solve, solvercraft.simulate and solvercraft.result.apply.
+The Data ribbon places Solvercraft immediately after Solver. Its right task pane starts optimization/simulation jobs on immutable snapshots, displays progress/cancellation and offers explicit result application. Native hosts use bounded workers; the web application uses a compiled Rust WebWorker. The legacy data.solver command remains available.
 
-Workbook formulas are translated structurally for the documented subset. Candidate values are checked against original expressions and Gridcraft Calc on a private workbook copy. Applying a preview checks document identity/revision and commits the variable changes as one undoable edit.
+Original worksheet evaluation, document identity/revision, domains, protection and spills guard result application. One accepted result forms one undoable edit. Multiple saved models live in owned XLSX parts and relationships; hidden formula bindings track supported structural edits. SC worksheet inputs/outputs, answer reports, six simulation chart types, parameter runs and verified PSI subsets are documented in the [host guide](docs/implementation/gridcraft.md). Unsupported semantics produce explicit errors.
 
-The Gridcraft commands are currently bounded synchronous calls. Native SDK background jobs do not imply an asynchronous UI. The planned right sidebar and asynchronous host workflow remain separate work.
+## Verification
 
-This nested workspace is excluded from automatic parent membership and is consumed as a path dependency at L4. Its own lockfile supports standalone development; the parent lockfile records the reachable SDK packages against the parent's locked dependencies.
+The [verification guide](docs/implementation/verification.md) links source-bound native, actual Chrome/WASM, production WebWorker, egui input, numerical oracle and release performance evidence. Full Gridcraft CI passed all ten stages on a recorded frozen snapshot; later changes require another frozen run. Original reports such as the 265-test review are historical evidence, not current counts.
 
-## Validation and remaining gates
+The [reference freeze](docs/implementation/reference-freeze.md) records official versions, hashes and documentation conflicts. The [function matrix](docs/implementation/reference-implementation.json) separates tested subsets from remaining functions/parameters. Unsupported functions do not count as implemented.
 
-The reviewed standalone workspace passed **265 tests**, including **40 real CLI process tests**, with zero failures or ignored tests. Format checking, all-target Clippy with -D warnings, release CLI examples and a Linux-target compile check passed using Rust 1.91.1. An independent NumPy vertex-enumeration oracle also passed 30 LP comparisons against the release executable. See the [deep review and remaining gates](docs/qa/README.md), [96-requirement coverage matrix](docs/qa/coverage-matrix.md), and [current verification report](docs/qa/verification-report.json). The earlier [136-test report](docs/verification/report.json) is historical.
+Sampling records solvercraft-addressed-mix64-v2; randomized Sobol records its own version and licensed direction table. Preserve engine/sampler versions, inputs, seeds and tolerances. Integer domains at absolute values of 2^53 or above are rejected because adjacent integers are not representable in binary64.
 
-The complete Gridcraft build, 17 host tests (four existing plus 13 added during review), visual UI validation and actual WASM execution have not been run. The development environment lacks Gridcraft's required Rust 1.95 and a complete downloadable dependency/source checkout. The parent CI does not currently execute the excluded standalone workspace's test suite. These are merge gates; the alpha must not be presented as full R1/R2 or Frontline parity.
-
-Sampling now identifies itself as `solvercraft-addressed-mix64-v2`. Seeds intentionally produce different streams from the initial alpha's v1 algorithm; retain the version with reproducibility records. Integer domains at absolute values of 2^53 or above are explicitly unsupported because adjacent integers are not representable in f64.
-
-No proprietary Frontline code, documentation text or vendor artwork is included. Project license: MIT OR Apache-2.0.
+Project license: MIT OR Apache-2.0. Dependency and numerical-data notices accompany the implementation. No proprietary Frontline implementation or vendor artwork is included.

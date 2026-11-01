@@ -506,15 +506,27 @@ pub fn now_serial() -> f64 {
 /// Evaluates a formula in the context of a cell without storing it (conditional formats, data
 /// validation, Evaluate Formula, Name Manager previews, the CLI `eval`).
 pub fn evaluate(wb: &Workbook, sheet: usize, at: CellRef, formula: &str) -> Value {
+    evaluate_at(wb, sheet, at, formula, now_serial())
+}
+
+/// Evaluate with a captured UTC date-time serial (1900 system). Snapshot hosts
+/// use this to keep NOW/TODAY fixed across trial evaluations and validation.
+pub fn evaluate_at(wb: &Workbook, sheet: usize, at: CellRef, formula: &str, now: f64) -> Value {
+    if !now.is_finite() {
+        return Value::Error(CellError::Num);
+    }
     let body = formula.strip_prefix('=').unwrap_or(formula);
     let Ok(expr) = gridcraft_formula::parse(body) else { return Value::Error(CellError::Name) };
-    evaluate_expr(wb, sheet, at, &expr)
+    evaluate_expr_at(wb, sheet, at, &expr, now)
 }
 
 pub fn evaluate_expr(wb: &Workbook, sheet: usize, at: CellRef, expr: &Expr) -> Value {
+    evaluate_expr_at(wb, sheet, at, expr, now_serial())
+}
+fn evaluate_expr_at(wb: &Workbook, sheet: usize, at: CellRef, expr: &Expr, now: f64) -> Value {
     let exprs = HashMap::default();
     let mut rng = 0x1234_5678_9ABC_DEF0u64;
-    let mut host = PassHost::new(wb, &exprs, &mut rng, now_serial());
+    let mut host = PassHost::new(wb, &exprs, &mut rng, now);
     let mut ev = Evaluator::new(&mut host, sheet, at);
     ev.value(expr)
 }

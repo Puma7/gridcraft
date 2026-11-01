@@ -1,0 +1,80 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3rpekje5pjrf5\s-hnqcq2exra-1vks3it-working`
+
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_core-04zi80jghcqtb\s-hnq7korrni-12sad8v-working`
+
+warning: `gridcraft-core` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_formula-1uu6tx2gwi19k\s-hnq7krk0hs-1ray7a7-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-33yrrw6azndrh\s-hnqcq3gxzg-1t4vnqv-working`
+
+warning: `gridcraft-formula` (lib) generated 1 warning
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_model-2upsn5j9ui6k0\s-hnq7ktn1ui-1evh710-working`
+
+warning: `gridcraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-2krwrrfs8m899\s-hnqcq71yog-0jxwxqc-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_functions-1g1xxp2hrdtr2\s-hnq8j48r1l-07ahuc8-working`
+
+warning: `gridcraft-functions` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_numfmt-1cnhoqyz4h02i\s-hnq7krsq20-1vi1z60-working`
+
+warning: `gridcraft-numfmt` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-2kx8v0jfvvh7q\s-hnqcq7t8sp-1vytmgj-working`
+
+warning: `gridcraft-calc` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zg09wcl4hjot\s-hnqcr1xi3u-1avie5f-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-390x0hpilwrkq\s-hnqcr318ke-07exax8-working`
+
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_xlsx-3pd3pbw3gl2gf\s-hnqc6iwc5w-11n086h-working`
+
+warning: `gridcraft-xlsx` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-3k5nlxhpdvnu0\s-hnqcrqui18-18q9f54-working`
+
+warning: `gridcraft-chart` (lib) generated 1 warning
+warning: gridcraft-ui-egui@0.14.2: craft-fonts: not embedding Noto Sans CJK SC Regular (repository asset policy)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_engines-0t02of9nhg7nl\s-hnqecd9dn1-15166o8-working`
+
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft-0omgn7gbqn50i\s-hnqeceqg8n-0l85kut-working`
+
+warning: `solvercraft` (lib) generated 1 warning
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+warning: `solvercraft-engines` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_engine-3d7o2kdu6gp7t\s-hnqecilg9n-150zufr-working`
+
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_ui_egui-25ktdojls0zyz\s-hnqecmnt5k-0pbupsz-working`
+
+warning: `gridcraft-ui-egui` (lib) generated 1 warning
+warning: `gridcraft-engine` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_acceptance-2918200snv6kq\s-hnqee6ois2-0g6z7sg-working`
+
+warning: `gridcraft-ui-egui` (test "solvercraft_acceptance") generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 58s
+     Running tests\solvercraft_acceptance.rs ($BUILD_OUTPUT\host-validation\debug\deps\solvercraft_acceptance-530a605adf4c39d9.exe)
+
+running 6 tests
+test ribbon_opens_the_real_pane_after_solver ... ok
+test pane_command_honors_visibility_and_german_controls ... ok
+test pane_preview_requires_apply_and_reverts_in_one_undo_step ... ok
+test workbook_edit_disables_apply_for_a_stale_preview ... ok
+test pane_keyboard_focus_and_preview_shortcut_work_in_both_themes_and_languages ... ok
+test simulation_chart_choices_and_parameter_tornado_use_completed_preview_data ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+

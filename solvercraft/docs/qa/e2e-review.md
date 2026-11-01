@@ -8,7 +8,7 @@ The integration tests in crates/cli/tests/end_to_end.rs spawn the actual Cargo-b
 
 Executed on native Windows with Rust 1.91.1:
 
-    CARGO_TARGET_DIR=C:\workspace\solvercraft-targets\validation
+    CARGO_TARGET_DIR=$BUILD_OUTPUT\validation
     CARGO_INCREMENTAL=0
     cargo test -p solvercraft-cli --test end_to_end --offline --locked -- --test-threads=4
     cargo clippy -p solvercraft-cli --all-targets --offline --locked -- -D warnings

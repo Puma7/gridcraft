@@ -1,6 +1,6 @@
 # Architecture
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft alpha integration scope and pending gates) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft async task pane, workbook persistence and native/browser evidence) · **Target:** Microsoft Excel (Microsoft 365)
 
 How GridCraft is built today. Rules for contributors are in [`AGENTS.md`](../AGENTS.md).
 
@@ -157,13 +157,13 @@ rpm, tarball), FreeBSD, and web (WASM; WebGPU or WebGL2). Release workflows in
 
 ## Solvercraft alpha integration
 
-The new [Solvercraft SDK and host integration](solvercraft.md) add explicit advanced optimization and simulation alongside the existing Solver. The independently tested core is an alpha; full Gridcraft, visual UI and WASM gates are pending. The initial dialog is modal with bounded synchronous calls. This does not close general solver parity, persistence, async sidebar or conic/global-engine gaps.
+Solvercraft now has an async right task pane beside the existing Solver, native worker jobs and Rust Web Workers, immutable previews with explicit revision-guarded atomic apply/undo, a bounded multi-model registry in its own XLSX part/relationship, SC/Psi worksheet integration, parameter comparisons and checked LP reports. Simulation runs a bounded topological cell program through Gridcraft's actual value evaluator, preserving spreadsheet operation order and coercion; optimization retains its separate structural mathematical compiler and actual-Calc candidate guards. Native host/UI and generated-worker Chrome evidence are recorded separately in the [implementation report](../solvercraft/docs/implementation/gridcraft.md). This remains alpha scope, with explicit formula/import limits and no claim of complete Frontline or Excel parity.
 
 ## Revision history
 
 | Date | Change | Summary |
 |---|---|---|
-| 2026-10-31 | minor | Document Solvercraft alpha integration and the remaining application/platform gates |
+| 2026-10-31 | minor | Document Solvercraft native/browser async integration, owned XLSX model persistence, ordered Calc simulation and bounded evidence |
 | 2026-10-25 | trivial | The hidden names that hold macros are `_gc_macro_<n>_<k>` |
 | 2026-10-24 | minor | Macro engine on the building blocks (`macros/`, `cmd/macros.rs`) |
 | 2026-10-24 | minor | Engine building blocks for multi-command actions: undo groups, recording buffer, document trust, chunked hidden-name storage |

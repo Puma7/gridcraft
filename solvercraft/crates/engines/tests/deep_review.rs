@@ -485,7 +485,7 @@ fn quadratic_limits_and_unsupported_classes_do_not_report_an_optimum() {
     assert_eq!(result.termination, Termination::EvaluationLimit);
     assert_eq!(result.statistics.evaluations, 0);
     input.objective.quadratic.push(QuadraticTerm { left: 0, right: 1, coefficient: 0.25 });
-    assert!(solve(&input, &SolveOptions::default(), &NoControl).is_err_and(|e| e.code == "unsupported_problem"));
+    assert!(solve(&input, &SolveOptions::default(), &NoControl).is_err_and(|e| e.code == "convexity_not_proven"));
 }
 
 #[test]

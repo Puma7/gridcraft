@@ -1,0 +1,230 @@
+solvercraft-wasm-smoke v0.1.0 ($SDK_ROOT\tests\wasm-smoke)
+â”œâ”€â”€ serde_json feature "default"
+â”‚   â”œâ”€â”€ serde_json v1.0.154
+â”‚   â”‚   â”œâ”€â”€ memchr v2.8.3
+â”‚   â”‚   â”œâ”€â”€ serde_core v1.0.229
+â”‚   â”‚   â”œâ”€â”€ itoa feature "default"
+â”‚   â”‚   â”‚   â””â”€â”€ itoa v1.0.18
+â”‚   â”‚   â””â”€â”€ zmij feature "default"
+â”‚   â”‚       â””â”€â”€ zmij v1.0.23
+â”‚   â””â”€â”€ serde_json feature "std"
+â”‚       â”œâ”€â”€ serde_json v1.0.154 (*)
+â”‚       â”œâ”€â”€ memchr feature "std"
+â”‚       â”‚   â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚   â””â”€â”€ memchr feature "alloc"
+â”‚       â”‚       â””â”€â”€ memchr v2.8.3
+â”‚       â””â”€â”€ serde_core feature "std"
+â”‚           â””â”€â”€ serde_core v1.0.229
+â””â”€â”€ solvercraft feature "default"
+    â””â”€â”€ solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+        â”œâ”€â”€ serde_json feature "default" (*)
+        â”œâ”€â”€ serde feature "default"
+        â”‚   â”œâ”€â”€ serde v1.0.229
+        â”‚   â”‚   â”œâ”€â”€ serde_core feature "result"
+        â”‚   â”‚   â”‚   â””â”€â”€ serde_core v1.0.229
+        â”‚   â”‚   â””â”€â”€ serde_derive feature "default"
+        â”‚   â”‚       â””â”€â”€ serde_derive v1.0.229 (proc-macro)
+        â”‚   â”‚           â”œâ”€â”€ proc-macro2 feature "proc-macro"
+        â”‚   â”‚           â”‚   â””â”€â”€ proc-macro2 v1.0.107
+        â”‚   â”‚           â”‚       â””â”€â”€ unicode-ident feature "default"
+        â”‚   â”‚           â”‚           â””â”€â”€ unicode-ident v1.0.27
+        â”‚   â”‚           â”œâ”€â”€ quote feature "proc-macro"
+        â”‚   â”‚           â”‚   â”œâ”€â”€ quote v1.0.47
+        â”‚   â”‚           â”‚   â”‚   â””â”€â”€ proc-macro2 v1.0.107 (*)
+        â”‚   â”‚           â”‚   â””â”€â”€ proc-macro2 feature "proc-macro" (*)
+        â”‚   â”‚           â”œâ”€â”€ syn feature "clone-impls"
+        â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9
+        â”‚   â”‚           â”‚       â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+        â”‚   â”‚           â”‚       â”œâ”€â”€ quote v1.0.47 (*)
+        â”‚   â”‚           â”‚       â””â”€â”€ unicode-ident feature "default" (*)
+        â”‚   â”‚           â”œâ”€â”€ syn feature "derive"
+        â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+        â”‚   â”‚           â”œâ”€â”€ syn feature "parsing"
+        â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+        â”‚   â”‚           â”œâ”€â”€ syn feature "printing"
+        â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+        â”‚   â”‚           â””â”€â”€ syn feature "proc-macro"
+        â”‚   â”‚               â”œâ”€â”€ syn v3.0.9 (*)
+        â”‚   â”‚               â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+        â”‚   â”‚               â””â”€â”€ quote feature "proc-macro" (*)
+        â”‚   â””â”€â”€ serde feature "std"
+        â”‚       â”œâ”€â”€ serde v1.0.229 (*)
+        â”‚       â””â”€â”€ serde_core feature "std" (*)
+        â”œâ”€â”€ serde feature "derive"
+        â”‚   â”œâ”€â”€ serde v1.0.229 (*)
+        â”‚   â””â”€â”€ serde feature "serde_derive"
+        â”‚       â””â”€â”€ serde v1.0.229 (*)
+        â”œâ”€â”€ solvercraft-compile feature "default"
+        â”‚   â””â”€â”€ solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+        â”‚       â”œâ”€â”€ serde feature "default" (*)
+        â”‚       â”œâ”€â”€ serde feature "derive" (*)
+        â”‚       â”œâ”€â”€ solvercraft-model feature "default"
+        â”‚       â”‚   â””â”€â”€ solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+        â”‚       â”‚       â””â”€â”€ solvercraft-types feature "default"
+        â”‚       â”‚           â””â”€â”€ solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+        â”‚       â”‚               â”œâ”€â”€ serde feature "default" (*)
+        â”‚       â”‚               â””â”€â”€ serde feature "derive" (*)
+        â”‚       â””â”€â”€ solvercraft-types feature "default" (*)
+        â”œâ”€â”€ solvercraft-model feature "default" (*)
+        â”œâ”€â”€ solvercraft-types feature "default" (*)
+        â”œâ”€â”€ solvercraft-engines feature "default"
+        â”‚   â””â”€â”€ solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+        â”‚       â”œâ”€â”€ serde feature "default" (*)
+        â”‚       â”œâ”€â”€ serde feature "derive" (*)
+        â”‚       â”œâ”€â”€ solvercraft-model feature "default" (*)
+        â”‚       â”œâ”€â”€ solvercraft-types feature "default" (*)
+        â”‚       â””â”€â”€ clarabel feature "serde"
+        â”‚           â””â”€â”€ clarabel v0.11.1
+        â”‚               â”œâ”€â”€ serde_json feature "default" (*)
+        â”‚               â”œâ”€â”€ serde_json feature "float_roundtrip"
+        â”‚               â”‚   â””â”€â”€ serde_json v1.0.154 (*)
+        â”‚               â”œâ”€â”€ serde feature "default" (*)
+        â”‚               â”œâ”€â”€ serde feature "derive" (*)
+        â”‚               â”œâ”€â”€ amd feature "default"
+        â”‚               â”‚   â””â”€â”€ amd v0.2.2
+        â”‚               â”‚       â””â”€â”€ num-traits feature "default"
+        â”‚               â”‚           â”œâ”€â”€ num-traits v0.2.19
+        â”‚               â”‚           â”‚   [build-dependencies]
+        â”‚               â”‚           â”‚   â””â”€â”€ autocfg feature "default"
+        â”‚               â”‚           â”‚       â””â”€â”€ autocfg v1.5.1
+        â”‚               â”‚           â””â”€â”€ num-traits feature "std"
+        â”‚               â”‚               â””â”€â”€ num-traits v0.2.19 (*)
+        â”‚               â”œâ”€â”€ num-traits feature "default" (*)
+        â”‚               â”œâ”€â”€ cfg-if feature "default"
+        â”‚               â”‚   â””â”€â”€ cfg-if v1.0.5
+        â”‚               â”œâ”€â”€ derive_builder feature "default"
+        â”‚               â”‚   â”œâ”€â”€ derive_builder v0.11.2
+        â”‚               â”‚   â”‚   â””â”€â”€ derive_builder_macro feature "default"
+        â”‚               â”‚   â”‚       â””â”€â”€ derive_builder_macro v0.11.2 (proc-macro)
+        â”‚               â”‚   â”‚           â”œâ”€â”€ derive_builder_core feature "default"
+        â”‚               â”‚   â”‚           â”‚   â””â”€â”€ derive_builder_core v0.11.2
+        â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ proc-macro2 feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â””â”€â”€ proc-macro2 feature "proc-macro" (*)
+        â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ quote feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â””â”€â”€ quote feature "proc-macro" (*)
+        â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ darling feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”œâ”€â”€ darling v0.14.4
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”œâ”€â”€ darling_core feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚   â””â”€â”€ darling_core v0.14.4
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ proc-macro2 feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ quote feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ fnv feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ fnv v1.0.7
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ fnv feature "std"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â””â”€â”€ fnv v1.0.7
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ ident_case feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ ident_case v1.0.1
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ strsim feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ strsim v0.10.0
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ syn feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn v1.0.109
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ unicode-ident feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "clone-impls"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "derive"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "parsing"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "printing"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn feature "quote"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚       â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ syn feature "proc-macro"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ quote feature "proc-macro" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â””â”€â”€ syn feature "quote" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ syn feature "extra-traits"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â””â”€â”€ syn feature "full"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚           â””â”€â”€ syn v1.0.109 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â””â”€â”€ darling_macro feature "default"
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚       â””â”€â”€ darling_macro v0.14.4 (proc-macro)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â”œâ”€â”€ quote feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â”œâ”€â”€ darling_core feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â””â”€â”€ syn feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚   â””â”€â”€ darling feature "suggestions"
+        â”‚               â”‚   â”‚           â”‚       â”‚       â”œâ”€â”€ darling v0.14.4 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚       â””â”€â”€ darling_core feature "suggestions"
+        â”‚               â”‚   â”‚           â”‚       â”‚           â”œâ”€â”€ darling_core v0.14.4 (*)
+        â”‚               â”‚   â”‚           â”‚       â”‚           â””â”€â”€ darling_core feature "strsim"
+        â”‚               â”‚   â”‚           â”‚       â”‚               â””â”€â”€ darling_core v0.14.4 (*)
+        â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ syn feature "default" (*)
+        â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ syn feature "extra-traits" (*)
+        â”‚               â”‚   â”‚           â”‚       â””â”€â”€ syn feature "full" (*)
+        â”‚               â”‚   â”‚           â”œâ”€â”€ syn feature "default" (*)
+        â”‚               â”‚   â”‚           â”œâ”€â”€ syn feature "extra-traits" (*)
+        â”‚               â”‚   â”‚           â””â”€â”€ syn feature "full" (*)
+        â”‚               â”‚   â””â”€â”€ derive_builder feature "std"
+        â”‚               â”‚       â””â”€â”€ derive_builder v0.11.2 (*)
+        â”‚               â”œâ”€â”€ enum_dispatch feature "default"
+        â”‚               â”‚   â””â”€â”€ enum_dispatch v0.3.13 (proc-macro)
+        â”‚               â”‚       â”œâ”€â”€ proc-macro2 feature "default" (*)
+        â”‚               â”‚       â”œâ”€â”€ quote feature "default" (*)
+        â”‚               â”‚       â”œâ”€â”€ once_cell feature "default"
+        â”‚               â”‚       â”‚   â”œâ”€â”€ once_cell v1.21.4
+        â”‚               â”‚       â”‚   â””â”€â”€ once_cell feature "std"
+        â”‚               â”‚       â”‚       â”œâ”€â”€ once_cell v1.21.4
+        â”‚               â”‚       â”‚       â””â”€â”€ once_cell feature "alloc"
+        â”‚               â”‚       â”‚           â”œâ”€â”€ once_cell v1.21.4
+        â”‚               â”‚       â”‚           â””â”€â”€ once_cell feature "race"
+        â”‚               â”‚       â”‚               â””â”€â”€ once_cell v1.21.4
+        â”‚               â”‚       â”œâ”€â”€ syn feature "default"
+        â”‚               â”‚       â”‚   â”œâ”€â”€ syn v2.0.119
+        â”‚               â”‚       â”‚   â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+        â”‚               â”‚       â”‚   â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+        â”‚               â”‚       â”‚   â”‚   â””â”€â”€ unicode-ident feature "default" (*)
+        â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "clone-impls"
+        â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+        â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "derive"
+        â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+        â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "parsing"
+        â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+        â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "printing"
+        â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+        â”‚               â”‚       â”‚   â””â”€â”€ syn feature "proc-macro"
+        â”‚               â”‚       â”‚       â”œâ”€â”€ syn v2.0.119 (*)
+        â”‚               â”‚       â”‚       â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+        â”‚               â”‚       â”‚       â””â”€â”€ quote feature "proc-macro" (*)
+        â”‚               â”‚       â””â”€â”€ syn feature "full"
+        â”‚               â”‚           â””â”€â”€ syn v2.0.119 (*)
+        â”‚               â”œâ”€â”€ itertools feature "default"
+        â”‚               â”‚   â”œâ”€â”€ itertools v0.11.0
+        â”‚               â”‚   â”‚   â””â”€â”€ either v1.19.0
+        â”‚               â”‚   â””â”€â”€ itertools feature "use_std"
+        â”‚               â”‚       â”œâ”€â”€ itertools v0.11.0 (*)
+        â”‚               â”‚       â”œâ”€â”€ itertools feature "use_alloc"
+        â”‚               â”‚       â”‚   â””â”€â”€ itertools v0.11.0 (*)
+        â”‚               â”‚       â””â”€â”€ either feature "use_std"
+        â”‚               â”‚           â”œâ”€â”€ either v1.19.0
+        â”‚               â”‚           â””â”€â”€ either feature "std"
+        â”‚               â”‚               â””â”€â”€ either v1.19.0
+        â”‚               â”œâ”€â”€ lazy_static feature "default"
+        â”‚               â”‚   â””â”€â”€ lazy_static v1.5.1
+        â”‚               â”œâ”€â”€ serde-big-array feature "default"
+        â”‚               â”‚   â””â”€â”€ serde-big-array v0.5.1
+        â”‚               â”‚       â””â”€â”€ serde v1.0.229 (*)
+        â”‚               â””â”€â”€ thiserror feature "default"
+        â”‚                   â””â”€â”€ thiserror v1.0.69
+        â”‚                       â””â”€â”€ thiserror-impl feature "default"
+        â”‚                           â””â”€â”€ thiserror-impl v1.0.69 (proc-macro)
+        â”‚                               â”œâ”€â”€ proc-macro2 feature "default" (*)
+        â”‚                               â”œâ”€â”€ quote feature "default" (*)
+        â”‚                               â””â”€â”€ syn feature "default" (*)
+        â”œâ”€â”€ solvercraft-math feature "default"
+        â”‚   â””â”€â”€ solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+        â”‚       â”œâ”€â”€ serde feature "default" (*)
+        â”‚       â”œâ”€â”€ serde feature "derive" (*)
+        â”‚       â””â”€â”€ solvercraft-types feature "default" (*)
+        â”œâ”€â”€ solvercraft-simulation feature "default"
+        â”‚   â””â”€â”€ solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+        â”‚       â”œâ”€â”€ serde feature "default" (*)
+        â”‚       â”œâ”€â”€ serde feature "derive" (*)
+        â”‚       â”œâ”€â”€ solvercraft-types feature "default" (*)
+        â”‚       â””â”€â”€ solvercraft-math feature "default" (*)
+        â””â”€â”€ web-time feature "default"
+            â””â”€â”€ web-time v0.2.4

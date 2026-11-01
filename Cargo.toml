@@ -13,6 +13,8 @@ repository = "https://github.com/storytold/gridcraft"
 
 [workspace.dependencies]
 solvercraft = { path = "solvercraft/crates/solvercraft" }
+solvercraft-types = { path = "solvercraft/crates/types" }
+solvercraft-math = { path = "solvercraft/crates/math" }
 # internal
 gridcraft-core = { path = "crates/core" }
 gridcraft-numfmt = { path = "crates/numfmt" }

@@ -13,6 +13,7 @@ pub struct Scenario {
 #[serde(tag = "kind", rename_all = "snake_case")]
 pub enum RiskMeasure {
     ExpectedLoss,
+    MeanVariance { penalty: f64 },
     ConditionalValueAtRisk { confidence: f64 },
 }
 impl<'de> Deserialize<'de> for RiskMeasure {
@@ -21,10 +22,12 @@ impl<'de> Deserialize<'de> for RiskMeasure {
         #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
         enum Input {
             ExpectedLoss {},
+            MeanVariance { penalty: f64 },
             ConditionalValueAtRisk { confidence: f64 },
         }
         match Input::deserialize(deserializer)? {
             Input::ExpectedLoss {} => Ok(Self::ExpectedLoss),
+            Input::MeanVariance { penalty } => Ok(Self::MeanVariance { penalty }),
             Input::ConditionalValueAtRisk { confidence } => Ok(Self::ConditionalValueAtRisk { confidence }),
         }
     }
@@ -44,8 +47,14 @@ pub struct RiskResult {
     pub decision_values: Option<Vec<f64>>,
     pub scenario_losses: Option<Vec<f64>>,
     pub expected_loss: Option<f64>,
+    pub variance: Option<f64>,
     pub cvar: Option<f64>,
     pub confidence: Option<f64>,
+    /// Uniform bound for the last multiply/add step assembling the mean-variance
+    /// polynomial from computed moments over the original variable box.
+    /// This is not a sampling uncertainty interval or a bound for all preceding
+    /// statistical-moment arithmetic, which has separate conditioning checks.
+    pub coefficient_roundoff_bound: f64,
     pub validation_note: String,
 }
 fn invalid(message: &str) -> SolverError {
@@ -200,6 +209,46 @@ fn weighted_average<I: ExactSizeIterator<Item = f64> + Clone>(values: I, weights
     }
     finish_average(&area, &weights.total, scale, absolute.total()?, terms, minimum, maximum)
 }
+/// Weighted population mean; finite nonnegative weights need not sum to one.
+pub fn weighted_mean(values: &[f64], weights: &[f64]) -> Result<f64> {
+    let plan = WeightPlan::new(weights.iter().copied())?;
+    weighted_average(values.iter().copied(), &plan)
+}
+/// Weighted population variance, with power-of-two scaling before squaring.
+pub fn weighted_variance(values: &[f64], weights: &[f64]) -> Result<f64> {
+    let plan = WeightPlan::new(weights.iter().copied())?;
+    let mean = weighted_average(values.iter().copied(), &plan)?;
+    let maximum = values.iter().zip(&plan.scaled).filter(|(_, w)| **w > 0.0).map(|(v, _)| v.abs()).fold(0.0_f64, f64::max);
+    let scale = binary_scale(maximum);
+    let center = mean / scale;
+    let mut area = Sum::default();
+    for (value, weight) in values.iter().zip(&plan.scaled) {
+        if *weight > 0.0 {
+            let deviation = scaled_loss(*value, scale)? - center;
+            let square = deviation * deviation;
+            area.product(square, *weight)?;
+        }
+    }
+    let variance = ((area.total()? / plan.total.total()?) * scale) * scale;
+    if variance.is_finite() && variance >= 0.0 && (area.total()? == 0.0 || variance >= f64::MIN_POSITIVE) {
+        Ok(variance)
+    } else {
+        Err(numerical("Variance exceeds supported finite precision"))
+    }
+}
+pub(crate) fn probability_weights<I: ExactSizeIterator<Item = f64> + Clone>(weights: I) -> Result<Vec<f64>> {
+    let plan = WeightPlan::new(weights)?;
+    let total = plan.total.total()?;
+    let mut result = plan.scaled;
+    for value in &mut result {
+        let original = *value;
+        *value /= total;
+        if original > 0.0 && *value < f64::MIN_POSITIVE {
+            return Err(numerical("Normalized probability exceeds supported precision"));
+        }
+    }
+    Ok(result)
+}
 fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Result<WeightPlan> {
     preflight(problem, options)?;
     if problem.scenarios.is_empty() || problem.scenarios.len() > 100_000 {
@@ -230,10 +279,15 @@ fn normalized_weights(problem: &ScenarioProblem, options: &SolveOptions) -> Resu
 fn preflight(problem: &ScenarioProblem, options: &SolveOptions) -> Result<()> {
     use solvercraft_model::{MAX_CONSTRAINTS, MAX_NAME_BYTES, MAX_TERMS, MAX_VARIABLES};
     solvercraft_model::validate_options(options)?;
-    if let RiskMeasure::ConditionalValueAtRisk { confidence } = problem.measure {
-        if !confidence.is_finite() || !(0.0..1.0).contains(&confidence) {
-            return Err(invalid("CVaR confidence must be in [0,1)"));
-        }
+    if let RiskMeasure::MeanVariance { penalty } = problem.measure
+        && (!penalty.is_finite() || penalty < 0.0)
+    {
+        return Err(invalid("Variance penalty must be finite and nonnegative"));
+    }
+    if let RiskMeasure::ConditionalValueAtRisk { confidence } = problem.measure
+        && (!confidence.is_finite() || !(0.0..1.0).contains(&confidence))
+    {
+        return Err(invalid("CVaR confidence must be in [0,1)"));
     }
     let n = problem.variables.len();
     let s = problem.scenarios.len();
@@ -265,7 +319,17 @@ fn preflight(problem: &ScenarioProblem, options: &SolveOptions) -> Result<()> {
             return Err(invalid("Invalid base constraint coefficient"));
         }
     }
-    let transformed = if extra > 0 { s.checked_mul(n.saturating_add(3)).and_then(|v| v.checked_add(1)) } else { Some(n) };
+    let transformed = if extra > 0 {
+        s.checked_mul(n.saturating_add(3)).and_then(|v| v.checked_add(1))
+    } else if matches!(problem.measure,RiskMeasure::MeanVariance{penalty} if penalty>0.0) {
+        let quadratic = n.checked_mul(n.saturating_add(1)).map(|v| v / 2).and_then(|v| v.checked_add(n.checked_mul(2)?));
+        if quadratic.and_then(|q| q.checked_mul(s)).is_none_or(|work| work > 50_000_000) {
+            return Err(SolverError::new("model_limit", "Variance coefficient assembly exceeds bounded work"));
+        }
+        quadratic
+    } else {
+        Some(n)
+    };
     terms = terms.checked_add(transformed.ok_or_else(|| invalid("Counterpart term overflow"))?).ok_or_else(|| invalid("Term overflow"))?;
     if terms > MAX_TERMS {
         return Err(SolverError::new("model_limit", "Risk counterpart exceeds term limit"));
@@ -280,8 +344,50 @@ fn preflight(problem: &ScenarioProblem, options: &SolveOptions) -> Result<()> {
     }
     Ok(())
 }
+fn rounded_coefficient(
+    base: f64,
+    multiplier: f64,
+    moment: f64,
+    variables: &[Variable],
+    factors: &[usize],
+    errors: &mut solvercraft_model::ExactProducts,
+) -> Result<f64> {
+    let mut exact = solvercraft_model::ExactProducts::default();
+    exact.add(base)?;
+    exact.add_product(multiplier, moment)?;
+    let coefficient = exact.clone().finish()?;
+    let (low, high) = exact.enclosure()?;
+    let error = (coefficient - low).abs().max((high - coefficient).abs());
+    if error > 0.0 {
+        let mut magnitudes = [1.0_f64; 2];
+        for (slot, handle) in factors.iter().enumerate() {
+            let variable = variables.get(*handle).ok_or_else(|| invalid("Invalid coefficient formation handle"))?;
+            let (lo, hi) = solvercraft_model::effective_bounds(variable)?;
+            let (Some(lo), Some(hi)) = (lo, hi) else {
+                return Err(SolverError::new(
+                    "unsupported_risk_precision",
+                    "Nonzero mean/variance coefficient roundoff requires finite original variable bounds",
+                ));
+            };
+            magnitudes[slot] = lo.abs().max(hi.abs());
+        }
+        let mut impact = solvercraft_model::ExactProducts::default();
+        match factors.len() {
+            0 => impact.add(error)?,
+            1 => impact.add_product(error, magnitudes[0])?,
+            2 => impact.add_triple(error, magnitudes[0], magnitudes[1])?,
+            _ => return Err(invalid("Unsupported risk coefficient degree")),
+        }
+        errors.add(impact.enclosure()?.1)?;
+    }
+    Ok(coefficient)
+}
 pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<OptimizationModel> {
+    compile_with_roundoff(problem, options).map(|(model, _)| model)
+}
+fn compile_with_roundoff(problem: &ScenarioProblem, options: &SolveOptions) -> Result<(OptimizationModel, f64)> {
     let weights = normalized_weights(problem, options)?;
+    let mut roundoff = solvercraft_model::ExactProducts::default();
     let mut model = OptimizationModel {
         schema_version: SCHEMA_VERSION,
         name: problem.name.clone(),
@@ -290,13 +396,69 @@ pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Opti
         constraints: problem.constraints.clone(),
     };
     match problem.measure {
-        RiskMeasure::ExpectedLoss => {
+        RiskMeasure::ExpectedLoss | RiskMeasure::MeanVariance { .. } => {
             model.objective.offset = weighted_average(problem.scenarios.iter().map(|s| s.offset), &weights)?;
             for variable in 0..problem.variables.len() {
                 let coefficient =
                     weighted_average(problem.scenarios.iter().map(|s| s.coefficients.get(variable).copied().unwrap_or(f64::NAN)), &weights)?;
                 if coefficient != 0.0 {
                     model.objective.linear.push(LinearTerm { variable, coefficient });
+                }
+            }
+            if let RiskMeasure::MeanVariance { penalty } = problem.measure
+                && penalty > 0.0
+            {
+                let probabilities = probability_weights(problem.scenarios.iter().map(|s| s.weight))?;
+                let n = problem.variables.len();
+                let means =
+                    (0..n).map(|i| weighted_average(problem.scenarios.iter().map(|s| s.coefficients[i]), &weights)).collect::<Result<Vec<_>>>()?;
+                let mean_offset = model.objective.offset;
+                let mut variance_offset = Sum::default();
+                let mut linear = vec![Sum::default(); n];
+                let mut quadratic = vec![Sum::default(); n * (n + 1) / 2];
+                for (scenario, probability) in problem.scenarios.iter().zip(probabilities) {
+                    if probability == 0.0 {
+                        continue;
+                    }
+                    let offset = scenario.offset - mean_offset;
+                    variance_offset.product(probability, offset * offset)?;
+                    let mut index = 0;
+                    for i in 0..n {
+                        let left = scenario.coefficients[i] - means[i];
+                        linear[i].product(probability, 2.0 * left * offset)?;
+                        for (j, mean) in means.iter().enumerate().skip(i) {
+                            let right = scenario.coefficients[j] - mean;
+                            quadratic[index].product(probability, left * right * if i == j { 1.0 } else { 2.0 })?;
+                            index += 1;
+                        }
+                    }
+                }
+                model.objective.offset =
+                    rounded_coefficient(model.objective.offset, penalty, variance_offset.total()?, &problem.variables, &[], &mut roundoff)?;
+                // Emit each internally generated coefficient once. The raw-model
+                // canonicalizer retains its stricter exact duplicate policy.
+                model.objective.linear.clear();
+                for (i, sum) in linear.into_iter().enumerate() {
+                    let coefficient = rounded_coefficient(means[i], penalty, sum.total()?, &problem.variables, &[i], &mut roundoff)?;
+                    if !coefficient.is_finite() {
+                        return Err(numerical("Mean-variance linear coefficient overflow"));
+                    }
+                    if coefficient != 0.0 {
+                        model.objective.linear.push(LinearTerm { variable: i, coefficient });
+                    }
+                }
+                let mut index = 0;
+                for i in 0..n {
+                    for j in i..n {
+                        let coefficient = rounded_coefficient(0.0, penalty, quadratic[index].total()?, &problem.variables, &[i, j], &mut roundoff)?;
+                        if !coefficient.is_finite() {
+                            return Err(numerical("Mean-variance quadratic coefficient overflow"));
+                        }
+                        if coefficient != 0.0 {
+                            model.objective.quadratic.push(QuadraticTerm { left: i, right: j, coefficient });
+                        }
+                        index += 1;
+                    }
                 }
             }
         }
@@ -330,7 +492,7 @@ pub fn compile(problem: &ScenarioProblem, options: &SolveOptions) -> Result<Opti
         }
     }
     solvercraft_model::validate(&model, options)?;
-    Ok(model)
+    Ok((model, roundoff.enclosure()?.1))
 }
 pub fn weighted_upper_tail_cvar(losses: &[f64], weights: &[f64], confidence: f64) -> Result<f64> {
     if losses.len() > 1_000_000 {
@@ -414,15 +576,16 @@ pub fn weighted_upper_tail_cvar(losses: &[f64], weights: &[f64], confidence: f64
 }
 
 pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn RunControl) -> Result<RiskResult> {
-    let model = compile(problem, options)?;
-    let solve = solvercraft_engines::solve(&model, options, control)?;
+    let (model, coefficient_roundoff_bound) = compile_with_roundoff(problem, options)?;
+    let mut solve = solvercraft_engines::solve(&model, options, control)?;
     let decision_values = solve.values.as_ref().map(|v| v.iter().take(problem.variables.len()).copied().collect::<Vec<_>>());
     let weights = normalized_weights(problem, options)?;
     let mut scenario_losses = None;
     let mut expected_loss = None;
     let mut cvar = None;
+    let mut variance = None;
     let confidence = match problem.measure {
-        RiskMeasure::ExpectedLoss => None,
+        RiskMeasure::ExpectedLoss | RiskMeasure::MeanVariance { .. } => None,
         RiskMeasure::ConditionalValueAtRisk { confidence } => Some(confidence),
     };
     if let Some(values) = &decision_values {
@@ -430,12 +593,12 @@ pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn
             .scenarios
             .iter()
             .map(|s| {
-                let mut sum = Sum::default();
+                let mut sum = solvercraft_model::ExactProducts::default();
                 sum.add(s.offset)?;
                 for (c, v) in s.coefficients.iter().zip(values) {
-                    sum.add(c * v)?;
+                    sum.add_product(*c, *v)?;
                 }
-                sum.total()
+                sum.finish()
             })
             .collect::<Result<_>>()?;
         if losses.iter().any(|x| !x.is_finite()) {
@@ -447,12 +610,49 @@ pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn
             let raw_weights: Vec<f64> = problem.scenarios.iter().map(|s| s.weight).collect();
             cvar = Some(weighted_upper_tail_cvar(&losses, &raw_weights, alpha)?);
         }
-        let original_measure = cvar.unwrap_or(mean);
+        let original_measure = if let RiskMeasure::MeanVariance { penalty } = problem.measure {
+            let raw_weights: Vec<_> = problem.scenarios.iter().map(|s| s.weight).collect();
+            let value = weighted_variance(&losses, &raw_weights)?;
+            variance = Some(value);
+            let mut objective = Sum::default();
+            objective.add(mean)?;
+            objective.product(penalty, value)?;
+            objective.total()?
+        } else {
+            cvar.unwrap_or(mean)
+        };
         if let Some(reported) = solve.objective {
             let scale = reported.abs().max(original_measure.abs()).max(1.0);
             let tolerance = options.optimality_tolerance.max(options.feasibility_tolerance);
-            if (reported / scale - original_measure / scale).abs() > tolerance + tolerance / scale {
+            if (reported / scale - original_measure / scale).abs() > tolerance + tolerance / scale + coefficient_roundoff_bound / scale {
                 return Err(numerical("Transformed objective disagrees with the original scenario risk measure"));
+            }
+        }
+        solve.objective = Some(original_measure);
+        if coefficient_roundoff_bound > 0.0 {
+            solve.best_bound = solve
+                .best_bound
+                .map(|bound| {
+                    let mut corrected = solvercraft_model::ExactProducts::default();
+                    corrected.add(bound)?;
+                    corrected.add(-coefficient_roundoff_bound)?;
+                    Ok(corrected.enclosure()?.0)
+                })
+                .transpose()?;
+            let gap = solve
+                .best_bound
+                .map(|bound| {
+                    let mut gap = solvercraft_model::ExactProducts::default();
+                    gap.add(original_measure)?;
+                    gap.add(-bound)?;
+                    Ok(gap.enclosure()?.1.max(0.0))
+                })
+                .transpose()?;
+            let scale = original_measure.abs().max(solve.best_bound.unwrap_or(original_measure).abs()).max(1.0);
+            solve.relative_gap = gap.map(|g| g / scale);
+            if solve.optimality == Optimality::Optimal && gap.is_none_or(|g| g > options.optimality_tolerance && g / scale > options.relative_gap) {
+                solve.optimality = Optimality::BestFound;
+                solve.warnings.push("Final coefficient assembly roundoff prevents certification of the requested original-risk gap.".into());
             }
         }
         scenario_losses = Some(losses);
@@ -462,9 +662,11 @@ pub fn optimize(problem: &ScenarioProblem, options: &SolveOptions, control: &dyn
         decision_values,
         scenario_losses,
         expected_loss,
+        variance,
         cvar,
         confidence,
-        validation_note: "Exact finite-scenario formulation; scenario performance is in-sample, not an out-of-sample probability guarantee.".into(),
+        coefficient_roundoff_bound,
+        validation_note: "Finite-scenario formulation with an explicit final coefficient-assembly roundoff bound. Scenario performance is in-sample, not an out-of-sample probability guarantee.".into(),
     })
 }
 
@@ -474,7 +676,107 @@ pub struct BoxUncertainty {
     pub constraint: usize,
     pub radii: Vec<f64>,
 }
-/// Robustifies selected <= rows against independent, symmetric coefficient boxes.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct BudgetUncertainty {
+    pub constraint: usize,
+    pub radii: Vec<f64>,
+    /// sum_i |coefficient_deviation_i| / radius_i <= budget.
+    pub budget: f64,
+}
+/// Exact linear counterpart for independent symmetric coefficient deviations
+/// with a Bertsimas-Sim cardinality budget. Only <= rows are accepted.
+pub fn robust_budget(model: &OptimizationModel, uncertainties: &[BudgetUncertainty], options: &SolveOptions) -> Result<OptimizationModel> {
+    solvercraft_model::validate(model, options)?;
+    if uncertainties.len() > solvercraft_model::MAX_CONSTRAINTS {
+        return Err(invalid("Too many robust rows"));
+    }
+    let n = model.variables.len();
+    robust_validation_budget(n, uncertainties.len(), options)?;
+    let mut k = 0usize;
+    let mut names = model.name.len();
+    for variable in &model.variables {
+        names = names.saturating_add(variable.name.len());
+    }
+    for row in &model.constraints {
+        names = names.saturating_add(row.name.len());
+    }
+    for u in uncertainties {
+        if u.constraint >= model.constraints.len()
+            || u.radii.len() != n
+            || !u.budget.is_finite()
+            || u.budget < 0.0
+            || u.radii.iter().any(|r| !r.is_finite() || *r < 0.0)
+        {
+            return Err(invalid("Invalid budget uncertainty"));
+        }
+        if model.constraints[u.constraint].relation != Relation::LessEqual {
+            return Err(SolverError::new("unsupported_robust_relation", "Budget counterpart requires <= rows"));
+        }
+        k = k.checked_add(u.radii.iter().filter(|r| **r > 0.0).count()).ok_or_else(|| invalid("Robust term overflow"))?;
+    }
+    let variables = n.checked_add(k).and_then(|x| x.checked_add(uncertainties.len())).ok_or_else(|| invalid("Robust variable overflow"))?;
+    let rows = model
+        .constraints
+        .len()
+        .checked_add(k.checked_mul(2).ok_or_else(|| invalid("Robust row overflow"))?)
+        .ok_or_else(|| invalid("Robust row overflow"))?;
+    let mut terms = model.objective.linear.len() + model.objective.quadratic.len();
+    for row in &model.constraints {
+        terms = terms.checked_add(row.terms.len()).ok_or_else(|| invalid("Term overflow"))?;
+    }
+    terms = terms
+        .checked_add(k.checked_mul(7).and_then(|x| x.checked_add(uncertainties.len())).ok_or_else(|| invalid("Robust term overflow"))?)
+        .ok_or_else(|| invalid("Term overflow"))?;
+    if variables > solvercraft_model::MAX_VARIABLES || rows > solvercraft_model::MAX_CONSTRAINTS || terms > solvercraft_model::MAX_TERMS {
+        return Err(SolverError::new("model_limit", "Budget counterpart exceeds model dimensions"));
+    }
+    let bytes = terms
+        .checked_mul(256)
+        .and_then(|x| x.checked_add(variables.checked_mul(256)?))
+        .and_then(|x| x.checked_add(rows.checked_mul(256)?))
+        .and_then(|x| x.checked_add(names.checked_mul(2)?));
+    if bytes.is_none_or(|x| x as u64 > options.max_memory_bytes) {
+        return Err(SolverError::new("memory_limit", "Budget counterpart exceeds memory before allocation"));
+    }
+    let mut seen = std::collections::BTreeSet::new();
+    for u in uncertainties {
+        if !seen.insert(u.constraint) {
+            return Err(invalid("Duplicate robust row"));
+        }
+    }
+    let mut output = model.clone();
+    output.variables.try_reserve_exact(variables - n).map_err(|_| invalid("Cannot allocate robust variables"))?;
+    output.constraints.try_reserve_exact(rows - model.constraints.len()).map_err(|_| invalid("Cannot allocate robust rows"))?;
+    for u in uncertainties {
+        let z = output.variables.len();
+        output.variables.push(Variable { name: "uncertainty threshold".into(), lower: Some(0.0), upper: None, kind: VariableKind::Continuous });
+        let cardinality = u.radii.iter().filter(|radius| **radius > 0.0).count();
+        output.constraints[u.constraint].terms.push(LinearTerm { variable: z, coefficient: u.budget.min(cardinality as f64) });
+        for (i, radius) in u.radii.iter().copied().enumerate().filter(|(_, r)| *r > 0.0) {
+            let excess = output.variables.len();
+            output.variables.push(Variable { name: "uncertainty excess".into(), lower: Some(0.0), upper: None, kind: VariableKind::Continuous });
+            output.constraints[u.constraint].terms.push(LinearTerm { variable: excess, coefficient: 1.0 });
+            for sign in [-1.0, 1.0] {
+                output.constraints.push(LinearConstraint {
+                    name: "budget support".into(),
+                    terms: vec![
+                        LinearTerm { variable: i, coefficient: sign * radius },
+                        LinearTerm { variable: z, coefficient: -1.0 },
+                        LinearTerm { variable: excess, coefficient: -1.0 },
+                    ],
+                    relation: Relation::LessEqual,
+                    rhs: 0.0,
+                });
+            }
+        }
+    }
+    solvercraft_model::validate(&output, options)?;
+    Ok(output)
+}
+/// Compile selected <= rows against independent symmetric coefficient boxes.
+/// Auxiliaries represent radius-weighted support, so their row tolerance is not
+/// multiplied by the radius. Use the checked solve API for original-row validation.
 pub fn robust_box(model: &OptimizationModel, uncertainties: &[BoxUncertainty], options: &SolveOptions) -> Result<OptimizationModel> {
     solvercraft_model::validate(model, options)?;
     let n = model.variables.len();
@@ -541,7 +843,7 @@ pub fn robust_box(model: &OptimizationModel, uncertainties: &[BoxUncertainty], o
         for (i, radius) in u.radii.iter().copied().enumerate().filter(|(_, r)| *r > 0.0) {
             let a = out.variables.len();
             out.variables.push(Variable {
-                name: format!("__abs_{}_{}", u.constraint, i),
+                name: format!("__weighted_abs_{}_{}", u.constraint, i),
                 lower: Some(0.0),
                 upper: None,
                 kind: VariableKind::Continuous,
@@ -549,16 +851,210 @@ pub fn robust_box(model: &OptimizationModel, uncertainties: &[BoxUncertainty], o
             for sign in [-1.0, 1.0] {
                 out.constraints.push(LinearConstraint {
                     name: format!("abs_{}_{}_{}", u.constraint, i, sign),
-                    terms: vec![LinearTerm { variable: i, coefficient: sign }, LinearTerm { variable: a, coefficient: -1.0 }],
+                    terms: vec![LinearTerm { variable: i, coefficient: sign * radius }, LinearTerm { variable: a, coefficient: -1.0 }],
                     relation: Relation::LessEqual,
                     rhs: 0.0,
                 });
             }
-            extra.push(LinearTerm { variable: a, coefficient: radius });
+            extra.push(LinearTerm { variable: a, coefficient: 1.0 });
         }
         let target = out.constraints.get_mut(u.constraint).ok_or_else(|| invalid("Missing counterpart row"))?;
         target.terms.extend(extra);
     }
     solvercraft_model::validate(&out, options)?;
     Ok(out)
+}
+
+/// A compiled counterpart plus a result checked in the original uncertainty set.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RobustSolveResult {
+    pub counterpart: OptimizationModel,
+    pub result: SolveResult,
+}
+
+fn robust_validation_budget(variables: usize, rows: usize, options: &SolveOptions) -> Result<()> {
+    let cells = variables.checked_mul(rows).ok_or_else(|| invalid("Robust validation size overflow"))?;
+    if rows > solvercraft_model::MAX_CONSTRAINTS || cells > 100_000 || (cells as u64).saturating_mul(256) > options.max_memory_bytes {
+        return Err(SolverError::new("memory_limit", "Robust validation exceeds its bounded work/storage budget"));
+    }
+    Ok(())
+}
+
+// A positive binary64 product is an integer of at most106 bits times a power
+// of two. Its normalized key orders the exact product without first rounding,
+// overflowing, or underflowing a floating-point multiplication.
+fn support_product_key(left: f64, right: f64) -> Result<(i32, u128)> {
+    fn parts(value: f64) -> (i32, u64) {
+        let bits = value.to_bits();
+        let exponent = ((bits >> 52) & 0x7ff) as i32;
+        let fraction = bits & ((1u64 << 52) - 1);
+        if exponent == 0 { (-1074, fraction) } else { (exponent - 1075, fraction | (1u64 << 52)) }
+    }
+    let (left_exponent, left_mantissa) = parts(left);
+    let (right_exponent, right_mantissa) = parts(right);
+    let product =
+        u128::from(left_mantissa).checked_mul(u128::from(right_mantissa)).ok_or_else(|| numerical("Robust product significand overflow"))?;
+    if product == 0 {
+        return Ok((i32::MIN, 0));
+    }
+    let leading = product.leading_zeros();
+    Ok((left_exponent + right_exponent + (128 - leading) as i32, product << leading))
+}
+
+fn validate_robust_rows<'a, I>(
+    model: &OptimizationModel,
+    rows: I,
+    values: &[f64],
+    options: &SolveOptions,
+) -> Result<solvercraft_model::SolutionValidation>
+where
+    I: ExactSizeIterator<Item = (usize, &'a [f64], Option<f64>)> + Clone,
+{
+    solvercraft_model::validate(model, options)?;
+    robust_validation_budget(model.variables.len(), rows.len(), options)?;
+    let mut seen = std::collections::BTreeSet::new();
+    for (index, radii, budget) in rows.clone() {
+        if index >= model.constraints.len()
+            || radii.len() != model.variables.len()
+            || !seen.insert(index)
+            || radii.iter().any(|radius| !radius.is_finite() || *radius < 0.0)
+            || budget.is_some_and(|budget| !budget.is_finite() || budget < 0.0)
+        {
+            return Err(invalid("Invalid or duplicate robust validation row"));
+        }
+        if model.constraints[index].relation != Relation::LessEqual {
+            return Err(SolverError::new("unsupported_robust_relation", "Robust validation requires <= rows"));
+        }
+    }
+    let mut validation = solvercraft_model::validate_solution(model, values, options)?;
+    validation.violations.try_reserve_exact(rows.len()).map_err(|_| numerical("Cannot allocate robust validation diagnostics"))?;
+    for (index, radii, budget) in rows {
+        let row = &model.constraints[index];
+        let mut residual = solvercraft_model::ExactProducts::default();
+        residual.add(-row.rhs)?;
+        for term in &row.terms {
+            residual.add_product(term.coefficient, values[term.variable])?;
+        }
+        if let Some(budget) = budget {
+            let count = radii.iter().filter(|radius| **radius > 0.0).count();
+            let mut terms = Vec::new();
+            terms.try_reserve_exact(count).map_err(|_| numerical("Cannot allocate robust support ordering"))?;
+            for (&radius, &value) in radii.iter().zip(values).filter(|(radius, _)| **radius > 0.0) {
+                let absolute = value.abs();
+                terms.push((support_product_key(radius, absolute)?, radius, absolute));
+            }
+            terms.sort_unstable_by_key(|term| std::cmp::Reverse(term.0));
+            let capped = budget.min(count as f64);
+            let whole = capped.floor() as usize;
+            let fraction = capped - whole as f64;
+            for (position, (_, radius, absolute)) in terms.into_iter().enumerate() {
+                if position < whole {
+                    residual.add_product(radius, absolute)?;
+                } else if position == whole && fraction > 0.0 {
+                    residual.add_triple(radius, absolute, fraction)?;
+                } else {
+                    break;
+                }
+            }
+        } else {
+            for (&radius, &value) in radii.iter().zip(values) {
+                residual.add_product(radius, value.abs())?;
+            }
+        }
+        // The upper endpoint preserves a positive residual even when its
+        // nearest binary64 value falls just below a requested tolerance.
+        let violation = residual.enclosure()?.1.max(0.0);
+        validation.max_violation = validation.max_violation.max(violation);
+        if violation > options.feasibility_tolerance {
+            validation.feasible = false;
+            validation.violations.push(solvercraft_model::Violation { kind: solvercraft_model::ViolationKind::Constraint, index, amount: violation });
+        }
+    }
+    Ok(validation)
+}
+
+/// Validate original decision coordinates, without relying on abs/slack auxiliaries.
+pub fn validate_robust_box_solution(
+    model: &OptimizationModel,
+    uncertainties: &[BoxUncertainty],
+    values: &[f64],
+    options: &SolveOptions,
+) -> Result<solvercraft_model::SolutionValidation> {
+    validate_robust_rows(model, uncertainties.iter().map(|u| (u.constraint, u.radii.as_slice(), None)), values, options)
+}
+
+/// Evaluate the exact finite-dimensional budget support (including its fractional
+/// boundary) in original coordinates, independently of counterpart auxiliaries.
+pub fn validate_robust_budget_solution(
+    model: &OptimizationModel,
+    uncertainties: &[BudgetUncertainty],
+    values: &[f64],
+    options: &SolveOptions,
+) -> Result<solvercraft_model::SolutionValidation> {
+    validate_robust_rows(model, uncertainties.iter().map(|u| (u.constraint, u.radii.as_slice(), Some(u.budget))), values, options)
+}
+
+fn check_robust_result<F>(model: &OptimizationModel, result: &mut SolveResult, options: &SolveOptions, validate: F) -> Result<()>
+where
+    F: FnOnce(&[f64]) -> Result<solvercraft_model::SolutionValidation>,
+{
+    if result.feasibility != Feasibility::Feasible {
+        return Ok(());
+    }
+    let values = result
+        .values
+        .as_deref()
+        .and_then(|values| values.get(..model.variables.len()))
+        .ok_or_else(|| numerical("Feasible robust result has no original decision vector"))?;
+    let validation = validate(values)?;
+    if !validation.feasible {
+        return Err(numerical("Counterpart candidate violates the original robust support or model"));
+    }
+    let reported = result.objective.ok_or_else(|| numerical("Feasible robust result has no objective"))?;
+    if !reported.is_finite() {
+        return Err(numerical("Robust objective is nonfinite"));
+    }
+    let scale = validation.objective.abs().max(reported.abs()).max(1.0);
+    if (validation.objective / scale - reported / scale).abs() > options.optimality_tolerance {
+        return Err(numerical("Counterpart objective disagrees with the original model"));
+    }
+    if validation.objective != reported {
+        result.best_bound = None;
+        result.relative_gap = None;
+        if result.optimality == Optimality::Optimal {
+            result.optimality = Optimality::BestFound;
+        }
+        result.warnings.push("Original robust objective reevaluation differs; no transferred global bound is retained.".into());
+    }
+    result.objective = Some(validation.objective);
+    result.max_violation = Some(validation.max_violation);
+    Ok(())
+}
+
+/// Compile once, solve with owned cancellation, and verify original box support.
+/// The plain counterpart API alone does not certify original-row tolerance.
+pub fn solve_robust_box_owned(
+    model: &OptimizationModel,
+    uncertainties: &[BoxUncertainty],
+    options: &SolveOptions,
+    control: std::sync::Arc<dyn RunControl>,
+) -> Result<RobustSolveResult> {
+    let counterpart = robust_box(model, uncertainties, options)?;
+    let mut result = solvercraft_engines::solve_owned(&counterpart, options, control)?;
+    check_robust_result(model, &mut result, options, |values| validate_robust_box_solution(model, uncertainties, values, options))?;
+    Ok(RobustSolveResult { counterpart, result })
+}
+
+/// Compile once, solve with owned cancellation, and verify the original budget
+/// support. Unsupported numerical range is an error, not fabricated feasibility.
+pub fn solve_robust_budget_owned(
+    model: &OptimizationModel,
+    uncertainties: &[BudgetUncertainty],
+    options: &SolveOptions,
+    control: std::sync::Arc<dyn RunControl>,
+) -> Result<RobustSolveResult> {
+    let counterpart = robust_budget(model, uncertainties, options)?;
+    let mut result = solvercraft_engines::solve_owned(&counterpart, options, control)?;
+    check_robust_result(model, &mut result, options, |values| validate_robust_budget_solution(model, uncertainties, values, options))?;
+    Ok(RobustSolveResult { counterpart, result })
 }

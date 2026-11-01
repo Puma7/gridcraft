@@ -139,6 +139,7 @@ impl Default for SolveOptions {
 pub enum Termination {
     Completed,
     Cancelled,
+    TimeLimit,
     EvaluationLimit,
     IterationLimit,
     NodeLimit,
@@ -203,17 +204,243 @@ impl RunControl for NoControl {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Distribution {
-    Constant { value: f64 },
-    Uniform { low: f64, high: f64 },
-    Normal { mean: f64, std_dev: f64 },
-    Lognormal { log_mean: f64, log_std_dev: f64 },
-    Triangular { low: f64, mode: f64, high: f64 },
-    Bernoulli { probability: f64 },
-    Binomial { trials: u32, probability: f64 },
-    Poisson { rate: f64 },
-    Exponential { rate: f64 },
-    Weibull { shape: f64, scale: f64 },
-    Empirical { values: Vec<f64> },
+    Constant {
+        value: f64,
+    },
+    Uniform {
+        low: f64,
+        high: f64,
+    },
+    Normal {
+        mean: f64,
+        std_dev: f64,
+    },
+    Lognormal {
+        log_mean: f64,
+        log_std_dev: f64,
+    },
+    Triangular {
+        low: f64,
+        mode: f64,
+        high: f64,
+    },
+    Bernoulli {
+        probability: f64,
+    },
+    Binomial {
+        trials: u32,
+        probability: f64,
+    },
+    Poisson {
+        rate: f64,
+    },
+    Exponential {
+        rate: f64,
+    },
+    Weibull {
+        shape: f64,
+        scale: f64,
+    },
+    Empirical {
+        values: Vec<f64>,
+    },
+    DiscreteUniform {
+        low: i64,
+        high: i64,
+    },
+    Beta {
+        alpha: f64,
+        beta: f64,
+    },
+    BetaPert {
+        low: f64,
+        mode: f64,
+        high: f64,
+        weight: f64,
+    },
+    Gamma {
+        shape: f64,
+        scale: f64,
+    },
+    NegativeBinomial {
+        successes: u32,
+        probability: f64,
+    },
+    /// Number of failures before the first success (support 0,1,...).
+    Geometric {
+        probability: f64,
+    },
+    /// Piecewise-linear quantile interpolation between sorted observations.
+    EmpiricalContinuous {
+        values: Vec<f64>,
+    },
+    StudentT {
+        degrees_of_freedom: f64,
+        location: f64,
+        scale: f64,
+    },
+    ChiSquared {
+        degrees_of_freedom: f64,
+    },
+    F {
+        numerator_df: f64,
+        denominator_df: f64,
+    },
+    Cauchy {
+        location: f64,
+        scale: f64,
+    },
+    Logistic {
+        location: f64,
+        scale: f64,
+    },
+    Laplace {
+        location: f64,
+        scale: f64,
+    },
+    Gumbel {
+        location: f64,
+        scale: f64,
+    },
+    Pareto {
+        minimum: f64,
+        shape: f64,
+    },
+    Rayleigh {
+        scale: f64,
+    },
+    Erlang {
+        shape: u32,
+        scale: f64,
+    },
+    InverseGamma {
+        shape: f64,
+        scale: f64,
+    },
+    InverseGaussian {
+        mean: f64,
+        shape: f64,
+    },
+    LogLogistic {
+        shape: f64,
+        scale: f64,
+    },
+    SkewNormal {
+        location: f64,
+        scale: f64,
+        shape: f64,
+    },
+    JohnsonSu {
+        gamma: f64,
+        delta: f64,
+        location: f64,
+        scale: f64,
+    },
+    JohnsonSb {
+        gamma: f64,
+        delta: f64,
+        location: f64,
+        scale: f64,
+    },
+    /// Johnson SL branch (shifted lognormal); the SN branch is Normal.
+    JohnsonSl {
+        gamma: f64,
+        delta: f64,
+        location: f64,
+        scale: f64,
+    },
+    Burr12 {
+        shape_c: f64,
+        shape_k: f64,
+        scale: f64,
+    },
+    Dagum {
+        shape: f64,
+        power: f64,
+        scale: f64,
+    },
+    DoubleTriangular {
+        low: f64,
+        mode: f64,
+        high: f64,
+        left_probability: f64,
+    },
+    FatigueLife {
+        shape: f64,
+        scale: f64,
+    },
+    Frechet {
+        shape: f64,
+        scale: f64,
+    },
+    HyperbolicSecant {
+        location: f64,
+        scale: f64,
+    },
+    Kumaraswamy {
+        alpha: f64,
+        beta: f64,
+    },
+    Levy {
+        location: f64,
+        scale: f64,
+    },
+    Pareto2 {
+        shape: f64,
+        scale: f64,
+    },
+    BetaPrime {
+        alpha: f64,
+        beta: f64,
+        scale: f64,
+    },
+    Reciprocal {
+        low: f64,
+        high: f64,
+    },
+    MinExtreme {
+        location: f64,
+        scale: f64,
+    },
+    /// Log-series count distribution; numerical implementation limits p to0.99.
+    Logarithmic {
+        probability: f64,
+    },
+    /// Original2016 Metalog; only globally certified coefficient sets are accepted.
+    Metalog {
+        coefficients: Vec<f64>,
+        lower: Option<f64>,
+        upper: Option<f64>,
+    },
+    Hypergeometric {
+        population: u32,
+        successes: u32,
+        draws: u32,
+    },
+    Categorical {
+        values: Vec<f64>,
+        weights: Vec<f64>,
+    },
+    ShiftScale {
+        base: Box<Distribution>,
+        shift: f64,
+        scale: f64,
+    },
+    Truncated {
+        base: Box<Distribution>,
+        lower: Option<f64>,
+        upper: Option<f64>,
+    },
+    Mixture {
+        components: Vec<Distribution>,
+        weights: Vec<f64>,
+    },
+    /// Sampling-only compound sum; generic compound CDF/quantile is not implied.
+    CompoundPoisson {
+        rate: f64,
+        severity: Box<Distribution>,
+        max_events: u32,
+    },
 }
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]

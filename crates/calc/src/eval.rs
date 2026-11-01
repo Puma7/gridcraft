@@ -16,6 +16,7 @@ mod call;
 mod format;
 mod lambda;
 mod reference_fns;
+pub(crate) mod solvercraft;
 mod special;
 
 use array::map_unary;

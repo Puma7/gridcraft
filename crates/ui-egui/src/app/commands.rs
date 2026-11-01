@@ -136,6 +136,15 @@ impl SheetApp {
     /// UI-only commands (dialogs, view toggles that aren't saved in the file).
     fn run_ui_command(&mut self, id: &str, p: &Json) -> Option<Result<Json, String>> {
         let r = match id {
+            "ui.solvercraft" => {
+                let on = p.get("on").and_then(Json::as_bool).unwrap_or(true);
+                if on {
+                    self.grid.pane = Some("solvercraft".into());
+                } else if self.grid.pane.as_deref() == Some("solvercraft") {
+                    self.grid.pane = None;
+                }
+                Ok(json!({"on":on}))
+            }
             "app.checkForUpdates" | "help.checkForUpdates" => {
                 self.check_for_updates();
                 Ok(Json::Null)

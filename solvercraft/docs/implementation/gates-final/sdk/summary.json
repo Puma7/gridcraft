@@ -1,0 +1,72 @@
+{
+  "schema": "solvercraft.gate-summary.v1",
+  "candidate": "final5",
+  "all_gates_accepted": true,
+  "passed": 630,
+  "failed": 0,
+  "ignored": 0,
+  "test_summary_targets": 74,
+  "raw_source_digest_sha256": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+  "canonical_source_digest_sha256": "9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb",
+  "gates": [
+    {
+      "name": "sdk-fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "$SDK_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-sdk\\sdk-fmt.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 10.0824464999896,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true
+    },
+    {
+      "name": "sdk-clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "$SDK_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-sdk\\sdk-clippy.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 35.222636699996656,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true
+    },
+    {
+      "name": "sdk-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "cwd": "$SDK_ROOT",
+      "log": "$EVIDENCE_ROOT\\gates-final5-sdk\\sdk-tests.log",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 228.66645560000325,
+      "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+      "source_changed_during_run": false,
+      "accepted": true
+    }
+  ]
+}

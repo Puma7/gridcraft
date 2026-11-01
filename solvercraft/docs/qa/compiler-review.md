@@ -1,5 +1,13 @@
 # Compiler model and automatic differentiation review
 
+**Historical checkpoint.** The review below preserves its original57-test run,
+findings and source locators from an earlier working snapshot. Its references
+to "live", "current" and "final" describe that checkpoint, not the final source
+or current workspace total. For current acceptance see
+[acceptance-current.md](acceptance-current.md); current compiler/target APIs are
+documented in [nonlinear.md](../implementation/nonlinear.md), and per-function
+reference evidence in [reference-implementation.json](../implementation/reference-implementation.json).
+
 Date: 2026-10-31. Reviewer scope: the live Solvercraft types, model, compiler and reverse-mode differentiation sources in this workspace. This is a review of the current working files; no Git commit identity was inferred from the local snapshot.
 
 The review reproduced six numerical defects before their fixes. It also identified late compiler metadata validation from source inspection. The authorized fixes are implemented, and the final targeted run passes **57 tests**, including **29 new independent regression/control tests**. Targeted Clippy with warnings denied and formatting checks pass.
@@ -61,7 +69,7 @@ Source inspection found f64::from(u32) conversions and powf calls, with no signe
 
 ## Verification commands and results
 
-Environment: Windows native, rustc 1.91.1, cargo 1.91.1. Build target directory: C:/workspace/solvercraft-targets/grid-review. CARGO_INCREMENTAL=0 was used for the final runs because this filesystem cannot hard-link incremental cache files.
+Environment: Windows native, rustc 1.91.1, cargo 1.91.1. Build target directory: $BUILD_OUTPUT/grid-review. CARGO_INCREMENTAL=0 was used for the final runs because this filesystem cannot hard-link incremental cache files.
 
 Commands executed:
 

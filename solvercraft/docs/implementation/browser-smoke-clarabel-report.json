@@ -1,0 +1,37 @@
+{
+  "schema": "solvercraft.browser-smoke.v1",
+  "driver_sha256": "95ae04aebd7daf845dce58d42139f0acbf1a5172fd480db328ea70bdc6301790",
+  "runner_sha256": "c7b8d6109c485cee209ca616e500efc5311bb47e56eac5888c3afcb342dacbd9",
+  "browser": "$BROWSER_ROOT\\chrome.exe",
+  "endpoint": "$LOCAL_ENDPOINT",
+  "actual_browser": true,
+  "webdriver": {
+    "build": {
+      "version": "156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705})"
+    },
+    "message": "ChromeDriver ready for new sessions.",
+    "os": {
+      "arch": "x86_64",
+      "name": "Windows NT",
+      "version": "10.0.26200"
+    },
+    "ready": true
+  },
+  "command": [
+    "$TOOLCHAINS_ROOT\\toolchains\\1.95.0-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+    "test",
+    "--manifest-path",
+    "$SDK_ROOT\\tests\\wasm-smoke\\Cargo.toml",
+    "--target",
+    "wasm32-unknown-unknown",
+    "--locked",
+    "--test",
+    "browser",
+    "--",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "output": "   Compiling syn v1.0.109\n   Compiling strsim v0.10.0\n   Compiling fnv v1.0.7\n   Compiling ident_case v1.0.1\n   Compiling serde_json v1.0.154\n   Compiling thiserror v1.0.69\n   Compiling num-traits v0.2.19\n   Compiling either v1.19.0\n   Compiling once_cell v1.21.4\n   Compiling clarabel v0.11.1\n   Compiling lazy_static v1.5.1\n   Compiling syn v2.0.119\n   Compiling solvercraft-types v0.1.0 ($SDK_ROOT\\crates\\types)\n   Compiling serde-big-array v0.5.1\n   Compiling js-sys v0.3.107\n   Compiling itertools v0.11.0\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_types-1teici8rq8mn0\\s-hnq73wsp08-0g2517s-working`\n\n   Compiling solvercraft-model v0.1.0 ($SDK_ROOT\\crates\\model)\n   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\\crates\\math)\nwarning: `solvercraft-types` (lib) generated 1 warning\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_model-3f5n3dsllp3ad\\s-hnq73yvx9u-071na92-working`\n\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_math-2egjmsabyssz4\\s-hnq73ynstq-1cl96rl-working`\n\n   Compiling thiserror-impl v1.0.69\n   Compiling enum_dispatch v0.3.13\n   Compiling solvercraft-compile v0.1.0 ($SDK_ROOT\\crates\\compile)\n   Compiling amd v0.2.2\nwarning: `solvercraft-model` (lib) generated 1 warning\n   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\\crates\\simulation)\n   Compiling darling_core v0.14.4\nwarning: `solvercraft-math` (lib) generated 1 warning\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_compile-39ei5vesle1hm\\s-hnq7417p37-1wrnqm9-working`\n\nwarning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\\\?\\$BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\incremental\\solvercraft_simulation-14a2qpt74p2ul\\s-hnq741tja7-1tv4wno-working`\n\nwarning: `solvercraft-compile` (lib) generated 1 warning\nwarning: `solvercraft-simulation` (lib) generated 1 warning\n   Compiling darling_macro v0.14.4\n   Compiling darling v0.14.4\n   Compiling web-time v0.2.4\n   Compiling wasm-bindgen-futures v0.4.80\n   Compiling derive_builder_core v0.11.2\n   Compiling wasm-bindgen-test v0.3.80\n   Compiling derive_builder_macro v0.11.2\n   Compiling derive_builder v0.11.2\n   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\\crates\\engines)\n   Compiling solvercraft v0.1.0 ($SDK_ROOT\\crates\\solvercraft)\n   Compiling solvercraft-wasm-smoke v0.1.0 ($SDK_ROOT\\tests\\wasm-smoke)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 50.90s\n     Running tests\\browser.rs ($BUILD_OUTPUT\\wasm-browser\\wasm32-unknown-unknown\\debug\\deps\\browser-1ebfbbdd97efbef5.wasm)\nSet WASM_BINDGEN_TEST_TIMEOUT to 60 seconds...\nRunning headless tests in Chrome on `$LOCAL_ENDPOINT/`\nTry find `webdriver.json` for configure browser's capabilities:\nOk\n[2026-10-31T14:43:05Z WARN  ureq::unversioned::transport::no_proxy] Enable feature socks-proxy to use proxy\n                                    configured by environment variables\nLoading Wasm module...\nusing deprecated parameters for the initialization function; pass a single object instead\n\nrunning 12 tests\nInvoking test: browser_solves_wyndor_and_validates_original_constraints\ntest browser_solves_wyndor_and_validates_original_constraints ... ok\nInvoking test: browser_solves_a_coupled_convex_quadratic_with_original_residuals\ntest browser_solves_a_coupled_convex_quadratic_with_original_residuals ... ok\nInvoking test: browser_samples_deterministically_with_loss_tail_statistics\ntest browser_samples_deterministically_with_loss_tail_statistics ... ok\nInvoking test: browser_rejects_native_thread_jobs_without_panicking\ntest browser_rejects_native_thread_jobs_without_panicking ... ok\nInvoking test: browser_randomized_sobol_integrates_a_smooth_product\ntest browser_randomized_sobol_integrates_a_smooth_product ... ok\nInvoking test: browser_optimizes_finite_scenario_tail_risk\ntest browser_optimizes_finite_scenario_tail_risk ... ok\nInvoking test: browser_nonlinear_method_reports_stationarity_separately_from_global_optimality\ntest browser_nonlinear_method_reports_stationarity_separately_from_global_optimality ... ok\nInvoking test: browser_latin_hypercube_preserves_all_strata\ntest browser_latin_hypercube_preserves_all_strata ... ok\nInvoking test: browser_honors_binary_domains\ntest browser_honors_binary_domains ... ok\nInvoking test: browser_handles_large_seed_json_without_javascript_precision_loss\ntest browser_handles_large_seed_json_without_javascript_precision_loss ... ok\nInvoking test: browser_executes_clarabel_socp_with_a_cauchy_schwarz_oracle\ntest browser_executes_clarabel_socp_with_a_cauchy_schwarz_oracle ... ok\nInvoking test: browser_autodiff_rejects_a_nondifferentiable_point\ntest browser_autodiff_rejects_a_nondifferentiable_point ... ok\n\ntest result: ok. 12 passed; 0 failed; 0 ignored; 0 filtered out; finished in 0.11s\n\n",
+  "driver_output": "Starting ChromeDriver 156.0.8078.80 (fb096c0011f9d50f0a264a9376420cdea9c421e3-refs/branch-heads/8078@{#1705}) on port 58244\nOnly local connections are allowed.\nPlease see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.\nChromeDriver was started successfully on port 58244.\n",
+  "elapsed_seconds": 67.32705970000825
+}

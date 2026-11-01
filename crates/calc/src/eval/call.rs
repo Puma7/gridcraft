@@ -7,6 +7,8 @@ use std::sync::Arc;
 impl<'h> Evaluator<'h> {
     pub(super) fn call(&mut self, name: &str, args: &[Expr]) -> Ev {
         match name {
+            "SC.OUTPUT" | "SC.MEAN" | "SC.QUANTILE" | "SC.CVAR" => self.solvercraft(name, args),
+            name if super::solvercraft::distribution_arity(name).is_some() => self.solvercraft(name, args),
             "IF" => self.if_call(args),
             "IFS" => {
                 if args.len() < 2 || !args.len().is_multiple_of(2) {

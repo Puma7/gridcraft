@@ -11,7 +11,7 @@ fn sorted(values: &[f64]) -> Result<Vec<f64>> {
     let mut result = Vec::new();
     result.try_reserve_exact(values.len()).map_err(|_| SolverError::new("allocation", "Cannot allocate sample ordering."))?;
     result.extend_from_slice(values);
-    result.sort_by(f64::total_cmp);
+    result.sort_unstable_by(f64::total_cmp);
     Ok(result)
 }
 fn probability(value: f64, include_one: bool) -> Result<()> {

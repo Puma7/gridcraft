@@ -1,0 +1,64 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+ Downloading crates ...
+  Downloaded web-time v0.2.4
+    Blocking waiting for file lock on package cache
+   Compiling either v1.19.0
+   Compiling lazy_static v1.5.1
+   Compiling web-time v0.2.4
+   Compiling amd v0.2.2
+   Compiling thiserror v1.0.69
+   Compiling solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+   Compiling serde-big-array v0.5.1
+   Compiling derive_builder v0.11.2
+   Compiling gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+   Compiling gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+   Compiling itertools v0.11.0
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3g2z6s1kh3fub\s-hnq72o2emc-1poqhsp-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-350bmaa4ca6hf\s-hnq72ogzwd-1cteczx-working`
+
+   Compiling solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+   Compiling gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-030rjxmg1y0tz\s-hnq72p3nf8-0q3hrvr-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-2a3azcatsrut5\s-hnq72ozfs2-0266vb4-working`
+
+   Compiling solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-0pyqyjmst38wn\s-hnq72pc9gc-0cskahe-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zqc9ppt422l1\s-hnq72pgsnl-1yqrrre-working`
+
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+   Compiling clarabel v0.11.1
+warning: `gridcraft-calc` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-1z1cxc31uj7au\s-hnq72pwayl-09imrjz-working`
+
+warning: `gridcraft-chart` (lib) generated 1 warning
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: `solvercraft-compile` (lib) generated 1 warning
+warning: `solvercraft-simulation` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+error: literal out of range for `i32`
+  --> crates\engine\src\cmd\solvercraft.rs:85:231
+   |
+85 | ...y_bytes":67108864,"background_reserved_memory_limit_bytes":2147483648},
+   |                                                               ^^^^^^^^^^
+   |
+   = note: the literal `2147483648` does not fit into the type `i32` whose range is `-2147483648..=2147483647`
+   = help: consider using the type `u32` instead
+   = note: `#[deny(overflowing_literals)]` on by default
+
+error: could not compile `gridcraft-engine` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

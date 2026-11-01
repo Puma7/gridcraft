@@ -1,9 +1,104 @@
 //! Independent finite-scenario and native-runtime review cases.
 use solvercraft::{jobs, model, provenance, risk, solve, types::*};
 use std::sync::{Arc, mpsc};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 type TestResult = std::result::Result<(), Box<dyn std::error::Error>>;
+
+#[test]
+fn coefficient_box_feasibility_does_not_amplify_auxiliary_tolerance() -> TestResult {
+    for radius in [1.0, 1e12] {
+        let mut original = linear_model();
+        original.variables[0].lower = Some(1e-9);
+        original.variables[0].upper = Some(1e-9);
+        original.objective.linear.clear();
+        original.constraints.push(LinearConstraint { name: "uncertain row".into(), terms: vec![], relation: Relation::LessEqual, rhs: 0.0 });
+        let options = SolveOptions::default();
+        let counterpart = risk::robust_box(&original, &[risk::BoxUncertainty { constraint: 0, radii: vec![radius] }], &options)?;
+        let report = solve(&counterpart, &options, &NoControl)?;
+        if report.feasibility == Feasibility::Feasible {
+            let x = report.values.as_ref().ok_or("Feasible without values")?[0];
+            let original_worst_case = radius * x.abs();
+            assert!(
+                original_worst_case <= options.feasibility_tolerance,
+                "False robust feasibility after an auxiliary tolerance was multiplied by the uncertainty radius: radius={radius}, support={original_worst_case}, report={report:?}"
+            );
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn checked_robust_wrappers_validate_original_summed_support() -> TestResult {
+    let mut original = linear_model();
+    original.objective.linear.clear();
+    original.variables = vec![
+        Variable { name: "x".into(), lower: Some(8e-9), upper: Some(8e-9), kind: VariableKind::Continuous },
+        Variable { name: "y".into(), lower: Some(8e-9), upper: Some(8e-9), kind: VariableKind::Continuous },
+    ];
+    original.constraints.push(LinearConstraint { name: "uncertain row".into(), terms: vec![], relation: Relation::LessEqual, rhs: 0.0 });
+    let options = SolveOptions { feasibility_tolerance: 1e-8, ..Default::default() };
+    let boxes = [risk::BoxUncertainty { constraint: 0, radii: vec![1.0, 1.0] }];
+    let budgets = [risk::BudgetUncertainty { constraint: 0, radii: vec![1.0, 1.0], budget: f64::MAX }];
+    assert!(!risk::validate_robust_box_solution(&original, &boxes, &[8e-9, 8e-9], &options)?.feasible);
+    assert!(!risk::validate_robust_budget_solution(&original, &budgets, &[8e-9, 8e-9], &options)?.feasible);
+    for output in [
+        risk::solve_robust_box_owned(&original, &boxes, &options, Arc::new(NoControl)),
+        risk::solve_robust_budget_owned(&original, &budgets, &options, Arc::new(NoControl)),
+    ] {
+        match output {
+            Ok(output) => assert_ne!(output.result.feasibility, Feasibility::Feasible, "{output:?}"),
+            Err(error) => assert!(matches!(error.code.as_str(), "numerical_failure" | "numeric_range"), "{error}"),
+        }
+    }
+    original.constraints[0].rhs = 1.0;
+    for output in [
+        risk::solve_robust_box_owned(&original, &boxes, &options, Arc::new(NoControl))?,
+        risk::solve_robust_budget_owned(&original, &budgets, &options, Arc::new(NoControl))?,
+    ] {
+        assert_eq!(output.result.feasibility, Feasibility::Feasible);
+        assert_eq!(output.result.objective, Some(0.0));
+        assert_eq!(output.result.max_violation, Some(0.0));
+    }
+    Ok(())
+}
+
+#[test]
+fn budget_support_orders_exact_products_and_retains_collective_underflow() -> TestResult {
+    let mut original = linear_model();
+    original.objective.linear.clear();
+    original.variables =
+        (0..3).map(|index| Variable { name: format!("x{index}"), lower: None, upper: None, kind: VariableKind::Continuous }).collect();
+    let delta = 2.0_f64.powi(-106);
+    original.constraints.push(LinearConstraint {
+        name: "nearly tied weights".into(),
+        terms: vec![LinearTerm { variable: 2, coefficient: delta }],
+        relation: Relation::LessEqual,
+        rhs: 0.5,
+    });
+    let options = SolveOptions { feasibility_tolerance: 1e-40, ..Default::default() };
+    let epsilon = f64::EPSILON;
+    // Both first products round to1, but (1+eps)*(1-eps)=1-eps^2
+    // is strictly smaller than1. Choosing the wrong fractional atom would
+    // change the residual from+2^-106 to-2^-106.
+    for (values, radii) in
+        [(vec![1.0 - epsilon, 1.0, 1.0], vec![1.0 + epsilon, 1.0, 0.0]), (vec![1.0, 1.0 - epsilon, 1.0], vec![1.0, 1.0 + epsilon, 0.0])]
+    {
+        let checked =
+            risk::validate_robust_budget_solution(&original, &[risk::BudgetUncertainty { constraint: 0, radii, budget: 0.5 }], &values, &options)?;
+        assert!(!checked.feasible);
+        assert_eq!(checked.max_violation, delta);
+    }
+    original.variables.truncate(2);
+    original.constraints[0].terms.clear();
+    original.constraints[0].rhs = 0.0;
+    let options = SolveOptions { feasibility_tolerance: f64::from_bits(1), ..Default::default() };
+    let uncertainties = [risk::BudgetUncertainty { constraint: 0, radii: vec![f64::MIN_POSITIVE; 2], budget: 1.5 }];
+    let checked = risk::validate_robust_budget_solution(&original, &uncertainties, &[1e-16, 2e-16], &options)?;
+    assert!(!checked.feasible, "Individually rounded products must not erase positive combined support");
+    assert!(checked.max_violation > options.feasibility_tolerance);
+    Ok(())
+}
 
 fn linear_model() -> OptimizationModel {
     OptimizationModel {
@@ -89,13 +184,13 @@ fn transformed_dimension_and_manifest_escape_limits_are_explicit() -> TestResult
 }
 
 fn wait_terminal<T: Clone>(handle: &jobs::JobHandle<T>) -> std::result::Result<jobs::JobSnapshot<T>, Box<dyn std::error::Error>> {
-    let until = Instant::now() + Duration::from_secs(5);
+    let until = solvercraft::runtime::monotonic_now() + Duration::from_secs(5);
     loop {
         let state = handle.snapshot()?;
         if matches!(state.status, jobs::JobStatus::Completed | jobs::JobStatus::Failed) {
             return Ok(state);
         }
-        if Instant::now() >= until {
+        if solvercraft::runtime::monotonic_now() >= until {
             return Err("background job failed to terminate in review timeout".into());
         }
         std::thread::sleep(Duration::from_millis(2));
@@ -163,11 +258,11 @@ fn native_job_quota_panic_cancel_and_shared_results_have_real_lifecycle() -> Tes
         assert_eq!(first_result.completed_trials, 3);
     }
     // Terminal state may be published just before the worker's slot guard drops.
-    let until = Instant::now() + Duration::from_secs(5);
+    let until = solvercraft::runtime::monotonic_now() + Duration::from_secs(5);
     let recovered = loop {
         match jobs::start_solve(linear_model(), SolveOptions::default()) {
             Ok(handle) => break handle,
-            Err(e) if e.code == "job_limit" && Instant::now() < until => std::thread::yield_now(),
+            Err(e) if e.code == "job_limit" && solvercraft::runtime::monotonic_now() < until => std::thread::yield_now(),
             Err(e) => return Err(e.into()),
         }
     };
@@ -211,7 +306,7 @@ fn small_integer_weight_tail_means_match_exact_rational_mass_accounting() -> Tes
         let values = [seed % 7 - 3, (seed * 3) % 11 - 5, (seed * 5) % 13 - 6];
         let weights = [seed % 3 + 1, (seed * 2) % 5 + 1, (seed * 3) % 7 + 1];
         let mut ordered = values.into_iter().zip(weights).collect::<Vec<_>>();
-        ordered.sort_unstable_by(|a, b| b.0.cmp(&a.0));
+        ordered.sort_unstable_by_key(|b| std::cmp::Reverse(b.0));
         for (numerator, denominator) in [(0, 1), (1, 2), (3, 4), (19, 20)] {
             let total = weights.into_iter().sum::<i64>();
             let tail_units = total * (denominator - numerator);

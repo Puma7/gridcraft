@@ -42,7 +42,7 @@ pub(crate) fn solve(model: &OptimizationModel, options: &SolveOptions, control: 
     let mut unbounded = false;
     let mut stopped = None;
     for (j, var) in normalized.variables.iter().enumerate() {
-        if let Err(reason) = budget.step() {
+        if let Err(reason) = budget.step_named("separable_quadratic") {
             stopped = Some(reason);
             break;
         }

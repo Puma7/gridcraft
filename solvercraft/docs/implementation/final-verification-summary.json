@@ -1,0 +1,48 @@
+{
+  "schema": "solvercraft.final-verification.v1",
+  "candidate": "final5",
+  "baseline_commit": "95f7b46ff94fe833b2f3356db58dc6754916f43c",
+  "raw_code_and_compilation_input_digest_sha256": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+  "canonical_code_and_compilation_input_digest_sha256": "9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb",
+  "active_and_frozen_source_files_match": 789,
+  "source_unchanged_during_all_gates": true,
+  "host_ci": {
+    "stages_passed": 10,
+    "passed": 2827,
+    "failed": 0,
+    "ignored": 1,
+    "summary": "gates-final/host/summary.json"
+  },
+  "sdk": {
+    "passed": 630,
+    "failed": 0,
+    "ignored": 0,
+    "fmt": true,
+    "all_targets_clippy_warnings_denied": true,
+    "summary": "gates-final/sdk/summary.json"
+  },
+  "native_ui_test_bodies_passed": 6,
+  "chart_numerical_tests_passed": 8,
+  "chart_retained_result_lifecycle_tests_passed": 1,
+  "actual_chrome_sdk_test_bodies_passed": 13,
+  "actual_product_worker_test_bodies_passed": 7,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "independent_oracles": {
+    "lp": 30,
+    "qp": 20,
+    "robust_vertex_cases": 20,
+    "robust_tiny_infeasible_cases": 4,
+    "exact_binary_variants": 3,
+    "binary_node_limit_control": 1
+  },
+  "worker_observed_maxima_ms": {
+    "active_progress_gap": 65,
+    "window_heartbeat_gap": 22,
+    "status_query": 1
+  },
+  "performance_repetitions_per_workload": 5,
+  "performance_context": "Shared host, native regression tests concurrent; no isolated speed comparison.",
+  "acceptance_scope": "Bounded executed cases; original96 matrix remains separate, with R046 legacy arities and R081 proprietary import scope partial.",
+  "links_checked": 22,
+  "verification": "verification.md"
+}

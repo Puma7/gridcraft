@@ -1,22 +1,62 @@
 //! Budgeted, workbook-independent floating-point LP and MILP engines.
 //!
-//! Models have sparse coefficients. The current reference backend uses a dense,
-//! two-phase simplex tableau, with memory checks before constructing it. It does
-//! not expose a basis, duals, sensitivity ranges, or exact rational certificates.
+//! Independent dense simplex and proximal ADMM coexist with a genuine sparse
+//! Clarabel LP/QP/SOCP path, finite-domain mixed-conic search, checked LP vertex
+//! bases/sensitivity, and explicit bounded SOS/indicator formulations.
+//! Guarantees and capability limits are documented per API; no exact rational
+//! or unrestricted commercial-suite parity claim is made.
 #![forbid(unsafe_code)]
 
+mod basis;
+mod conic;
+mod discrete;
+mod linear_algebra;
+mod mixed_conic;
+mod quadratic;
 mod separable_qp;
 mod simplex;
+pub use basis::{AllowableChange, LpBasis, LpBasisResult, LpSensitivity, solve_lp_with_basis};
+pub use conic::{
+    AffineExpression, ConicCertificate, ConicDetailedResult, ConicModel, SecondOrderConeConstraint, solve_socp_detailed, solve_socp_owned,
+    solve_sparse_owned, validate_conic_solution,
+};
+pub use discrete::{
+    DiscreteCompilation, DiscreteConicModel, IndicatorConstraint, SosConstraint, SosKind, compile_discrete, solve_discrete_owned,
+    validate_discrete_solution,
+};
+pub use mixed_conic::{MixedConicResult, solve_mixed_conic_owned};
+pub use quadratic::{
+    ConstraintDual, ConstraintSource, ConvexityAnalysis, QpCertificate, QpDetailedResult, QpWarmStart, analyze_quadratic_curvature, solve_qp_detailed,
+};
 
-use solvercraft_model::{compensated_sum, effective_bounds, validate, validate_solution};
+use solvercraft_model::{ExactProducts, compensated_sum, effective_bounds, evaluate_working_objective, validate, validate_solution};
 use solvercraft_types::*;
 
 /// Capabilities describe implemented behavior, not aspirational backend names.
 pub const ENGINE_NAME: &str = "solvercraft-dense-simplex-0.1";
 
-/// Solve an LP, MILP, or a bounds-only separable convex QP without mutating the supplied model.
+/// Owned-control auto route, including genuine finite-domain MIQP relaxations.
+/// This is the portable entry point for job systems already owning cancellation.
+pub fn solve_owned(model: &OptimizationModel, options: &SolveOptions, control: std::sync::Arc<dyn RunControl>) -> Result<SolveResult> {
+    if !model.objective.quadratic.is_empty() && model.variables.iter().any(|v| v.kind != VariableKind::Continuous) {
+        // Admission must precede the owned adapter copy. Match the borrowed
+        // entry point's domain and budget semantics rather than copying first.
+        if let Err(error) = validate(model, options) {
+            if error.code == "infeasible_bounds" {
+                return Ok(empty_result(Termination::Completed, Feasibility::Infeasible, Optimality::Unknown));
+            }
+            return Err(error);
+        }
+        return solve_mixed_conic_owned(&ConicModel { base: model.clone(), second_order_cones: Vec::new() }, options, control).map(|r| r.result);
+    }
+    solve(model, options, control.as_ref())
+}
+
+/// Solve an LP, MILP, or continuous convex QP without mutating the supplied model.
 ///
-/// General quadratic objectives and nonlinear-method requests are explicit errors.
+/// General linearly constrained QP uses checked proximal ADMM. Explicit sparse,
+/// conic, mixed-conic and basis APIs expose their additional result contracts.
+/// Unsupported nonlinear-method requests are explicit errors.
 /// An unbounded LP relaxation alone never establishes MILP unboundedness.
 pub fn solve(model: &OptimizationModel, options: &SolveOptions, control: &dyn RunControl) -> Result<SolveResult> {
     if let Err(error) = validate(model, options) {
@@ -26,7 +66,14 @@ pub fn solve(model: &OptimizationModel, options: &SolveOptions, control: &dyn Ru
         return Err(error);
     }
     if !model.objective.quadratic.is_empty() {
-        return separable_qp::solve(model, options, control);
+        let separable = model.constraints.is_empty()
+            && model.variables.iter().all(|v| v.kind == VariableKind::Continuous)
+            && model.objective.quadratic.iter().all(|term| term.left == term.right);
+        return if separable {
+            separable_qp::solve(model, options, control)
+        } else {
+            solve_qp_detailed(model, options, control, None).map(|d| d.result)
+        };
     }
     if matches!(options.method, SolveMethod::ProjectedGradient | SolveMethod::DifferentialEvolution) {
         return Err(SolverError::new("unsupported_method", "The selected nonlinear method is not implemented by this LP/MILP backend."));
@@ -78,13 +125,16 @@ impl<'a> Budget<'a> {
         if self.control.is_cancelled() { Err(Termination::Cancelled) } else { Ok(()) }
     }
     pub(crate) fn step(&mut self) -> std::result::Result<(), Termination> {
+        self.step_named("simplex")
+    }
+    pub(crate) fn step_named(&mut self, stage: &str) -> std::result::Result<(), Termination> {
         self.check()?;
         if self.statistics.iterations >= self.options.max_iterations {
             return Err(Termination::IterationLimit);
         }
         self.statistics.iterations += 1;
         if self.statistics.iterations % 128 == 1 {
-            self.progress("simplex", None);
+            self.progress(stage, None);
         }
         Ok(())
     }
@@ -184,9 +234,16 @@ fn gap(incumbent: f64, bound: f64, offset: f64) -> Option<f64> {
     Some(difference / a.abs().max(b.abs()).max(1.0))
 }
 fn working_objective(model: &OptimizationModel, values: &[f64], options: &SolveOptions) -> Result<f64> {
-    let products = || model.objective.linear.iter().map(|term| term.coefficient * values[term.variable]);
-    let value = compensated_sum(products())?;
-    let lost = compensated_sum(products().chain(std::iter::once(-value)))?;
+    let value = evaluate_working_objective(model, values)?;
+    let mut remainder = ExactProducts::default();
+    for term in &model.objective.linear {
+        remainder.add_product(term.coefficient, values[term.variable])?;
+    }
+    for term in &model.objective.quadratic {
+        remainder.add_triple(term.coefficient, values[term.left], values[term.right])?;
+    }
+    remainder.add(-value)?;
+    let lost = remainder.finish()?;
     if lost.abs() > options.optimality_tolerance {
         return Err(SolverError::new(
             "numeric_range",
@@ -246,11 +303,11 @@ fn solve_mip(
             break;
         };
         active_bound = node.bound;
-        if let (Some(b), Some((_, v))) = (node.bound, &incumbent) {
-            if b >= *v - options.optimality_tolerance {
-                active_bound = None;
-                continue;
-            }
+        if let (Some(b), Some((_, v))) = (node.bound, &incumbent)
+            && b >= *v - options.optimality_tolerance
+        {
+            active_bound = None;
+            continue;
         }
         budget.statistics.nodes += 1;
         let values = match simplex::relax(model, &node.bounds, budget) {
@@ -284,11 +341,11 @@ fn solve_mip(
         };
         let bound = score(model.objective.direction, relaxed_objective);
         active_bound = Some(bound);
-        if let Some((_, best)) = &incumbent {
-            if bound >= *best - options.optimality_tolerance {
-                active_bound = None;
-                continue;
-            }
+        if let Some((_, best)) = &incumbent
+            && bound >= *best - options.optimality_tolerance
+        {
+            active_bound = None;
+            continue;
         }
         let mut fractional = None;
         let mut fractional_size = 0.0;
@@ -309,6 +366,7 @@ fn solve_mip(
                 }
             }
             let check = validate_solution(model, &rounded, options)?;
+            let mut close_node = false;
             if check.feasible {
                 let candidate = match working_objective(model, &rounded, options) {
                     Ok(value) => score(model.objective.direction, value),
@@ -321,9 +379,20 @@ fn solve_mip(
                 if incumbent.as_ref().is_none_or(|(_, value)| candidate < *value) {
                     incumbent = Some((rounded, candidate));
                 }
+                // Integer-distance tolerance alone cannot close a node: a tiny
+                // fraction can carry a large objective coefficient. Keep the
+                // rounded incumbent, but require its actual LP gap to be small.
+                let mut difference = solvercraft_model::ExactProducts::default();
+                difference.add(candidate)?;
+                difference.add(-bound)?;
+                difference.add(-options.optimality_tolerance)?;
+                close_node = difference.exact_sign()? != std::cmp::Ordering::Greater;
+            }
+            if close_node {
                 active_bound = None;
             } else {
-                // Near-integral does not mean rounding preserves a big-M constraint.
+                // Branch on any actual fractional coordinate when rounding
+                // loses feasibility OR leaves a material objective gap.
                 for (j, (v, var)) in values.iter().zip(&model.variables).enumerate() {
                     let delta = (v - v.round()).abs();
                     if var.kind != VariableKind::Continuous && delta > 0.0 && delta > fractional_size {
@@ -333,7 +402,7 @@ fn solve_mip(
                 }
                 if fractional.is_none() {
                     termination = Termination::NumericalFailure;
-                    warning = Some("An integral LP candidate failed original-model feasibility validation.".into());
+                    warning = Some("An integral LP candidate could not close its original-model feasibility/objective certificate.".into());
                     break;
                 }
             }
@@ -365,13 +434,12 @@ fn solve_mip(
             active_bound = None;
         }
         budget.progress("branch_and_bound", incumbent.as_ref().and_then(|(_, s)| restored_objective(model, *s)));
-        if let (Some((_, best)), Some(lower)) = (&incumbent, frontier_bound(&frontier)) {
-            if options.relative_gap > 0.0
-                && gap(*best, lower, score(model.objective.direction, model.objective.offset)).is_some_and(|gap| gap <= options.relative_gap)
-            {
-                stopped_for_gap = true;
-                break;
-            }
+        if let (Some((_, best)), Some(lower)) = (&incumbent, frontier_bound(&frontier))
+            && options.relative_gap > 0.0
+            && gap(*best, lower, score(model.objective.direction, model.objective.offset)).is_some_and(|gap| gap <= options.relative_gap)
+        {
+            stopped_for_gap = true;
+            break;
         }
     }
     let frontier_lower = frontier_bound(&frontier);

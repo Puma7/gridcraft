@@ -1,0 +1,5 @@
+# These frozen reference/planning/oracle inputs have recorded raw-byte hashes.
+crates/model/tests/data/exact_products.txt -text
+docs/masterplan/* -text
+docs/implementation/reference-catalog.json -text
+docs/implementation/reference-implementation.json -text

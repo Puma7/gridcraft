@@ -62,7 +62,7 @@ impl<T: Clone + Send + Sync> RunControl for Control<T> {
 fn spawn<T, F>(operation: F) -> Result<JobHandle<T>>
 where
     T: Clone + Send + Sync + 'static,
-    F: FnOnce(&dyn RunControl) -> Result<T> + Send + 'static,
+    F: FnOnce(Arc<dyn RunControl>) -> Result<T> + Send + 'static,
 {
     ACTIVE
         .fetch_update(Ordering::AcqRel, Ordering::Acquire, |v| if v < MAX_ACTIVE { Some(v + 1) } else { None })
@@ -88,8 +88,8 @@ where
         if let Ok(mut s) = state.lock() {
             s.status = JobStatus::Running;
         }
-        let control = Control { cancel, state: Arc::clone(&state) };
-        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| operation(&control)))
+        let control: Arc<dyn RunControl> = Arc::new(Control { cancel, state: Arc::clone(&state) });
+        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| operation(control)))
             .unwrap_or_else(|_| Err(SolverError::new("job_panic", "Background evaluator panicked")))
             .map(Arc::new);
         if let Ok(mut s) = state.lock() {
@@ -106,12 +106,29 @@ where
 pub fn start_solve(model: OptimizationModel, options: SolveOptions) -> Result<JobHandle<SolveResult>> {
     #[cfg(not(target_arch = "wasm32"))]
     {
-        spawn(move |c| solvercraft_engines::solve(&model, &options, c))
+        spawn(move |c| solvercraft_engines::solve_owned(&model, &options, c))
     }
     #[cfg(target_arch = "wasm32")]
     {
         let _ = (model, options);
         Err(SolverError::new("unsupported_host", "Use direct engine callbacks in a WASM worker"))
+    }
+}
+/// Run a host-owned operation under the same bounded worker quota and panic guard.
+/// Cancellation is cooperative: the operation must check its supplied control.
+pub fn start_job<T, F>(operation: F) -> Result<JobHandle<T>>
+where
+    T: Clone + Send + Sync + 'static,
+    F: FnOnce(&dyn RunControl) -> Result<T> + Send + 'static,
+{
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        spawn(move |control| operation(control.as_ref()))
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        let _ = operation;
+        Err(SolverError::new("unsupported_host", "Use cooperative callbacks in a WASM worker"))
     }
 }
 pub fn start_simulation<F>(distributions: Vec<Distribution>, options: SimulationOptions, evaluator: F) -> Result<JobHandle<SimulationResult>>
@@ -120,11 +137,27 @@ where
 {
     #[cfg(not(target_arch = "wasm32"))]
     {
-        spawn(move |c| solvercraft_simulation::simulate(&distributions, &options, c, evaluator))
+        spawn(move |c| solvercraft_simulation::simulate(&distributions, &options, c.as_ref(), evaluator))
     }
     #[cfg(target_arch = "wasm32")]
     {
         let _ = (distributions, options, evaluator);
         Err(SolverError::new("unsupported_host", "Use direct simulation callbacks in a WASM worker"))
+    }
+}
+/// Ownership-preserving callback entry point for engines that retain callbacks.
+pub fn start_shared_job<T, F>(operation: F) -> Result<JobHandle<T>>
+where
+    T: Clone + Send + Sync + 'static,
+    F: FnOnce(Arc<dyn RunControl>) -> Result<T> + Send + 'static,
+{
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        spawn(operation)
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        let _ = operation;
+        Err(SolverError::new("unsupported_host", "Use a WASM worker with an owned RunControl"))
     }
 }

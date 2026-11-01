@@ -1,0 +1,396 @@
+{
+  "schema": "solvercraft.exact-binary-oracle.v1",
+  "binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "oracle": "Complete four-point enumeration using Python arbitrary-precision integers; strict equality for representable outputs, no relative tolerance.",
+  "cases": [
+    {
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "independent exact binary enumeration",
+          "variables": [
+            {
+              "name": "x",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            },
+            {
+              "name": "y",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1000000000000
+              },
+              {
+                "variable": 1,
+                "coefficient": 500
+              }
+            ],
+            "quadratic": []
+          },
+          "constraints": [
+            {
+              "name": "capacity",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1000000000
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1
+            }
+          ]
+        }
+      },
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 0
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": 500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": 500
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": 500.0,
+        "best_bound": 500.0,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1",
+        "warnings": [
+          "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+        ]
+      },
+      "passed": true,
+      "elapsed_seconds": 0.2573768000002019
+    },
+    {
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "independent exact binary enumeration",
+          "variables": [
+            {
+              "name": "x",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            },
+            {
+              "name": "y",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 10000000000000000,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1000000000000
+              },
+              {
+                "variable": 1,
+                "coefficient": 500
+              }
+            ],
+            "quadratic": []
+          },
+          "constraints": [
+            {
+              "name": "capacity",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1000000000
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1
+            }
+          ]
+        }
+      },
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 10000000000000000
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": 10000000000000500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": 10000000000000500
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": 1.00000000000005e+16,
+        "best_bound": 1.00000000000005e+16,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1",
+        "warnings": [
+          "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+        ]
+      },
+      "passed": true,
+      "elapsed_seconds": 0.19825929999933578
+    },
+    {
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "independent exact binary enumeration",
+          "variables": [
+            {
+              "name": "x",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            },
+            {
+              "name": "y",
+              "lower": 0,
+              "upper": 1,
+              "kind": "binary"
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1000000000000
+              },
+              {
+                "variable": 1,
+                "coefficient": 500
+              }
+            ],
+            "quadratic": []
+          },
+          "constraints": [
+            {
+              "name": "capacity",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1000000000
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1
+            }
+          ]
+        },
+        "options": {
+          "max_nodes": 1
+        }
+      },
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 0
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": -500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": -500
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": -500.0,
+        "best_bound": -500.0,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1",
+        "warnings": [
+          "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+        ]
+      },
+      "passed": true,
+      "elapsed_seconds": 0.20409279997693375
+    }
+  ],
+  "node_limit_control": {
+    "request": {
+      "model": {
+        "schema_version": 1,
+        "name": "independent exact binary enumeration",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "binary"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": 1,
+            "kind": "binary"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1000000000000
+            },
+            {
+              "variable": 1,
+              "coefficient": 500
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "capacity",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1000000000
+              },
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "options": {
+        "max_nodes": 1
+      }
+    },
+    "actual": {
+      "termination": "node_limit",
+      "feasibility": "feasible",
+      "optimality": "best_found",
+      "values": [
+        0.0,
+        0.0
+      ],
+      "objective": 0.0,
+      "best_bound": 1000.0000000000001,
+      "relative_gap": 1.0,
+      "max_violation": 0.0,
+      "statistics": {
+        "evaluations": 1,
+        "iterations": 2,
+        "nodes": 1
+      },
+      "engine": "solvercraft-dense-simplex-0.1",
+      "warnings": [
+        "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+      ]
+    },
+    "passed": true
+  },
+  "passed": true,
+  "exact_optimal_cases": 3,
+  "node_limit_controls": 1
+}

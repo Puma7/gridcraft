@@ -1,8 +1,25 @@
 //! Workbook bindings for the independent Solvercraft SDK.
 //!
-//! Commands never open dialogs. Solves are bounded synchronous previews; only
-//! result.apply writes cells, after checking the document identity and revision.
+//! Commands never open dialogs. Synchronous calls and native background jobs
+//! preview immutable snapshots; explicit apply checks identity and revision.
 use std::collections::{HashMap, HashSet};
+
+#[cfg(test)]
+mod host_tests;
+#[cfg(not(target_arch = "wasm32"))]
+mod jobs;
+#[cfg(target_arch = "wasm32")]
+#[path = "solvercraft/jobs_web.rs"]
+mod jobs;
+mod legacy;
+mod manifest;
+mod parameters;
+mod registry;
+mod reports;
+mod simulation_ir;
+mod worksheet;
+#[cfg(test)]
+mod worksheet_tests;
 
 use ::solvercraft::compile::{Expr, ExpressionConstraint, ExpressionModel};
 use ::solvercraft::types::{
@@ -23,9 +40,22 @@ const MAX_CONSTRAINTS: usize = 4096;
 const MAX_RANGE_CELLS: u64 = 32_768;
 const MAX_NODES: usize = 100_000;
 const MAX_DEPTH: usize = 96;
+type CellBinding = (usize, CellRef);
+type VariableBindings = (Vec<Variable>, Vec<CellBinding>);
+
+/// The session calls this only when that document actually closes. No other
+/// session's live jobs are inferred to be orphaned from a local document list.
+pub(crate) fn document_closed(uid: u64) {
+    jobs::document_closed(uid);
+}
+/// Entry point for the separate Trunk-generated Solvercraft Web Worker binary.
+#[cfg(target_arch = "wasm32")]
+pub fn browser_worker_main() {
+    jobs::worker_main();
+}
 
 pub fn specs() -> Vec<CommandSpec> {
-    vec![
+    let mut specs = vec![
         cmd!(query "solvercraft.capabilities", "Solvercraft capabilities", [], None,
             "{} -> supported formula subset and execution capabilities; never opens a dialog.",
             always, capabilities),
@@ -47,7 +77,14 @@ pub fn specs() -> Vec<CommandSpec> {
             has_doc,
             apply
         ),
-    ]
+    ];
+    specs.extend(registry::specs());
+    specs.extend(jobs::specs());
+    specs.extend(worksheet::specs());
+    specs.extend(parameters::specs());
+    specs.extend(reports::specs());
+    specs.extend(legacy::specs());
+    specs
 }
 
 fn sdk_error(e: impl std::fmt::Display) -> EngineError {
@@ -58,16 +95,24 @@ fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
     Ok(json!({
         "schema_version": 1,
         "preview_only": true,
-        "execution": "synchronous_bounded",
+        "execution": "synchronous_bounded_and_background_snapshot",
+        "background_jobs": {"native":!cfg!(target_arch="wasm32"),"wasm":cfg!(target_arch="wasm32"),"start_command":"solvercraft.job.start","cancel_command":"solvercraft.job.cancel","apply_command":"solvercraft.job.apply","retained_limit":64,"browser_cancel":"worker termination; no untransmitted incumbent claimed"},
         "automatic_apply": false,
         "sdk": ::solvercraft::capabilities(),
         "workbook_formula_subset": [
             "numeric constants", "cell and named references", "+ - * /",
             "nonnegative integer powers", "SUM", "SUMPRODUCT",
-            "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX"
+            "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX", "NOW", "TODAY", "SC.OUTPUT"
         ],
+        "worksheet_declarations":["SC.UNIFORM","SC.DISCRETEUNIFORM","SC.NORMAL","SC.LOGNORMAL","SC.TRIANGULAR","SC.BETAPERT","SC.BETA","SC.GAMMA","SC.EXPONENTIAL","SC.WEIBULL","SC.BERNOULLI","SC.BINOMIAL","SC.POISSON","SC.NEGATIVEBINOMIAL","SC.GEOMETRIC","SC.EMPIRICAL","SC.EMPIRICALCONTINUOUS","SC.OUTPUT"],
+        "psi_import":{"core_numeric_signatures":19,"property_modifiers":false,"ordinary_cell_policy":"SC finite analytic mean; explicit labelled median fallback for undefined/unavailable means","cumul_subset":"unambiguous strictly increasing knots; no endpoint atoms"},
+        "reports":{"answer":true,"lp_checked_basis_shadow_prices_and_intervals":true,"simultaneous_parameter_changes":"must revalidate basis"},
+        "worksheet_statistics":{"SC.MEAN":"explicit finite sample range","SC.QUANTILE":"empirical lower inverse CDF","SC.CVAR":"fractional upper loss tail"},
+        "saved_models":{"schema_version":1,"xlsx_part":"xl/solvercraft/models.json","binding_migration":"hidden formula names; invalidated bindings fail explicitly"},
+        "time_and_random":{"NOW_TODAY":"fixed UTC snapshot serial","deterministic_RAND":"unsupported; declare SC stochastic cells for simulation","background_default_memory_bytes":67108864_u64,"background_reserved_memory_limit_bytes":2147483648_u64},
         "unsupported_references": ["3D", "external workbooks", "dynamic references", "spills"],
-        "formula_semantics_limits": ["MIN/MAX over blank referenced cells is explicitly rejected"],
+        "formula_semantics_limits": ["Optimization MIN/MAX over blank referenced cells is explicitly rejected", "Simulation uses ordered Calc value semantics; array-producing cells, spills and unlisted functions are rejected"],
+        "run_manifest":{"schema_version":1,"seed":"lossless decimal string","identity":"diagnostic configuration record; not cryptographic attestation","simulation_rerun":"preview.request"},
         "optimization_note": "The structural compiler and chosen engine may reject expressions outside their mathematical capabilities."
     }))
 }
@@ -96,6 +141,22 @@ fn snapshot(s: &Session) -> Result<Snapshot> {
     let doc = s.doc()?;
     Ok(Snapshot { document_uid: doc.uid.to_string(), revision: doc.revision.to_string() })
 }
+/// Workbook active-tab state can change through a shared Arc without a new
+/// revision. Capture it on admission, before a native thread can observe it.
+fn pin_request_sheet(wb: &Workbook, request: &mut Json, kind: &str) -> Result<()> {
+    if kind == "optimization" && request.get("model").is_some() {
+        return Ok(());
+    }
+    let sheet = match request.get("sheet") {
+        None | Some(Json::Null) => wb.active().ok_or(EngineError::NoDocument)?,
+        Some(Json::String(name)) => {
+            wb.sheet(wb.sheet_index(name).ok_or_else(|| bad(SOLVE, "The model sheet no longer exists"))?).ok_or(EngineError::NoDocument)?
+        }
+        Some(_) => return Err(bad(SOLVE, "sheet must be a worksheet name")),
+    };
+    request["sheet"] = json!(sheet.name);
+    Ok(())
+}
 
 fn options(p: &Json) -> Result<SolveOptions> {
     let mut opt: SolveOptions = serde_json::from_value(p.get("options").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
@@ -108,6 +169,12 @@ fn options(p: &Json) -> Result<SolveOptions> {
         opt.method = serde_json::from_value(json!(x)).map_err(sdk_error)?;
     }
     Ok(opt)
+}
+fn snapshot_time(p: &Json) -> Result<f64> {
+    match p.get("_snapshot_time_serial") {
+        None => Ok(gridcraft_calc::now_serial()),
+        Some(value) => value.as_f64().filter(|v| v.is_finite()).ok_or_else(|| bad(SOLVE, "Snapshot time must be a finite1900-system serial")),
+    }
 }
 
 fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
@@ -129,6 +196,7 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
     let source = p.get("variables").ok_or_else(|| bad(SOLVE, "variables is required"))?;
     let (mut vars, bindings) = variable_bindings(wb, base, source)?;
     let mut tr = Translator::new(wb, &bindings);
+    tr.frozen_now = snapshot_time(p)?;
     let objective_text = str_param(p, "objective").filter(|x| !x.trim().is_empty()).ok_or_else(|| bad(SOLVE, "objective is required"))?;
     let objective = tr.text(base, objective_text)?;
     let direction = match str_param(p, "goal").unwrap_or("max") {
@@ -147,19 +215,16 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
             add_constraint(&mut tr, &mut vars, base, item, &mut cons)?;
         }
     }
-    if str_param(p, "goal") == Some("value") {
+    let target = if str_param(p, "goal") == Some("value") {
         let target = p
             .get("value")
             .and_then(|x| x.as_f64().or_else(|| x.as_str().and_then(|v| v.parse().ok())))
             .filter(|x| x.is_finite())
             .ok_or_else(|| bad(SOLVE, "A finite target value is required"))?;
-        cons.push(ExpressionConstraint {
-            name: "Target value".into(),
-            left: objective.clone(),
-            relation: Relation::Equal,
-            right: Expr::constant(target),
-        });
-    }
+        Some(target)
+    } else {
+        None
+    };
     // The checkbox applies only to variables without an explicit lower bound.
     // Applying it before constraints would erase legitimate negative bounds.
     if nonnegative {
@@ -169,13 +234,27 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
             }
         }
     }
-    let expr = ExpressionModel {
+    let mut expr = ExpressionModel {
         name: str_param(p, "name").unwrap_or("Gridcraft model").to_string(),
         variables: vars,
         direction,
         objective,
         constraints: cons,
     };
+    if let Some(target) = target {
+        if expr.constraints.len() >= MAX_CONSTRAINTS {
+            return Err(bad(SOLVE, "Target equality exceeds the host constraint budget"));
+        }
+        // Count the extra objective copy, constant and row metadata against
+        // this caller's limits before materializing the exact equality.
+        ::solvercraft::compile::preflight_target_named(&expr, target, "Target value", &opt).map_err(sdk_error)?;
+        expr.constraints.push(ExpressionConstraint {
+            name: "Target value".into(),
+            left: expr.objective.clone(),
+            relation: Relation::Equal,
+            right: Expr::constant(target),
+        });
+    }
     // Structural compiler failure only permits an explicitly supported
     // expression backend. Other errors retain their original failure meaning.
     let model = match ::solvercraft::compile::compile(&expr, &opt) {
@@ -184,7 +263,6 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
             if matches!(e.code.as_str(), "unsupported_expression" | "unsupported_constraint")
                 && (opt.method == SolveMethod::DifferentialEvolution
                     || (matches!(opt.method, SolveMethod::Auto | SolveMethod::ProjectedGradient)
-                        && expr.constraints.is_empty()
                         && expr.variables.iter().all(|v| v.kind == VariableKind::Continuous))) =>
         {
             ::solvercraft::model::validate(&bounds_model(&expr), &opt).map_err(sdk_error)?;
@@ -199,7 +277,7 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
     Ok(Prepared { model, expression: Some(expr), bindings, names, options: opt })
 }
 
-fn variable_bindings(wb: &Workbook, base: usize, source: &Json) -> Result<(Vec<Variable>, Vec<(usize, CellRef)>)> {
+fn variable_bindings(wb: &Workbook, base: usize, source: &Json) -> Result<VariableBindings> {
     let mut bindings = Vec::new();
     let mut vars = Vec::new();
     for item in variable_entries(source)? {
@@ -405,10 +483,17 @@ struct Translator<'a> {
     bindings: HashMap<(usize, CellRef), usize>,
     visiting: HashSet<(usize, CellRef)>,
     nodes: usize,
+    frozen_now: f64,
 }
 impl<'a> Translator<'a> {
     fn new(wb: &'a Workbook, bindings: &[(usize, CellRef)]) -> Self {
-        Self { wb, bindings: bindings.iter().enumerate().map(|(i, k)| (*k, i)).collect(), visiting: HashSet::new(), nodes: 0 }
+        Self {
+            wb,
+            bindings: bindings.iter().enumerate().map(|(i, k)| (*k, i)).collect(),
+            visiting: HashSet::new(),
+            nodes: 0,
+            frozen_now: gridcraft_calc::now_serial(),
+        }
     }
     fn enter(&mut self, depth: usize) -> Result<()> {
         self.nodes = self.nodes.saturating_add(1);
@@ -534,6 +619,13 @@ impl<'a> Translator<'a> {
     fn call(&mut self, base: usize, name: &str, args: &[FormulaExpr], depth: usize) -> Result<Expr> {
         self.enter(depth)?;
         match name {
+            "NOW" | "TODAY" if args.is_empty() => {
+                let time = gridcraft_core::date::serial_in_system(self.wb.date_system, self.frozen_now);
+                Ok(Expr::constant(if name == "TODAY" { time.floor() } else { time }))
+            }
+            "SC.OUTPUT" if (1..=2).contains(&args.len()) => {
+                self.expr(base, args.first().ok_or_else(|| bad(SOLVE, "SC.OUTPUT requires a value"))?, depth + 1)
+            }
             "SUM" => {
                 let mut terms = Vec::new();
                 for arg in args {
@@ -658,6 +750,37 @@ fn validate_candidate(prepared: &Prepared, values: &[f64]) -> Result<()> {
     }
     Ok(())
 }
+fn rounded_candidate(prepared: &Prepared, values: &[f64]) -> Result<Vec<f64>> {
+    let variables = prepared
+        .model
+        .as_ref()
+        .map(|m| m.variables.as_slice())
+        .or_else(|| prepared.expression.as_ref().map(|m| m.variables.as_slice()))
+        .ok_or_else(|| bad(SOLVE, "Original variables are missing"))?;
+    if variables.len() != values.len() {
+        return Err(bad(SOLVE, "Result dimension differs from original variables"));
+    }
+    variables
+        .iter()
+        .zip(values)
+        .map(|(variable, value)| {
+            if !value.is_finite() {
+                return Err(bad(SOLVE, "Result values must be finite"));
+            }
+            if variable.kind == VariableKind::Continuous {
+                return Ok(*value);
+            }
+            if value.abs() >= ::solvercraft::model::INTEGER_PRECISION_LIMIT {
+                return Err(bad(SOLVE, "Integer candidate magnitude must be below2^53"));
+            }
+            let rounded = value.round();
+            if (value - rounded).abs() > prepared.options.integrality_tolerance {
+                return Err(bad(SOLVE, "Candidate exceeds the original integer tolerance"));
+            }
+            Ok(rounded)
+        })
+        .collect()
+}
 fn validate(s: &mut Session, p: &Json) -> Result<Json> {
     let prepared = prepare(&s.doc()?.wb, p)?;
     let class = match prepared.model.as_ref() {
@@ -668,69 +791,110 @@ fn validate(s: &mut Session, p: &Json) -> Result<Json> {
     Ok(json!({"model":prepared.model,"expression_model":prepared.expression,"bindings":prepared.names,"class":class,"snapshot":snapshot(s)?}))
 }
 fn solve(s: &mut Session, p: &Json) -> Result<Json> {
+    let doc = s.doc()?;
+    solve_snapshot(&doc.wb, &doc.calc, snapshot(s)?, p, std::sync::Arc::new(NoControl))
+}
+fn solve_snapshot(
+    wb: &Workbook,
+    calc: &gridcraft_calc::Calc,
+    snapshot: Snapshot,
+    p: &Json,
+    control: std::sync::Arc<dyn ::solvercraft::types::RunControl>,
+) -> Result<Json> {
     if !p.is_object() {
         return Err(bad(SOLVE, "Solvercraft parameters must be an object"));
     }
+    manifest::fingerprint(p)?;
     let mut request = p.clone();
-    if request.get("model").is_none() && request.get("sheet").is_none() {
-        let sheet = s.doc()?.wb.active().ok_or(EngineError::NoDocument)?.name.clone();
-        request["sheet"] = json!(sheet);
+    if request.get("_snapshot_time_serial").is_none() {
+        request["_snapshot_time_serial"] = json!(calc.fixed_now.unwrap_or_else(gridcraft_calc::now_serial));
     }
-    let prepared = prepare(&s.doc()?.wb, &request)?;
+    pin_request_sheet(wb, &mut request, "optimization")?;
+    let prepared = prepare(wb, &request)?;
+    request["options"] = json!(prepared.options);
     let result = match (prepared.expression.as_ref(), prepared.options.method) {
         (Some(expr), SolveMethod::DifferentialEvolution) => {
-            ::solvercraft::heuristic::solve(expr, &prepared.options, &NoControl).map_err(sdk_error)?
+            ::solvercraft::heuristic::solve(expr, &prepared.options, control.as_ref()).map_err(sdk_error)?
         }
         (Some(expr), SolveMethod::ProjectedGradient) => {
             let start = prepared
                 .bindings
                 .iter()
                 .map(|(si, c)| {
-                    let sh = s.doc()?.wb.sheet(*si).ok_or(EngineError::NoDocument)?;
+                    let sh = wb.sheet(*si).ok_or(EngineError::NoDocument)?;
                     numeric(&sh.value(*c))
                 })
                 .collect::<Result<Vec<_>>>()?;
-            ::solvercraft::nonlinear::solve_from(expr, &start, &prepared.options, &NoControl).map_err(sdk_error)?
+            solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
         }
         (Some(expr), SolveMethod::Auto) if prepared.model.is_none() => {
-            let start = starting_values(s, &prepared)?;
-            ::solvercraft::nonlinear::solve_from(expr, &start, &prepared.options, &NoControl).map_err(sdk_error)?
+            let start = starting_values(wb, &prepared)?;
+            solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
         }
         _ => {
             let model = prepared.model.as_ref().ok_or_else(|| bad(SOLVE, "This method does not support the expression model"))?;
-            match ::solvercraft::solve(model, &prepared.options, &NoControl) {
+            match ::solvercraft::engines::solve_owned(model, &prepared.options, std::sync::Arc::clone(&control)) {
                 Ok(result) => result,
                 Err(e)
                     if matches!(e.code.as_str(), "unsupported_qp" | "unsupported_problem")
                         && !model.objective.quadratic.is_empty()
                         && prepared.options.method == SolveMethod::Auto
-                        && prepared
-                            .expression
-                            .as_ref()
-                            .is_some_and(|expr| expr.constraints.is_empty() && expr.variables.iter().all(|v| v.kind == VariableKind::Continuous)) =>
+                        && prepared.expression.as_ref().is_some_and(|expr| expr.variables.iter().all(|v| v.kind == VariableKind::Continuous)) =>
                 {
                     let expr = prepared.expression.as_ref().ok_or_else(|| bad(SOLVE, "Missing expression model"))?;
-                    let start = starting_values(s, &prepared)?;
-                    ::solvercraft::nonlinear::solve_from(expr, &start, &prepared.options, &NoControl).map_err(sdk_error)?
+                    let start = starting_values(wb, &prepared)?;
+                    solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
                 }
                 Err(e) => return Err(sdk_error(e)),
             }
         }
     };
-    if let Some(values) = result.values.as_ref() {
-        if result.feasibility == Feasibility::Feasible {
-            validate_candidate(&prepared, values)?;
-            verify_workbook_objective(s.doc()?, &request, &prepared, values)?;
-        }
+    let mut apply_values = None;
+    if let Some(values) = result.values.as_ref()
+        && result.feasibility == Feasibility::Feasible
+    {
+        validate_candidate(&prepared, values)?;
+        let rounded = rounded_candidate(&prepared, values)?;
+        validate_candidate(&prepared, &rounded)?;
+        verify_workbook_snapshot(wb, calc, &request, &prepared, &rounded)?;
+        apply_values = Some(rounded);
     }
-    Ok(json!({"result":result,"request":request,"snapshot":snapshot(s)?,"bindings":prepared.names,"execution":"synchronous_bounded"}))
+    let nlp: ::solvercraft::nonlinear::NlpOptions =
+        serde_json::from_value(request.get("nlp").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
+    let manifest = manifest::create(
+        "optimization",
+        &snapshot,
+        &request,
+        json!({"solve":prepared.options,"nonlinear":nlp}),
+        json!({"engine":result.engine,"formula_evaluator":"structural-compiler-with-original-Calc-candidate-guard-v1"}),
+        json!({"variables":prepared.names}),
+    )?;
+    Ok(
+        json!({"result":result,"apply_values":apply_values,"request":request,"snapshot":snapshot,"bindings":prepared.names,"manifest":manifest,"execution":"synchronous_bounded"}),
+    )
 }
-fn starting_values(s: &Session, prepared: &Prepared) -> Result<Vec<f64>> {
+fn solve_nonlinear(
+    expr: &ExpressionModel,
+    start: &[f64],
+    options: &SolveOptions,
+    request: &Json,
+    control: &dyn ::solvercraft::types::RunControl,
+) -> Result<SolveResult> {
+    let nlp: ::solvercraft::nonlinear::NlpOptions =
+        serde_json::from_value(request.get("nlp").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
+    if expr.constraints.is_empty() {
+        ::solvercraft::nonlinear::solve_from_with_derivatives(expr, start, options, control, nlp.derivative_mode, nlp.finite_difference_step)
+            .map_err(sdk_error)
+    } else {
+        ::solvercraft::constrained::solve_from(expr, start, options, &nlp, control).map_err(sdk_error)
+    }
+}
+fn starting_values(wb: &Workbook, prepared: &Prepared) -> Result<Vec<f64>> {
     prepared
         .bindings
         .iter()
         .map(|(si, c)| {
-            let sh = s.doc()?.wb.sheet(*si).ok_or(EngineError::NoDocument)?;
+            let sh = wb.sheet(*si).ok_or(EngineError::NoDocument)?;
             numeric(&sh.value(*c))
         })
         .collect()
@@ -755,6 +919,8 @@ fn apply(s: &mut Session, p: &Json) -> Result<Json> {
     let values = result.values.ok_or_else(|| bad(SOLVE, "The result has no variable values"))?;
     // Revalidation does not trust the received success flag or objective.
     validate_candidate(&prepared, &values)?;
+    let values = rounded_candidate(&prepared, &values)?;
+    validate_candidate(&prepared, &values)?;
     verify_workbook_objective(s.doc()?, request, &prepared, &values)?;
     edit(s, |cx| {
         for ((si, cell), value) in prepared.bindings.iter().zip(&values) {
@@ -765,19 +931,28 @@ fn apply(s: &mut Session, p: &Json) -> Result<Json> {
         }
         Ok(())
     })?;
-    Ok(json!({"applied":true,"cells":prepared.names}))
+    Ok(json!({"applied":true,"cells":prepared.names,"values":values}))
 }
 
 /// Check the compiler against Gridcraft's real evaluator on a private snapshot.
 /// This does not write the live workbook or create history.
 fn verify_workbook_objective(doc: &crate::DocState, request: &Json, prepared: &Prepared, values: &[f64]) -> Result<()> {
+    verify_workbook_snapshot(&doc.wb, &doc.calc, request, prepared, values)
+}
+fn verify_workbook_snapshot(
+    source: &Workbook,
+    source_calc: &gridcraft_calc::Calc,
+    request: &Json,
+    prepared: &Prepared,
+    values: &[f64],
+) -> Result<()> {
     if prepared.bindings.is_empty() {
         return Ok(());
     }
     if values.len() != prepared.bindings.len() {
         return Err(bad(SOLVE, "Result variable count does not match bindings"));
     }
-    let mut wb = (*doc.wb).clone();
+    let mut wb = source.clone();
     let mut changed = Vec::with_capacity(values.len());
     for ((si, cell), value) in prepared.bindings.iter().zip(values) {
         if !value.is_finite() {
@@ -789,11 +964,13 @@ fn verify_workbook_objective(doc: &crate::DocState, request: &Json, prepared: &P
         changed.push((*si, *cell));
     }
     wb.calc.mode = gridcraft_model::CalcMode::Automatic;
-    let mut calc = doc.calc.clone();
+    let mut calc = source_calc.clone();
+    let time = snapshot_time(request)?;
+    calc.fixed_now = Some(time);
     calc.cells_changed(&mut wb, &changed);
     let sheet = str_param(request, "sheet").and_then(|name| wb.sheet_index(name)).unwrap_or(wb.active_sheet());
     let objective = str_param(request, "objective").ok_or_else(|| bad(SOLVE, "Objective is missing"))?;
-    let actual = numeric(&gridcraft_calc::evaluate(&wb, sheet, CellRef::new(0, 0), objective))?;
+    let actual = numeric(&gridcraft_calc::evaluate_at(&wb, sheet, CellRef::new(0, 0), objective, time))?;
     let predicted = match (prepared.model.as_ref(), prepared.expression.as_ref()) {
         (Some(model), _) => ::solvercraft::model::evaluate_objective(model, values).map_err(sdk_error)?,
         (_, Some(expr)) => ::solvercraft::compile::evaluate(&expr.objective, values).map_err(sdk_error)?,
@@ -810,8 +987,8 @@ fn verify_workbook_objective(doc: &crate::DocState, request: &Json, prepared: &P
                 continue;
             }
             let rel = relation(&op)?;
-            let left = numeric_values(&gridcraft_calc::evaluate(&wb, sheet, CellRef::new(0, 0), &left))?;
-            let right = numeric_values(&gridcraft_calc::evaluate(&wb, sheet, CellRef::new(0, 0), &right))?;
+            let left = numeric_values(&gridcraft_calc::evaluate_at(&wb, sheet, CellRef::new(0, 0), &left, time))?;
+            let right = numeric_values(&gridcraft_calc::evaluate_at(&wb, sheet, CellRef::new(0, 0), &right, time))?;
             if left.len() != right.len() && right.len() != 1 {
                 return Err(bad(SOLVE, "Workbook constraint shape changed"));
             }
@@ -832,7 +1009,44 @@ fn verify_workbook_objective(doc: &crate::DocState, request: &Json, prepared: &P
 }
 
 fn simulate(s: &mut Session, p: &Json) -> Result<Json> {
-    let wb = &s.doc()?.wb;
+    simulate_snapshot(&s.doc()?.wb, &s.doc()?.calc, snapshot(s)?, p, &NoControl)
+}
+fn simulate_snapshot(
+    wb: &Workbook,
+    source_calc: &gridcraft_calc::Calc,
+    snapshot: Snapshot,
+    p: &Json,
+    control: &dyn ::solvercraft::types::RunControl,
+) -> Result<Json> {
+    if !p.is_object() {
+        return Err(bad(SOLVE, "Simulation parameters must be an object"));
+    }
+    manifest::fingerprint(p)?;
+    // Worksheet declarations are stable cells, sampled once per trial. Explicit
+    // bindings can override discovery without changing any live formula.
+    let mut request = p.clone();
+    pin_request_sheet(wb, &mut request, "simulation")?;
+    if request.get("_snapshot_time_serial").is_none() {
+        request["_snapshot_time_serial"] = json!(gridcraft_calc::now_serial());
+    }
+    // Refresh volatile dependencies on a private Calc at the one captured time.
+    // A parameter read of C1=NOW() and an output read of C1 must agree exactly.
+    let mut frozen = wb.clone();
+    frozen.calc.mode = gridcraft_model::CalcMode::Automatic;
+    let mut calculation = source_calc.clone();
+    calculation.fixed_now = Some(snapshot_time(&request)?);
+    calculation.cells_changed(&mut frozen, &[]);
+    let wb = &frozen;
+    if request.get("inputs").is_none() || request.get("outputs").is_none() {
+        let (inputs, outputs) = worksheet::discover_at(wb, snapshot_time(&request)?)?;
+        if request.get("inputs").is_none() {
+            request["inputs"] = json!(inputs);
+        }
+        if request.get("outputs").is_none() {
+            request["outputs"] = json!(outputs);
+        }
+    }
+    let p = &request;
     let base = match str_param(p, "sheet") {
         Some(name) => wb.sheet_index(name).ok_or_else(|| bad(SOLVE, "The model sheet no longer exists"))?,
         None => wb.active_sheet(),
@@ -853,12 +1067,18 @@ fn simulate(s: &mut Session, p: &Json) -> Result<Json> {
         if sh.spill_anchor(c.1).is_some() {
             return Err(bad(SOLVE, "A simulation input cannot be a derived spill cell; choose an independent constant input"));
         }
-        if sh.cell(c.1).is_some_and(|c| c.formula.is_some()) {
-            return Err(bad(SOLVE, "Simulation inputs must be constant cells"));
+        let declared = worksheet::input_distribution_at(wb, c.0, c.1, snapshot_time(p)?)?;
+        if sh.cell(c.1).is_some_and(|c| c.formula.is_some()) && declared.is_none() {
+            return Err(bad(SOLVE, "Simulation inputs must be constant cells or SC distribution declarations"));
         }
-        let distribution: Distribution =
-            serde_json::from_value(input.get("distribution").cloned().ok_or_else(|| bad(SOLVE, "Input distribution is required"))?)
-                .map_err(sdk_error)?;
+        let distribution: Distribution = serde_json::from_value(
+            input
+                .get("distribution")
+                .cloned()
+                .or_else(|| declared.and_then(|d| serde_json::to_value(d).ok()))
+                .ok_or_else(|| bad(SOLVE, "Input distribution is required"))?,
+        )
+        .map_err(sdk_error)?;
         bindings.push(c);
         distributions.push(distribution);
     }
@@ -878,15 +1098,33 @@ fn simulate(s: &mut Session, p: &Json) -> Result<Json> {
     if output_cells.is_empty() {
         return Err(bad(SOLVE, "At least one output cell is required"));
     }
-    let mut translator = Translator::new(wb, &bindings);
-    let exprs = output_cells.iter().map(|(si, c)| translator.cell(*si, *c, 0)).collect::<Result<Vec<_>>>()?;
-    let opt: SimulationOptions = serde_json::from_value(p.get("options").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
-    let result = ::solvercraft::simulation::simulate(&distributions, &opt, &NoControl, |values| {
-        exprs.iter().map(|expr| ::solvercraft::compile::evaluate(expr, values)).collect()
-    })
-    .map_err(sdk_error)?;
+    let mut opt: SimulationOptions = serde_json::from_value(p.get("options").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
+    let requested_options = opt.clone();
+    let mut program = simulation_ir::Program::compile(wb, &bindings, &output_cells, snapshot_time(p)?, opt.max_memory_bytes)?;
+    program.check_work(opt.trials)?;
+    opt.max_memory_bytes =
+        opt.max_memory_bytes.checked_sub(program.reserved_bytes()).ok_or_else(|| bad(SOLVE, "Simulation IR exceeds memory budget"))?;
+    let result = ::solvercraft::simulation::simulate(&distributions, &opt, control, |values| program.evaluate(values, control)).map_err(sdk_error)?;
     let names = output_cells.iter().map(|(si, c)| binding_name(wb, *si, *c)).collect::<Result<Vec<_>>>()?;
-    Ok(json!({"result":result,"outputs":names,"snapshot":snapshot(s)?,"execution":"synchronous_bounded"}))
+    let inputs = bindings
+        .iter()
+        .zip(&distributions)
+        .map(|((sheet, cell), distribution)| Ok(json!({"cell":binding_name(wb,*sheet,*cell)?,"distribution":distribution})))
+        .collect::<Result<Vec<_>>>()?;
+    // Preserve the original total budget for a rerun; the engine budget records
+    // the separate conservative IR reservation deducted for this execution.
+    request["options"] = json!(requested_options);
+    request["inputs"] = json!(inputs);
+    request["outputs"] = json!(names);
+    let manifest = manifest::create(
+        "simulation",
+        &snapshot,
+        &request,
+        json!({"simulation":requested_options,"engine":opt,"ir_reserved_bytes":program.reserved_bytes()}),
+        json!({"sampler":requested_options.method,"sampling_version":result.sampling_version,"formula_evaluator":"gridcraft-ordered-cell-ir-v1"}),
+        json!({"inputs":inputs,"outputs":names}),
+    )?;
+    Ok(json!({"result":result,"outputs":names,"request":request,"snapshot":snapshot,"manifest":manifest,"execution":"synchronous_bounded"}))
 }
 
 #[cfg(test)]

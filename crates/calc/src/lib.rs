@@ -7,8 +7,9 @@ pub mod eval;
 pub mod recalc;
 mod trimrange;
 
+pub use eval::solvercraft::{WorksheetDistribution, distribution_arity, worksheet_distribution};
 pub use eval::{Area, SPECIAL_FUNCTIONS, is_known_function};
-pub use recalc::{Calc, Key, evaluate, now_serial};
+pub use recalc::{Calc, Key, evaluate, evaluate_at, now_serial};
 
 #[cfg(test)]
 mod tests;

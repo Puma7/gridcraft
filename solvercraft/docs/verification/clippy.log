@@ -1,0 +1,9 @@
+    Checking solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+    Checking solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+    Checking solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+    Checking solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+    Checking solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+    Checking solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+    Checking solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+    Checking solvercraft-cli v0.1.0 ($SDK_ROOT\crates\cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.32s

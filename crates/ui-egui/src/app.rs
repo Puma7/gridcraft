@@ -109,6 +109,7 @@ impl SheetApp {
         // Floating pictures' textures go with their workbook, even when no sheet is painted.
         let open: Vec<u64> = self.session.documents().iter().map(|d| d.uid).collect();
         floating_pictures::forget_closed(ctx, &open);
+        crate::solvercraft::forget_closed(ctx, &open);
         self.apply_font_state(ctx);
         if let Some(answer) = self.desktop_theme.take_change() {
             self.desktop_dark = Some(answer);

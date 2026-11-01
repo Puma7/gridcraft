@@ -1,36 +1,23 @@
-# Solvercraft reference engines
+# Solvercraft optimization engines
 
-This crate implements real, workbook-independent optimization. It is a bounded alpha backend, not a replacement for the full capability set of HiGHS, Clarabel or Frontline.
+Workbook-independent Rust optimization with explicit numerical and resource limits.
 
-## Implemented engines
+| API | Implemented algorithm |
+|---|---|
+| `solve` | Independent two-phase dense simplex, linear integer branch-and-bound, analytic separable quadratic fast path, general continuous convex QP by proximal ADMM |
+| `solve_qp_detailed` | Checked general linearly constrained convex QP, primal/dual warm starts and independently restored Lagrangian bounds |
+| `solve_sparse_owned` | Actual sparse CSC LP/QP via pinned Clarabel 0.11.1 and sparse QDLDL/AMD |
+| `solve_socp_owned` | Exact affine Lorentz cones, continuous LP/QP/SOCP interior point, cone duals and original-domain validation |
+| `solve_mixed_conic_owned` | Finite integer-domain MIQP/MISOCP branch-and-bound with verified incumbents and valid relaxation bounds |
+| `compile_discrete`, `solve_discrete_owned` | Bounded SOS1/SOS2 selector formulations and indicators with finite-bound-derived big-M; independent original semantics check |
+| `solve_lp_with_basis` | Checked original-coordinate vertex basis reuse, shadow prices, and local allowable RHS/objective changes |
 
-| Engine | Supported model | Result guarantee |
-|---|---|---|
-| solvercraft-dense-simplex-0.1 | Linear objective, linear <=/=/>= rows, free/fixed/one-sided/two-sided continuous variables | Floating-point two-phase simplex, subject to configured tolerances and original-model validation |
-| Same backend with branch and bound | Linear model with integer/binary variables | LP-relaxation bounds, verified incumbent, conservative termination and global-gap reporting |
-| solvercraft-separable-convex-qp-0.1 | Continuous variables, bounds only, convex separable quadratic minimization or concave separable quadratic maximization | Analytic coordinate minima; no finite-difference gradient approximation |
+The reference simplex uses a budget-capped dense tableau. The explicit sparse path really uses sparse CSC matrices and sparse factors, with a conservative worst-case fill memory estimate. Checked dense QP factorization is limited to 512 variables; vertex basis/sensitivity to 64 variables and 512 normalized rows, with bounded basis search. These limits are explicit rather than claims of unrestricted commercial-suite parity.
 
-The model stores sparse coefficient lists. The LP reference backend deliberately uses a dense tableau internally. A conservative tableau/working-set estimate is checked against max_memory_bytes before construction. This is not a large-scale sparse factorization engine.
+Every returned candidate is validated against the original model; integer candidates are rounded and validated again. A backend status, small gradient or large objective magnitude alone never establishes a global optimum, infeasibility or unboundedness. Missing certified bounds stay absent. Approximate infeasibility rays must independently separate the original variable box. A supported unbounded result requires a feasible anchor and a checked recession direction.
 
-Auto routes LP/MILP or the supported separable QP class. Simplex on an integer model is rejected rather than silently relaxing integrality. ProjectedGradient and DifferentialEvolution are not implemented by this crate and return an explicit error. General constrained/cross-term QP, SOCP, general NLP, MIQP and global nonlinear optimization are not advertised.
+Cancel, iteration, evaluation, node and memory limits remain distinct from infeasibility. The conic primary APIs take `Arc<dyn RunControl>` for safe synchronous callbacks on native and WASM. Native borrowed compatibility uses a scoped worker bridge; WASM callers use the owned API. Clarabel does not expose a public warm-start point API; no such capability is advertised. LP vertex-basis and independent QP primal/dual warm starts are separate, real implementations.
 
-## Numerical and interruption semantics
+Arithmetic uses f64 and declared original-unit tolerances. No exact rational certificate, arbitrary-scale correctness, complete PSD recognition, cutting-plane MIP suite, sparse basis-factor reuse, or browser runtime validation is claimed. Unsupported classes return structured errors or conservative Unknown/Stationary results.
 
-- No magnitude threshold is interpreted as mathematical unboundedness.
-- A very small positive entering-column coefficient prevents an unreliable unbounded-ray classification; the routine reports numerical failure instead.
-- LP-unbounded does not establish MILP-unbounded. When this reference search encounters such a relaxation it returns an honest unknown mixed-integer status.
-- Every returned candidate is checked against the untransformed model. Integer candidates are rounded and then validated; rounded feasibility is never assumed.
-- Cancel, iteration, evaluation, node and memory budgets remain distinct from infeasibility. Verified integer incumbents survive interruptions.
-- The global lower bound in minimization space comes from unresolved nodes' valid LP bounds. It is omitted if an unresolved node has no available bound.
-- Relative gap is max(incumbent-bound,0)/max(1,abs(incumbent),abs(bound)); maximization is transformed consistently.
-- Positive requested MIP gap termination is BestFound with an explanatory warning, not an exact zero-gap proof.
-- No primal/dual basis, shadow prices, sensitivity intervals, warm start or exact rational certificate is exposed.
-
-The arithmetic is f64 with absolute original-model feasibility tolerances. Poorly conditioned problems can return numerical failure. No exact arithmetic, arbitrary-scale correctness or performance parity is claimed.
-
-## Verification
-
-The tests cover Wyndor's LP objective 36, alternative optima, equality/free/fixed/negative variables, binary optimum 1 versus continuous relaxation 1.5, infeasibility, actual LP-unboundedness, the LP-unbounded/MIP-infeasible trap, retained incumbents and bounds on interruption, large finite objective values, narrow-bound analytic QP, tiny-pivot honesty and independently enumerated signed integer models.
-
-Run cargo test -p solvercraft-engines --offline and cargo clippy -p solvercraft-engines --all-targets --offline -- -D warnings from the standalone Solvercraft workspace. A native core test is not the full Gridcraft or WASM runtime gate.
-
+See [implementation evidence and remaining gaps](../../docs/implementation/engines.md) for algorithms, dependency licensing, tests and restrictions. From the standalone workspace run `cargo test -p solvercraft-engines --offline --locked`, `cargo clippy -p solvercraft-engines --all-targets --offline --locked -- -D warnings`, and `cargo check -p solvercraft-engines --target wasm32-unknown-unknown --offline --locked`.

@@ -2,7 +2,7 @@
   "oracle": "Independent active-constraint vertex enumeration; NumPy linear solves",
   "executed_at_utc": "2026-10-31T13:56:10.414607+00:00",
   "python_version": "3.12.6",
-  "platform": "Windows-11-10.0.26200-SP0",
+  "platform": "Windows-11-x86_64",
   "numpy_version": "2.2.0",
   "seed": 20261031,
   "case_count": 30,

@@ -6,7 +6,11 @@ rust-version.workspace = true
 license.workspace = true
 
 [dependencies]
+serde.workspace = true
 solvercraft-types.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
 
 [lints]
 workspace = true

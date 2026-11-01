@@ -1,4 +1,6 @@
-# Solvercraft masterplan coverage matrix
+# Historical Solvercraft masterplan coverage matrix
+
+This is the historical 265-test baseline assessment. It is preserved for provenance and is superseded for current implementation decisions by [acceptance-current.md](acceptance-current.md). Statements below about absent features or unexecuted host/browser checks describe that earlier checkpoint, not the later implementation.
 
 Review date: 2026-10-31.
 

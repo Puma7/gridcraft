@@ -2,7 +2,7 @@
 #![allow(clippy::panic)]
 use solvercraft::{jobs, types::*};
 use std::sync::{Arc, Mutex, mpsc};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 static SERIAL: Mutex<()> = Mutex::new(());
 fn problem() -> OptimizationModel {
     OptimizationModel {
@@ -55,7 +55,7 @@ fn real_background_job_quota_cancel_shared_results_and_reuse() -> Result<()> {
         tx.send(()).map_err(|e| error(e.to_string()))?;
     }
     for handle in handles {
-        let start = Instant::now();
+        let start = solvercraft::runtime::monotonic_now();
         loop {
             let snapshot = handle.snapshot()?;
             if let Some(result) = snapshot.result {
@@ -70,7 +70,7 @@ fn real_background_job_quota_cancel_shared_results_and_reuse() -> Result<()> {
             std::thread::sleep(Duration::from_millis(1));
         }
     }
-    let start = Instant::now();
+    let start = solvercraft::runtime::monotonic_now();
     let handle = loop {
         match jobs::start_solve(problem(), SolveOptions::default()) {
             Ok(h) => break h,
@@ -94,7 +94,7 @@ fn evaluator_panic_is_observable_failure_and_slot_is_recovered() -> Result<()> {
     let handle = jobs::start_simulation(vec![Distribution::Constant { value: 1.0 }], SimulationOptions::default(), |_| -> Result<Vec<f64>> {
         panic!("intentional evaluator regression")
     })?;
-    let start = Instant::now();
+    let start = solvercraft::runtime::monotonic_now();
     loop {
         let snapshot = handle.snapshot()?;
         if let Some(result) = snapshot.result {

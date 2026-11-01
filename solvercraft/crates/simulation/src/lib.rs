@@ -7,6 +7,11 @@ use solvercraft_math::{PreparedDistribution, SAMPLING_VERSION, addressed_index, 
 use solvercraft_types::{
     Distribution, ProgressEvent, Result, RunControl, SampleSummary, SamplingMethod, SimulationOptions, SimulationResult, SolverError, Termination,
 };
+pub mod advanced;
+pub mod fitting;
+pub mod grid;
+pub mod intervals;
+pub mod resampling;
 mod statistics;
 pub use statistics::{OnlineMoments, fit_exponential, fit_normal, fit_uniform};
 
@@ -131,11 +136,20 @@ where
             } else {
                 jitter
             };
-            let value = distribution.quantile(p)?;
+            let value = if options.method == SamplingMethod::MonteCarlo {
+                distribution.sample(options.seed, binding as u64, trial)?
+            } else {
+                distribution.quantile(p)?
+            };
             let destination = inputs.get_mut(binding).ok_or_else(|| SolverError::new("sampling_index", "Missing input binding."))?;
             *destination = value;
         }
-        let outputs = evaluator(&inputs)?;
+        let evaluated = evaluator(&inputs);
+        if control.is_cancelled() {
+            termination = Termination::Cancelled;
+            break;
+        }
+        let outputs = evaluated?;
         if outputs.is_empty() || outputs.len() > MAX_DIMENSIONS {
             return Err(SolverError::new("output_dimension", "Evaluator must return between 1 and 4096 outputs."));
         }
@@ -176,7 +190,7 @@ where
             samples.push(outputs);
         }
         completed += 1;
-        if completed == 1 || completed % 256 == 0 || completed == options.trials {
+        if completed == 1 || completed.is_multiple_of(256) || completed == options.trials {
             control.progress(&ProgressEvent {
                 stage: "simulation".into(),
                 iterations: completed,
@@ -197,7 +211,7 @@ where
                 let value = row.get(column).copied().ok_or_else(|| SolverError::new("output_dimension", "Stored output shape changed."))?;
                 ordered.push(value);
             }
-            ordered.sort_by(f64::total_cmp);
+            ordered.sort_unstable_by(f64::total_cmp);
             if !ordered.is_empty() {
                 reserve(&mut summary.quantiles, 5)?;
                 for p in [0.05, 0.25, 0.5, 0.75, 0.95] {
@@ -219,7 +233,11 @@ where
         completed_trials: completed,
         summaries,
         samples: if options.retain_samples { Some(samples) } else { None },
-        sampling_version: SAMPLING_VERSION.into(),
+        sampling_version: if distributions.iter().any(solvercraft_math::extended::is_extended) {
+            format!("{SAMPLING_VERSION}/{}", solvercraft_math::catalog::CATALOG_VERSION)
+        } else {
+            SAMPLING_VERSION.into()
+        },
         warnings,
     })
 }

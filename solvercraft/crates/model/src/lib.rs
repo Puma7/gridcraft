@@ -4,10 +4,12 @@
 //! open side. Feasibility uses absolute tolerances in the original model units.
 #![forbid(unsafe_code)]
 
+mod exact_products;
+pub use exact_products::ExactProducts;
+
 use solvercraft_types::{
     LinearTerm, OptimizationModel, QuadraticTerm, Relation, Result, SCHEMA_VERSION, SolveOptions, SolverError, Variable, VariableKind,
 };
-use std::collections::BTreeMap;
 
 pub const MAX_VARIABLES: usize = 10_000;
 pub const MAX_CONSTRAINTS: usize = 50_000;
@@ -140,6 +142,8 @@ pub fn validate(model: &OptimizationModel, options: &SolveOptions) -> Result<()>
     }
     check_name(&model.name, "model name")?;
     let mut size = model.name.len();
+    // One reusable fixed exact-product work area; never one per coefficient map entry.
+    add_size(&mut size, std::mem::size_of::<ExactProducts>())?;
     add_size(&mut size, checked_bytes(model.variables.len(), std::mem::size_of::<Variable>())?)?;
     add_size(&mut size, checked_bytes(model.constraints.len(), std::mem::size_of::<solvercraft_types::LinearConstraint>())?)?;
     let mut terms =
@@ -218,12 +222,20 @@ pub fn compensated_sum(values: impl IntoIterator<Item = f64>) -> Result<f64> {
     sum.finish()
 }
 
-/// Checked compensated dot product, with a strict length contract.
+/// Exact dyadic products accumulated before one nearest/ties-even rounding.
+/// Intermediate product overflow/underflow cancellation is supported.
 pub fn compensated_dot(left: &[f64], right: &[f64]) -> Result<f64> {
     if left.len() != right.len() {
         return Err(invalid("invalid_values", "dot product lengths differ"));
     }
-    compensated_sum(left.iter().zip(right).map(|(a, b)| a * b))
+    if left.len() > MAX_TERMS {
+        return Err(invalid("model_limit", "dot product exceeds bounded term count"));
+    }
+    let mut sum = ExactProducts::default();
+    for (a, b) in left.iter().zip(right) {
+        sum.add_product(*a, *b)?;
+    }
+    sum.finish()
 }
 fn check_values(model: &OptimizationModel, values: &[f64]) -> Result<()> {
     if values.len() != model.variables.len() {
@@ -236,17 +248,42 @@ fn check_values(model: &OptimizationModel, values: &[f64]) -> Result<()> {
 }
 /// Evaluate the objective exactly as represented, before any presolve or scaling.
 pub fn evaluate_objective(model: &OptimizationModel, values: &[f64]) -> Result<f64> {
+    evaluate_objective_impl(model, values, true)
+}
+/// Objective without its irrelevant additive constant. Uses the same exact
+/// product accumulation as original-model validation and is safe for comparisons.
+pub fn evaluate_working_objective(model: &OptimizationModel, values: &[f64]) -> Result<f64> {
+    evaluate_objective_impl(model, values, false)
+}
+fn evaluate_objective_impl(model: &OptimizationModel, values: &[f64], offset: bool) -> Result<f64> {
     check_values(model, values)?;
-    let mut sum = Sum::default();
-    sum.add(model.objective.offset)?;
+    finite(model.objective.offset, "objective offset")?;
+    let mut sum = ExactProducts::default();
+    if offset {
+        sum.add(model.objective.offset)?;
+    }
     for term in &model.objective.linear {
         let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid variable handle during evaluation"))?;
-        sum.add(term.coefficient * value)?;
+        sum.add_product(term.coefficient, *value)?;
     }
     for term in &model.objective.quadratic {
         let left = values.get(term.left).ok_or_else(|| invalid("invalid_variable", "invalid quadratic variable"))?;
         let right = values.get(term.right).ok_or_else(|| invalid("invalid_variable", "invalid quadratic variable"))?;
-        sum.add(term.coefficient * left * right)?;
+        sum.add_triple(term.coefficient, *left, *right)?;
+    }
+    sum.finish()
+}
+/// Original linear lhs-rhs without rounding each coefficient/value product or
+/// the large lhs first. Duplicate terms retain their original exact meaning.
+pub fn evaluate_linear_residual(terms: &[LinearTerm], values: &[f64], rhs: f64) -> Result<f64> {
+    if terms.len() > MAX_TERMS {
+        return Err(invalid("model_limit", "linear residual exceeds bounded term count"));
+    }
+    let mut sum = ExactProducts::default();
+    sum.add(-rhs)?;
+    for term in terms {
+        let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid linear residual variable"))?;
+        sum.add_product(term.coefficient, *value)?;
     }
     sum.finish()
 }
@@ -281,13 +318,7 @@ pub fn validate_solution(model: &OptimizationModel, values: &[f64], options: &So
         }
     }
     for (index, row) in model.constraints.iter().enumerate() {
-        let mut sum = Sum::default();
-        for term in &row.terms {
-            let value = values.get(term.variable).ok_or_else(|| invalid("invalid_variable", "invalid variable handle during evaluation"))?;
-            sum.add(term.coefficient * value)?;
-        }
-        sum.add(-row.rhs)?;
-        let residual = sum.finish()?;
+        let residual = evaluate_linear_residual(&row.terms, values, row.rhs)?;
         finite(residual, "constraint residual")?;
         let amount = match row.relation {
             Relation::LessEqual => residual.max(0.0),
@@ -303,36 +334,63 @@ pub fn validate_solution(model: &OptimizationModel, values: &[f64], options: &So
 }
 
 fn aggregate_linear(terms: &[LinearTerm]) -> Result<Vec<LinearTerm>> {
-    let mut map: BTreeMap<usize, Sum> = BTreeMap::new();
-    for term in terms {
-        map.entry(term.variable).or_default().add(term.coefficient)?;
-    }
-    let mut result = Vec::with_capacity(map.len());
-    for (variable, sum) in map {
-        let coefficient = sum.finish()?;
+    let mut ordered = terms.iter().collect::<Vec<_>>();
+    ordered.sort_unstable_by_key(|t| t.variable);
+    let mut result = Vec::with_capacity(ordered.len());
+    let mut start = 0;
+    while start < ordered.len() {
+        let variable = ordered[start].variable;
+        let mut end = start + 1;
+        while end < ordered.len() && ordered[end].variable == variable {
+            end += 1;
+        }
+        let coefficient = exact_coefficient(ordered[start..end].iter().map(|t| t.coefficient))?;
         if coefficient != 0.0 {
             result.push(LinearTerm { variable, coefficient });
         }
+        start = end;
     }
     Ok(result)
 }
+fn exact_coefficient(values: impl IntoIterator<Item = f64>) -> Result<f64> {
+    let mut sum = ExactProducts::default();
+    for value in values {
+        sum.add(value)?;
+    }
+    let coefficient = sum.clone().finish()?;
+    sum.add(-coefficient)?;
+    if sum.finish()? != 0.0 {
+        return Err(invalid(
+            "numeric_range",
+            "Duplicate coefficients have an exact sum not representable as one f64; refusing to change model semantics during canonicalization.",
+        ));
+    }
+    Ok(coefficient)
+}
 /// Aggregate duplicates, sort variable handles and discard exact zero terms.
+/// Aggregated coefficients must be exactly representable as f64; otherwise
+/// numeric_range prevents silently solving a different canonical model.
 /// This is algebraic normalization, never tolerance-based term dropping.
 pub fn canonicalize(model: &OptimizationModel, options: &SolveOptions) -> Result<OptimizationModel> {
     validate(model, options)?;
     let mut result = model.clone();
     result.objective.linear = aggregate_linear(&model.objective.linear)?;
-    let mut quadratic: BTreeMap<(usize, usize), Sum> = BTreeMap::new();
-    for term in &model.objective.quadratic {
-        let pair = (term.left.min(term.right), term.left.max(term.right));
-        quadratic.entry(pair).or_default().add(term.coefficient)?;
-    }
+    let mut quadratic = model.objective.quadratic.iter().collect::<Vec<_>>();
+    quadratic.sort_unstable_by_key(|t| (t.left.min(t.right), t.left.max(t.right)));
     result.objective.quadratic.clear();
-    for ((left, right), sum) in quadratic {
-        let coefficient = sum.finish()?;
+    let mut start = 0;
+    while start < quadratic.len() {
+        let pair = |term: &&QuadraticTerm| (term.left.min(term.right), term.left.max(term.right));
+        let (left, right) = pair(&quadratic[start]);
+        let mut end = start + 1;
+        while end < quadratic.len() && pair(&quadratic[end]) == (left, right) {
+            end += 1;
+        }
+        let coefficient = exact_coefficient(quadratic[start..end].iter().map(|t| t.coefficient))?;
         if coefficient != 0.0 {
             result.objective.quadratic.push(QuadraticTerm { left, right, coefficient });
         }
+        start = end;
     }
     for row in &mut result.constraints {
         row.terms = aggregate_linear(&row.terms)?;

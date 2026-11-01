@@ -1,6 +1,7 @@
 //! Portable run identity; fingerprints are diagnostic, never authorization tokens.
 use serde::{Deserialize, Serialize};
 use solvercraft_types::*;
+use std::sync::Arc;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RunManifest {
     pub schema_version: u32,
@@ -9,6 +10,14 @@ pub struct RunManifest {
     pub fingerprint_algorithm: String,
     pub options: SolveOptions,
     pub platform: String,
+    #[serde(default)]
+    pub entrypoint: String,
+    #[serde(default)]
+    pub snapshot: Option<crate::run_manifest::SnapshotIdentity>,
+    #[serde(default)]
+    pub actual_engine: Option<String>,
+    #[serde(default)]
+    pub result_location: String,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SolveRun {
@@ -53,10 +62,24 @@ pub fn manifest(model: &OptimizationModel, options: &SolveOptions) -> Result<Run
         fingerprint_algorithm: "fnv1a64-diagnostic-v1".into(),
         options: options.clone(),
         platform: format!("{}-{}", std::env::consts::ARCH, std::env::consts::OS),
+        entrypoint: "solve".into(),
+        snapshot: Some(crate::run_manifest::SnapshotIdentity::DiagnosticRequestFingerprint { value: format!("{hash:016x}") }),
+        actual_engine: None,
+        result_location: "SolveRun.result".into(),
     })
 }
+/// Borrowed compatibility path; use solve_run_owned for integer QP and engines
+/// retaining their owned callback state.
 pub fn solve_run(model: &OptimizationModel, options: &SolveOptions, control: &dyn RunControl) -> Result<SolveRun> {
-    let manifest = manifest(model, options)?;
+    let mut manifest = manifest(model, options)?;
     let result = solvercraft_engines::solve(model, options, control)?;
+    manifest.actual_engine = Some(result.engine.clone());
+    Ok(SolveRun { manifest, result })
+}
+/// Owned callback variant reaches integer quadratic engines without discarding run identity.
+pub fn solve_run_owned(model: &OptimizationModel, options: &SolveOptions, control: Arc<dyn RunControl>) -> Result<SolveRun> {
+    let mut manifest = manifest(model, options)?;
+    let result = solvercraft_engines::solve_owned(model, options, control)?;
+    manifest.actual_engine = Some(result.engine.clone());
     Ok(SolveRun { manifest, result })
 }

@@ -1,0 +1,152 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+   Compiling scopeguard v1.2.0
+   Compiling zerocopy v0.8.61
+   Compiling gridcraft-core v0.14.2 ($CHECKOUT_ROOT\crates\core)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3rpekje5pjrf5\s-hnq7g8q690-0hjf8do-working`
+
+   Compiling image v0.25.10
+   Compiling windows-core v0.62.2
+   Compiling windows-sys v0.61.2
+warning: `solvercraft-types` (lib) generated 1 warning
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+   Compiling aws-lc-sys v0.46.0
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-2krwrrfs8m899\s-hnq7g9e76z-01e18c1-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+   Compiling thiserror v1.0.69
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zg09wcl4hjot\s-hnq7g9nu1r-01wh002-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+   Compiling wgpu-types v30.0.1
+   Compiling ring v0.17.14
+   Compiling tracing-core v0.1.36
+   Compiling windows-sys v0.52.0
+   Compiling cursor-icon v1.2.0
+   Compiling dpi v0.1.2
+   Compiling smol_str v0.2.2
+   Compiling lock_api v0.4.14
+   Compiling winsafe v0.0.29
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+   Compiling error-code v3.4.0
+   Compiling xml v1.4.0
+   Compiling strum v0.28.0
+   Compiling fmt-derive v0.1.2
+   Compiling gridcraft v0.14.2 ($CHECKOUT_ROOT\apps\gridcraft)
+   Compiling roxmltree v0.21.2
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_core-04zi80jghcqtb\s-hnq7korrni-12sad8v-working`
+
+warning: `gridcraft-core` (lib) generated 1 warning
+   Compiling gridcraft-formula v0.14.2 ($CHECKOUT_ROOT\crates\formula)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-33yrrw6azndrh\s-hnq7kp4yy9-1e748uk-working`
+
+   Compiling gridcraft-functions v0.14.2 ($CHECKOUT_ROOT\crates\functions)
+   Compiling gridcraft-numfmt v0.14.2 ($CHECKOUT_ROOT\crates\numfmt)
+   Compiling windows-future v0.3.2
+   Compiling windows-collections v0.3.2
+   Compiling windows-numerics v0.3.1
+   Compiling clarabel v0.11.1
+   Compiling parking_lot v0.12.5
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+warning: `solvercraft-math` (lib) generated 1 warning
+   Compiling rustls-webpki v0.103.16
+   Compiling ahash v0.8.12
+   Compiling half v2.7.1
+   Compiling tracing v0.1.44
+   Compiling dify v0.8.0
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_formula-1uu6tx2gwi19k\s-hnq7krk0hs-1ray7a7-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_numfmt-1cnhoqyz4h02i\s-hnq7krsq20-1vi1z60-working`
+
+warning: `gridcraft-formula` (lib) generated 1 warning
+   Compiling gridcraft-model v0.14.2 ($CHECKOUT_ROOT\crates\model)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_functions-1g1xxp2hrdtr2\s-hnq7krog1r-0m984nf-working`
+
+warning: `gridcraft-numfmt` (lib) generated 1 warning
+   Compiling clipboard-win v5.4.1
+   Compiling windows v0.62.2
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-390x0hpilwrkq\s-hnq7kspash-0k3w5ey-working`
+
+warning: `gridcraft-functions` (lib) generated 1 warning
+   Compiling epaint v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling naga v30.0.1
+   Compiling winit v0.30.13 (https://github.com/storytold/winit.git?rev=a517b3846ee8457d84ee4975110bfda6797c44dc#a517b384)
+   Compiling rustls v0.23.46
+   Compiling tempfile v3.27.0
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_model-2upsn5j9ui6k0\s-hnq7ktn1ui-1evh710-working`
+
+   Compiling verifysign v1.0.1
+   Compiling zip v9.1.0
+   Compiling arboard v3.7.0
+   Compiling craft-winprint-gdi v0.1.0 (https://github.com/storytold/winprint.rs?rev=417ac3c4d14d3da5485a99c7d5ce8f05664ec312#417ac3c4)
+   Compiling gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+   Compiling gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+   Compiling rfd v0.17.2
+warning: `gridcraft-model` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-2kx8v0jfvvh7q\s-hnq7kwjpz5-1wdu2vl-working`
+
+   Compiling egui v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_xlsx-3pd3pbw3gl2gf\s-hnq7kwsca6-1qlsc7j-working`
+
+   Compiling gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-3k5nlxhpdvnu0\s-hnq7kz5ntb-1gn3zji-working`
+
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+   Compiling rustls-platform-verifier v0.7.1
+warning: `gridcraft-xlsx` (lib) generated 1 warning
+   Compiling gridcraft-pdf v0.14.2 ($CHECKOUT_ROOT\crates\pdf)
+   Compiling ureq v3.5.0
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+   Compiling wgpu-naga-bridge v30.0.1
+warning: `gridcraft-chart` (lib) generated 1 warning
+   Compiling craft-ui v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling craft-window v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+   Compiling craft-update v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+warning: `gridcraft-calc` (lib) generated 1 warning
+   Compiling gridcraft-mcp v0.14.2 ($CHECKOUT_ROOT\crates\mcp)
+   Compiling gpu-allocator v0.28.0
+   Compiling accesskit_windows v0.35.1
+   Compiling wgpu-hal v30.0.1
+   Compiling accesskit_winit v0.34.1
+   Compiling egui-winit v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling wgpu-core-deps-windows-linux-android v30.0.1
+   Compiling wgpu-core v30.0.1
+   Compiling wgpu v30.0.1
+   Compiling egui-wgpu v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling egui_kittest v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling eframe v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling gridcraft-cli v0.14.2 ($CHECKOUT_ROOT\apps\gridcraft-cli)
+   Compiling xtask v0.14.2 ($CHECKOUT_ROOT\xtask)
+   Compiling gridcraft-web v0.14.2 ($CHECKOUT_ROOT\apps\gridcraft-web)
+warning: aws-lc-sys@0.46.0: Emitting configuration: cargo:rustc-cfg=universal
+warning: aws-lc-sys@0.46.0: Building with: CC
+warning: aws-lc-sys@0.46.0: Symbol Prefix: Some("aws_lc_0_46_0")
+warning: aws-lc-sys@0.46.0: Target platform: 'x86_64-pc-windows-msvc'
+warning: aws-lc-sys@0.46.0: Compilation of 'stdalign_check.c' failed - Err(Error { kind: ToolExecError, message: "command did not execute successfully (status code exit code: 2): \"$NATIVE_BUILD_TOOLS\\\\2022\\\\BuildTools\\\\VC\\\\Tools\\\\MSVC\\\\14.40.33807\\\\bin\\\\HostX64\\\\x64\\\\cl.exe\" \"-nologo\" \"-MD\" \"-O2\" \"-Brepro\" \"-WX\" \"-W4\" \"-FoC:\\\\WORKSP~1\\\\SOLVER~3\\\\HOST-V~1\\\\debug\\\\build\\\\AWS-LC~4\\\\out\\\\out-stdalign_check\\\\b56b5710777e5e78-stdalign_check.o\" \"-c\" \"$LOCAL_PATH"" }).
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: NASM command not found or failed to execute.
+warning: aws-lc-sys@0.46.0: NASM command not found or failed to execute.
+error: failed to run custom build command for `aws-lc-sys v0.46.0`
+
+Caused by:
+  process didn't exit successfully: `$BUILD_OUTPUT\host-validation\debug\build\aws-lc-sys-b3d6fb00b83b9d7d\build-script-main` (exit code: 1)
+  --- stderr
+
+
+  error occurred in cc-rs: command did not execute successfully (status code exit code: 1114): "$NATIVE_BUILD_TOOLS\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\lib.exe" "-out:$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\libaws_lc_0_46_0_crypto.a" "-nologo" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\libaws_lc_0_46_0_crypto.a" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-dgram.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-errno.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-fd.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-file.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-hexdump.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-md.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-pair.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-printf.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-socket.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-socket_helper.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\ab41a32ab60f6ba0-blake2.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\519078444b26caa0-bn_asn1.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\519078444b26caa0-convert.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\ec0259edbf0e75d8-buf.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-asn1_compat.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-ber.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-cbb.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-cbs.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-unicode.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\51b5bd6c9ce1a4b8-chacha.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-cipher_extra.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-cts.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-derive_key.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aesctrhmac.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aesgcmsiv.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aes_cbc_hmac_sha1.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aes_cbc_hmac_sha256.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_chacha20poly1305.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_des.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_null.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_rc2.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_rc4.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_tls.o"
+
+
+warning: build failed, waiting for other jobs to finish...

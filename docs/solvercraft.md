@@ -1,26 +1,21 @@
 # Solvercraft integration
 
-Last updated: 2026-10-31. Status: alpha integration; full application validation pending.
+Last updated: 2026-10-31. Status: development alpha; evidence is scoped to named checks.
 
-Solvercraft introduces advanced optimization and simulation alongside the existing Solver. The new code is under [solvercraft/](../solvercraft/README.md), an independently buildable Rust workspace. Gridcraft's engine depends on its facade; formula/workbook bindings remain in the engine and the UI only sends commands.
+Solvercraft adds optimization and simulation beside the existing Solver. The ribbon button opens a right task pane; programmatic engine, CLI and MCP calls execute commands without dialogs. The [independent Rust SDK](../solvercraft/README.md) owns mathematics and portable models. The host owns workbook bindings, exact spreadsheet simulation semantics, saved models and transactional application.
 
-The implemented numerical scope is LP/MILP, bounds-only separable convex QP, bound-constrained smooth AD optimization, constrained finite-bound differential evolution, Monte Carlo/LHS and finite-scenario expectation/CVaR/box-robust formulations. Each path reports its actual guarantee. Sparse model coefficients do not imply a sparse internal LP implementation.
+The pane starts actual background jobs: bounded native SDK workers or a separate Rust/Trunk Web Worker binary. Progress and status queries do not wait for solving. Previews leave live cells unchanged. Applying a feasible solution checks document identity/revision, original expressions, the real Calc result, protection, bounds and integer rounding before one undoable edit. Unknown or stale previews cannot be applied. A cooperatively cancelled native run can expose only an actually returned and revalidated feasible incumbent.
 
-## Host commands and state
+Saved models use the owned OPC part `xl/solvercraft/models.json`, its content type and workbook relationship. Stable hidden reference names migrate bindings through structural edits; invalid references fail explicitly. Tests cover two roundtrips, Strict Open XML input, collision rules, deletion, undo and sheet/row migration. Legacy Solver names have an explicit same-sheet linear import/export subset with representability reporting; unsupported shapes are reported before writes.
 
-- solvercraft.capabilities reports the supported formula/method subset.
-- solvercraft.validate translates and checks the workbook or a portable model.
-- solvercraft.solve and solvercraft.simulate return bounded synchronous previews.
-- solvercraft.result.apply revalidates identity, revision, formulas, bounds and constraints before one transactional edit.
+Simulation uses a bounded topological cell IR over immutable sampled inputs, evaluated with Gridcraft's actual value evaluator. It preserves SUM grouping and IEEE order, SUMPRODUCT, reference/text/boolean/blank coercion, errors, scoped/relative names and frozen NOW/TODAY. This differs deliberately from optimization's structural mathematical compiler, which remains protected by original-Calc candidate checks. Dynamic references, spills, legacy array cells and functions outside the declared subset are refused; cached values never stand in for unsupported formulas.
 
-Programmatic calls do not open dialogs. The initial ribbon entry opens a modal UI with optimization/simulation tabs and an explicit apply action. Preview and simulation leave the live workbook untouched.
+The worksheet adapter supports17 SC distribution families plus verified numeric Psi shims. Unsupported properties and ambiguous reference domains remain explicit. Parameter comparisons, histogram/step CDF/scatter/box/quantile-band/tornado displays and checked LP answer/basis sensitivity reports use actual results. Every ordinary solve/simulation preview carries a bounded diagnostic manifest with effective options, lossless seed, SDK/host/platform versions, frozen document/revision/time, actual engine/sampler identity and bindings. Effective simulation requests are retained for reruns. Fingerprints and caller labels are not build attestations.
 
-## Layering and workspace ownership
+See [host implementation and test evidence](../solvercraft/docs/implementation/gridcraft.md), [browser transport measurements](../solvercraft/docs/implementation/browser-worker-native-transport-report.json) and [current acceptance review](../solvercraft/docs/qa/acceptance-current.md). Native host regression tests, actual egui input/render tests, WASM compilation and actual generated-worker Chrome tests are distinct evidence. The final rebuilt-worker/UI/full-CI checkpoint is recorded there; compile success alone is never browser execution or complete Excel/Frontline parity.
 
-Solvercraft types sit at L0; math/model at L1; compile at L2; engines/simulation at L3; the facade at L4. Gridcraft engine remains L5 and UI L6. The parent excludes the nested Solvercraft workspace and its member paths, avoiding accidental inherited Gridcraft versions, editions and lints. The path dependency still participates in layer validation.
+## Revision history
 
-## Verification and open gates
-
-The standalone core has 136 passing native tests and recorded CLI examples. This is not a complete application build or browser/WASM test. Before merging, run the outer cargo xtask ci and the four new engine integration tests with Gridcraft's required toolchain, verify model/preview/apply/undo in the running UI, and test WASM.
-
-The current UI is modal and synchronous. Async sidebar operation, workbook model persistence, advanced sensitivity reports, general conic optimization and full Frontline function parity remain open. See the SDK [reference](../solvercraft/docs/reference.md) and [acceptance](../solvercraft/docs/acceptance.md).
+| Date | Change | Summary |
+|---|---|---|
+| 2026-10-31 | minor | Replace obsolete modal/synchronous scope with async task pane, owned XLSX models, ordered Calc simulation and bounded manifests/evidence |

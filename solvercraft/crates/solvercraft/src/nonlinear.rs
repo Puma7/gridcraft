@@ -4,7 +4,8 @@
 //! and Barzilai-Borwein step estimates. It is not GRG. Its strongest successful
 //! status is first-order `Stationary`, not a local or global optimality proof.
 //! Cancellation is polled at iteration and expression-evaluation boundaries.
-use solvercraft_compile::{Expr, ExpressionModel, evaluate, evaluate_with_gradient};
+use serde::{Deserialize, Serialize};
+use solvercraft_compile::{Expr, ExpressionModel, evaluate, evaluate_with_gradient, finite_difference_gradient};
 use solvercraft_types::{
     Direction, Feasibility, Optimality, ProgressEvent, Result, RunControl, SolveMethod, SolveOptions, SolveResult, SolveStatistics, SolverError,
     Termination, VariableKind,
@@ -12,6 +13,59 @@ use solvercraft_types::{
 
 const ENGINE: &str = "solvercraft-projected-gradient-ad";
 const MAX_LINE_STEPS: usize = 80;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum DerivativeMode {
+    /// Reverse AD first; only an explicitly unavailable derivative permits FD.
+    #[default]
+    Automatic,
+    /// Bound-aware central/second-order one-sided numerical derivatives.
+    FiniteDifference,
+}
+
+/// Configuration for the safeguarded augmented-Lagrangian local method.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(default, deny_unknown_fields)]
+pub struct NlpOptions {
+    pub max_outer_iterations: u64,
+    pub max_inner_iterations: u64,
+    pub initial_penalty: f64,
+    pub penalty_growth: f64,
+    pub derivative_mode: DerivativeMode,
+    pub finite_difference_step: f64,
+}
+impl Default for NlpOptions {
+    fn default() -> Self {
+        Self {
+            max_outer_iterations: 40,
+            max_inner_iterations: 500,
+            initial_penalty: 10.0,
+            penalty_growth: 5.0,
+            derivative_mode: DerivativeMode::Automatic,
+            finite_difference_step: 1e-6,
+        }
+    }
+}
+impl NlpOptions {
+    pub fn validate(&self) -> Result<()> {
+        if self.max_outer_iterations > 100_000
+            || self.max_inner_iterations > 1_000_000
+            || !self.initial_penalty.is_finite()
+            || self.initial_penalty <= 0.0
+            || self.initial_penalty > 1e12
+            || !self.penalty_growth.is_finite()
+            || self.penalty_growth <= 1.0
+            || self.penalty_growth > 100.0
+            || !self.finite_difference_step.is_finite()
+            || self.finite_difference_step <= 0.0
+            || self.finite_difference_step > 0.25
+        {
+            return Err(error("invalid_options", "invalid nonlinear iteration, penalty or finite-difference configuration"));
+        }
+        Ok(())
+    }
+}
 
 struct Bounds {
     lower: Vec<Option<f64>>,
@@ -29,6 +83,9 @@ struct Evaluation<'a> {
     options: &'a SolveOptions,
     control: &'a dyn RunControl,
     count: u64,
+    bounds: &'a Bounds,
+    mode: DerivativeMode,
+    difference_step: f64,
 }
 enum EvalError {
     Stop(Termination),
@@ -147,8 +204,36 @@ impl Evaluation<'_> {
         if self.count >= self.options.max_evaluations {
             return Err(EvalError::Stop(Termination::EvaluationLimit));
         }
-        self.count += 1;
-        let (value, gradient) = evaluate_with_gradient(&self.model.objective, &x).map_err(EvalError::Formula)?;
+        let analytic = if self.mode == DerivativeMode::Automatic {
+            self.count += 1;
+            match evaluate_with_gradient(&self.model.objective, &x) {
+                Ok(result) => Some(result),
+                Err(e) if matches!(e.code.as_str(), "unsupported_derivative" | "derivative_unavailable") => None,
+                Err(e) => return Err(EvalError::Formula(e)),
+            }
+        } else {
+            None
+        };
+        let (value, gradient) = if let Some(result) = analytic {
+            result
+        } else {
+            let fd = finite_difference_gradient(&x, &self.bounds.lower, &self.bounds.upper, self.difference_step, |sample| {
+                if self.control.is_cancelled() {
+                    return Err(error("cancelled", "nonlinear evaluation cancelled"));
+                }
+                if self.count >= self.options.max_evaluations {
+                    return Err(error("evaluation_limit", "nonlinear evaluation budget exhausted"));
+                }
+                self.count += 1;
+                evaluate(&self.model.objective, sample)
+            })
+            .map_err(|e| match e.code.as_str() {
+                "cancelled" => EvalError::Stop(Termination::Cancelled),
+                "evaluation_limit" => EvalError::Stop(Termination::EvaluationLimit),
+                _ => EvalError::Formula(e),
+            })?;
+            (fd.value, fd.gradient)
+        };
         let sign = direction(self.model);
         let gradient: Vec<f64> = gradient.into_iter().map(|g| sign * g).collect();
         if !value.is_finite() || gradient.iter().any(|v| !v.is_finite()) {
@@ -231,8 +316,27 @@ pub fn solve(model: &ExpressionModel, options: &SolveOptions, control: &dyn RunC
 /// explicitly and recording a warning. General constraints and integer domains
 /// are rejected. Domain/derivative failure at the initial point is an error.
 pub fn solve_from(model: &ExpressionModel, start: &[f64], options: &SolveOptions, control: &dyn RunControl) -> Result<SolveResult> {
+    solve_from_with_derivatives(model, start, options, control, DerivativeMode::Automatic, 1e-6)
+}
+
+/// Select the derivative source explicitly. Finite-difference stationarity is
+/// approximate and does not supply an optimality certificate.
+pub fn solve_from_with_derivatives(
+    model: &ExpressionModel,
+    start: &[f64],
+    options: &SolveOptions,
+    control: &dyn RunControl,
+    mode: DerivativeMode,
+    difference_step: f64,
+) -> Result<SolveResult> {
+    if !difference_step.is_finite() || difference_step <= 0.0 || difference_step > 0.25 {
+        return Err(error("invalid_options", "finite-difference relative step must be in (0,0.25]"));
+    }
     let (bounds, x, clipped, memory) = validate(model, start, options)?;
     let mut warnings = Vec::new();
+    if mode == DerivativeMode::FiniteDifference {
+        warnings.push("Derivatives and stationarity residual are finite-difference approximations.".into());
+    }
     if clipped {
         warnings.push("Starting point was projected into variable bounds.".into());
     }
@@ -242,7 +346,7 @@ pub fn solve_from(model: &ExpressionModel, start: &[f64], options: &SolveOptions
     if u64::try_from(memory).map_or(true, |m| m > options.max_memory_bytes) {
         return Ok(finish(None, Termination::MemoryLimit, false, 0, 0, warnings, &bounds));
     }
-    let mut ev = Evaluation { model, options, control, count: 0 };
+    let mut ev = Evaluation { model, options, control, count: 0, bounds: &bounds, mode, difference_step };
     if control.is_cancelled() {
         return Ok(finish(None, Termination::Cancelled, false, 0, 0, warnings, &bounds));
     }

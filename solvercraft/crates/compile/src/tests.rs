@@ -29,6 +29,36 @@ fn model(expr: Expr) -> ExpressionModel {
     }
 }
 #[test]
+fn generic_model_validation_needs_no_polynomial_or_valid_evaluation_point() {
+    let mut m = model(Expr::Ln { value: Box::new(x(0)) });
+    validate_expression_model(&m, &SolveOptions::default()).unwrap();
+    assert!(compile(&m, &SolveOptions::default()).is_err());
+    m.constraints.push(ExpressionConstraint { name: "bad handle".into(), left: x(2), relation: Relation::Equal, right: c(0.0) });
+    assert_eq!(validate_expression_model(&m, &SolveOptions::default()).unwrap_err().code, "invalid_variable");
+}
+#[test]
+fn generic_model_validation_shares_nodes_across_all_constraint_expressions() {
+    let mut m = model(c(0.0));
+    m.constraints =
+        (0..40_000).map(|_| ExpressionConstraint { name: String::new(), left: c(0.0), relation: Relation::Equal, right: c(0.0) }).collect();
+    validate_expression_model(&m, &SolveOptions::default()).unwrap();
+    m.constraints[0].left = x(usize::MAX);
+    assert_eq!(validate_expression_model(&m, &SolveOptions::default()).unwrap_err().code, "invalid_variable");
+    m.constraints[0].left = c(0.0);
+    let mut tree = c(0.0);
+    for _ in 0..8 {
+        tree = add(tree.clone(), tree);
+    }
+    for row in m.constraints.iter_mut().take(40) {
+        row.left = tree.clone();
+    }
+    assert_eq!(validate_expression_model(&m, &SolveOptions::default()).unwrap_err().code, "expression_limit");
+    assert_eq!(
+        validate_expression_model(&model(c(0.0)), &SolveOptions { max_memory_bytes: 1, ..SolveOptions::default() }).unwrap_err().code,
+        "memory_limit"
+    );
+}
+#[test]
 fn expanded_quadratic_has_explicit_cross_coefficient() {
     let expr = pow(add(x(0), mul(c(2.0), x(1))), 2);
     let m = compile(&model(expr.clone()), &SolveOptions::default()).unwrap();

@@ -20,6 +20,10 @@ fn addressed_bits(seed: u64, binding: u64, trial: u64, subcounter: u64) -> u64 {
     let trial_state = mix(binding_state ^ mix(trial ^ 0xa409_3822_299f_31d0));
     mix(trial_state ^ mix(subcounter ^ 0x082e_fa98_ec4e_6c89))
 }
+/// Raw addressed bits for independently derived compound/replicate streams.
+pub fn addressed_u64(seed: u64, binding: u64, trial: u64, subcounter: u64) -> u64 {
+    addressed_bits(seed, binding, trial, subcounter)
+}
 /// An open-interval uniform value. Its 52-bit midpoint construction cannot round to 0 or 1.
 pub fn addressed_uniform(seed: u64, binding: u64, trial: u64, subcounter: u64) -> f64 {
     let mantissa = addressed_bits(seed, binding, trial, subcounter) >> 12;

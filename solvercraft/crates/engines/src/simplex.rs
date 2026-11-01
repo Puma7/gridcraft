@@ -71,11 +71,11 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     let mut offset = allocated(n, 0.0)?;
     let mut upper_bounds = Vec::new();
     for (j, (lo, hi)) in bounds.iter().enumerate() {
-        if let (Some(l), Some(h)) = (lo, hi) {
-            if l == h {
-                offset[j] = *l;
-                continue;
-            }
+        if let (Some(l), Some(h)) = (lo, hi)
+            && l == h
+        {
+            offset[j] = *l;
+            continue;
         }
         if let Some(l) = lo {
             offset[j] = *l;
@@ -115,8 +115,17 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         }
         // Keep rhs in the same compensated sum. Rounding a large shifted
         // constant first can lose a small residual before rhs is subtracted.
-        let mut rhs = solvercraft_model::compensated_sum(std::iter::once(constraint.rhs).chain(original.iter().zip(&offset).map(|(a, b)| -a * b)))
-            .map_err(|e| Relaxation::Numerical(format!("Constraint translation: {e}")))?;
+        let mut translated = solvercraft_model::ExactProducts::default();
+        translated.add(constraint.rhs).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        for (a, b) in original.iter().zip(&offset) {
+            translated.add_product(-a, *b).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+        let mut rhs = translated.clone().finish().map_err(|e| Relaxation::Numerical(format!("Constraint translation: {e}")))?;
+        translated.add(-rhs).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        let lost = translated.finish().map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        if lost.abs() > budget.options.feasibility_tolerance {
+            return Err(Relaxation::Numerical("Constraint translation loses a meaningful exact residual; rescale the model.".into()));
+        }
         if !rhs.is_finite() {
             return Err(Relaxation::Numerical("Constraint translation overflowed.".into()));
         }
@@ -211,7 +220,7 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
             )
             .map_err(|e| Relaxation::Numerical(format!("Phase-one cost aggregation: {e}")))?;
         }
-        match simplex(&mut tableau, &mut phase, width, budget) {
+        match simplex(&mut tableau, &mut phase, width, Some(non_artificial), budget) {
             Step::Stopped(reason) => return Err(Relaxation::Stopped(reason)),
             Step::Numerical(reason) => return Err(Relaxation::Numerical(reason)),
             Step::Unbounded => {
@@ -219,7 +228,13 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
             }
             Step::Optimal => {}
         }
-        let sum_artificial = -phase[width];
+        let mut artificial_value = solvercraft_model::ExactProducts::default();
+        for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
+            if *basic >= non_artificial {
+                artificial_value.add(row[width]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+            }
+        }
+        let sum_artificial = artificial_value.finish().map_err(|e| Relaxation::Numerical(e.to_string()))?;
         if !sum_artificial.is_finite() {
             return Err(Relaxation::Numerical("Non-finite phase-one objective.".into()));
         }
@@ -261,10 +276,12 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     }
     let mut objective = allocated(width + 1, 0.0)?;
     for (column, value) in objective.iter_mut().enumerate() {
-        *value = solvercraft_model::compensated_sum(
-            std::iter::once(cost[column]).chain(tableau.rows.iter().zip(&tableau.basis).map(|(row, basic)| -cost[*basic] * row[column])),
-        )
-        .map_err(|e| Relaxation::Numerical(format!("Reduced-cost aggregation: {e}")))?;
+        let mut sum = solvercraft_model::ExactProducts::default();
+        sum.add(cost[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
+            sum.add_product(-cost[*basic], row[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+        *value = sum.finish().map_err(|e| Relaxation::Numerical(format!("Reduced-cost aggregation: {e}")))?;
     }
     // Normalize after eliminating the current basis: a large cost on an already
     // constrained variable must not erase a meaningful remaining small cost.
@@ -280,7 +297,7 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         }
     }
     objective[width] = 0.0;
-    let outcome = simplex(&mut tableau, &mut objective, non_artificial, budget);
+    let outcome = simplex(&mut tableau, &mut objective, non_artificial, None, budget);
     let unbounded = match outcome {
         Step::Optimal => false,
         Step::Unbounded => true,
@@ -353,7 +370,7 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
         let coefficient = row[j];
         if coefficient != 0.0 {
             for (v, a) in row.iter_mut().zip(&pivot_row) {
-                *v -= coefficient * a;
+                *v = (-coefficient).mul_add(*a, *v);
             }
             if !finite(row) {
                 return Err(Relaxation::Numerical("Tableau elimination overflowed.".into()));
@@ -362,7 +379,7 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
     }
     let coefficient = obj[j];
     for (v, a) in obj.iter_mut().zip(&pivot_row) {
-        *v -= coefficient * a;
+        *v = (-coefficient).mul_add(*a, *v);
     }
     if !finite(obj) {
         return Err(Relaxation::Numerical("Reduced cost elimination overflowed.".into()));
@@ -371,10 +388,18 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
     Ok(())
 }
 
-fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, budget: &mut Budget<'_>) -> Step {
+fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, artificial_start: Option<usize>, budget: &mut Budget<'_>) -> Step {
     loop {
         if let Err(reason) = budget.step() {
             return Step::Stopped(reason);
+        }
+        // Phase I only needs a feasible basis. Artificial variables are
+        // nonnegative, so exact zero for every basic artificial proves its
+        // known global minimum0 without relying on rounded reduced costs.
+        // This does not drop small reduced costs in the real phase-II objective.
+        if artificial_start.is_some_and(|start| t.basis.iter().zip(&t.rows).all(|(basic, row)| *basic < start || row[t.width] == 0.0)) {
+            obj[t.width] = 0.0;
+            return Step::Optimal;
         }
         // Bland's entering and tie-breaking rule avoids cycling on degenerate bases.
         // A small reduced cost can still improve the objective substantially over
