@@ -30,6 +30,8 @@ cargo run -p solvercraft --example artcraft_layout
 
 Use --offline when the locked dependencies are cached. Requests/responses are JSON; omit the input path or use - for stdin. Errors are structured JSON on stderr with a nonzero exit status. The [SDK/runtime guide](docs/implementation/sdk-runtime.md) describes modern execution, advanced commands, model migration and the optional service.
 
+The [application and AI-agent quickstart](docs/implementation/agent-quickstart.md) provides standalone CLI commands, an MCP configuration and a complete workbook job/preview/apply workflow. Gridcraft's existing MCP server exposes Solvercraft headlessly or in a running desktop app; the optional SDK service uses its own local JSON-lines TCP protocol.
+
 This nested workspace has its own lockfile and is excluded from parent membership. Gridcraft consumes path dependencies. Run both the SDK checks and parent cargo xtask ci; parent tests do not execute all excluded SDK tests.
 
 ## Gridcraft integration
@@ -39,6 +41,8 @@ The Data ribbon places Solvercraft immediately after Solver. Its right task pane
 Original worksheet evaluation, document identity/revision, domains, protection and spills guard result application. One accepted result forms one undoable edit. Multiple saved models live in owned XLSX parts and relationships; hidden formula bindings track supported structural edits. SC worksheet inputs/outputs, answer reports, six simulation chart types, parameter runs and verified PSI subsets are documented in the [host guide](docs/implementation/gridcraft.md). Unsupported semantics produce explicit errors.
 
 ## Verification
+
+The [2026-11-02 recovery verification](docs/implementation/recovery-2026-11-02.md) records fresh SDK/host checks, release CLI examples and the complete headless MCP workflow.
 
 The [final7 verification](docs/implementation/verification-final7.md) and [current acceptance](docs/qa/acceptance-current.md) link source-bound evidence: all ten host CI stages (2904 passed, one existing ignored), SDK 630, actual Chrome SDK 13, native UI 6 and chart module 8 numerical+1 lifecycle. The actual browser Worker passed all nine test bodies on its first final7 attempt. Both import bodies passed: the previous 19 signatures with 2048 trials and twelve additions with 4096 trials, seed 42. The additions have 24 independent closed-form CDF anchors; their maximum observed error was 0.020751953125 against a predeclared tolerance of 0.054792830314635735. These finite checks do not prove the entire CDF or proprietary compatibility.
 
