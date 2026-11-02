@@ -364,6 +364,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "solvercraft-mcp"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "solvercraft",
+]
+
+[[package]]
 name = "solvercraft-model"
 version = "0.1.0"
 dependencies = [

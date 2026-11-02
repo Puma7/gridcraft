@@ -1,0 +1,316 @@
+diff --git a/crates/core/src/catalog.rs b/crates/core/src/catalog.rs
+--- a/crates/core/src/catalog.rs
++++ b/crates/core/src/catalog.rs
+@@ -1,4 +1,4 @@
+-//! The Craft App Suite: the sixteen apps the launcher knows about.
++//! The Craft App Suite: the seventeen apps the launcher knows about.
+ //!
+ //! The list is data so a later version can fetch it from an API; [`SUITE`] is the built-in copy.
+ //!
+@@ -123,7 +123,7 @@
+ }
+ 
+ /// The Craft App Suite, in display order matching getartcraft.com, then the community apps:
+-pub const SUITE: [CraftApp; 16] = [
++pub const SUITE: [CraftApp; 17] = [
+     app("photocraft", "PhotoCraft", "Image editing", [[0x2f, 0x7b, 0xf5], [0x1a, 0x5b, 0xc4], [0x7f, 0xb0, 0xff]], "storytold/photocraft"),
+     app("vectorcraft", "VectorCraft", "Vector illustration", [[0xe8, 0x57, 0x3f], [0xb8, 0x3a, 0x24], [0xff, 0x8a, 0x70]], "storytold/vectorcraft"),
+     app(
+@@ -210,6 +210,22 @@
+         [[0x4e, 0x7b, 0xfb], [0x16, 0x59, 0xc4], [0x74, 0xaa, 0xff]],
+         "storytold/craft-anything",
+     ),
++    CraftApp {
++        kind: AppKind::Community,
++        publisher: "Puma7",
++        msi_publisher: Some("Puma7"),
++        bundle: Some("io.github.puma7.solvercraft"),
++        site: Some("https://github.com/Puma7/gridcraft"),
++        // No publisher Developer ID has been verified: do not install a macOS DMG.
++        mac_team: None,
++        ..app(
++            "solvercraft",
++            "Solvercraft",
++            "Optimization and simulation",
++            [[0x16, 0x98, 0x8d], [0x0c, 0x6b, 0x63], [0x43, 0xd4, 0xc2]],
++            "Puma7/gridcraft",
++        )
++    },
+     CraftApp {
+         kind: AppKind::Community,
+         publisher: "Tangency Labs",
+@@ -284,6 +300,7 @@
+         "wordcraft" => include_bytes!("../../../assets/app-icons/wordcraft.png"),
+         "deckcraft" => include_bytes!("../../../assets/app-icons/deckcraft.png"),
+         "gridcraft" => include_bytes!("../../../assets/app-icons/gridcraft.png"),
++        "solvercraft" => include_bytes!("../../../assets/app-icons/solvercraft.png"),
+         "texturecraft" => include_bytes!("../../../assets/app-icons/texturecraft.png"),
+         "craft-anything" => include_bytes!("../../../assets/app-icons/craft-anything.png"),
+         "solidcraft" => include_bytes!("../../../assets/app-icons/solidcraft.png"),
+@@ -308,8 +325,8 @@
+     }
+ 
+     #[test]
+-    fn suite_has_sixteen_apps_with_unique_ids() {
+-        assert_eq!(SUITE.len(), 16);
++    fn suite_has_seventeen_apps_with_unique_ids() {
++        assert_eq!(SUITE.len(), 17);
+         let mut ids: Vec<_> = SUITE.iter().map(|a| a.id).collect();
+         ids.sort_unstable();
+         ids.dedup();
+@@ -325,6 +342,19 @@
+     }
+ 
+     #[test]
++    fn solvercraft_is_community_owned_and_has_no_unverified_mac_installer() {
++        let app = CraftApp::by_id("solvercraft").unwrap();
++        assert_eq!(app.kind, AppKind::Community);
++        assert_eq!(app.repo, "Puma7/gridcraft");
++        assert_eq!(app.publisher, "Puma7");
++        assert_eq!(app.bundle_id(), "io.github.puma7.solvercraft");
++        assert_eq!(app.website(), "https://github.com/Puma7/gridcraft");
++        assert_eq!(app.mac_team, None);
++        assert!(!app.installs(crate::PackageKind::Dmg));
++        assert!(app.installs(crate::PackageKind::PortableZip));
++    }
++
++    #[test]
+     fn solidcraft_is_a_community_app_with_its_own_bundle_id() {
+         let sc = CraftApp::by_id("solidcraft").unwrap();
+         assert_eq!(sc.kind, AppKind::Community);
+diff --git a/crates/core/src/details.rs b/crates/core/src/details.rs
+--- a/crates/core/src/details.rs
++++ b/crates/core/src/details.rs
+@@ -139,7 +139,7 @@
+ /// Where every Craft App runs (getartcraft.com lists the same for each of them).
+ const PLATFORMS: &str = "macOS, Windows, Linux, FreeBSD, web";
+ 
+-pub const DETAILS: [AppDetails; 16] = [
++pub const DETAILS: [AppDetails; 17] = [
+     AppDetails {
+         id: "photocraft",
+         headline: "The image editor you already know how to use.",
+@@ -502,6 +502,19 @@
+         ],
+         shots: &[],
+         platforms: PLATFORMS,
++    },
++    AppDetails {
++        id: "solvercraft",
++        headline: "Optimization and simulation, locally.",
++        about: "Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.",
++        features: &[
++            feature("Optimize models", "Solve supported linear and integer models with explicit result status."),
++            feature("Simulate uncertainty", "Use seeded Monte Carlo simulation and inspect statistical summaries."),
++            feature("Work with local agents", "Use the standalone stdio MCP tool with on-demand local execution."),
++        ],
++        // No picture URL is invented before the shared screenshots repository accepts it.
++        shots: &[],
++        platforms: "Windows",
+     },
+     AppDetails {
+         id: "solidcraft",
+diff --git a/crates/native/src/desktop_entry.rs b/crates/native/src/desktop_entry.rs
+--- a/crates/native/src/desktop_entry.rs
++++ b/crates/native/src/desktop_entry.rs
+@@ -29,6 +29,7 @@
+         "wordcraft" => ("Office;WordProcessor;", None),
+         "deckcraft" => ("Office;Presentation;", None),
+         "gridcraft" => ("Office;Spreadsheet;", None),
++        "solvercraft" => ("Office;Science;Math;", None),
+         "cadcraft" => ("Graphics;Engineering;VectorGraphics;", None),
+         "soundcraft" => ("AudioVideo;Audio;Midi;Mixer;Sequencer;Recorder;", None),
+         "figcraft" => ("Graphics;2DGraphics;VectorGraphics;X-Design;", Some("figcraft")),
+diff --git a/ATTRIBUTION.md b/ATTRIBUTION.md
+--- a/ATTRIBUTION.md
++++ b/ATTRIBUTION.md
+@@ -59,3 +59,9 @@
+ |---|---|---|---|---|
+ | `docs/brand/` (all files) | ArtCraft name, wordmark and mark | ArtCraft Team | getartcraft.com | Not open source; trademarks of the ArtCraft Team, [`docs/brand/LICENSE-brand.txt`](docs/brand/LICENSE-brand.txt) |
+ | README app icons (linked, not copied) | Each Craft app's 64 px icon | ArtCraft Team and each app's contributors | `raw.githubusercontent.com/storytold/<app>/main/assets/app-icon/hicolor/64x64/apps/ai.storyteller.<app>.png` | MIT OR Apache-2.0 (each app's license) |
++
++## Solvercraft community-app submission
++
++| File                               | Work                                     | Author                   | Source                                                                                  | License           |
++|------------------------------------|------------------------------------------|--------------------------|-----------------------------------------------------------------------------------------|-------------------|
++| `assets/app-icons/solvercraft.png` | Solvercraft numerical-chart icon, 128 px | Solvercraft contributors | Original procedural artwork; recipe distributed with the Solvercraft catalog submission | MIT OR Apache-2.0 |
+diff --git a/crates/ui-egui/src/i18n/cs.tsv b/crates/ui-egui/src/i18n/cs.tsv
+--- a/crates/ui-egui/src/i18n/cs.tsv
++++ b/crates/ui-egui/src/i18n/cs.tsv
+@@ -371,3 +371,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Vypékejte mapy sítí a používejte inteligentní materiály.
+ texturecraft	Paint textures on 3D models.	Malujte textury na 3D modely.
+ 	Hide community apps	Skrýt komunitní aplikace
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optimalizace a simulace
++solvercraft	Optimization and simulation, locally.	Optimalizace a simulace přímo v počítači.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Řeš numerické modely a spouštěj simulace pomocí společného SDK v Rustu. Desktopová aplikace a místní nástroje pro agenty používají stejný výpočetní modul.
++solvercraft	Optimize models	Optimalizuj modely
++solvercraft	Solve supported linear and integer models with explicit result status.	Řeš podporované lineární a celočíselné modely s jasně uvedeným stavem výsledku.
++solvercraft	Simulate uncertainty	Simuluj nejistotu
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Používej simulaci Monte Carlo s nastaveným seedem a prohlížej statistické souhrny.
++solvercraft	Work with local agents	Pracuj s místními agenty
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Používej samostatný nástroj MCP přes stdio s místním spuštěním na vyžádání.
+diff --git a/crates/ui-egui/src/i18n/de.tsv b/crates/ui-egui/src/i18n/de.tsv
+--- a/crates/ui-egui/src/i18n/de.tsv
++++ b/crates/ui-egui/src/i18n/de.tsv
+@@ -403,3 +403,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Mesh-Maps backen und intelligente Materialien verwenden.
+ texturecraft	Paint textures on 3D models.	Texturen auf 3D-Modelle malen.
+ 	Hide community apps	Community-Apps ausblenden
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optimierung und Simulation
++solvercraft	Optimization and simulation, locally.	Optimierung und Simulation auf deinem Computer.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Löse numerische Modelle und führe Simulationen mit einem gemeinsamen Rust-SDK aus. Die Desktop-App und die lokalen Agentenwerkzeuge verwenden denselben Rechenkern.
++solvercraft	Optimize models	Modelle optimieren
++solvercraft	Solve supported linear and integer models with explicit result status.	Löse unterstützte lineare und ganzzahlige Modelle mit klar ausgewiesenem Ergebnisstatus.
++solvercraft	Simulate uncertainty	Unsicherheit simulieren
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Nutze Monte-Carlo-Simulation mit festgelegtem Seed und prüfe statistische Zusammenfassungen.
++solvercraft	Work with local agents	Mit lokalen Agenten arbeiten
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Nutze das eigenständige MCP-Werkzeug über stdio mit lokaler Ausführung bei Bedarf.
+diff --git a/crates/ui-egui/src/i18n/es.tsv b/crates/ui-egui/src/i18n/es.tsv
+--- a/crates/ui-egui/src/i18n/es.tsv
++++ b/crates/ui-egui/src/i18n/es.tsv
+@@ -384,3 +384,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Hornea mapas de malla y usa materiales inteligentes.
+ texturecraft	Paint textures on 3D models.	Pinta texturas en modelos 3D.
+ 	Hide community apps	Ocultar aplicaciones de la comunidad
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optimización y simulación
++solvercraft	Optimization and simulation, locally.	Optimización y simulación en tu equipo.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Resuelve modelos numéricos y ejecuta simulaciones con un SDK compartido en Rust. La aplicación de escritorio y las herramientas locales para agentes usan el mismo motor de cálculo.
++solvercraft	Optimize models	Optimiza modelos
++solvercraft	Solve supported linear and integer models with explicit result status.	Resuelve los modelos lineales y enteros admitidos con un estado del resultado explícito.
++solvercraft	Simulate uncertainty	Simula la incertidumbre
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Usa simulaciones de Monte Carlo con una semilla definida y consulta los resúmenes estadísticos.
++solvercraft	Work with local agents	Trabaja con agentes locales
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Usa la herramienta MCP independiente por stdio con ejecución local bajo demanda.
+diff --git a/crates/ui-egui/src/i18n/fr.tsv b/crates/ui-egui/src/i18n/fr.tsv
+--- a/crates/ui-egui/src/i18n/fr.tsv
++++ b/crates/ui-egui/src/i18n/fr.tsv
+@@ -401,3 +401,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Calculez des cartes de maillage et utilisez des matériaux intelligents.
+ texturecraft	Paint textures on 3D models.	Peignez des textures sur des modèles 3D.
+ 	Hide community apps	Masquer les applications communautaires
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optimisation et simulation
++solvercraft	Optimization and simulation, locally.	Optimisation et simulation sur ton ordinateur.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Résous des modèles numériques et lance des simulations avec un SDK Rust partagé. L’application de bureau et les outils locaux pour agents utilisent le même moteur de calcul.
++solvercraft	Optimize models	Optimiser les modèles
++solvercraft	Solve supported linear and integer models with explicit result status.	Résous les modèles linéaires et entiers pris en charge avec un état du résultat explicite.
++solvercraft	Simulate uncertainty	Simuler l’incertitude
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Utilise la simulation de Monte-Carlo avec une graine définie et consulte les résumés statistiques.
++solvercraft	Work with local agents	Travailler avec des agents locaux
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Utilise l’outil MCP autonome via stdio avec une exécution locale à la demande.
+diff --git a/crates/ui-egui/src/i18n/hu.tsv b/crates/ui-egui/src/i18n/hu.tsv
+--- a/crates/ui-egui/src/i18n/hu.tsv
++++ b/crates/ui-egui/src/i18n/hu.tsv
+@@ -404,3 +404,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Süss ki hálótérképeket, és használj intelligens anyagokat.
+ texturecraft	Paint textures on 3D models.	Fess textúrákat 3D modellekre.
+ 	Hide community apps	Közösségi alkalmazások elrejtése
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optimalizálás és szimuláció
++solvercraft	Optimization and simulation, locally.	Optimalizálás és szimuláció a saját számítógépeden.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Oldj meg numerikus modelleket, és futtass szimulációkat közös Rust SDK-val. Az asztali alkalmazás és a helyi agenteszközök ugyanazt a számítási motort használják.
++solvercraft	Optimize models	Modellek optimalizálása
++solvercraft	Solve supported linear and integer models with explicit result status.	Oldd meg a támogatott lineáris és egészértékű modelleket egyértelmű eredményállapottal.
++solvercraft	Simulate uncertainty	Bizonytalanság szimulálása
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Használj rögzített kezdőértékű Monte Carlo-szimulációt, és tekintsd át a statisztikai összesítéseket.
++solvercraft	Work with local agents	Munka helyi ágensekkel
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Használd az önálló MCP-eszközt stdio-kapcsolaton keresztül, igény szerinti helyi futtatással.
+diff --git a/crates/ui-egui/src/i18n/ja.tsv b/crates/ui-egui/src/i18n/ja.tsv
+--- a/crates/ui-egui/src/i18n/ja.tsv
++++ b/crates/ui-egui/src/i18n/ja.tsv
+@@ -406,3 +406,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	メッシュマップをベイクし、スマートマテリアルを使用します。
+ texturecraft	Paint textures on 3D models.	3Dモデルにテクスチャを描きます。
+ 	Hide community apps	コミュニティアプリを非表示
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	最適化とシミュレーション
++solvercraft	Optimization and simulation, locally.	自分のコンピューターで最適化とシミュレーション。
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	共通のRust SDKを使って数値モデルを解き、シミュレーションを実行できます。デスクトップアプリとローカルエージェント用ツールは同じ計算エンジンを使います。
++solvercraft	Optimize models	モデルを最適化
++solvercraft	Solve supported linear and integer models with explicit result status.	対応する線形モデルや整数モデルを解き、結果の状態を明確に表示します。
++solvercraft	Simulate uncertainty	不確実性をシミュレーション
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	シードを指定したモンテカルロシミュレーションを実行し、統計の要約を確認できます。
++solvercraft	Work with local agents	ローカルエージェントと連携
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	必要なときにローカルで実行する独立したMCPツールをstdio経由で使えます。
+diff --git a/crates/ui-egui/src/i18n/pl.tsv b/crates/ui-egui/src/i18n/pl.tsv
+--- a/crates/ui-egui/src/i18n/pl.tsv
++++ b/crates/ui-egui/src/i18n/pl.tsv
+@@ -405,3 +405,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Wypiekaj mapy siatki i używaj inteligentnych materiałów.
+ texturecraft	Paint textures on 3D models.	Maluj tekstury na modelach 3D.
+ 	Hide community apps	Ukryj aplikacje społeczności
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Optymalizacja i symulacja
++solvercraft	Optimization and simulation, locally.	Optymalizacja i symulacja na twoim komputerze.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Rozwiązuj modele numeryczne i uruchamiaj symulacje za pomocą wspólnego SDK w Rust. Aplikacja komputerowa i lokalne narzędzia dla agentów używają tego samego silnika obliczeniowego.
++solvercraft	Optimize models	Optymalizuj modele
++solvercraft	Solve supported linear and integer models with explicit result status.	Rozwiązuj obsługiwane modele liniowe i całkowitoliczbowe z jasno określonym stanem wyniku.
++solvercraft	Simulate uncertainty	Symuluj niepewność
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Korzystaj z symulacji Monte Carlo z określonym ziarnem i przeglądaj podsumowania statystyczne.
++solvercraft	Work with local agents	Pracuj z lokalnymi agentami
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Korzystaj z samodzielnego narzędzia MCP przez stdio z lokalnym uruchamianiem na żądanie.
+diff --git a/crates/ui-egui/src/i18n/pt-BR.tsv b/crates/ui-egui/src/i18n/pt-BR.tsv
+--- a/crates/ui-egui/src/i18n/pt-BR.tsv
++++ b/crates/ui-egui/src/i18n/pt-BR.tsv
+@@ -391,3 +391,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Gere mapas de malha e use materiais inteligentes.
+ texturecraft	Paint textures on 3D models.	Pinte texturas em modelos 3D.
+ 	Hide community apps	Ocultar aplicativos da comunidade
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Otimização e simulação
++solvercraft	Optimization and simulation, locally.	Otimização e simulação no seu computador.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Resolva modelos numéricos e execute simulações com um SDK compartilhado em Rust. O aplicativo de desktop e as ferramentas locais para agentes usam o mesmo mecanismo de cálculo.
++solvercraft	Optimize models	Otimize modelos
++solvercraft	Solve supported linear and integer models with explicit result status.	Resolva os modelos lineares e inteiros compatíveis com um estado de resultado explícito.
++solvercraft	Simulate uncertainty	Simule incertezas
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Use a simulação de Monte Carlo com uma semente definida e confira os resumos estatísticos.
++solvercraft	Work with local agents	Trabalhe com agentes locais
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Use a ferramenta MCP independente por stdio com execução local sob demanda.
+diff --git a/crates/ui-egui/src/i18n/ru.tsv b/crates/ui-egui/src/i18n/ru.tsv
+--- a/crates/ui-egui/src/i18n/ru.tsv
++++ b/crates/ui-egui/src/i18n/ru.tsv
+@@ -399,3 +399,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	Запекайте карты сетки и используйте умные материалы.
+ texturecraft	Paint textures on 3D models.	Рисуйте текстуры на 3D-моделях.
+ 	Hide community apps	Скрыть приложения сообщества
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	Оптимизация и моделирование
++solvercraft	Optimization and simulation, locally.	Оптимизация и моделирование на твоём компьютере.
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	Решай численные модели и запускай моделирование с общим SDK на Rust. Настольное приложение и локальные инструменты для агентов используют один вычислительный движок.
++solvercraft	Optimize models	Оптимизация моделей
++solvercraft	Solve supported linear and integer models with explicit result status.	Решай поддерживаемые линейные и целочисленные модели с явно указанным статусом результата.
++solvercraft	Simulate uncertainty	Моделирование неопределённости
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	Используй моделирование Монте-Карло с заданным зерном и изучай статистические сводки.
++solvercraft	Work with local agents	Работа с локальными агентами
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	Используй отдельный инструмент MCP через stdio с локальным запуском по требованию.
+diff --git a/crates/ui-egui/src/i18n/zh-CN.tsv b/crates/ui-egui/src/i18n/zh-CN.tsv
+--- a/crates/ui-egui/src/i18n/zh-CN.tsv
++++ b/crates/ui-egui/src/i18n/zh-CN.tsv
+@@ -371,3 +371,14 @@
+ texturecraft	Bake mesh maps and use smart materials.	烘焙网格贴图并使用智能材质。
+ texturecraft	Paint textures on 3D models.	在 3D 模型上绘制纹理。
+ 	Hide community apps	隐藏社区应用
++
++# Solvercraft community-app submission
++solvercraft	Optimization and simulation	优化与模拟
++solvercraft	Optimization and simulation, locally.	在你的电脑上进行优化与模拟。
++solvercraft	Solve numerical models and run simulations with a shared Rust SDK. The desktop app and local agent tools use the same calculation engine.	使用共享的 Rust SDK 求解数值模型并运行模拟。桌面应用和本地智能体工具使用同一个计算引擎。
++solvercraft	Optimize models	优化模型
++solvercraft	Solve supported linear and integer models with explicit result status.	求解支持的线性和整数模型，并明确显示结果状态。
++solvercraft	Simulate uncertainty	模拟不确定性
++solvercraft	Use seeded Monte Carlo simulation and inspect statistical summaries.	使用指定随机种子的蒙特卡洛模拟，并查看统计摘要。
++solvercraft	Work with local agents	与本地智能体协作
++solvercraft	Use the standalone stdio MCP tool with on-demand local execution.	通过 stdio 使用独立的 MCP 工具，按需在本地运行。

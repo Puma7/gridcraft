@@ -14,6 +14,14 @@ Each capability has finite numerical, dimension and resource limits. Consult the
 
 ## Build and run
 
+The standalone **Solvercraft desktop app** starts from the repository root with
+`cargo run --release -p solvercraft-app`. It opens the shared workbook interface
+with optimization and simulation examples and the Solvercraft task pane.
+External agents can use the separate **`solvercraft-mcp`** executable over stdio,
+without a workbook or listening service. The
+[ArtCraft integration guide](docs/implementation/artcraft-integration.md) covers
+the desktop app, host-independent SDK, MCP setup and launcher submission.
+
 Rust **1.95** or newer is required. From this directory:
 
 ~~~sh
@@ -25,12 +33,18 @@ cargo run --release -p solvercraft-cli -- solve examples/lp.json
 cargo run --release -p solvercraft-cli -- solve-expr examples/nonlinear.json
 cargo run --release -p solvercraft-cli -- simulate examples/simulation.json
 cargo run --release -p solvercraft-cli -- risk examples/risk.json
+cargo run --release -p solvercraft-mcp
 cargo run -p solvercraft --example artcraft_layout
 ~~~
 
 Use --offline when the locked dependencies are cached. Requests/responses are JSON; omit the input path or use - for stdin. Errors are structured JSON on stderr with a nonzero exit status. The [SDK/runtime guide](docs/implementation/sdk-runtime.md) describes modern execution, advanced commands, model migration and the optional service.
 
 The [application and AI-agent quickstart](docs/implementation/agent-quickstart.md) provides standalone CLI commands, an MCP configuration and a complete workbook job/preview/apply workflow. Gridcraft's existing MCP server exposes Solvercraft headlessly or in a running desktop app; the optional SDK service uses its own local JSON-lines TCP protocol.
+
+The [portable Windows packager](packaging/README.md) bundles the GUI, CLI and
+standalone MCP executable. All three run locally; no hosted server is required.
+The official ArtCraft Launcher catalog is a separately reviewed upstream
+submission, not a registration automatically created by this repository.
 
 This nested workspace has its own lockfile and is excluded from parent membership. Gridcraft consumes path dependencies. Run both the SDK checks and parent cargo xtask ci; parent tests do not execute all excluded SDK tests.
 
@@ -42,7 +56,13 @@ Original worksheet evaluation, document identity/revision, domains, protection a
 
 ## Verification
 
-The [2026-11-02 recovery verification](docs/implementation/recovery-2026-11-02.md) records fresh SDK/host checks, release CLI examples and the complete headless MCP workflow.
+The [standalone app/agent verification](docs/implementation/app-agent-verification-2026-11-02.md)
+records the current integration: 645 SDK tests and 2,911 host tests passed,
+with one existing ignored host timing test; full format/Clippy/CI/WASM checks
+passed. It also records the optimized Windows app, real stdio MCP cases, actual
+offscreen rendering, packaged executable hashes and launcher-contract checks.
+
+The [earlier recovery verification](docs/implementation/recovery-2026-11-02.md) records the pre-app checkpoint, release CLI examples and the complete Gridcraft headless MCP workflow.
 
 The [final7 verification](docs/implementation/verification-final7.md) and [current acceptance](docs/qa/acceptance-current.md) link source-bound evidence: all ten host CI stages (2904 passed, one existing ignored), SDK 630, actual Chrome SDK 13, native UI 6 and chart module 8 numerical+1 lifecycle. The actual browser Worker passed all nine test bodies on its first final7 attempt. Both import bodies passed: the previous 19 signatures with 2048 trials and twelve additions with 4096 trials, seed 42. The additions have 24 independent closed-form CDF anchors; their maximum observed error was 0.020751953125 against a predeclared tolerance of 0.054792830314635735. These finite checks do not prove the entire CDF or proprietary compatibility.
 

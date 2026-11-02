@@ -1,6 +1,6 @@
 # Architecture
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft async task pane, workbook persistence and native/browser evidence) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-11-02 · **Change:** minor (Solvercraft local app, shared SDK and on-demand stdio MCP) · **Target:** Microsoft Excel (Microsoft 365)
 
 How GridCraft is built today. Rules for contributors are in [`AGENTS.md`](../AGENTS.md).
 
@@ -25,7 +25,15 @@ including tests, 2026-10-10.
 | L6 | `ui-egui` | ~11.6k | Excel-style UI (title bar, QAT, ribbon, formula bar, virtualised grid, editor, tabs, status bar, dialogs, task panes, chart view) and the control channel |
 | L6 | `mcp` | ~1.4k | MCP server over stdio (hand-written JSON-RPC), headless or bridged to a running app |
 | L7 | `apps/gridcraft`, `apps/gridcraft-cli`, `apps/gridcraft-web` | ~2.2k | Desktop (eframe/wgpu), CLI (`info`, `convert`, `eval`, `cat`, `run`, `commands`, `functions`, `mcp`, `send`), web (WASM via trunk) |
+| L7 | `apps/solvercraft-app` | — | Dedicated Solvercraft workbook workbench over the existing L5 commands/L6 frontend; no listener or Gridcraft updater |
+| L7 | `solvercraft/crates/cli`, `solvercraft/crates/mcp` | — | Independent JSON CLI and on-demand stdio MCP for the L4 Solvercraft SDK; no workbook or hosted service required |
 | — | `xtask` | — | `ci`, `parity`, `assets`, `layers`, `wasm`, `version`, `stats` |
+
+The nested Solvercraft workspace remains independently buildable. Its portable
+models bind arbitrary host object/property IDs, so another ArtCraft application
+can consume the shared SDK without importing this workbook UI. External agents
+can launch `solvercraft-mcp` and own the process lifetime; no central daemon is
+introduced. See the [integration contracts](../solvercraft/docs/implementation/artcraft-integration.md).
 
 ## Data flow
 

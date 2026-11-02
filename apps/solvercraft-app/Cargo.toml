@@ -1,0 +1,29 @@
+[package]
+name = "solvercraft-app"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+description = "Solvercraft local optimization and simulation workbench"
+default-run = "solvercraft"
+
+[[bin]]
+name = "solvercraft"
+path = "src/main.rs"
+
+[dependencies]
+gridcraft-engine.workspace = true
+gridcraft-ui-egui.workspace = true
+egui.workspace = true
+eframe = { workspace = true, features = ["default_fonts", "wgpu", "accesskit", "wayland", "x11", "clipboard"] }
+serde_json.workspace = true
+rfd.workspace = true
+arboard.workspace = true
+image.workspace = true
+
+[dev-dependencies]
+egui_kittest = { workspace = true, features = ["wgpu", "snapshot"] }
+
+[lints]
+workspace = true

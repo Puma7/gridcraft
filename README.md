@@ -116,6 +116,13 @@ cargo run --release -p gridcraft -- --sample sales --control 7979   # + JSON con
 cargo xtask ci                                                 # fmt, clippy, tests, assets, layering, wasm
 ```
 
+Solvercraft also has a [standalone local app and agent entry point](solvercraft/docs/implementation/artcraft-integration.md):
+`cargo run --release -p solvercraft-app` opens its optimization/simulation
+workbench; `solvercraft-mcp` exposes the shared SDK to local MCP clients without
+opening a workbook or starting a network service. Gridcraft retains the same
+Solvercraft task pane under Data. [Windows packaging](solvercraft/packaging/README.md)
+includes the app, JSON CLI and standalone MCP executable.
+
 Choose Español under View → Interface language for [Spanish formula names, decimal commas, and semicolon arguments](docs/formula-input.md).
 Workbooks, clipboard exchange, and programmatic APIs retain canonical English syntax.
 

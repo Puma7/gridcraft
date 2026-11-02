@@ -4968,6 +4968,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "solvercraft-app"
+version = "0.14.2"
+dependencies = [
+ "arboard",
+ "eframe",
+ "egui",
+ "egui_kittest",
+ "gridcraft-engine",
+ "gridcraft-ui-egui",
+ "image",
+ "rfd",
+ "serde_json",
+]
+
+[[package]]
 name = "solvercraft-compile"
 version = "0.1.0"
 dependencies = [

@@ -149,6 +149,57 @@ fn draft(state: &State) -> Result<Json, String> {
     }
     Ok(request)
 }
+fn variable_text(value: &Json) -> String {
+    if let Some(text) = value.as_str() {
+        return text.to_string();
+    }
+    if let Some(rows) = value.as_array().filter(|rows| !rows.is_empty()) {
+        let cells = rows
+            .iter()
+            .map(|row| row.as_str().or_else(|| row.as_object().filter(|object| object.len() == 1).and_then(|object| object.get("cell")?.as_str())))
+            .collect::<Option<Vec<_>>>();
+        if let Some(cells) = cells.filter(|cells| cells.iter().all(|cell| !cell.chars().any(char::is_control))) {
+            // Cell-formula syntax permits reference unions inside parentheses,
+            // unlike the name-only parser's bare top-level comma form.
+            return if cells.len() == 1 { cells.join("") } else { format!("({})", cells.join(",")) };
+        }
+    }
+    // Bounds, integer kinds and any future metadata stay losslessly editable.
+    value.to_string()
+}
+
+fn constraint_text(value: &Json) -> String {
+    let Some(rows) = value.as_array() else {
+        return String::new();
+    };
+    let plain = rows
+        .iter()
+        .map(|row| {
+            if let Some(text) = row.as_str() {
+                return Some(text.to_string());
+            }
+            let object = row.as_object().filter(|object| object.len() == 3)?;
+            let left = object.get("lhs")?.as_str()?;
+            let op = object.get("op")?.as_str()?;
+            if !matches!(op, "<=" | "=" | "==" | ">=" | "≤" | "≥") {
+                return None;
+            }
+            let right = match object.get("rhs")? {
+                Json::String(text) => text.clone(),
+                Json::Number(number) => number.to_string(),
+                _ => return None,
+            };
+            // The text parser splits at its first relation. Preserve an object if
+            // an operand itself contains one (including quoted sheet names).
+            if left.chars().chain(right.chars()).any(|character| character.is_control() || "<>=≤≥".contains(character)) {
+                return None;
+            }
+            Some(format!("{left} {op} {right}"))
+        })
+        .collect::<Option<Vec<_>>>();
+    plain.map(|rows| rows.join("\n")).unwrap_or_else(|| value.to_string())
+}
+
 fn load(state: &mut State, model: Json) {
     state.job = None;
     state.preview = None;
@@ -160,15 +211,8 @@ fn load(state: &mut State, model: Json) {
     state.request = model["request"].clone();
     let p = &state.request;
     state.objective = p["objective"].as_str().unwrap_or("B1").into();
-    state.variables = p["variables"].as_str().map(str::to_string).unwrap_or_else(|| p["variables"].to_string());
-    state.constraints = p["constraints"]
-        .as_array()
-        .map(|rows| rows.iter().map(|row| row.as_str().map(str::to_string).unwrap_or_else(|| row.to_string())).collect::<Vec<_>>().join("\n"))
-        .unwrap_or_default();
-    // Object constraints retain their JSON representation when loaded.
-    if p["constraints"].as_array().is_some_and(|rows| rows.iter().any(Json::is_object)) {
-        state.constraints = p["constraints"].to_string();
-    }
+    state.variables = variable_text(&p["variables"]);
+    state.constraints = constraint_text(&p["constraints"]);
     state.goal = p["goal"].as_str().unwrap_or("max").into();
     state.target = p["value"].as_f64().map(|v| v.to_string()).unwrap_or_else(|| "0".into());
     state.method = p["method"].as_str().unwrap_or("auto").into();
@@ -202,6 +246,18 @@ fn refresh(app: &mut SheetApp, state: &mut State) {
     }
 }
 
+/// Reveal and select a saved model for an embedding application. The host does
+/// not duplicate editor state or bypass the engine's model validation.
+pub fn open_model(app: &mut SheetApp, ctx: &egui::Context, id: &str) -> Result<(), String> {
+    let model = app.run("solvercraft.model.get", json!({"id":id}))?;
+    let uid = app.session.active().map(|doc| doc.uid).ok_or_else(|| "No workbook is open".to_string())?;
+    let mut state = State::default();
+    load(&mut state, model);
+    refresh(app, &mut state);
+    ctx.data_mut(|memory| memory.insert_temp(egui::Id::unique(("solvercraft-pane", uid)), state));
+    app.run("ui.solvercraft", json!({"on":true})).map(|_| ())
+}
+
 fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
     ui.horizontal(|ui| {
         ui.selectable_value(&mut state.kind, "optimization".into(), label(de, "Optimization", "Optimierung"));
@@ -217,8 +273,8 @@ fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
         if state.goal == "value" {
             field(ui, label(de, "Target value", "Zielwert"), &mut state.target);
         }
-        field(ui, label(de, "Variables: references or JSON array", "Variablen: Referenzen oder JSON-Array"), &mut state.variables);
-        ui.label(label(de, "Constraints: one per line or JSON array", "Nebenbedingungen: eine pro Zeile oder JSON-Array"));
+        field(ui, label(de, "Decision cells", "Entscheidungszellen"), &mut state.variables);
+        ui.label(label(de, "Constraints (one per line)", "Nebenbedingungen (eine pro Zeile)"));
         ui.add(egui::TextEdit::multiline(&mut state.constraints).desired_rows(4).desired_width(f32::INFINITY))
             .accessible_name("Solvercraft constraints");
         ui.checkbox(&mut state.nonnegative, label(de, "Unbounded variables are nonnegative", "Variablen ohne Untergrenze sind nichtnegativ"));
@@ -772,6 +828,37 @@ fn parameter_results(ui: &mut egui::Ui, cases: &[Json]) {
 #[cfg(test)]
 mod tests {
     #![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
+    #[test]
+    fn saved_plain_models_remain_readable_and_preserve_the_solved_model() {
+        let mut session = gridcraft_engine::Session::new();
+        session.new_workbook();
+        session.execute("range.setValues", super::json!({"range":"A1:C1","values":[[0,0,"=3*A1+5*B1"]]})).unwrap();
+        let saved=session.execute("solvercraft.model.create",super::json!({
+            "name":"Readable model","request":{"objective":"C1","goal":"max","variables":"A1:B1","constraints":["A1 <= 4","B1 <= 6","3*A1+2*B1 <= 18"]}
+        })).unwrap();
+        let request = &saved["request"];
+        let before = session.execute("solvercraft.validate", request.clone()).unwrap();
+        let mut state = super::State::default();
+        super::load(&mut state, saved);
+        assert!(!state.variables.starts_with('['));
+        assert!(!state.constraints.starts_with('['));
+        let roundtrip = super::draft(&state).unwrap();
+        let after = session.execute("solvercraft.validate", roundtrip.clone()).unwrap();
+        assert_eq!(before["model"], after["model"]);
+        assert_eq!(session.execute("solvercraft.solve", roundtrip).unwrap()["result"]["objective"], 36.0);
+    }
+
+    #[test]
+    fn readable_load_keeps_bounds_kinds_and_ambiguous_constraint_objects() {
+        let variables = super::json!([{"cell":"A1","kind":"integer","lower":-4,"upper":9},{"cell":"B1","binding":"host-owned"}]);
+        assert_eq!(super::variable_text(&variables), variables.to_string());
+        let constraints = super::json!([{"lhs":"'x=y'!A1","op":"<=","rhs":4}]);
+        assert_eq!(super::constraint_text(&constraints), constraints.to_string());
+        let advanced = super::json!([{"lhs":"A1","op":"<=","rhs":4,"future_metadata":"retain"}]);
+        assert_eq!(super::constraint_text(&advanced), advanced.to_string());
+        let multiline = super::json!([{"cell":"'Two\nlines'!A1"}]);
+        assert_eq!(super::variable_text(&multiline), multiline.to_string());
+    }
     use super::{Arc, State, cdf_steps, forget_closed, histogram_bins, json, parameter_effects, sample_points, summary_quantiles, unit_position};
     #[test]
     fn histogram_contract_places_boundaries_in_twenty_bins_and_retains_every_row() {

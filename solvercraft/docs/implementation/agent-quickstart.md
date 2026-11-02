@@ -9,6 +9,8 @@ retain the actual result status, engine, seed and limits with each answer.
 
 | Task | Entry point |
 |---|---|
+| Open Solvercraft as a standalone desktop application | `solvercraft` (`cargo run -p solvercraft-app`) |
+| Give an external agent workbook-independent tools | `solvercraft-mcp` over stdio, started by the MCP client |
 | Solve or simulate without a spreadsheet | `solvercraft-cli`, or the Rust `solvercraft` SDK |
 | Work with workbook cells, formulas, saved models and Undo | Gridcraft's Solvercraft pane or `gridcraft-cli mcp` |
 | Control the desktop workbook an operator is viewing | `gridcraft-cli mcp --connect 7979` |
@@ -19,7 +21,24 @@ applications belong to Layer 7; they consume the SDK through their appropriate
 adapters. Another ArtCraft application can embed the SDK without depending on
 Gridcraft or its interface. The executable [layout example](../../crates/solvercraft/examples/artcraft_layout.rs)
 shows portable object bindings. It is an integration example, not a released
-second ArtCraft application or an app-store registration.
+second ArtCraft application or an app-store registration. The
+[ArtCraft integration guide](artcraft-integration.md) documents the standalone
+app, shared host API, on-demand MCP entry point and launcher submission.
+
+## Standalone MCP for external agents
+
+Build `solvercraft-mcp` from the nested SDK workspace:
+
+```sh
+cargo build --manifest-path solvercraft/Cargo.toml --release --locked -p solvercraft-mcp
+```
+
+This command is run from the repository root. Configure a local MCP client with
+the absolute executable path (`solvercraft-mcp.exe` on Windows), with no
+arguments. It exposes optimization, simulation, portable host-model execution
+and job lifecycle tools directly from the SDK. It requires no workbook, account,
+listening network port or permanently running service. The MCP client starts the
+process when needed. See the [tool table and lifecycle](artcraft-integration.md#external-agents-without-a-standing-service).
 
 ## Standalone calculations
 

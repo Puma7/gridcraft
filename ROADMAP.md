@@ -2,7 +2,7 @@
 
 **Stage: alpha** · next: beta, ~25 points of "ready for real work" and ~160–240 h away
 
-> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft async task pane and workbook persistence; independent native/browser validation; overall alpha estimates unchanged) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-11-02 · **Change:** minor (Solvercraft standalone local app, on-demand MCP and reviewed launcher submission; overall alpha estimates unchanged) · **Target:** Microsoft Excel (Microsoft 365)
 
 GridCraft aims at full Microsoft Excel parity, and at being better in places: faster, open (XLSX
 is the native format), fully scriptable by agents (MCP, control channel, CLI), and on the web.
@@ -18,6 +18,11 @@ This page is the summary. The detail is in:
 - [`docs/architecture.md`](docs/architecture.md): how it is built
 
 Solvercraft adds a separate optimization/simulation task pane, native and browser background jobs, and saved workbook models. Its [scope and executed evidence](docs/solvercraft.md) are tracked separately; this does not recalculate the broad Excel parity estimates below.
+
+The [standalone Solvercraft app, shared SDK and on-demand agent tools](solvercraft/docs/implementation/artcraft-integration.md)
+reuse that numerical core. They require no hosted server. An official ArtCraft
+Launcher entry is supplied as a pinned review artifact and remains subject to
+the launcher's third-party publisher approval.
 
 ## Headline numbers
 
