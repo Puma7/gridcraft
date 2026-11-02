@@ -1,6 +1,6 @@
 //! Frozen, inspectable family catalog. Compositional modifiers are separate entries.
 use serde::Serialize;
-pub const CATALOG_VERSION: &str = "solvercraft-baseline17-r4-catalog-v1";
+pub const CATALOG_VERSION: &str = "solvercraft-baseline17-r4-catalog-v2";
 #[derive(Debug, Clone, Copy, Serialize)]
 pub struct DistributionDescriptor {
     pub id: &'static str,

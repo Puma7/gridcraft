@@ -2,6 +2,76 @@
 use solvercraft_simulation::{advanced::*, fitting::*};
 use solvercraft_types::*;
 #[test]
+fn unrepresentable_variance_is_an_error_and_does_not_erase_representable_fit_scale() {
+    let mut stats = solvercraft_simulation::OnlineMoments::default();
+    for x in [-1e-200, 1e-200] {
+        stats.push(x).unwrap();
+    }
+    assert_eq!(stats.summary().unwrap_err().code, "numerical_range");
+    let fitted = solvercraft_simulation::fit_normal(&[-1e-200, 1e-200]).unwrap();
+    let Distribution::Normal { mean, std_dev } = fitted else { panic!("wrong fitted family") };
+    assert_eq!(mean, 0.0);
+    assert!((std_dev / 1e-200 - 1.0).abs() < 1e-14);
+    let mut constant = solvercraft_simulation::OnlineMoments::default();
+    constant.push(1e-200).unwrap();
+    constant.push(1e-200).unwrap();
+    assert_eq!(constant.summary().unwrap().variance, Some(0.0));
+    let error = solvercraft_simulation::fit_normal(&[0.0, f64::from_bits(1)]).unwrap_err();
+    assert_eq!(error.code, "numerical_range", "A positive unrepresentable fitted scale is not a point mass");
+}
+#[test]
+fn fitted_normal_mean_preserves_a_small_residue_between_huge_cancelling_values() {
+    let fitted = solvercraft_simulation::fit_normal(&[1e308, 1e-100, -1e308]).unwrap();
+    let Distribution::Normal { mean, .. } = fitted else { panic!("wrong fitted family") };
+    assert!((mean / (1e-100 / 3.0) - 1.0).abs() < 1e-14, "mean={mean}");
+}
+#[test]
+fn bounded_intervals_do_not_round_a_nonconstant_adjacent_support_to_a_point() {
+    let low = 1e10_f64;
+    let high = low.next_up();
+    // The exact mean is strictly between adjacent finite values. An interval
+    // consisting of either endpoint alone therefore cannot cover it.
+    let options = AdvancedSimulationOptions {
+        base: SimulationOptions { trials: 1024, seed: 42, ..Default::default() },
+        stopping: Some(StoppingRule {
+            minimum_trials: 1024,
+            check_every: 1024,
+            absolute_half_width: 1e-20,
+            confidence: 0.95,
+            output_bounds: vec![(low, high)],
+        }),
+        ..Default::default()
+    };
+    let report =
+        simulate_advanced(
+            &[Distribution::Categorical { values: vec![low, high], weights: vec![0.5, 0.5] }],
+            &options,
+            &NoControl,
+            |x| Ok(x.to_vec()),
+        )
+        .unwrap();
+    assert_eq!(report.result.summaries[0].minimum, low);
+    assert_eq!(report.result.summaries[0].maximum, high);
+    let interval = &report.mean_intervals[0];
+    assert_eq!(interval.lower, low);
+    assert_eq!(interval.upper, high);
+}
+#[test]
+fn student_intervals_do_not_round_nonzero_uncertainty_to_a_point() {
+    let low = 1e10_f64;
+    let high = low.next_up();
+    let values = (0..1024).map(|i| if i % 2 == 0 { low } else { high }).collect::<Vec<_>>();
+    let interval = solvercraft_simulation::intervals::iid_mean_interval(&values, 0.95).unwrap();
+    assert!(interval.standard_error > 0.0);
+    assert!(interval.lower <= low && interval.upper >= high, "{interval:?}");
+}
+
+#[test]
+fn unrepresentable_intermediate_sum_does_not_authorize_a_lost_residual_mean() {
+    let error = solvercraft_simulation::fit_normal(&[1e308, 1e308, 1e-100, -1e308, -1e308]).unwrap_err();
+    assert_eq!(error.code, "numerical_range");
+}
+#[test]
 fn resampling_preserves_intact_vectors_and_shuffle_preserves_all_cells() {
     use solvercraft_simulation::resampling::{PreparedTable, PreparedValues, ResamplingLimits, VectorAddress, VectorOrientation};
     let rows = vec![vec![1.0, 2.0, 3.0], vec![4.0, 5.0, 6.0]];

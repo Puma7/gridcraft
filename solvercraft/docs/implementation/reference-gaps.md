@@ -1,5 +1,10 @@
 # Exact remaining reference-function work
 
+The [2026-11-02 numerical review](../qa/numerical-review-2026-11-02.md) records
+subsequent wrong-result repairs, fresh independent checks and remaining numeric
+refusals. Historical positive function-name coverage below is not proof that
+every parameter combination was numerically correct.
+
 This report preserves the original CSV criteria. R046 covers the 111 frozen
 distribution/custom/special/time-series mathematical capabilities; R081 checks
 each actually supported worksheet signature/default policy. R091 records all

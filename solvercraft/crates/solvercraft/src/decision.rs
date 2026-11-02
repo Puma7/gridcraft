@@ -233,6 +233,101 @@ pub struct InformationValue {
     pub net_value_of_signal: f64,
     pub value_of_perfect_information: f64,
 }
+
+fn payoff_differences(left: &[f64], right: &[f64]) -> Result<Vec<f64>> {
+    let mut differences = Vec::new();
+    reserve(&mut differences, left.len())?;
+    for (left, right) in left.iter().zip(right) {
+        let difference = left - right;
+        if !difference.is_finite() {
+            return Err(SolverError::new("numerical_failure", "Payoff advantage exceeds supported finite precision"));
+        }
+        differences.push(difference);
+    }
+    Ok(differences)
+}
+
+fn signal_joint(likelihood: &[f64], priors: &[f64]) -> Result<(Vec<f64>, f64)> {
+    let joint: Vec<_> = likelihood.iter().zip(priors).map(|(l, p)| l * p).collect();
+    if likelihood.iter().zip(priors).zip(&joint).any(|((l, p), v)| *l > 0.0 && *p > 0.0 && (*v == 0.0 || v.abs() < f64::MIN_POSITIVE)) {
+        return Err(invalid("Signal mass exceeds supported precision"));
+    }
+    let mut mass = CompensatedSum::default();
+    for probability in &joint {
+        mass.add(*probability)?;
+    }
+    Ok((joint, mass.finish()?))
+}
+
+fn linear_information_value(problem: &InformationProblem, priors: &[f64], likelihoods: &[Vec<f64>]) -> Result<InformationValue> {
+    // Policy comparisons and values of information are differences. Anchor to
+    // another action before averaging instead of subtracting already-rounded,
+    // potentially enormous certainty-equivalent levels.
+    let mut baseline_action = 0;
+    for action in 1..problem.action_payoffs.len() {
+        let differences = payoff_differences(&problem.action_payoffs[action], &problem.action_payoffs[baseline_action])?;
+        if crate::risk::weighted_mean(&differences, priors)? > 0.0 {
+            baseline_action = action;
+        }
+    }
+    let baseline = &problem.action_payoffs[baseline_action];
+    let baseline_ce = crate::risk::weighted_mean(baseline, priors)?;
+    let mut perfect_payoffs = baseline.clone();
+    let mut perfect_advantages = vec![0.0_f64; baseline.len()];
+    for payoffs in &problem.action_payoffs {
+        let advantages = payoff_differences(payoffs, baseline)?;
+        for ((perfect, advantage), (payoff, gain)) in perfect_payoffs.iter_mut().zip(&mut perfect_advantages).zip(payoffs.iter().zip(advantages)) {
+            *perfect = perfect.max(*payoff);
+            *advantage = (*advantage).max(gain);
+        }
+    }
+    let perfect_ce = crate::risk::weighted_mean(&perfect_payoffs, priors)?;
+    let value_of_perfect_information = crate::risk::weighted_mean(&perfect_advantages, priors)?;
+    let mut signal_actions = Vec::new();
+    let mut signal_advantages = Vec::new();
+    let mut signal_payoffs = Vec::new();
+    let mut signal_masses = Vec::new();
+    reserve(&mut signal_actions, likelihoods.len())?;
+    reserve(&mut signal_advantages, likelihoods.len())?;
+    reserve(&mut signal_payoffs, likelihoods.len())?;
+    reserve(&mut signal_masses, likelihoods.len())?;
+    for likelihood in likelihoods {
+        let (joint, mass) = signal_joint(likelihood, priors)?;
+        if mass == 0.0 {
+            signal_actions.push(0);
+            continue;
+        }
+        let mut best = 0.0;
+        let mut choice = baseline_action;
+        for (action, payoffs) in problem.action_payoffs.iter().enumerate() {
+            let advantages = payoff_differences(payoffs, baseline)?;
+            let advantage = crate::risk::weighted_mean(&advantages, &joint)?;
+            if advantage > best {
+                best = advantage;
+                choice = action;
+            }
+        }
+        signal_actions.push(choice);
+        signal_advantages.push(best);
+        signal_payoffs.push(crate::risk::weighted_mean(&problem.action_payoffs[choice], &joint)?);
+        signal_masses.push(mass);
+    }
+    let gross_value = crate::risk::weighted_mean(&signal_advantages, &signal_masses)?;
+    let net_value_of_signal = gross_value - problem.acquisition_cost;
+    let signal_ce = crate::risk::weighted_mean(&signal_payoffs, &signal_masses)? - problem.acquisition_cost;
+    if !net_value_of_signal.is_finite() || !signal_ce.is_finite() {
+        return Err(SolverError::new("numerical_failure", "Information value exceeds finite precision"));
+    }
+    Ok(InformationValue {
+        baseline_action,
+        baseline_certainty_equivalent: baseline_ce,
+        perfect_information_certainty_equivalent: perfect_ce,
+        signal_actions,
+        signal_certainty_equivalent: signal_ce,
+        net_value_of_signal,
+        value_of_perfect_information,
+    })
+}
 /// Compare a pre-information action with policies chosen after a signal, and
 /// perfect information. Acquisition cost is included exactly once, before utility.
 pub fn information_value(problem: &InformationProblem, max_memory_bytes: u64) -> Result<InformationValue> {
@@ -290,6 +385,9 @@ pub fn information_value(problem: &InformationProblem, max_memory_bytes: u64) ->
             row[state] = probability;
         }
     }
+    if matches!(problem.utility, Utility::Linear {}) {
+        return linear_information_value(problem, &priors, &likelihoods);
+    }
     let mut baseline = f64::NEG_INFINITY;
     let mut baseline_action = 0;
     let mut perfect = Vec::new();
@@ -317,15 +415,7 @@ pub fn information_value(problem: &InformationProblem, max_memory_bytes: u64) ->
     reserve(&mut signal_utilities, s)?;
     reserve(&mut signal_masses, s)?;
     for likelihood in &likelihoods {
-        let joint: Vec<_> = likelihood.iter().zip(&priors).map(|(l, p)| l * p).collect();
-        if likelihood.iter().zip(&priors).zip(&joint).any(|((l, p), v)| *l > 0.0 && *p > 0.0 && (*v == 0.0 || v.abs() < f64::MIN_POSITIVE)) {
-            return Err(invalid("Signal mass exceeds supported precision"));
-        }
-        let mut mass = CompensatedSum::default();
-        for p in &joint {
-            mass.add(*p)?;
-        }
-        let mass = mass.finish()?;
+        let (joint, mass) = signal_joint(likelihood, &priors)?;
         if mass == 0.0 {
             signal_actions.push(0);
             continue;

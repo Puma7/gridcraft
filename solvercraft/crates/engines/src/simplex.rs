@@ -10,6 +10,14 @@ struct Row {
     coefficients: Vec<f64>,
     relation: Relation,
     rhs: f64,
+    /// Original constraint and the sign/scale used to normalize its row.
+    source: Option<(usize, f64)>,
+}
+struct DualLink {
+    source: usize,
+    column: usize,
+    cost: f64,
+    multiplier: f64,
 }
 struct Tableau {
     rows: Vec<Vec<f64>>,
@@ -18,7 +26,7 @@ struct Tableau {
 }
 enum Step {
     Optimal,
-    Unbounded,
+    Unbounded(usize),
     Stopped(Termination),
     Numerical(String),
 }
@@ -64,7 +72,10 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         .and_then(|r| r.checked_mul(max_width as u64))
         .and_then(|v| v.checked_mul(24))
         .ok_or(Relaxation::Stopped(Termination::MemoryLimit))?;
-    if bytes > budget.options.max_memory_bytes {
+    let certificate_bytes = (n as u64)
+        .checked_mul(std::mem::size_of::<solvercraft_model::ExactProducts>() as u64)
+        .and_then(|v| v.checked_add((max_rows as u64).checked_mul(64)?));
+    if bytes.checked_add(certificate_bytes.unwrap_or(u64::MAX)).is_none_or(|v| v > budget.options.max_memory_bytes) {
         return Err(Relaxation::Stopped(Termination::MemoryLimit));
     }
     let mut columns = Vec::new();
@@ -97,7 +108,7 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     }
     let ny = columns.len();
     let mut normalized = Vec::new();
-    for constraint in &model.constraints {
+    for (source, constraint) in model.constraints.iter().enumerate() {
         budget.check().map_err(Relaxation::Stopped)?;
         let mut original = allocated(n, 0.0)?;
         for term in &constraint.terms {
@@ -149,7 +160,9 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         if !rhs.is_finite() {
             return Err(Relaxation::Numerical("Constraint row scaling overflowed.".into()));
         }
+        let mut source_multiplier = 1.0 / scale;
         if rhs < 0.0 {
+            source_multiplier = -source_multiplier;
             rhs = -rhs;
             for coefficient in &mut coefficients {
                 *coefficient = -*coefficient;
@@ -160,12 +173,12 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
                 Relation::Equal => Relation::Equal,
             };
         }
-        normalized.push(Row { coefficients, relation, rhs });
+        normalized.push(Row { coefficients, relation, rhs, source: Some((source, source_multiplier)) });
     }
     for (column, rhs) in upper_bounds {
         let mut coefficients = allocated(ny, 0.0)?;
         coefficients[column] = 1.0;
-        normalized.push(Row { coefficients, relation: Relation::LessEqual, rhs });
+        normalized.push(Row { coefficients, relation: Relation::LessEqual, rhs, source: None });
     }
     let slack = normalized.iter().filter(|r| r.relation != Relation::Equal).count();
     let artificial = normalized.iter().filter(|r| r.relation != Relation::LessEqual).count();
@@ -175,10 +188,19 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
     let mut basis = Vec::new();
     let mut next_slack = ny;
     let mut next_art = non_artificial;
+    let mut dual_links = Vec::new();
     for row in &normalized {
         let mut values = allocated(width + 1, 0.0)?;
         for (v, a) in values.iter_mut().zip(&row.coefficients) {
             *v = *a;
+        }
+        let (dual_column, dual_cost, dual_sign) = match row.relation {
+            Relation::LessEqual => (next_slack, 0.0, 1.0),
+            Relation::GreaterEqual => (next_slack, 0.0, -1.0),
+            Relation::Equal => (next_art, 1.0, 1.0),
+        };
+        if let Some((source, multiplier)) = row.source {
+            dual_links.push(DualLink { source, column: dual_column, cost: dual_cost, multiplier: multiplier / dual_sign });
         }
         let basic = match row.relation {
             Relation::LessEqual => {
@@ -220,10 +242,10 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
             )
             .map_err(|e| Relaxation::Numerical(format!("Phase-one cost aggregation: {e}")))?;
         }
-        match simplex(&mut tableau, &mut phase, width, Some(non_artificial), budget) {
+        match simplex(&mut tableau, &mut phase, width, Some(non_artificial), None, budget) {
             Step::Stopped(reason) => return Err(Relaxation::Stopped(reason)),
             Step::Numerical(reason) => return Err(Relaxation::Numerical(reason)),
-            Step::Unbounded => {
+            Step::Unbounded(_) => {
                 return Err(Relaxation::Numerical("Phase-one objective unexpectedly became unbounded.".into()));
             }
             Step::Optimal => {}
@@ -238,10 +260,18 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         if !sum_artificial.is_finite() {
             return Err(Relaxation::Numerical("Non-finite phase-one objective.".into()));
         }
-        // Phase-one variables are row-scaled. A nonzero minimum is an LP
-        // infeasibility result; final feasible candidates are checked unscaled.
+        // Rounded phase-I pivots may erase a small coefficient that matters
+        // over a wide variable interval. An artificial residual alone must not
+        // label the original model infeasible. Independently verify a signed
+        // original-row separation over the current variable box first.
         if sum_artificial > budget.options.feasibility_tolerance {
-            return Ok(Relaxation::Infeasible);
+            return if infeasibility_certificate(model, bounds, &phase, &dual_links, budget)? {
+                Ok(Relaxation::Infeasible)
+            } else {
+                Err(Relaxation::Numerical(
+                    "Phase-one residual lacks an independently valid original-model infeasibility certificate; rescale the model.".into(),
+                ))
+            };
         }
         let mut redundant = Vec::new();
         for i in 0..tableau.rows.len() {
@@ -275,32 +305,10 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         cost[j] = original_cost[c.original] * c.sign;
     }
     let mut objective = allocated(width + 1, 0.0)?;
-    for (column, value) in objective.iter_mut().enumerate() {
-        let mut sum = solvercraft_model::ExactProducts::default();
-        sum.add(cost[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
-        for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
-            sum.add_product(-cost[*basic], row[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
-        }
-        *value = sum.finish().map_err(|e| Relaxation::Numerical(format!("Reduced-cost aggregation: {e}")))?;
-    }
-    // Normalize after eliminating the current basis: a large cost on an already
-    // constrained variable must not erase a meaningful remaining small cost.
-    // Phase two does not use the objective constant for any stopping decision.
-    let cost_scale = objective.iter().take(non_artificial).map(|v| v.abs()).fold(0.0_f64, f64::max);
-    if cost_scale > 0.0 {
-        for value in objective.iter_mut().take(non_artificial) {
-            let original = *value;
-            *value /= cost_scale;
-            if !value.is_finite() || original != 0.0 && *value == 0.0 {
-                return Err(Relaxation::Numerical("Objective scaling loses a nonzero reduced cost; rescale the model.".into()));
-            }
-        }
-    }
-    objective[width] = 0.0;
-    let outcome = simplex(&mut tableau, &mut objective, non_artificial, None, budget);
+    let outcome = simplex(&mut tableau, &mut objective, non_artificial, None, Some(&cost), budget);
     let unbounded = match outcome {
-        Step::Optimal => false,
-        Step::Unbounded => true,
+        Step::Optimal => None,
+        Step::Unbounded(column) => Some(column),
         Step::Stopped(reason) => return Err(Relaxation::Stopped(reason)),
         Step::Numerical(reason) => return Err(Relaxation::Numerical(reason)),
     };
@@ -347,7 +355,128 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
             return Err(Relaxation::Numerical("LP basis failed original constraint verification; rescale the model.".into()));
         }
     }
-    Ok(if unbounded { Relaxation::Unbounded(values) } else { Relaxation::Optimal(values) })
+    if let Some(entering) = unbounded {
+        if !recession_certificate(model, bounds, &columns, &tableau, entering, budget)? {
+            return Err(Relaxation::Numerical(
+                "Tableau ray lacks an exact original-row/bound recession and improving-objective certificate; rescale the model.".into(),
+            ));
+        }
+        Ok(Relaxation::Unbounded(values))
+    } else {
+        Ok(Relaxation::Optimal(values))
+    }
+}
+
+fn recession_certificate(
+    model: &OptimizationModel,
+    bounds: &[(Option<f64>, Option<f64>)],
+    columns: &[Column],
+    tableau: &Tableau,
+    entering: usize,
+    budget: &Budget<'_>,
+) -> std::result::Result<bool, Relaxation> {
+    use std::cmp::Ordering;
+    let mut transformed = allocated(columns.len(), 0.0)?;
+    if entering < columns.len() {
+        transformed[entering] = 1.0;
+    }
+    for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
+        if *basic < columns.len() {
+            transformed[*basic] = -row[entering];
+        }
+    }
+    let mut direction = allocated(model.variables.len(), 0.0)?;
+    for (original, value) in direction.iter_mut().enumerate() {
+        budget.check().map_err(Relaxation::Stopped)?;
+        *value = solvercraft_model::compensated_sum(
+            columns.iter().enumerate().filter(|(_, c)| c.original == original).map(|(i, c)| c.sign * transformed[i]),
+        )
+        .map_err(|e| Relaxation::Numerical(e.to_string()))?;
+    }
+    for (d, (low, high)) in direction.iter().zip(bounds) {
+        if !d.is_finite() || low.is_some() && *d < 0.0 || high.is_some() && *d > 0.0 {
+            return Ok(false);
+        }
+    }
+    for row in &model.constraints {
+        budget.check().map_err(Relaxation::Stopped)?;
+        let mut derivative = solvercraft_model::ExactProducts::default();
+        for term in &row.terms {
+            derivative.add_product(term.coefficient, direction[term.variable]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+        let sign = derivative.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        if match row.relation {
+            Relation::LessEqual => sign == Ordering::Greater,
+            Relation::GreaterEqual => sign == Ordering::Less,
+            Relation::Equal => sign != Ordering::Equal,
+        } {
+            return Ok(false);
+        }
+    }
+    let mut descent = solvercraft_model::ExactProducts::default();
+    for term in &model.objective.linear {
+        descent.add_product(term.coefficient, direction[term.variable]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+    }
+    let sign = descent.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))?;
+    Ok(match model.objective.direction {
+        Direction::Minimize => sign == Ordering::Less,
+        Direction::Maximize => sign == Ordering::Greater,
+    })
+}
+
+fn infeasibility_certificate(
+    model: &OptimizationModel,
+    bounds: &[(Option<f64>, Option<f64>)],
+    phase: &[f64],
+    links: &[DualLink],
+    budget: &Budget<'_>,
+) -> std::result::Result<bool, Relaxation> {
+    use std::cmp::Ordering;
+    let mut weights = allocated(model.constraints.len(), 0.0)?;
+    for link in links {
+        let value = (link.cost - phase[link.column]) * link.multiplier;
+        if !value.is_finite() {
+            return Ok(false);
+        }
+        weights[link.source] = match model.constraints[link.source].relation {
+            Relation::LessEqual => value.min(0.0),
+            Relation::GreaterEqual => value.max(0.0),
+            Relation::Equal => value,
+        };
+    }
+    let mut gradients = allocated(model.variables.len(), solvercraft_model::ExactProducts::default())?;
+    let mut separation = solvercraft_model::ExactProducts::default();
+    for (row, weight) in model.constraints.iter().zip(&weights) {
+        budget.check().map_err(Relaxation::Stopped)?;
+        separation.add_product(*weight, row.rhs).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        for term in &row.terms {
+            gradients[term.variable].add_product(*weight, term.coefficient).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+    }
+    let mut endpoints = allocated(model.variables.len(), 0.0)?;
+    for ((gradient, (low, high)), endpoint) in gradients.iter().zip(bounds).zip(&mut endpoints) {
+        *endpoint = match gradient.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))? {
+            Ordering::Greater => match high {
+                Some(value) => *value,
+                None => return Ok(false),
+            },
+            Ordering::Less => match low {
+                Some(value) => *value,
+                None => return Ok(false),
+            },
+            Ordering::Equal => 0.0,
+        };
+    }
+    for (row, weight) in model.constraints.iter().zip(weights) {
+        budget.check().map_err(Relaxation::Stopped)?;
+        for term in &row.terms {
+            separation.add_triple(-weight, term.coefficient, endpoints[term.variable]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+    }
+    // Signed row weights imply weighted(Ax)>=weighted(b) for every feasible
+    // original x. Exact positivity of weighted(b)-max_box weighted(Ax) is a
+    // contradiction; no rounded reduced cost or magnitude threshold is a proof.
+    Ok(separation.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))? == Ordering::Greater)
 }
 
 fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'_>) -> std::result::Result<(), Relaxation> {
@@ -388,7 +517,49 @@ fn pivot(t: &mut Tableau, obj: &mut [f64], r: usize, j: usize, budget: &Budget<'
     Ok(())
 }
 
-fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, artificial_start: Option<usize>, budget: &mut Budget<'_>) -> Step {
+fn refresh_objective(t: &Tableau, obj: &mut [f64], costs: &[f64], allowed: usize, budget: &Budget<'_>) -> std::result::Result<(), Relaxation> {
+    // Pivoting a rounded/scaled objective row can erase a small cost and later
+    // falsely cancel the remaining large terms. Reconstruct from the original
+    // objective and the current basis before every phase-II entering decision.
+    // In particular, 10^16*x+y-10^16*z on x<=y<=z must retain its unit residual
+    // after the two zero-length pivots. Exact products recover it from this basis.
+    for (column, value) in obj.iter_mut().enumerate().take(t.width) {
+        if column % 32 == 0 {
+            budget.check().map_err(Relaxation::Stopped)?;
+        }
+        let mut sum = solvercraft_model::ExactProducts::default();
+        sum.add(costs[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        for (row, basic) in t.rows.iter().zip(&t.basis) {
+            sum.add_product(-costs[*basic], row[column]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+        }
+        *value = sum.finish().map_err(|e| Relaxation::Numerical(format!("Reduced-cost aggregation: {e}")))?;
+    }
+    // Normalize only after eliminating the current basis, not the original
+    // objective. A meaningful reduced cost is never deliberately rounded away.
+    let scale = obj.iter().take(allowed).map(|v| v.abs()).fold(0.0_f64, f64::max);
+    if scale > 0.0 {
+        for value in obj.iter_mut().take(allowed) {
+            let original = *value;
+            *value /= scale;
+            if !value.is_finite() || original != 0.0 && *value == 0.0 {
+                return Err(Relaxation::Numerical("Objective scaling loses a nonzero reduced cost; rescale the model.".into()));
+            }
+        }
+    }
+    // Phase II never uses a translated objective constant to choose a pivot or
+    // establish optimality. The original objective is evaluated independently.
+    obj[t.width] = 0.0;
+    Ok(())
+}
+
+fn simplex(
+    t: &mut Tableau,
+    obj: &mut [f64],
+    allowed: usize,
+    artificial_start: Option<usize>,
+    original_costs: Option<&[f64]>,
+    budget: &mut Budget<'_>,
+) -> Step {
     loop {
         if let Err(reason) = budget.step() {
             return Step::Stopped(reason);
@@ -400,6 +571,15 @@ fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, artificial_start: O
         if artificial_start.is_some_and(|start| t.basis.iter().zip(&t.rows).all(|(basic, row)| *basic < start || row[t.width] == 0.0)) {
             obj[t.width] = 0.0;
             return Step::Optimal;
+        }
+        if let Some(costs) = original_costs
+            && let Err(reason) = refresh_objective(t, obj, costs, allowed, budget)
+        {
+            return match reason {
+                Relaxation::Stopped(reason) => Step::Stopped(reason),
+                Relaxation::Numerical(message) => Step::Numerical(message),
+                _ => Step::Numerical("Unexpected reduced-cost reconstruction failure.".into()),
+            };
         }
         // Bland's entering and tie-breaking rule avoids cycling on degenerate bases.
         // A small reduced cost can still improve the objective substantially over
@@ -435,7 +615,7 @@ fn simplex(t: &mut Tableau, obj: &mut [f64], allowed: usize, artificial_start: O
             if t.rows.iter().any(|r| r[j] > 0.0 && r[j] <= PIVOT_EPS) {
                 return Step::Numerical("Numerically tiny pivot prevents a reliable unboundedness decision.".into());
             }
-            return Step::Unbounded;
+            return Step::Unbounded(j);
         };
         if let Err(reason) = pivot(t, obj, i, j, budget) {
             return match reason {

@@ -56,8 +56,16 @@ Original worksheet evaluation, document identity/revision, domains, protection a
 
 ## Verification
 
+The [numerical review of 2026-11-02](docs/qa/numerical-review-2026-11-02.md)
+reproduced and repaired silent wrong optima, false infeasibility/unboundedness,
+lost goal priorities/information costs, distribution-tail errors and false zero
+uncertainty. It adds independent mathematical, real CLI/MCP, workbook and actual
+Chrome checks. Its before/after counts and explicit numerical refusals supersede
+the affected numerical confidence of the historical checkpoints below. Finite
+tests do not establish correctness for every floating-point input.
+
 The [standalone app/agent verification](docs/implementation/app-agent-verification-2026-11-02.md)
-records the current integration: 645 SDK tests and 2,911 host tests passed,
+records the pre-audit integration: 645 SDK tests and 2,911 host tests passed,
 with one existing ignored host timing test; full format/Clippy/CI/WASM checks
 passed. It also records the optimized Windows app, real stdio MCP cases, actual
 offscreen rendering, packaged executable hashes and launcher-contract checks.

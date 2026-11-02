@@ -57,6 +57,10 @@ pub fn cvar_sorted(values: &[f64], alpha: f64) -> Result<f64> {
         return Err(SolverError::new("sample_order", "Observations must be finite and sorted."));
     }
     let tail_mass = (1.0 - alpha) * values.len() as f64;
+    // Exact binary upscaling keeps normalization from rounding every term of
+    // a subnormal tail to zero. The weighted sum stays below 2^1022 here.
+    let magnitude = values[0].abs().max(values[values.len() - 1].abs());
+    let scale = if magnitude < 1.0 { f64::from_bits(2045_u64 << 52) } else { 1.0 };
     let mut remaining = tail_mass;
     let mut mean = 0.0;
     let mut correction = 0.0;
@@ -67,13 +71,13 @@ pub fn cvar_sorted(values: &[f64], alpha: f64) -> Result<f64> {
             break;
         }
         let weight = remaining.min(1.0);
-        let term = *value * (weight / tail_mass);
+        let term = (*value * scale) * (weight / tail_mass);
         let next = mean + term;
         correction += if mean.abs() >= term.abs() { (mean - next) + term } else { (term - next) + mean };
         mean = next;
         remaining -= weight;
     }
-    let mean = mean + correction;
+    let mean = (mean + correction) / scale;
     if !mean.is_finite() {
         return Err(SolverError::new("numerical_range", "Expected shortfall exceeds finite arithmetic."));
     }

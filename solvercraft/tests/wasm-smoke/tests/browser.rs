@@ -100,6 +100,49 @@ fn browser_handles_large_seed_json_without_javascript_precision_loss() {
 }
 
 #[wasm_bindgen_test]
+fn browser_retains_a_unit_improvement_after_large_objective_cancellation() {
+    let model: OptimizationModel = serde_json::from_value(serde_json::json!({
+        "schema_version":1,"name":"browser cancellation oracle",
+        "variables":[{"name":"x","lower":0,"upper":1,"kind":"continuous"},
+                     {"name":"y","lower":0,"upper":1,"kind":"continuous"},
+                     {"name":"z","lower":0,"upper":1,"kind":"continuous"}],
+        "objective":{"direction":"maximize","offset":0,"linear":[{"variable":0,"coefficient":1e16},
+            {"variable":1,"coefficient":1},{"variable":2,"coefficient":-1e16}],"quadratic":[]},
+        "constraints":[{"name":"xy","terms":[{"variable":0,"coefficient":1},{"variable":1,"coefficient":-1}],"relation":"less_equal","rhs":0},
+            {"name":"yz","terms":[{"variable":1,"coefficient":1},{"variable":2,"coefficient":-1}],"relation":"less_equal","rhs":0}]
+    }))
+    .expect("synthetic model");
+    // 1e16*(x-z)+y <= y <= 1; equality is attained by x=y=z=1.
+    let result = solvercraft::solve(&model, &SolveOptions::default(), &NoControl).expect("cancellation solve");
+    assert_eq!(result.optimality, Optimality::Optimal);
+    assert_eq!(result.values, Some(vec![1.0, 1.0, 1.0]));
+    assert_eq!(result.objective, Some(1.0));
+    assert_eq!(result.best_bound, Some(1.0));
+}
+
+#[wasm_bindgen_test]
+fn browser_does_not_round_nonrepresentable_positive_variance_to_zero() {
+    let options = SimulationOptions { trials: 32, seed: 42, retain_samples: true, ..SimulationOptions::default() };
+    let result = solvercraft::simulation::simulate(&[Distribution::Uniform { low: -1e-200, high: 1e-200 }], &options, &NoControl, |x| Ok(x.to_vec()));
+    let error = result.expect_err("nonconstant tiny samples have no representable binary64 variance");
+    assert_eq!(error.code, "numerical_range");
+}
+
+#[wasm_bindgen_test]
+fn browser_lhs_keeps_a_discrete_mixture_on_its_exact_atoms() {
+    let options =
+        SimulationOptions { trials: 64, seed: 42, method: SamplingMethod::LatinHypercube, retain_samples: true, ..SimulationOptions::default() };
+    let distribution = Distribution::Mixture {
+        components: vec![Distribution::Constant { value: 0.0 }, Distribution::Constant { value: 1.0 }],
+        weights: vec![0.5, 0.5],
+    };
+    let result = solvercraft::simulation::simulate(&[distribution], &options, &NoControl, |x| Ok(x.to_vec())).expect("discrete mixture LHS");
+    let rows = result.samples.expect("samples");
+    assert!(rows.iter().all(|row| row == &[0.0] || row == &[1.0]));
+    assert_eq!(rows.iter().filter(|row| row[0] == 0.0).count(), 32);
+}
+
+#[wasm_bindgen_test]
 fn browser_autodiff_rejects_a_nondifferentiable_point() {
     let abs = solvercraft::compile::Expr::Abs { value: Box::new(solvercraft::compile::Expr::variable(0)) };
     assert!(solvercraft::compile::evaluate_with_gradient(&abs, &[0.0]).is_err());

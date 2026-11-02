@@ -233,11 +233,7 @@ where
         completed_trials: completed,
         summaries,
         samples: if options.retain_samples { Some(samples) } else { None },
-        sampling_version: if distributions.iter().any(solvercraft_math::extended::is_extended) {
-            format!("{SAMPLING_VERSION}/{}", solvercraft_math::catalog::CATALOG_VERSION)
-        } else {
-            SAMPLING_VERSION.into()
-        },
+        sampling_version: format!("{SAMPLING_VERSION}/{}", solvercraft_math::catalog::CATALOG_VERSION),
         warnings,
     })
 }

@@ -145,9 +145,15 @@ fn bounded_intervals(stats: &[OnlineMoments], rule: &StoppingRule, total_trials:
     for (stat, (low, high)) in stats.iter().zip(&rule.output_bounds) {
         let summary = stat.summary()?;
         let half = (high - low) * (log / (2.0 * summary.count as f64)).sqrt();
+        // A rounded sample mean and endpoint arithmetic can otherwise turn
+        // positive uncertainty into a point between adjacent support values.
+        // Reserve one outward representable endpoint before clipping to the
+        // caller's true deterministic bounds; exact zero-width bounds stay exact.
+        let lower = summary.mean - half;
+        let upper = summary.mean + half;
         intervals.push(MeanInterval {
-            lower: (summary.mean - half).max(*low),
-            upper: (summary.mean + half).min(*high),
+            lower: if low < high { lower.next_down().max(*low) } else { *low },
+            upper: if low < high { upper.next_up().min(*high) } else { *high },
             confidence: rule.confidence,
             method: "simultaneous_bounded_hoeffding".into(),
         });

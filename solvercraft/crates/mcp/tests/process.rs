@@ -153,6 +153,46 @@ fn actual_process_simulates_expression_and_constant_distribution_exactly() {
 }
 
 #[test]
+fn actual_agent_process_does_not_certify_a_cancelled_reduced_cost_as_optimal() {
+    let mut client = Client::spawn();
+    client.initialize();
+    // x<=y<=z on [0,1]: 1e16*(x-z)+y <= y <= 1, attained at (1,1,1).
+    let problem = json!({"schema_version":1,"name":"independent cancellation witness",
+        "variables":[{"name":"x","lower":0,"upper":1,"kind":"continuous"},
+                     {"name":"y","lower":0,"upper":1,"kind":"continuous"},
+                     {"name":"z","lower":0,"upper":1,"kind":"continuous"}],
+        "objective":{"direction":"maximize","offset":0,"linear":[{"variable":0,"coefficient":1e16},
+            {"variable":1,"coefficient":1},{"variable":2,"coefficient":-1e16}],"quadratic":[]},
+        "constraints":[{"name":"xy","terms":[{"variable":0,"coefficient":1},{"variable":1,"coefficient":-1}],"relation":"less_equal","rhs":0},
+            {"name":"yz","terms":[{"variable":1,"coefficient":1},{"variable":2,"coefficient":-1}],"relation":"less_equal","rhs":0}]});
+    let started = client.tool("solvercraft_start_solve", json!({"model":problem}));
+    let terminal = client.terminal(&started["job_id"]);
+    assert_eq!(terminal["result"]["ok"], true, "{terminal}");
+    let result = &terminal["result"]["value"];
+    assert_eq!(result["optimality"], "optimal", "{result}");
+    assert_eq!(result["values"], json!([1.0, 1.0, 1.0]));
+    assert_eq!(result["objective"], 1.0);
+    assert_eq!(result["best_bound"], 1.0);
+    client.close();
+}
+
+#[test]
+fn actual_agent_process_reports_unrepresentable_variance_without_false_certainty() {
+    let mut client = Client::spawn();
+    client.initialize();
+    let started = client.tool(
+        "solvercraft_start_simulation",
+        json!({
+        "inputs":[{"kind":"uniform","low":-1e-200,"high":1e-200}],
+        "options":{"trials":32,"seed":"42","retain_samples":true}}),
+    );
+    let terminal = client.terminal(&started["job_id"]);
+    assert_eq!(terminal["result"]["ok"], false, "{terminal}");
+    assert!(terminal.to_string().contains("numerical_range"), "{terminal}");
+    client.close();
+}
+
+#[test]
 fn actual_process_executes_portable_artcraft_model_without_a_workbook() {
     let mut client = Client::spawn();
     client.initialize();

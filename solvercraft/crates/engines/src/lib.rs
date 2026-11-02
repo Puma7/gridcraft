@@ -33,7 +33,7 @@ use solvercraft_model::{ExactProducts, compensated_sum, effective_bounds, evalua
 use solvercraft_types::*;
 
 /// Capabilities describe implemented behavior, not aspirational backend names.
-pub const ENGINE_NAME: &str = "solvercraft-dense-simplex-0.1";
+pub const ENGINE_NAME: &str = "solvercraft-dense-simplex-0.2";
 
 /// Owned-control auto route, including genuine finite-domain MIQP relaxations.
 /// This is the portable entry point for job systems already owning cancellation.

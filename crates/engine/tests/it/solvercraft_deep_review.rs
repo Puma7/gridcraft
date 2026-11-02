@@ -28,6 +28,47 @@ fn constant_simulation(input: &str, output: &str, value: f64) -> Json {
 }
 
 #[test]
+fn workbook_simulation_rejects_false_zero_variance_and_preserves_the_document() {
+    let mut s = session();
+    set(&mut s, "A1", "7");
+    set(&mut s, "B1", "=A1");
+    let before = s.doc().unwrap().wb.clone();
+    let result = s.execute(
+        "solvercraft.simulate",
+        json!({
+        "inputs":[{"cell":"A1","distribution":{"kind":"uniform","low":-1e-200,"high":1e-200}}],
+        "outputs":"B1","options":{"trials":32,"seed":"42","retain_samples":true}}),
+    );
+    let error = result.expect_err("positive nonrepresentable variance must not become a zero-variance report");
+    assert!(error.to_string().contains("numerical_range"), "{error}");
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+    assert_eq!(value(&s, "Sheet1", "A1"), Value::number(7.0));
+}
+
+#[test]
+fn workbook_optimization_preserves_the_unit_improvement_and_checks_calc_before_apply() {
+    let mut s = session();
+    for cell in ["A1", "A2", "A3"] {
+        set(&mut s, cell, "0");
+    }
+    set(&mut s, "B1", "=1e16*(A1-A3)+A2");
+    let request = json!({"objective":"B1","variables":[
+        {"cell":"A1","lower":0,"upper":1},{"cell":"A2","lower":0,"upper":1},{"cell":"A3","lower":0,"upper":1}],
+        "goal":"max","constraints":["A1 <= A2","A2 <= A3"]});
+    let preview = s.execute("solvercraft.solve", request).unwrap();
+    // Exact inequality oracle: 1e16*(x-z)+y <= y <= 1.
+    assert_eq!(preview["result"]["values"], json!([1.0, 1.0, 1.0]));
+    assert_eq!(preview["result"]["objective"], 1.0);
+    assert_eq!(value(&s, "Sheet1", "B1"), Value::number(0.0));
+    s.execute("solvercraft.result.apply", preview).unwrap();
+    assert_eq!(value(&s, "Sheet1", "B1"), Value::number(1.0));
+    s.execute("edit.undo", json!({})).unwrap();
+    for cell in ["A1", "A2", "A3"] {
+        assert_eq!(value(&s, "Sheet1", cell), Value::number(0.0));
+    }
+}
+
+#[test]
 fn explicit_negative_lower_bound_overrides_the_nonnegative_default() {
     let mut s = session();
     set(&mut s, "A1", "0");

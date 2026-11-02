@@ -1,0 +1,209 @@
+{
+  "schema": "solvercraft.numerical-review-public.v1",
+  "date": "2026-11-02",
+  "base_commit": "dec991232f686930b52329d6caf8729b0c5e31fd",
+  "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf",
+  "canonical_code_files": 838,
+  "canonicalization": "838 Rust/TOML/lock/Python files; sorted relative paths; CRLF normalized to LF; not a complete binary-input manifest",
+  "publication_scope": "Fixed public fields and synthetic mathematical fixtures only; no raw environment, paths, argv or arbitrary diagnostics.",
+  "versions": {
+    "rust": "1.95.0",
+    "python": "3.12.6",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "dense_engine": "solvercraft-dense-simplex-0.2",
+    "catalog": "solvercraft-baseline17-r4-catalog-v2"
+  },
+  "counts": {
+    "sdk": {
+      "passed": 686,
+      "failed": 0,
+      "ignored": 0
+    },
+    "host": {
+      "passed": 2913,
+      "failed": 0,
+      "ignored": 1
+    }
+  },
+  "gates": [
+    {
+      "check": "sdk-fmt",
+      "exit_code": 0,
+      "seconds": 1.22,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    },
+    {
+      "check": "sdk-tests",
+      "exit_code": 0,
+      "seconds": 135.48,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    },
+    {
+      "check": "sdk-clippy",
+      "exit_code": 0,
+      "seconds": 8.44,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    },
+    {
+      "check": "host-ci",
+      "exit_code": 0,
+      "seconds": 171.36,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    },
+    {
+      "check": "cli-mcp-release",
+      "exit_code": 0,
+      "seconds": 0.34,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    },
+    {
+      "check": "app-release",
+      "exit_code": 0,
+      "seconds": 1.02,
+      "source_stable": true,
+      "canonical_code_sha256": "7353b7c2ecb447f8901b7130ad751d5bec9e778c65c2d5d08aaaf9aa142730bf"
+    }
+  ],
+  "before_process_counts": {
+    "passed": 257,
+    "failed": 5,
+    "explicit_rejection": 0,
+    "honest_inconclusive": 1
+  },
+  "after_process_counts": {
+    "passed": 259,
+    "failed": 0,
+    "explicit_rejection": 1,
+    "honest_inconclusive": 3
+  },
+  "distribution": {
+    "scipy": "1.18.1",
+    "numpy": "2.5.4",
+    "thresholds": {
+      "quantile_relative": 2e-06,
+      "quantile_zero_absolute": 1e-10,
+      "cdf_absolute": 2e-08,
+      "legacy_normal_lognormal_cdf_absolute": 5e-07,
+      "logdensity_absolute": 2e-06,
+      "logdensity_additional_relative": 1e-10
+    },
+    "counts": {
+      "distributions": 150,
+      "quantiles": 1349,
+      "cdfs": 1361,
+      "logdensities": 1361,
+      "explicit_range_errors": 0,
+      "oracle_endpoint_or_unavailable_quantiles": 1,
+      "transport_float_changes": 0
+    },
+    "max_errors": {
+      "quantile_relative": 3.771408747484251e-08,
+      "quantile_zero_absolute": 0.0,
+      "cdf_absolute": 6.859614753995658e-08,
+      "logdensity_absolute": 1.6198598018490884e-11
+    },
+    "failure_count": 0,
+    "source_stable": true,
+    "harness_sha256": "7fa9b698b9f330b28f2197e20c88bb40d48e3edbcdecb1afdb5a45a0b377fbea"
+  },
+  "browser": {
+    "actual_browser": true,
+    "exit_code": 0,
+    "runner_exit_code": 0,
+    "test_wasm_sha256": "5ae86dc8dfa238561fb10b191c8ca6d42543b29e6367619dcc900d51e3cc5625",
+    "browser_sha256": "4132eb3e9c5b3978874eed48cb45c21debf343a0d383b6d2fb01a5fcf349ec65",
+    "driver_sha256": "95ae04aebd7daf845dce58d42139f0acbf1a5172fd480db328ea70bdc6301790",
+    "runner_sha256": "c7b8d6109c485cee209ca616e500efc5311bb47e56eac5888c3afcb342dacbd9",
+    "test_results": [
+      "test browser_solves_wyndor_and_validates_original_constraints ... ok",
+      "test browser_solves_a_coupled_convex_quadratic_with_original_residuals ... ok",
+      "test browser_samples_deterministically_with_loss_tail_statistics ... ok",
+      "test browser_retains_a_unit_improvement_after_large_objective_cancellation ... ok",
+      "test browser_rejects_native_thread_jobs_without_panicking ... ok",
+      "test browser_randomized_sobol_integrates_a_smooth_product ... ok",
+      "test browser_optimizes_finite_scenario_tail_risk ... ok",
+      "test browser_nonlinear_method_reports_stationarity_separately_from_global_optimality ... ok",
+      "test browser_lhs_keeps_a_discrete_mixture_on_its_exact_atoms ... ok",
+      "test browser_latin_hypercube_preserves_all_strata ... ok",
+      "test browser_honors_binary_domains ... ok",
+      "test browser_handles_large_seed_json_without_javascript_precision_loss ... ok",
+      "test browser_executes_clarabel_socp_with_a_cauchy_schwarz_oracle ... ok",
+      "test browser_does_not_round_nonrepresentable_positive_variance_to_zero ... ok",
+      "test browser_constrained_nonlinear_rechecks_the_original_exponential_inequality ... ok",
+      "test browser_autodiff_rejects_a_nondifferentiable_point ... ok"
+    ],
+    "passed": 16,
+    "failed": 0,
+    "ignored": 0,
+    "qualification": "SDK math execution in actual headless Chrome; no new production Worker or native GUI click-through claim. Test bodies passed; runner logged a window-close timeout warning before bounded driver termination."
+  },
+  "performance": {
+    "baseline": {
+      "executable_sha256": "2437b11058922252a5c31f8b0df6b5c74fd1b2a2ae6047219fd82944f14dfb50",
+      "repeats": 3,
+      "cases": [
+        {
+          "name": "continuous_lp_100_variables_500_rows",
+          "median_wall_seconds": 0.23916079999980866,
+          "max_os_peak_working_set_bytes": 10469376
+        },
+        {
+          "name": "streaming_mc_100000_trials_20_inputs_10_outputs",
+          "median_wall_seconds": 0.5013039999994362,
+          "max_os_peak_working_set_bytes": 5681152
+        }
+      ]
+    },
+    "repaired": {
+      "executable_sha256": "ef1034b5eff99a3545ad952ab9f911e5bc5a6876f1b231b4218221f64909f446",
+      "repeats": 3,
+      "cases": [
+        {
+          "name": "continuous_lp_100_variables_500_rows",
+          "median_wall_seconds": 0.573622300000352,
+          "max_os_peak_working_set_bytes": 10641408
+        },
+        {
+          "name": "streaming_mc_100000_trials_20_inputs_10_outputs",
+          "median_wall_seconds": 0.4315592999992077,
+          "max_os_peak_working_set_bytes": 6053888
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "binary_sha256": {
+      "solvercraft.exe": "b7561030d55291c2d0d091e6f20d8f42678f7742e20369c1c66f64e396c3346f",
+      "solvercraft-cli.exe": "ef1034b5eff99a3545ad952ab9f911e5bc5a6876f1b231b4218221f64909f446",
+      "solvercraft-mcp.exe": "aa6e3c6c222b0621977a2f88245a0d96468fc490f56f3f8d45cae6ae7b9323d6"
+    },
+    "assets": {
+      "Solvercraft-Windows.zip": {
+        "bytes": 2193626,
+        "sha256": "52de6e3643c52cfaab75678d68267978772cf63a9fdb5424fcfadf5f0f135b0e"
+      },
+      "solvercraft-0.14.2-windows-x64-portable.zip": {
+        "bytes": 47133564,
+        "sha256": "68c89513d38b0b947b0d6c136bc84729f9761e2ad5657ee62474364f8e45796b",
+        "entries": 702,
+        "uncompressed_bytes": 100182240
+      }
+    }
+  },
+  "release_admission": {
+    "optimized_mcp_tests": {
+      "passed": 17,
+      "failed": 0,
+      "ignored": 0
+    },
+    "x64_pe_admission": true,
+    "app_version": "Solvercraft 0.14.2"
+  },
+  "process_harness_sha256": "1c4244ec28fa7b09d3ab2931bbe2d4bf3449b847a424ecd67937cc084fc8f63d"
+}

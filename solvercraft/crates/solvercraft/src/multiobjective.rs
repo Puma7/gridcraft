@@ -72,6 +72,22 @@ fn evaluate(goal: &LinearGoal, values: &[f64]) -> Result<f64> {
     }
     total.finish()
 }
+fn priority_bound(goal: &LinearGoal, values: &[f64], tolerance: f64) -> Result<LinearConstraint> {
+    // Constants cancel from a priority comparison. Do not round a large goal
+    // offset into the achieved value and subtract it again: that can erase the
+    // entire variable contribution and relax a zero-tolerance priority.
+    let mut activity = CompensatedSum::default();
+    for term in &goal.terms {
+        activity.add(term.coefficient * values.get(term.variable).ok_or_else(|| invalid("Missing solution handle"))?)?;
+    }
+    activity.add(sign(goal.direction) * tolerance)?;
+    Ok(LinearConstraint {
+        name: goal.name.clone(),
+        terms: goal.terms.clone(),
+        relation: if goal.direction == Direction::Minimize { Relation::LessEqual } else { Relation::GreaterEqual },
+        rhs: activity.finish()?,
+    })
+}
 fn scalarize(goals: &[LinearGoal], weights: &[f64]) -> Result<Objective> {
     let normalized = crate::risk::probability_weights(weights.iter().copied())?;
     let mut coefficients: BTreeMap<usize, CompensatedSum> = BTreeMap::new();
@@ -183,12 +199,7 @@ pub fn solve(
             && optimal
             && stage + 1 < goals.len()
         {
-            let achieved = evaluate(&goals[stage], values)?;
-            let limit = achieved + sign(goals[stage].direction) * absolute_tolerances[stage];
-            if !limit.is_finite() {
-                return Err(invalid("Lexicographic bound overflow"));
-            }
-            let constraint = bound(&goals[stage], limit)?;
+            let constraint = priority_bound(&goals[stage], values, absolute_tolerances[stage])?;
             working.constraints.push(constraint.clone());
             imposed.push(constraint);
         }

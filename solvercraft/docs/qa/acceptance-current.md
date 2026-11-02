@@ -1,5 +1,12 @@
 # Current acceptance against the original 96 requirements
 
+Numerical follow-up, 2026-11-02: the [independent numerical review](numerical-review-2026-11-02.md)
+found and repaired silent errors that the historical final7 gates below did not
+detect. Its current tests and qualifications supersede numerical confidence in
+the affected cases. The original requirement rows and historical acceptance
+records remain preserved; bounded acceptance does not establish correctness for
+all parameter values.
+
 Review date: 2026-11-01. This is the **final7** source-bound bounded assessment. The [structured assessment](acceptance-current.json) preserves all original fields and statuses.
 
 **All 96 original criteria retain their accepted bounded contracts.** This is criterion tracking, not universal correctness, all-platform coverage or full Frontline/272-PSI parity. The supported import scope is31 explicit top-level core forms; historical19-form results stay historical.

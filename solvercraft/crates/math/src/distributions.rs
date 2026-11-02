@@ -123,7 +123,11 @@ impl PreparedDistribution {
         }
         let value = match &self.distribution {
             Distribution::Constant { value } => *value,
-            Distribution::Uniform { low, high } => low + (high - low) * p,
+            Distribution::Uniform { low, high } => {
+                // Preserve the declared endpoints even if subtracting a large
+                // negative lower bound rounds away the upper bound.
+                if p == 1.0 { *high } else { low + (high - low) * p }
+            }
             Distribution::Normal { mean, std_dev } => {
                 if *std_dev == 0.0 {
                     *mean

@@ -9,11 +9,13 @@ fn numerical_range() -> SolverError {
 ///
 /// - Origin-centered, adaptively scaled Welford moments preserve small variance
 ///   around a large offset and avoid forming an overflowing squared deviation.
-/// - A compensated scaled raw sum computes the reported mean without requiring
-///   cancellation of an origin and an almost equal reconstructed offset.
+/// - Compensated sums in scaled and original units compute the reported mean
+///   without cancelling an origin and an almost equal reconstructed offset,
+///   or normalizing away a small residue between huge cancelling values.
 ///
 /// A finite standard deviation does not imply a representable variance. The
-/// latter remains an explicit error in summary(), rather than an infinite field.
+/// latter remains an explicit error in summary(), rather than an infinite field
+/// or a rounded zero for nonconstant observations.
 #[derive(Debug, Clone, Default)]
 pub struct OnlineMoments {
     count: u64,
@@ -26,6 +28,10 @@ pub struct OnlineMoments {
     sum_scale: f64,
     sum_scaled: f64,
     sum_correction: f64,
+    raw_sum: f64,
+    raw_correction: f64,
+    raw_sum_available: bool,
+    scaled_sum_lost_term: bool,
     minimum: f64,
     maximum: f64,
 }
@@ -58,6 +64,8 @@ impl OnlineMoments {
             self.origin = value;
             self.sum_scale = value.abs();
             self.sum_scaled = if value == 0.0 { 0.0 } else { value / self.sum_scale };
+            self.raw_sum = value;
+            self.raw_sum_available = true;
             self.minimum = value;
             self.maximum = value;
             return Ok(());
@@ -85,6 +93,18 @@ impl OnlineMoments {
             (m2, m2_correction) = compensated_add(m2, m2_correction, increment);
         }
         let (sum_scale, sum_scaled, sum_correction) = scaled_sum_add(self.sum_scale, self.sum_scaled, self.sum_correction, value);
+        // Normalizing vastly different finite magnitudes can erase a term
+        // which becomes significant after cancellation. Retain an independent
+        // Neumaier sum in original units whenever its partial sums fit.
+        let raw_sum = self.raw_sum + value;
+        let raw_correction =
+            self.raw_correction + if self.raw_sum.abs() >= value.abs() { (self.raw_sum - raw_sum) + value } else { (value - raw_sum) + self.raw_sum };
+        let raw_sum_available = self.raw_sum_available && raw_sum.is_finite() && raw_correction.is_finite();
+        let ratio = if self.sum_scale == 0.0 { 0.0 } else { self.sum_scale / sum_scale };
+        let scaled_sum_lost_term = self.scaled_sum_lost_term
+            || (value != 0.0 && value / sum_scale == 0.0)
+            || (self.sum_scaled != 0.0 && self.sum_scaled * ratio == 0.0)
+            || (self.sum_correction != 0.0 && self.sum_correction * ratio == 0.0);
         if !mean_delta.is_finite() || !m2.is_finite() || m2 < 0.0 || !sum_scaled.is_finite() || !sum_correction.is_finite() {
             return Err(numerical_range());
         }
@@ -98,6 +118,10 @@ impl OnlineMoments {
         self.sum_scale = sum_scale;
         self.sum_scaled = sum_scaled;
         self.sum_correction = sum_correction;
+        self.raw_sum = if raw_sum_available { raw_sum } else { 0.0 };
+        self.raw_correction = if raw_sum_available { raw_correction } else { 0.0 };
+        self.raw_sum_available = raw_sum_available;
+        self.scaled_sum_lost_term = scaled_sum_lost_term;
         self.minimum = self.minimum.min(value);
         self.maximum = self.maximum.max(value);
         Ok(())
@@ -111,22 +135,29 @@ impl OnlineMoments {
             // centered mean avoids normalizing away the low-order location.
             // This branch cannot suffer large opposite-sign cancellation.
             self.deviation_scale.mul_add(self.mean_delta, self.origin)
+        } else if self.raw_sum_available {
+            // Divide each finite expansion component before their final sum;
+            // the sum itself could overflow although the mean is finite.
+            self.raw_sum / self.count as f64 + self.raw_correction / self.count as f64
         } else {
             // For data crossing zero, prefer the compensated raw sum rather
             // than subtracting a large origin from a reconstructed offset.
+            if self.scaled_sum_lost_term {
+                return Err(numerical_range());
+            }
             self.sum_scale * ((self.sum_scaled + self.sum_correction) / self.count as f64)
         };
         if value.is_finite() { Ok(value) } else { Err(numerical_range()) }
     }
     fn population_std_dev(&self) -> Result<f64> {
         let value = self.deviation_scale * (self.m2_scaled / self.count as f64).sqrt();
-        if value.is_finite() { Ok(value) } else { Err(numerical_range()) }
+        if value.is_finite() && !(value == 0.0 && self.m2_scaled > 0.0) { Ok(value) } else { Err(numerical_range()) }
     }
     pub fn summary(&self) -> Result<SampleSummary> {
         let mean = self.mean()?;
         let variance = if self.count > 1 {
             let value = ((self.m2_scaled / (self.count - 1) as f64) * self.deviation_scale) * self.deviation_scale;
-            if !value.is_finite() {
+            if !value.is_finite() || (value == 0.0 && self.m2_scaled > 0.0) {
                 return Err(numerical_range());
             }
             Some(value)

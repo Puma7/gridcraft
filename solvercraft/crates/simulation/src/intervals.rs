@@ -78,6 +78,10 @@ fn calculate(values: &[f64], confidence: f64, design: &str, assumptions: &str) -
     let half_width = critical * standard_error;
     let lower = summary.mean - half_width;
     let upper = summary.mean + half_width;
+    // Preserve nonzero uncertainty at the scale of a large location. Without
+    // outward rounding, both endpoints can round back to the sample mean.
+    let lower = if half_width > 0.0 { lower.next_down() } else { lower };
+    let upper = if half_width > 0.0 { upper.next_up() } else { upper };
     if !standard_error.is_finite() || !half_width.is_finite() || !lower.is_finite() || !upper.is_finite() {
         return Err(SolverError::new("numerical_range", "Mean interval exceeds finite arithmetic"));
     }

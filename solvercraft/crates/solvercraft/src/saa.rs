@@ -284,15 +284,20 @@ pub fn train_and_validate(
         }
         let weights = vec![1.0; losses.len()];
         let mean = crate::risk::weighted_mean(&losses, &weights)?;
-        let mut squared = solvercraft_model::CompensatedSum::default();
-        for value in &losses {
-            let deviation = value - mean;
-            squared.add(deviation * deviation)?;
+        // The shared risk statistic scales before squaring and rejects a
+        // nonzero variance outside f64's supported range. Direct tiny squares
+        // otherwise underflow to zero and manufacture a zero-width interval.
+        let population_variance = crate::risk::weighted_variance(&losses, &weights)?;
+        let sample_variance = population_variance * (losses.len() as f64 / (losses.len() - 1) as f64);
+        if !sample_variance.is_finite() {
+            return Err(SolverError::new("numerical_failure", "Holdout variance exceeds finite precision"));
         }
-        let sample_variance = squared.finish()? / (losses.len() - 1) as f64;
-        let standard_error = (sample_variance / losses.len() as f64).sqrt();
+        let standard_error = sample_variance.sqrt() / (losses.len() as f64).sqrt();
         let half_width = 1.959_963_984_540_054 * standard_error;
-        let interval = (mean - half_width, mean + half_width);
+        // A positive width can be smaller than one ULP of a large mean. Round
+        // the endpoints outward so it cannot become a false point interval.
+        // Truly constant holdouts retain their exact zero-width interval.
+        let interval = if half_width > 0.0 { ((mean - half_width).next_down(), (mean + half_width).next_up()) } else { (mean, mean) };
         if !interval.0.is_finite() || !interval.1.is_finite() {
             return Err(SolverError::new("numerical_failure", "Holdout interval exceeds finite precision"));
         }
@@ -309,5 +314,5 @@ pub fn train_and_validate(
             cvar,
         });
     }
-    Ok(SampleAverageResult{training,validation,training_trials:sampling.training_trials,validation_trials:sampling.validation_trials,sampling_version:solvercraft_math::SAMPLING_VERSION.into(),note:"Frozen addressed training draws and distinct-seed final holdout. The displayed mean interval uses a normal approximation for a fixed final decision; it is not an optimality gap, distribution-free confidence guarantee, or a CVaR interval. Independent marginals only.".into()})
+    Ok(SampleAverageResult{training,validation,training_trials:sampling.training_trials,validation_trials:sampling.validation_trials,sampling_version:format!("{}/{}", solvercraft_math::SAMPLING_VERSION, solvercraft_math::catalog::CATALOG_VERSION),note:"Frozen addressed training draws and distinct-seed final holdout. The displayed mean interval uses a normal approximation for a fixed final decision; it is not an optimality gap, distribution-free confidence guarantee, or a CVaR interval. Independent marginals only.".into()})
 }

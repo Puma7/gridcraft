@@ -308,6 +308,34 @@ fn continuous_inverse<F: Fn(f64) -> Result<f64>>(p: f64, cdf: F, positive: bool)
     }
     if positive { special::invert(p, -743.0, 709.0, f64::exp, cdf) } else { special::invert(p, -710.0, 710.0, f64::sinh, cdf) }
 }
+/// Generalized inverse on the ordered finite-f64 lattice. Unlike a coordinate
+/// tolerance, adjacent-value termination preserves exact discrete atoms in
+/// mixtures, which may be fed into discontinuous simulation evaluators.
+fn mixture_inverse<F: Fn(f64) -> Result<f64>>(p: f64, cdf: F) -> Result<f64> {
+    if p <= 0.0 || p >= 1.0 {
+        return Err(endpoint());
+    }
+    const SIGN: u64 = 1 << 63;
+    let key = |x: f64| {
+        let bits = x.to_bits();
+        if bits & SIGN != 0 { !bits } else { bits ^ SIGN }
+    };
+    let value = |key: u64| f64::from_bits(if key & SIGN == 0 { !key } else { key ^ SIGN });
+    let mut low = key(-f64::MAX);
+    let mut high = key(f64::MAX);
+    let lower_cdf = cdf(value(low))?;
+    if lower_cdf > p || cdf(value(high))? < p {
+        return Err(SolverError::new("quantile_range", "Mixture quantile is outside finite arithmetic."));
+    }
+    if lower_cdf == p {
+        return Ok(value(low));
+    }
+    while high - low > 1 {
+        let mid = low + (high - low) / 2;
+        if cdf(value(mid))? < p { low = mid } else { high = mid }
+    }
+    Ok(value(high))
+}
 fn beta_quantile(a: f64, b: f64, p: f64) -> Result<f64> {
     if p == 0.0 {
         return Ok(0.0);
@@ -356,7 +384,7 @@ impl PreparedExtra {
                 }
                 q
             }
-            Self::Mixture { .. } => continuous_inverse(p, |x| self.cdf(x), false)?,
+            Self::Mixture { .. } => mixture_inverse(p, |x| self.cdf(x))?,
             Self::Compound { .. } => {
                 return Err(SolverError::new(
                     "compound_quantile_unavailable",
@@ -403,8 +431,15 @@ impl PreparedExtra {
                 D::InverseGamma { shape, scale } => {
                     if p == 0.0 {
                         0.0
-                    } else {
+                    } else if p > 0.5 {
+                        // Here 1-p is exact by Sterbenz's lemma. Invert the
+                        // small gamma-P tail, rather than a rounded near-one
+                        // gamma-Q value (especially ill-conditioned at small shape).
                         scale / continuous_inverse(1.0 - p, |x| special::gamma_p(*shape, x), true)?
+                    } else {
+                        // Invert the CDF directly: 1-p rounds to one for small
+                        // valid probabilities and destroys this lower tail.
+                        scale * continuous_inverse(p, |x| special::gamma_q(*shape, x.recip()), true)?
                     }
                 }
                 D::NegativeBinomial { successes, probability: q } => {
@@ -655,7 +690,7 @@ impl PreparedExtra {
                     if x <= 0.0 {
                         0.0
                     } else {
-                        1.0 - special::gamma_p(*shape, scale / x)?
+                        special::gamma_q(*shape, scale / x)?
                     }
                 }
                 D::NegativeBinomial { successes, probability: p } => {
@@ -686,7 +721,19 @@ impl PreparedExtra {
                         special::beta_i_logit(numerator_df * 0.5, denominator_df * 0.5, numerator_df.ln() + x.ln() - denominator_df.ln())?
                     }
                 }
-                D::Cauchy { location, scale } => 0.5 + standardize(x, *location, *scale).atan() / std::f64::consts::PI,
+                D::Cauchy { location, scale } => {
+                    let z = standardize(x, *location, *scale);
+                    // atan(z)+pi/2 cancels the entire representable lower
+                    // tail for large negative z. The reciprocal identity
+                    // evaluates that tail directly.
+                    if z < 0.0 {
+                        (-z.recip()).atan() / std::f64::consts::PI
+                    } else if z > 0.0 {
+                        1.0 - z.recip().atan() / std::f64::consts::PI
+                    } else {
+                        0.5
+                    }
+                }
                 D::Logistic { location, scale } => special::logistic(standardize(x, *location, *scale)),
                 D::Laplace { location, scale } => {
                     if x < *location {
@@ -703,7 +750,7 @@ impl PreparedExtra {
                     if x < *minimum {
                         0.0
                     } else {
-                        1.0 - (minimum / x).powf(*shape)
+                        -(-shape * crate::reference_families::log_ratio(x, *minimum)).exp_m1()
                     }
                 }
                 D::Rayleigh { scale } => {
@@ -717,7 +764,7 @@ impl PreparedExtra {
                     if x <= 0.0 {
                         0.0
                     } else {
-                        special::logistic(shape * (x / scale).ln())
+                        special::logistic(shape * crate::reference_families::log_ratio(x, *scale))
                     }
                 }
                 D::JohnsonSu { gamma, delta, location, scale } => normal_cdf(gamma + delta * asinh_standardize(x, *location, *scale))?,
