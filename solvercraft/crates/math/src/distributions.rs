@@ -1,6 +1,6 @@
 //! Validated distributions with inverse-CDF sampling.
 //! Normal inverse CDF uses the piecewise rational approximation of P. J. Acklam.
-//! The normal CDF is a classical erf approximation (absolute error about 1.5e-7).
+//! The normal CDF evaluates its small tail directly with regularized gamma Q.
 //! Poisson rate is deliberately limited to 512; binomial trials to 10,000 for bounded work.
 //! Unsupported parameter sizes fail explicitly rather than selecting a normal approximation.
 use crate::random::addressed_uniform;
@@ -87,6 +87,82 @@ pub struct PreparedDistribution {
     extra: Option<Box<crate::extended::PreparedExtra>>,
 }
 impl PreparedDistribution {
+    pub(crate) fn has_atoms(&self) -> bool {
+        self.extra.as_ref().map_or_else(|| crate::density::is_discrete(&self.distribution), |extra| extra.has_atoms())
+    }
+    pub(crate) fn interval_probability(&self, lower: f64, upper: f64) -> Result<f64> {
+        if lower > upper {
+            return Ok(0.0);
+        }
+        if self.is_discrete() {
+            return Ok(self.interval_log_mass(lower, upper)?.exp().clamp(0.0, 1.0));
+        }
+        if let Distribution::Normal { mean, std_dev } = self.distribution
+            && self.extra.is_none()
+        {
+            return crate::special::normal_interval(mean, std_dev, lower, upper);
+        }
+        let lower = if self.has_atoms() { lower.next_down() } else { lower };
+        let lo = self.cdf(lower)?;
+        Ok(if lo > 0.5 { self.reflected_cdf(-lower)? - self.reflected_cdf(-upper)? } else { self.cdf(upper)? - lo }.clamp(0.0, 1.0))
+    }
+    pub(crate) fn reflected_quantile(&self, p: f64) -> Result<f64> {
+        if let Some(extra) = &self.extra {
+            return extra.reflected_quantile(p);
+        }
+        if let Some(d) = crate::affine::mirrored(&self.distribution) {
+            return Self::new(&d)?.quantile(p);
+        }
+        let value = match &self.distribution {
+            Distribution::Lognormal { log_mean, log_std_dev } => {
+                if *log_std_dev == 0.0 {
+                    -log_mean.exp()
+                } else if p == 1.0 {
+                    0.0
+                } else {
+                    -(-log_std_dev).mul_add(inverse_normal(p)?, *log_mean).exp()
+                }
+            }
+            Distribution::Exponential { rate } => p.ln() / rate,
+            Distribution::Weibull { shape, scale } => {
+                if p == 1.0 {
+                    0.0
+                } else {
+                    -(scale.ln() + (-p.ln()).ln() / shape).exp()
+                }
+            }
+            _ => return self.quantile(if p == 0.0 || p == 1.0 { 1.0 - p } else { (1.0 - p).next_up().min(1.0) }).map(|x| -x),
+        };
+        if value.is_finite() { Ok(value) } else { Err(unbounded_quantile()) }
+    }
+    pub(crate) fn reflected_cdf(&self, x: f64) -> Result<f64> {
+        if let Some(extra) = &self.extra {
+            return extra.reflected_cdf(x);
+        }
+        if let Some(d) = crate::affine::mirrored(&self.distribution) {
+            return Self::new(&d)?.cdf(x);
+        }
+        match &self.distribution {
+            Distribution::Exponential { rate } => Ok(if x >= 0.0 { 1.0 } else { (rate * x).exp() }),
+            Distribution::Weibull { shape, scale } => {
+                Ok(if x >= 0.0 { 1.0 } else { (-(shape * crate::reference_families::log_ratio(-x, *scale)).exp()).exp() })
+            }
+            Distribution::Lognormal { log_mean, log_std_dev } if *log_std_dev > 0.0 => {
+                if x >= 0.0 {
+                    Ok(1.0)
+                } else {
+                    crate::special::normal_cdf((log_mean - (-x).ln()) / log_std_dev)
+                }
+            }
+            _ => Ok(1.0 - self.cdf((-x).next_down())?),
+        }
+    }
+    pub(crate) fn is_discrete(&self) -> bool {
+        self.extra.as_ref().map_or_else(|| crate::density::is_discrete(&self.distribution), |extra| extra.is_discrete())
+    }
+    pub(crate) fn interval_log_mass(&self, lower: f64, upper: f64) -> Result<f64> {
+        if let Some(extra) = &self.extra { extra.interval_log_mass(lower, upper) } else { crate::mass::interval(&self.distribution, lower, upper) }
+    }
     pub fn new(distribution: &Distribution) -> Result<Self> {
         validate_distribution(distribution)?;
         if crate::extended::is_extended(distribution) {
@@ -267,7 +343,7 @@ impl PreparedDistribution {
                 } else {
                     let difference = x - mean;
                     let standardized = if difference.is_finite() || !x.is_finite() { difference / std_dev } else { x / std_dev - mean / std_dev };
-                    normal_cdf(standardized)
+                    crate::special::normal_cdf(standardized)?
                 }
             }
             Distribution::Lognormal { log_mean, log_std_dev } => {
@@ -276,7 +352,7 @@ impl PreparedDistribution {
                 } else if *log_std_dev == 0.0 {
                     if x < log_mean.exp() { 0.0 } else { 1.0 }
                 } else {
-                    normal_cdf((x.ln() - log_mean) / log_std_dev)
+                    crate::special::normal_cdf((x.ln() - log_mean) / log_std_dev)?
                 }
             }
             Distribution::Triangular { low, mode, high } => {
@@ -492,22 +568,6 @@ pub(crate) fn inverse_normal(p: f64) -> Result<f64> {
         Ok(poly(&a, r) * q / (poly(&b, r) * r + 1.0))
     }
 }
-pub(crate) fn normal_cdf(x: f64) -> f64 {
-    if x == f64::NEG_INFINITY {
-        return 0.0;
-    }
-    if x == f64::INFINITY {
-        return 1.0;
-    }
-    if x == 0.0 {
-        return 0.5;
-    }
-    let z = x.abs() / std::f64::consts::SQRT_2;
-    let t = 1.0 / (1.0 + 0.327_591_1 * z);
-    let tail = (((((1.061_405_429 * t - 1.453_152_027) * t) + 1.421_413_741) * t - 0.284_496_736) * t + 0.254_829_592) * t * (-z * z).exp();
-    if x >= 0.0 { 1.0 - 0.5 * tail } else { 0.5 * tail }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

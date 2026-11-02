@@ -143,6 +143,69 @@ fn browser_lhs_keeps_a_discrete_mixture_on_its_exact_atoms() {
 }
 
 #[wasm_bindgen_test]
+fn browser_preserves_tiny_positive_endpoint_mass_and_rounded_affine_atoms() {
+    use solvercraft::math::{cdf, density::log_density, quantile};
+    let weighted = Distribution::Categorical { values: vec![-2.0, 3.0], weights: vec![1.0, 1e-20] };
+    assert_eq!(quantile(&weighted, 1.0).expect("upper endpoint"), 3.0);
+    let transformed = Distribution::ShiftScale { base: Box::new(Distribution::Constant { value: -0.1 }), shift: -0.3, scale: -0.2 };
+    let atom = -0.27999999999999997_f64;
+    assert_eq!(quantile(&transformed, 0.5).expect("rounded atom"), atom);
+    assert_eq!(cdf(&transformed, atom).expect("atom CDF"), 1.0);
+    assert_eq!(cdf(&transformed, atom.next_down()).expect("below atom CDF"), 0.0);
+    assert_eq!(log_density(&transformed, atom).expect("atom mass"), 0.0);
+}
+
+#[wasm_bindgen_test]
+fn browser_compiler_retains_integer_product_residuals() {
+    for exponent in 27..=30 {
+        let a = ((1_u64 << exponent) + 1) as f64;
+        let b = ((1_u64 << (2 * exponent)) + (1_u64 << (exponent + 1))) as f64;
+        let model:solvercraft::compile::ExpressionModel=serde_json::from_value(serde_json::json!({
+            "name":"exact compiler residual","variables":[{"name":"x","lower":0,"upper":1,"kind":"continuous"}],"direction":"maximize",
+            "objective":{"op":"subtract","left":{"op":"multiply","left":{"op":"multiply","left":{"op":"constant","value":a},"right":{"op":"variable","index":0}},"right":{"op":"constant","value":a}},
+                "right":{"op":"multiply","left":{"op":"constant","value":b},"right":{"op":"variable","index":0}}},"constraints":[]})).expect("model");
+        let compiled = solvercraft::compile::compile(&model, &SolveOptions::default()).expect("exact product cancellation");
+        assert_eq!(compiled.objective.linear, vec![LinearTerm { variable: 0, coefficient: 1.0 }]);
+    }
+}
+
+#[wasm_bindgen_test]
+fn browser_rejects_inexact_division_before_it_can_change_an_identity_constraint() {
+    let model:solvercraft::compile::ExpressionModel=serde_json::from_value(serde_json::json!({
+        "name":"division identity","variables":[{"name":"x","lower":1,"upper":2,"kind":"continuous"}],"direction":"minimize","objective":{"op":"constant","value":0},
+        "constraints":[{"name":"identity","left":{"op":"subtract","left":{"op":"multiply","left":{"op":"divide","left":{"op":"variable","index":0},"right":{"op":"constant","value":3}},
+            "right":{"op":"constant","value":3}},"right":{"op":"variable","index":0}},"relation":"equal","right":{"op":"constant","value":0}}]})).expect("model");
+    let error = solvercraft::compile::compile(&model, &SolveOptions::default()).expect_err("coefficient1/3 is not exact binary64");
+    assert_eq!(error.code, "numeric_range");
+}
+
+#[wasm_bindgen_test]
+fn browser_risk_variance_and_zero_confidence_cvar_match_closed_forms() {
+    use solvercraft::risk::{RiskMeasure, Scenario, ScenarioProblem};
+    let mut problem = ScenarioProblem {
+        name: "browser risk expansion".into(),
+        variables: vec![Variable { name: "x".into(), lower: Some(0.0), upper: Some(0.0), kind: VariableKind::Continuous }],
+        constraints: vec![],
+        scenarios: vec![
+            Scenario { weight: 1.0, offset: 1e10, coefficients: vec![0.0] },
+            Scenario { weight: 1.0, offset: 1e10_f64.next_up(), coefficients: vec![0.0] },
+        ],
+        measure: RiskMeasure::MeanVariance { penalty: 0.0 },
+    };
+    let result = solvercraft::risk::optimize(&problem, &SolveOptions::default(), &NoControl).expect("variance law");
+    let spread = 1e10_f64.next_up() - 1e10;
+    assert_eq!(result.variance, Some(spread * spread / 4.0));
+    problem.variables[0].lower = Some(-2.0);
+    problem.variables[0].upper = Some(2.0);
+    problem.scenarios = [-1.0, 0.0, 1.0].into_iter().map(|c| Scenario { weight: 1.0, offset: -1.0, coefficients: vec![c] }).collect();
+    problem.measure = RiskMeasure::ConditionalValueAtRisk { confidence: 0.0 };
+    let result = solvercraft::risk::optimize(&problem, &SolveOptions::default(), &NoControl).expect("CVaR at zero is the mean");
+    assert_eq!(result.solve.optimality, Optimality::Optimal);
+    assert_eq!(result.solve.objective, Some(-1.0));
+    assert_eq!(result.cvar, Some(-1.0));
+}
+
+#[wasm_bindgen_test]
 fn browser_autodiff_rejects_a_nondifferentiable_point() {
     let abs = solvercraft::compile::Expr::Abs { value: Box::new(solvercraft::compile::Expr::variable(0)) };
     assert!(solvercraft::compile::evaluate_with_gradient(&abs, &[0.0]).is_err());

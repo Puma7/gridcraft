@@ -1,5 +1,9 @@
 # Exact remaining reference-function work
 
+The [expanded numerical qualification](../qa/numerical-expansion-2026-11-02.md)
+is the latest evidence for calculation accuracy and precision limits. Its
+finite matrices and explicit refusals do not establish full parameter coverage.
+
 The [2026-11-02 numerical review](../qa/numerical-review-2026-11-02.md) records
 subsequent wrong-result repairs, fresh independent checks and remaining numeric
 refusals. Historical positive function-name coverage below is not proof that

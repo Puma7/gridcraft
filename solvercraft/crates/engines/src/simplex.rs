@@ -432,6 +432,7 @@ fn infeasibility_certificate(
     budget: &Budget<'_>,
 ) -> std::result::Result<bool, Relaxation> {
     use std::cmp::Ordering;
+    let bounds = crate::certificate_box(model, bounds);
     let mut weights = allocated(model.constraints.len(), 0.0)?;
     for link in links {
         let value = (link.cost - phase[link.column]) * link.multiplier;
@@ -454,7 +455,7 @@ fn infeasibility_certificate(
         }
     }
     let mut endpoints = allocated(model.variables.len(), 0.0)?;
-    for ((gradient, (low, high)), endpoint) in gradients.iter().zip(bounds).zip(&mut endpoints) {
+    for ((gradient, (low, high)), endpoint) in gradients.iter().zip(&bounds).zip(&mut endpoints) {
         *endpoint = match gradient.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))? {
             Ordering::Greater => match high {
                 Some(value) => *value,

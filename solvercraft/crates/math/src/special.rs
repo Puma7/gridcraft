@@ -119,7 +119,8 @@ pub fn gamma_q(a: f64, x: f64) -> Result<f64> {
     }
     Err(err())
 }
-/// CDF for new samplers; the legacy normal family keeps its frozen approximation/streams.
+/// Gaussian CDF with a directly evaluated small tail. Addressed inverse-normal
+/// draws use their separate unchanged quantile algorithm.
 pub fn normal_cdf(x: f64) -> Result<f64> {
     if x.is_nan() {
         return Err(err());
@@ -129,6 +130,39 @@ pub fn normal_cdf(x: f64) -> Result<f64> {
     }
     let tail = 0.5 * gamma_q(0.5, 0.5 * x * x)?;
     Ok(if x > 0.0 { 1.0 - tail } else { tail })
+}
+/// Gaussian interval probability without subtracting nearly equal tails.
+/// The local8-node Gaussian rule integrates a smooth positive density over a
+/// standardized width<=0.125/(1+|a|); its small-width limit is phi(a)*width.
+pub(crate) fn normal_interval(mean: f64, std: f64, lower: f64, upper: f64) -> Result<f64> {
+    if lower >= upper {
+        return Ok(0.0);
+    }
+    if lower == f64::NEG_INFINITY {
+        return normal_cdf(crate::extended::standardize(upper, mean, std));
+    }
+    let a = crate::extended::standardize(lower, mean, std);
+    if upper == f64::INFINITY {
+        return normal_cdf(-a);
+    }
+    let width = crate::extended::standardize(upper, lower, std);
+    if width <= 0.125 / (1.0 + a.abs()) {
+        let mut sum = 0.0;
+        for (node, weight) in [
+            (0.9602898564975363, 0.1012285362903763),
+            (0.7966664774136267, 0.2223810344533745),
+            (0.525532409916329, 0.3137066458778873),
+            (0.1834346424956498, 0.362683783378362),
+        ] {
+            for sign in [-1.0, 1.0] {
+                let z = a + 0.5 * width * (1.0 + sign * node);
+                sum += weight * (-0.5 * z * z).exp();
+            }
+        }
+        return Ok(0.5 * width * sum / std::f64::consts::TAU.sqrt());
+    }
+    let b = crate::extended::standardize(upper, mean, std);
+    Ok(if a > 0.0 { normal_cdf(-a)? - normal_cdf(-b)? } else { normal_cdf(b)? - normal_cdf(a)? })
 }
 /// Log Phi(x), preserving finite log probabilities after the ordinary CDF underflows.
 pub fn normal_log_cdf(x: f64) -> Result<f64> {

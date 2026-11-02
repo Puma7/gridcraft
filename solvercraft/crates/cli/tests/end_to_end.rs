@@ -596,3 +596,122 @@ fn near_integer_relaxation_does_not_close_a_node_before_the_exact_binary_gap() -
     }
     Ok(())
 }
+
+fn product_residual_model(exponent: u32, quadratic: bool) -> Value {
+    let a = ((1_u64 << exponent) + 1) as f64;
+    let b = ((1_u64 << (2 * exponent)) + (1_u64 << (exponent + 1))) as f64;
+    let x = json!({"op":"variable","index":0});
+    let ax = json!({"op":"multiply","left":{"op":"constant","value":a},"right":x});
+    let (left, right) = if quadratic {
+        (
+            json!({"op":"multiply","left":ax,"right":ax}),
+            json!({"op":"multiply","left":{"op":"constant","value":b},"right":{"op":"power","base":x,"exponent":2}}),
+        )
+    } else {
+        (
+            json!({"op":"multiply","left":ax,"right":{"op":"constant","value":a}}),
+            json!({"op":"multiply","left":{"op":"constant","value":b},"right":x}),
+        )
+    };
+    json!({"name":"exact product residual","variables":[{"name":"x","lower":0,"upper":1,"kind":"continuous"}],
+        "direction":"maximize","objective":{"op":"subtract","left":left,"right":right},"constraints":[]})
+}
+
+#[test]
+fn actual_cli_compiler_preserves_exact_integer_product_residuals() -> TestResult {
+    for exponent in 27..=30 {
+        for quadratic in [false, true] {
+            let result = success(run(&["compile", "-"], &product_residual_model(exponent, quadratic))?)?;
+            // (2^k+1)^2 - (2^(2k)+2^(k+1)) is exactly one.
+            let terms = if quadratic { &result["objective"]["quadratic"] } else { &result["objective"]["linear"] };
+            assert_eq!(terms.as_array().ok_or("missing compiled terms")?.len(), 1);
+            assert_eq!(terms[0]["coefficient"], 1.0);
+        }
+    }
+    Ok(())
+}
+
+#[test]
+fn actual_cli_checks_rounded_original_ast_after_exact_compilation() -> TestResult {
+    for exponent in 27..=30 {
+        let expression = product_residual_model(exponent, false);
+        let error = failure(run(&["solve-expr", "-"], &json!({"model":expression}))?, "numerical_failure")?;
+        assert!(error["message"].as_str().is_some_and(|s| s.to_lowercase().contains("original")));
+    }
+    // The explicit algebraic reformulation retains its computed optimum.
+    let mut expression = product_residual_model(27, false);
+    expression["objective"] = json!({"op":"variable","index":0});
+    let output = success(run(&["solve-expr", "-"], &json!({"model":expression}))?)?;
+    assert_eq!(output["result"]["values"], json!([1.0]));
+    assert_eq!(output["result"]["objective"], 1.0);
+    Ok(())
+}
+
+#[test]
+fn actual_cli_zero_confidence_cvar_uses_the_exact_mean_identity() -> TestResult {
+    let problem = json!({"name":"exact zero-tail mean","variables":[{"name":"x","lower":-2,"upper":2,"kind":"continuous"}],"constraints":[],
+        "scenarios":[{"weight":1,"offset":-1,"coefficients":[-1]},{"weight":1,"offset":-1,"coefficients":[0]},{"weight":1,"offset":-1,"coefficients":[1]}],
+        "measure":{"kind":"conditional_value_at_risk","confidence":0}});
+    let output = success(run(&["risk", "-"], &json!({"problem":problem}))?)?;
+    let result = &output;
+    assert_eq!(result["solve"]["feasibility"], "feasible");
+    assert_eq!(result["solve"]["optimality"], "optimal");
+    assert_eq!(result["solve"]["objective"], -1.0);
+    assert_eq!(result["solve"]["best_bound"], -1.0);
+    assert_eq!(result["cvar"], -1.0);
+    assert_eq!(result["expected_loss"], -1.0);
+    Ok(())
+}
+
+#[test]
+fn actual_cli_reports_the_correct_variance_between_adjacent_large_losses() -> TestResult {
+    let low = 1e10_f64;
+    let high = low.next_up();
+    let problem = json!({"name":"exact dyadic variance","variables":[{"name":"x","lower":0,"upper":0,"kind":"continuous"}],"constraints":[],
+        "scenarios":[{"weight":1,"offset":low,"coefficients":[0]},{"weight":1,"offset":high,"coefficients":[0]}],
+        "measure":{"kind":"mean_variance","penalty":0}});
+    let output = success(run(&["risk", "-"], &json!({"problem":problem}))?)?;
+    let expected = (high - low) * (high - low) / 4.0;
+    assert_eq!(output["variance"].as_f64(), Some(expected));
+    Ok(())
+}
+
+#[test]
+fn actual_cli_rejects_an_edge_cost_that_would_change_a_policy_invisibly() -> TestResult {
+    for payoff in [1e16, -1e16] {
+        let request = json!({"tree":{"root":0,"utility":{"kind":"linear"},"nodes":[
+            {"kind":"decision","alternatives":[{"child":1,"cost":1},{"child":1,"cost":0}]},{"kind":"terminal","payoff":payoff}]}});
+        let error = failure(run(&["decision-tree", "-"], &request)?, "invalid_decision_tree")?;
+        assert!(error["message"].as_str().is_some_and(|s| s.to_lowercase().contains("precision")));
+    }
+    Ok(())
+}
+
+#[test]
+fn actual_cli_finite_differences_do_not_invent_stationarity_near_a_bound() -> TestResult {
+    let request = json!({"model":{"name":"bound-neighbor FD","variables":[{"name":"x","lower":-3,"upper":3,"kind":"continuous"}],
+        "direction":"minimize","objective":{"op":"add","left":{"op":"constant","value":1024},"right":{"op":"multiply","left":{"op":"constant","value":0.25},
+            "right":{"op":"power","base":{"op":"add","left":{"op":"variable","index":0},"right":{"op":"constant","value":2}},"exponent":2}}},"constraints":[]},
+        "nonlinear":{"derivative_mode":"finite_difference","finite_difference_step":1e-6},"start":[-3]});
+    let output = success(run(&["solve-constrained", "-"], &request)?)?;
+    let result = &output;
+    let x = result["values"][0].as_f64().ok_or("missing nonlinear decision")?;
+    assert!((x + 2.0).abs() < 1e-3, "false stationary point {result}");
+    assert!((result["objective"].as_f64().ok_or("objective")? - 1024.0).abs() < 1e-7);
+    assert_ne!(result["optimality"], "optimal");
+    assert!(result["best_bound"].is_null() && result["relative_gap"].is_null());
+    Ok(())
+}
+
+#[test]
+fn actual_cli_inexact_division_cannot_produce_false_original_infeasibility() -> TestResult {
+    for denominator in [3.0, 5.0, 7.0] {
+        let request = json!({"model":{"name":"division identity","variables":[{"name":"x","lower":1,"upper":2,"kind":"continuous"}],"direction":"minimize",
+            "objective":{"op":"constant","value":0},"constraints":[{"name":"identity","left":{"op":"subtract","left":{"op":"multiply",
+                "left":{"op":"divide","left":{"op":"variable","index":0},"right":{"op":"constant","value":denominator}},
+                "right":{"op":"constant","value":denominator}},"right":{"op":"variable","index":0}},"relation":"equal","right":{"op":"constant","value":0}}]}});
+        let error = failure(run(&["solve-expr", "-"], &request)?, "numeric_range")?;
+        assert!(error["message"].as_str().is_some_and(|m| m.to_lowercase().contains("division")));
+    }
+    Ok(())
+}

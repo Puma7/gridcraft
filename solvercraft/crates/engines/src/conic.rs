@@ -12,7 +12,7 @@ use solvercraft_model::{
 use solvercraft_types::*;
 use std::sync::Arc;
 
-const ENGINE: &str = "solvercraft-clarabel-0.11.1";
+const ENGINE: &str = "solvercraft-clarabel-0.11.1-adapter-0.2";
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct AffineExpression {
@@ -71,6 +71,7 @@ struct Data {
     descriptions: Vec<String>,
     direction: f64,
     minimum_eigenvalue: f64,
+    certificate_bounds: Vec<(Option<f64>, Option<f64>)>,
 }
 fn error(message: &str) -> SolverError {
     SolverError::new("invalid_conic_model", message)
@@ -162,6 +163,7 @@ pub(crate) fn preflight(model: &ConicModel, options: &SolveOptions, control: &dy
         .and_then(|v| v.checked_mul(96))
         .and_then(|v| (dim as u64).checked_mul(2048).and_then(|scratch| v.checked_add(scratch)))
         .and_then(|v| (nnz as u64).checked_mul(96).and_then(|s| v.checked_add(s)))
+        .and_then(|v| (n as u64).checked_mul(64).and_then(|s| v.checked_add(s)))
         .ok_or_else(|| SolverError::new("memory_limit", "Sparse conic working-set estimate overflow."))?;
     if dim > 20_000 || bytes > options.max_memory_bytes {
         return Err(SolverError::new("memory_limit", "Conservative sparse KKT fill estimate exceeds memory budget."));
@@ -178,6 +180,8 @@ fn build(model: &ConicModel, options: &SolveOptions, control: &dyn RunControl) -
         return Err(SolverError::new("unsupported_problem", "Continuous conic backend does not relax integer domains silently."));
     }
     let base = canonicalize(&model.base, options)?;
+    let original_bounds = base.variables.iter().map(|v| (v.lower, v.upper)).collect::<Vec<_>>();
+    let certificate_bounds = crate::certificate_box(&base, &original_bounds);
     let direction = if base.objective.direction == Direction::Minimize { 1.0 } else { -1.0 };
     let minimum_eigenvalue = if base.objective.quadratic.is_empty() {
         0.0
@@ -243,7 +247,7 @@ fn build(model: &ConicModel, options: &SolveOptions, control: &dyn RunControl) -
         blocks.push(Block { start, len, kind: Kind::Lorentz });
         cones.push(SupportedConeT::SecondOrderConeT(len));
     }
-    Ok(Data { p: csc(n, n, p)?, q, a: csc(b.len(), n, a)?, b, cones, blocks, descriptions, direction, minimum_eigenvalue })
+    Ok(Data { p: csc(n, n, p)?, q, a: csc(b.len(), n, a)?, b, cones, blocks, descriptions, direction, minimum_eigenvalue, certificate_bounds })
 }
 fn accumulate_multiply(matrix: &CscMatrix<f64>, x: &[f64], transpose: bool, symmetric: bool) -> Result<Vec<ExactProducts>> {
     let mut sums = vec![ExactProducts::default(); if transpose { matrix.n } else { matrix.m }];
@@ -445,8 +449,7 @@ fn certificate(model: &ConicModel, data: &Data, x: &[f64], z: &[f64]) -> Result<
     for (i, r) in residual.iter().enumerate() {
         let Some((errors, _)) = &scales else { break };
         let error = errors[i];
-        let variable = &model.base.variables[i];
-        let contribution = match (variable.lower, variable.upper) {
+        let contribution = match data.certificate_bounds[i] {
             (Some(low), Some(high)) => {
                 [(*r - error) * (low - x[i]), (*r + error) * (low - x[i]), (*r - error) * (high - x[i]), (*r + error) * (high - x[i])]
                     .into_iter()
@@ -486,7 +489,7 @@ fn certificate(model: &ConicModel, data: &Data, x: &[f64], z: &[f64]) -> Result<
         row_descriptions: data.descriptions.clone(),
     })
 }
-fn infeasibility_certificate(model: &ConicModel, data: &Data, z: &[f64]) -> Result<bool> {
+fn infeasibility_certificate(_model: &ConicModel, data: &Data, z: &[f64]) -> Result<bool> {
     if z.len() != data.b.len() || z.iter().any(|v| !v.is_finite()) {
         return Ok(false);
     }
@@ -499,11 +502,11 @@ fn infeasibility_certificate(model: &ConicModel, data: &Data, z: &[f64]) -> Resu
         errors.push(16.0 * f64::EPSILON * (2 + range.len()) as f64 * scale);
     }
     let mut minimum = Vec::with_capacity(residual.len());
-    for ((r, e), v) in residual.iter().zip(errors).zip(&model.base.variables) {
+    for ((r, e), bounds) in residual.iter().zip(errors).zip(&data.certificate_bounds) {
         if *r == 0.0 && e == 0.0 {
             minimum.push(0.0);
         } else {
-            let value = match (v.lower, v.upper) {
+            let value = match *bounds {
                 (Some(low), Some(high)) => [(*r - e) * low, (*r + e) * low, (*r - e) * high, (*r + e) * high].into_iter().reduce(f64::min),
                 (Some(low), None) if *r - e >= 0.0 => Some(((*r - e) * low).min((*r + e) * low)),
                 (None, Some(high)) if *r + e <= 0.0 => Some(((*r - e) * high).min((*r + e) * high)),
@@ -694,9 +697,14 @@ pub fn solve_socp_owned(model: &ConicModel, options: &SolveOptions, control: Arc
     let settings = DefaultSettings {
         verbose: false,
         max_iter: options.max_iterations.min(u64::from(u32::MAX)) as u32,
-        tol_gap_abs: options.optimality_tolerance,
-        tol_gap_rel: options.relative_gap.max(1e-12),
-        tol_feas: options.feasibility_tolerance.min(options.optimality_tolerance),
+        // The public result also includes an independently rounded dual bound.
+        // Leave numerical room for that proof instead of stopping as soon as
+        // the backend's differently scaled internal gap reaches the user limit.
+        tol_gap_abs: (options.optimality_tolerance * 0.01).max(f64::MIN_POSITIVE).min(options.optimality_tolerance),
+        tol_gap_rel: (options.relative_gap * 0.01).max(1e-14),
+        tol_feas: (options.feasibility_tolerance.min(options.optimality_tolerance) * 0.01)
+            .max(f64::MIN_POSITIVE)
+            .min(options.feasibility_tolerance.min(options.optimality_tolerance)),
         presolve_enable: false,
         max_threads: 1,
         ..DefaultSettings::default()

@@ -1,0 +1,226 @@
+{
+  "schema": "solvercraft.expansion-coverage-public.v1",
+  "engine_and_compiler": {
+    "baseline": "e50da565",
+    "algorithm_ids": [
+      "solvercraft-dense-simplex-0.3",
+      "solvercraft-clarabel-0.11.1-adapter-0.2"
+    ],
+    "engine_matrix": {
+      "lp_vertex": 2048,
+      "milp_slice": 768,
+      "qp_kkt": 512,
+      "miqp_enumeration": 128,
+      "socp_support": 128,
+      "qp_rank_deficient": 256,
+      "infeasible_unbounded": 256,
+      "four_binary_enumeration": 256,
+      "separable_qp": 256
+    },
+    "compiler_matrix": {
+      "dyadic_polynomial_and_gradient": 1024,
+      "integer_product_cancellation": 512,
+      "bound_neighbor_finite_difference": 256,
+      "exact_division_identities": 384
+    },
+    "mathematical_matrix_cases": 6784,
+    "engine_distinct_models": 3200,
+    "seed_ranges": {
+      "lp": "0..1024",
+      "milp": "0..768",
+      "binary": "0..256"
+    },
+    "rng": "LCG64 state ^= 0x9e3779b97f4a7c15 (linear) or 0xd1b54a32d192ed03 (binary); multiplier6364136223846793005,increment1442695040888963407; high32 modulo bounded range",
+    "decimal_product_characterization": {
+      "cases": 64,
+      "exact_accepted": 43,
+      "explicit_numeric_range": 21,
+      "refusals_count_as_mathematical_success": false
+    },
+    "rejection_regressions": [
+      "third coefficient component cannot be represented without loss"
+    ],
+    "limitations": [
+      "Floating point solvers, not unrestricted exact rational proof systems.",
+      "Final compiled algebraic coefficients must fit binary64 exactly; 21/64 characterized ordinary decimal products now explicitly refuse instead of silently rounding.",
+      "Two-component intermediate polynomial capacity; third components explicitly reject.",
+      "Coefficient-part division must be exact: x/3 explicitly rejects; (3*x)/3 and dyadic quotients remain accepted. This bounded compiler is not an arbitrary rational algebra system.",
+      "Folded transcendental constants retain floating arithmetic semantics; AST and regrouped polynomial candidates need original-expression verification.",
+      "Finite differences remain approximations; no proof of a derivative from finitely many black-box probes.",
+      "Known highly conditioned cancellation LPs may honestly reject; they are not included among matrix successes.",
+      "Tighter conic internal stopping may require more iterations within unchanged user resource caps."
+    ],
+    "division_rejection_characterization": {
+      "signed_identity_constraints_and_objectives": 96,
+      "subnormal_remainder_even_when_fma_rounds_zero": 2,
+      "refusals_count_as_mathematical_success": false
+    }
+  },
+  "high_level": {
+    "baseline": "e50da565",
+    "scope": "solvercraft/crates/solvercraft only",
+    "matrix_entries": 216978,
+    "computed_or_feasible_entries": 216906,
+    "correctly_infeasible_entries": 72,
+    "certificate_forgeries_rejected": 360,
+    "separate_boundary_precision_refusals": {
+      "tree_edge_cost": 1,
+      "exponential_utility_or_acquisition_cost": 4,
+      "unresolved_positive_cvar_confidence": 2
+    },
+    "separate_corrected_variance_witness": 1,
+    "matrix_numerical_refusals": 0,
+    "rows": [
+      {
+        "name": "linear_information",
+        "cases": 90000,
+        "oracle": "4-action x2-state x2-signal exhaustive policy scores, dominated/duplicate actions, zero probabilities, offsets"
+      },
+      {
+        "name": "exponential_information",
+        "cases": 34992,
+        "oracle": "unconditional expected-utility policy enumeration, 3 CARA tolerances, translations"
+      },
+      {
+        "name": "linear_decision_trees",
+        "cases": 30000,
+        "oracle": "direct two-state leaf averages and edge costs"
+      },
+      {
+        "name": "weighted_risk_laws",
+        "cases": 29250,
+        "oracle": "pairwise population variance and exact fractional upper-tail mass; 6 numeric checks per law"
+      },
+      {
+        "name": "chance_scalar",
+        "cases": 3744,
+        "oracle": "enumeration of scalar support endpoints, probability boundaries, objective signs, common weight scales"
+      },
+      {
+        "name": "two_stage_recourse_routes",
+        "cases": 5184,
+        "oracle": "1728 inventory laws x extensive min,max,Benders; breakpoint oracle"
+      },
+      {
+        "name": "mean_variance_optimization",
+        "cases": 2592,
+        "oracle": "closed-form clipped quadratic vertices"
+      },
+      {
+        "name": "saa_holdout",
+        "cases": 384,
+        "oracle": "independently counted addressed two-atom draws and unbiased variance"
+      },
+      {
+        "name": "cvar_optimization",
+        "cases": 3240,
+        "oracle": "affine intersection enumeration and fractional tail mass"
+      },
+      {
+        "name": "two_condition_chance",
+        "cases": 1728,
+        "oracle": "1656 feasible optima and72 infeasible laws, joint and individual budgets"
+      },
+      {
+        "name": "weighted_multiobjective",
+        "cases": 7200,
+        "oracle": "signed linear endpoint oracle, normalized common weight rescaling"
+      },
+      {
+        "name": "lexicographic",
+        "cases": 576,
+        "oracle": "absolute original-unit priority bounds"
+      },
+      {
+        "name": "epsilon",
+        "cases": 768,
+        "oracle": "independent clipped feasible intervals"
+      },
+      {
+        "name": "sensitivity_bases",
+        "cases": 1200,
+        "oracle": "300 cold bases +900 warm RHS perturbations with analytic shadow prices"
+      },
+      {
+        "name": "robust_scalar",
+        "cases": 4320,
+        "oracle": "box,budget,ellipsoid absolute-value support breakpoints; all report Optimal"
+      },
+      {
+        "name": "nonlinear_local",
+        "cases": 1080,
+        "oracle": "AD/FD endpoint and interior starts; closed-form signed quadratic minima"
+      },
+      {
+        "name": "multistart",
+        "cases": 360,
+        "oracle": "two fixed seeds/four starts on analytic signed quadratics; no global claim"
+      },
+      {
+        "name": "global_certificate",
+        "cases": 180,
+        "oracle": "analytic quadratic objective, replayed whole-box certificate"
+      },
+      {
+        "name": "constrained_nonlinear",
+        "cases": 180,
+        "oracle": "independent active/inactive KKT endpoints"
+      }
+    ]
+  },
+  "math_simulation": {
+    "baseline": "e50da565",
+    "scope": [
+      "solvercraft/crates/math",
+      "solvercraft/crates/simulation"
+    ],
+    "numerical_revision": "solvercraft-baseline17-r4-catalog-v3",
+    "addressed_rng_revision_unchanged": "solvercraft-addressed-mix64-v2",
+    "finite_matrix": {
+      "elementary_cdf_and_log_density_distinct_parameter_x_tuples": 5615,
+      "combinatorial_count_cdf_and_pmf_distinct_parameter_x_tuples": 3983,
+      "rounded_affine_discrete_cdf_and_pmf_distinct_parameter_x_tuples": 1464,
+      "gaussian_transformation_cdf_and_log_density_distinct_parameter_x_tuples": 2433,
+      "custom_distribution_distinct_parameter_x_cdf_tuples": 1684,
+      "empirical_risk_distinct_dataset_alpha_tuples": 1800,
+      "math_tuple_total": 16979,
+      "time_series_distinct_specifications": 576,
+      "time_series_distinct_specification_step_tuples": 9792,
+      "sampler_distinct_run_specifications": 108,
+      "sampler_retained_and_streaming_executions": 216,
+      "sampler_independently_recomputed_output_columns": 720,
+      "scaled_summary_and_closed_form_fit_datasets": 117,
+      "counting_rule": "Count unique explicit parameters/query tuples or dataset/query tuples. Duplicate Beta(1,1), repeated fatigue-life parameters and coalesced affine queries are deduplicated. A loop case is not called a Rust unit test. Different units (run specs, output columns and step tuples) are reported separately."
+    },
+    "independent_oracles": [
+      "Elementary power/exponential/logistic CDFs and independently arranged log-density laws over scale1e-100..1e100, shapes0.25..10, positive and negative locations.",
+      "Small binomial/hypergeometric direct combinations; Poisson/negative-binomial/geometric/logarithmic PMF recurrences and independent finite-prefix CDF sums.",
+      "Original atoms are transformed by mul_add, then independently enumerated and coalesced to derive exact pushforward CDF/PMF; no inverse-coordinate assumption.",
+      "Fixed Gaussian probability constants plus analytic change-of-variable Jacobians for Normal, Lognormal, JohnsonSU/SB/SL, FatigueLife, Levy and symmetric SkewNormal; arbitrary noninteger tails are checked by the parent's separately qualified SciPy probe.",
+      "Independent histogram/cumulative piecewise masses, uniform empirical quantile interpolation, duplicate-knot atoms, two-term Metalog logistic/loglogistic/uniform reductions and conditional uniform laws.",
+      "Expected shortfall identity ES=eta+E[(L-eta)+]/(1-alpha) at an independently selected empirical alpha quantile.",
+      "All nine process recurrences independently replayed with supplied shocks, mixed-sign offsets and units1e-100,1,1e100; conditional standard deviations checked separately.",
+      "MC/LHS/Sobol retained columns recomputed by independent two-pass statistics; exact LHS strata and power-of-two Sobol prefix strata; retained/streaming bitwise moment agreement.",
+      "Scaled normal MLE and Bernoulli likelihood/AIC direct algebra."
+    ],
+    "confirmed_repairs": [
+      "Weighted categorical Q(1) preserves the last positive-mass endpoint even when its cumulative increment rounds away.",
+      "Rounded affine discrete CDFs and PMFs use exact finite-f64 preimages and stable original interval masses, including atoms that coalesce under a huge offset.",
+      "Normal/Lognormal CDFs use the existing directly evaluated regularized-gamma tail, removing amplified legacy error in accepted tail truncations.",
+      "Gamma/Erlang/ChiSquared upper quantiles invert direct gamma-Q survival; Beta upper quantiles invert the swapped lower tail; symmetric negative affine quantiles avoid forming1-p.",
+      "Hyperbolic-secant median returns its exact location, preserving a small location under huge scale.",
+      "Inverse-Gaussian upper quantiles invert survival directly; Mills' ratio uses a bounded128-level Laplace continued fraction instead of a five-term asymptotic series.",
+      "Continuous truncation uses an exact atom-free lower bound. Gaussian interval probabilities use a positive8-node Gauss-Legendre integral for small widths and direct-tail differences otherwise, preserving probabilities adjacent to a truncation bound. Inclusive discrete/hybrid atoms remain explicit."
+    ],
+    "limits": [
+      "The matrix is finite and does not establish all-f64 or vendor-wide numerical parity.",
+      "Only independently qualified external reference operations count; unreliable near-one SciPy PPF/CDF and ambiguous discrete inverse boundaries are not accepted as sole oracles.",
+      "Generic count interval masses have bounded exact summation and stable probability-tail evaluation; unsupported numerical ranges return structured errors.",
+      "Metalog matrix reductions use two terms; existing separate global-certificate and higher-order basis/moment tests remain required.",
+      "Time-series innovations are externally replayed deterministic values; this verifies recurrence algebra rather than stationarity of every possible stochastic parameterization.",
+      "Fixed confidence intervals retain their stated Gaussian/CLT assumptions, adaptive intervals require true deterministic bounds, and Sobol/LHS points are not treated as independent units.",
+      "Likelihood fitting remains a bounded local search where documented; these tests do not create global MLE or optimality guarantees."
+    ]
+  },
+  "counting_rule": "Native totals count Rust test bodies; matrices count declared configurations/route/query tuples inside those bodies. Do not add these different units. Correct infeasibility, forgeries and precision refusals are identified separately."
+}

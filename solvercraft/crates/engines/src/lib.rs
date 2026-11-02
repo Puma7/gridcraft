@@ -33,7 +33,44 @@ use solvercraft_model::{ExactProducts, compensated_sum, effective_bounds, evalua
 use solvercraft_types::*;
 
 /// Capabilities describe implemented behavior, not aspirational backend names.
-pub const ENGINE_NAME: &str = "solvercraft-dense-simplex-0.2";
+pub const ENGINE_NAME: &str = "solvercraft-dense-simplex-0.3";
+
+/// A containing box implied by a canonical model. Single-coordinate rows are
+/// genuine domain restrictions even when the variable metadata has an open
+/// side. This is used only for independent certificates, never to round or
+/// replace the user's constraints. Division is widened outwards by one ULP.
+fn certificate_box(model: &OptimizationModel, initial: &[(Option<f64>, Option<f64>)]) -> Vec<(Option<f64>, Option<f64>)> {
+    let mut bounds = initial.to_vec();
+    for row in &model.constraints {
+        let [term] = row.terms.as_slice() else { continue };
+        if term.coefficient == 0.0 {
+            continue;
+        }
+        let Some((lower, upper)) = bounds.get_mut(term.variable) else { continue };
+        let ratio = row.rhs / term.coefficient;
+        if !ratio.is_finite() {
+            continue;
+        }
+        let at_least = match row.relation {
+            Relation::GreaterEqual => term.coefficient > 0.0,
+            Relation::LessEqual => term.coefficient < 0.0,
+            Relation::Equal => true,
+        };
+        if at_least || row.relation == Relation::Equal {
+            let value = ratio.next_down();
+            if value.is_finite() {
+                *lower = Some(lower.map_or(value, |old| old.max(value)));
+            }
+        }
+        if !at_least || row.relation == Relation::Equal {
+            let value = ratio.next_up();
+            if value.is_finite() {
+                *upper = Some(upper.map_or(value, |old| old.min(value)));
+            }
+        }
+    }
+    bounds
+}
 
 /// Owned-control auto route, including genuine finite-domain MIQP relaxations.
 /// This is the portable entry point for job systems already owning cancellation.

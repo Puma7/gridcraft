@@ -217,14 +217,19 @@ pub fn weighted_mean(values: &[f64], weights: &[f64]) -> Result<f64> {
 /// Weighted population variance, with power-of-two scaling before squaring.
 pub fn weighted_variance(values: &[f64], weights: &[f64]) -> Result<f64> {
     let plan = WeightPlan::new(weights.iter().copied())?;
-    let mean = weighted_average(values.iter().copied(), &plan)?;
+    if values.len() != plan.scaled.len() || values.iter().any(|v| !v.is_finite()) {
+        return Err(invalid("Losses must be finite and match the weight count"));
+    }
     let maximum = values.iter().zip(&plan.scaled).filter(|(_, w)| **w > 0.0).map(|(v, _)| v.abs()).fold(0.0_f64, f64::max);
     let scale = binary_scale(maximum);
-    let center = mean / scale;
+    // Center on an observed value before averaging. Rounding the large mean
+    // level first can double the variance of two adjacent binary64 losses.
+    let anchor = values.iter().zip(&plan.scaled).find(|(_, w)| **w > 0.0).map_or(0.0, |(v, _)| *v / scale);
+    let center = weighted_average(values.iter().zip(&plan.scaled).map(|(v, w)| if *w > 0.0 { *v / scale - anchor } else { 0.0 }), &plan)?;
     let mut area = Sum::default();
     for (value, weight) in values.iter().zip(&plan.scaled) {
         if *weight > 0.0 {
-            let deviation = scaled_loss(*value, scale)? - center;
+            let deviation = (scaled_loss(*value, scale)? - anchor) - center;
             let square = deviation * deviation;
             area.product(square, *weight)?;
         }
@@ -395,7 +400,15 @@ fn compile_with_roundoff(problem: &ScenarioProblem, options: &SolveOptions) -> R
         objective: Objective { direction: Direction::Minimize, offset: 0.0, linear: vec![], quadratic: vec![] },
         constraints: problem.constraints.clone(),
     };
-    match problem.measure {
+    // CVaR at confidence zero is exactly the expectation. A free-eta
+    // expansion with rounded probabilities summing below one would instead
+    // create a spurious unbounded recession direction.
+    let measure = if matches!(problem.measure, RiskMeasure::ConditionalValueAtRisk { confidence } if confidence == 0.0) {
+        RiskMeasure::ExpectedLoss
+    } else {
+        problem.measure.clone()
+    };
+    match measure {
         RiskMeasure::ExpectedLoss | RiskMeasure::MeanVariance { .. } => {
             model.objective.offset = weighted_average(problem.scenarios.iter().map(|s| s.offset), &weights)?;
             for variable in 0..problem.variables.len() {
@@ -469,6 +482,8 @@ fn compile_with_roundoff(problem: &ScenarioProblem, options: &SolveOptions) -> R
             let eta = model.variables.len();
             model.variables.push(Variable { name: "__solvercraft_var".into(), lower: None, upper: None, kind: VariableKind::Continuous });
             model.objective.linear.push(LinearTerm { variable: eta, coefficient: 1.0 });
+            let mut tail_total = solvercraft_model::ExactProducts::default();
+            tail_total.add(-1.0)?;
             for (i, (s, w)) in problem.scenarios.iter().zip(&weights.scaled).enumerate() {
                 let excess = model.variables.len();
                 model.variables.push(Variable {
@@ -477,7 +492,9 @@ fn compile_with_roundoff(problem: &ScenarioProblem, options: &SolveOptions) -> R
                     upper: None,
                     kind: VariableKind::Continuous,
                 });
-                model.objective.linear.push(LinearTerm { variable: excess, coefficient: (w / weights.total.total()?) / (1.0 - confidence) });
+                let coefficient = (w / weights.total.total()?) / (1.0 - confidence);
+                tail_total.add(coefficient)?;
+                model.objective.linear.push(LinearTerm { variable: excess, coefficient });
                 let mut terms: Vec<_> = s
                     .coefficients
                     .iter()
@@ -488,6 +505,9 @@ fn compile_with_roundoff(problem: &ScenarioProblem, options: &SolveOptions) -> R
                 terms.push(LinearTerm { variable: eta, coefficient: -1.0 });
                 terms.push(LinearTerm { variable: excess, coefficient: -1.0 });
                 model.constraints.push(LinearConstraint { name: format!("tail_scenario_{i}"), terms, relation: Relation::LessEqual, rhs: -s.offset });
+            }
+            if tail_total.exact_sign()? != std::cmp::Ordering::Greater {
+                return Err(numerical("CVaR confidence is too small to preserve the positive tail budget in the finite counterpart"));
             }
         }
     }

@@ -1,5 +1,6 @@
 //! Deterministic simulation primitives. No global random state or native dependencies.
 #![forbid(unsafe_code)]
+mod affine;
 pub mod catalog;
 pub mod copula;
 pub mod density;
@@ -7,6 +8,7 @@ pub mod distributions;
 pub mod elicitation;
 pub mod extended;
 pub mod johnson_moments;
+mod mass;
 pub mod metalog;
 pub mod multivariate;
 pub mod nominal;

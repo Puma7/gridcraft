@@ -56,6 +56,14 @@ Original worksheet evaluation, document identity/revision, domains, protection a
 
 ## Verification
 
+The [expanded numerical qualification](docs/qa/numerical-expansion-2026-11-02.md)
+adds independent solver/compiler, simulation, risk and decision matrices, plus
+1,171 external distribution parameterizations and 1,523 real CLI requests.
+It repairs further rounding, tail and variance errors and documents the new
+explicit precision refusals, including inexact coefficient products/divisions.
+The report distinguishes numerical passes, refusals and unresolved cases and
+retains all Worker timing attempts. It is the latest numerical evidence.
+
 The [numerical review of 2026-11-02](docs/qa/numerical-review-2026-11-02.md)
 reproduced and repaired silent wrong optima, false infeasibility/unboundedness,
 lost goal priorities/information costs, distribution-tail errors and false zero

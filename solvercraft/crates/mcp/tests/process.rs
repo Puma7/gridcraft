@@ -193,6 +193,69 @@ fn actual_agent_process_reports_unrepresentable_variance_without_false_certainty
 }
 
 #[test]
+fn actual_agent_portable_execution_rejects_compiled_original_product_disagreement() {
+    let mut client = Client::spawn();
+    client.initialize();
+    for exponent in 27..=30 {
+        let a = ((1_u64 << exponent) + 1) as f64;
+        let b = ((1_u64 << (2 * exponent)) + (1_u64 << (exponent + 1))) as f64;
+        let started=client.tool("solvercraft_start_execute",json!({"request":{
+            "schema_version":2,"model":{"schema_version":2,"id":"product-residual","revision":"1","name":"exact product residual",
+                "definition":{"kind":"expression","model":{"name":"product residual","variables":[{"name":"x","lower":0,"upper":1,"kind":"continuous"}],
+                    "direction":"maximize","objective":{"op":"subtract","left":{"op":"multiply","left":{"op":"multiply","left":{"op":"constant","value":a},"right":{"op":"variable","index":0}},"right":{"op":"constant","value":a}},
+                        "right":{"op":"multiply","left":{"op":"constant","value":b},"right":{"op":"variable","index":0}}},"constraints":[]}}},
+            "context":{"run_id":"checked-product","snapshot_id":"algebra-snapshot","snapshot_revision":"1","host":"artcraft"}}}));
+        let terminal = client.terminal(&started["job_id"]);
+        assert_eq!(terminal["result"]["ok"], false, "{terminal}");
+        assert!(terminal.to_string().contains("numerical_failure"), "{terminal}");
+        client.tool("solvercraft_job_forget", json!({"job_id":started["job_id"]}));
+    }
+    client.close();
+}
+
+#[test]
+fn actual_agent_simulation_variance_matches_exact_counts_at_a_large_location() {
+    let mut client = Client::spawn();
+    client.initialize();
+    let low = 1e10_f64;
+    let high = low.next_up();
+    let started = client.tool(
+        "solvercraft_start_simulation",
+        json!({
+        "inputs":[{"kind":"categorical","values":[low,high],"weights":[1,1]}],
+        "options":{"trials":256,"seed":"42","retain_samples":true}}),
+    );
+    let terminal = client.terminal(&started["job_id"]);
+    assert_eq!(terminal["result"]["ok"], true, "{terminal}");
+    let result = &terminal["result"]["value"];
+    let samples = result["samples"].as_array().unwrap();
+    let count_low = samples.iter().filter(|row| row[0].as_f64() == Some(low)).count();
+    let count_high = samples.iter().filter(|row| row[0].as_f64() == Some(high)).count();
+    assert_eq!(count_low + count_high, 256);
+    assert!(count_low > 0 && count_high > 0);
+    let expected = (high - low).powi(2) * (count_low * count_high) as f64 / (256.0 * 255.0);
+    let actual = result["summaries"][0]["variance"].as_f64().unwrap();
+    assert!((actual / expected - 1.0).abs() < 1e-12, "{actual} != {expected}");
+    client.close();
+}
+
+#[test]
+fn actual_agent_does_not_publish_false_infeasibility_from_inexact_division() {
+    let mut client = Client::spawn();
+    client.initialize();
+    let started=client.tool("solvercraft_start_execute",json!({"request":{"schema_version":2,
+        "model":{"schema_version":2,"id":"division-identity","revision":"1","name":"division identity","definition":{"kind":"expression","model":{
+            "name":"division identity","variables":[{"name":"x","lower":1,"upper":2,"kind":"continuous"}],"direction":"minimize","objective":{"op":"constant","value":0},
+            "constraints":[{"name":"identity","left":{"op":"subtract","left":{"op":"multiply","left":{"op":"divide","left":{"op":"variable","index":0},"right":{"op":"constant","value":3}},
+                "right":{"op":"constant","value":3}},"right":{"op":"variable","index":0}},"relation":"equal","right":{"op":"constant","value":0}}]}}},
+        "context":{"run_id":"checked-division","snapshot_id":"division-snapshot","snapshot_revision":"1","host":"artcraft"}}}));
+    let terminal = client.terminal(&started["job_id"]);
+    assert_eq!(terminal["result"]["ok"], false, "{terminal}");
+    assert!(terminal.to_string().contains("numeric_range"), "{terminal}");
+    client.close();
+}
+
+#[test]
 fn actual_process_executes_portable_artcraft_model_without_a_workbook() {
     let mut client = Client::spawn();
     client.initialize();

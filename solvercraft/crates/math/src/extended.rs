@@ -167,7 +167,7 @@ pub fn storage(d: &D) -> Result<u64> {
         }
         D::EmpiricalContinuous { values } => values.len() as u64 * 8,
         D::Categorical { values, .. } => values.len() as u64 * 48,
-        D::Hypergeometric { draws, .. } => (u64::from(*draws) + 1) * 48,
+        D::Hypergeometric { draws, .. } => (u64::from(*draws) + 1) * 64,
         D::Metalog { .. } => 1024,
         D::SkewNormal { .. } => 8192,
         _ => 0,
@@ -179,9 +179,9 @@ pub enum PreparedExtra {
     Metalog(crate::metalog::PreparedMetalog),
     Scalar(D),
     Continuous(Vec<f64>),
-    Points { values: Vec<f64>, cumulative: Vec<f64> },
+    Points { values: Vec<f64>, cumulative: Vec<f64>, probabilities: Vec<f64> },
     Shift { base: Box<PreparedDistribution>, shift: f64, scale: f64 },
-    Truncated { base: Box<PreparedDistribution>, lower: Option<f64>, upper: Option<f64>, lo: f64, hi: f64 },
+    Truncated { base: Box<PreparedDistribution>, lower: Option<f64>, upper: Option<f64>, lo: f64, hi: f64, mass: f64, upper_tail: bool },
     Mixture { components: Vec<PreparedDistribution>, weights: Vec<f64> },
     Compound { frequency: Box<PreparedDistribution>, severity: Box<PreparedDistribution>, max_events: u32 },
 }
@@ -215,18 +215,21 @@ fn point_table(values: &[f64], weights: &[f64]) -> Result<PreparedExtra> {
     let sum = special::finite_sum(pairs.iter().map(|x| x.1))?;
     let mut v = Vec::new();
     let mut cumulative = Vec::new();
+    let mut probabilities = Vec::new();
     reserve(&mut v, pairs.len())?;
     reserve(&mut cumulative, pairs.len())?;
+    reserve(&mut probabilities, pairs.len())?;
     let mut current = 0.0;
     for (value, weight) in pairs {
         current += weight / sum;
         v.push(value);
         cumulative.push(current.min(1.0));
+        probabilities.push(weight / sum);
     }
     if let Some(last) = cumulative.last_mut() {
         *last = 1.0;
     }
-    Ok(PreparedExtra::Points { values: v, cumulative })
+    Ok(PreparedExtra::Points { values: v, cumulative, probabilities })
 }
 pub fn prepare(d: &D) -> Result<PreparedExtra> {
     validate_tree(d)?;
@@ -265,12 +268,12 @@ pub fn prepare(d: &D) -> Result<PreparedExtra> {
         }
         D::Truncated { base, lower, upper } => {
             let prepared = PreparedDistribution::new(base)?;
-            let lo = lower.map_or(Ok(0.0), |x| prepared.cdf(x.next_down()))?;
-            let hi = upper.map_or(Ok(1.0), |x| prepared.cdf(x))?;
-            if hi - lo < 1e-9 {
+            let (lo, hi, upper_tail) = truncation_probabilities(&prepared, *lower, *upper)?;
+            let mass = prepared.interval_probability(lower.unwrap_or(f64::NEG_INFINITY), upper.unwrap_or(f64::INFINITY))?;
+            if mass < 1e-9 {
                 return Err(SolverError::new("truncation_precision", "Truncation retains too little reliably resolved probability mass (<1e-9)."));
             }
-            PreparedExtra::Truncated { base: Box::new(prepared), lower: *lower, upper: *upper, lo, hi }
+            PreparedExtra::Truncated { base: Box::new(prepared), lower: *lower, upper: *upper, lo, hi, mass, upper_tail }
         }
         D::Mixture { components, weights } => {
             let max = weights.iter().copied().fold(0.0_f64, f64::max);
@@ -308,6 +311,80 @@ fn continuous_inverse<F: Fn(f64) -> Result<f64>>(p: f64, cdf: F, positive: bool)
     }
     if positive { special::invert(p, -743.0, 709.0, f64::exp, cdf) } else { special::invert(p, -710.0, 710.0, f64::sinh, cdf) }
 }
+fn gamma_upper_quantile(shape: f64, p: f64) -> Result<f64> {
+    if p == 1.0 {
+        return Ok(0.0);
+    }
+    if p <= 0.0 || p >= 1.0 {
+        return Err(endpoint());
+    }
+    special::invert(p, -709.0, 743.0, |t| (-t).exp(), |x| special::gamma_q(shape, x))
+}
+fn gamma_quantile(shape: f64, p: f64) -> Result<f64> {
+    if p == 0.0 {
+        Ok(0.0)
+    } else if p > 0.5 {
+        gamma_upper_quantile(shape, 1.0 - p)
+    } else {
+        continuous_inverse(p, |x| special::gamma_p(shape, x), true)
+    }
+}
+fn inverse_gaussian_probability(x: f64, mean: f64, shape: f64, upper: bool) -> Result<f64> {
+    if x <= 0.0 {
+        return Ok(if upper { 1.0 } else { 0.0 });
+    }
+    if x == f64::INFINITY {
+        return Ok(if upper { 0.0 } else { 1.0 });
+    }
+    let root = (shape / x).sqrt();
+    let a = root * (x / mean - 1.0);
+    let b = -root * (x / mean + 1.0);
+    // Beyond forty standard deviations the corresponding probability is
+    // below the smallest subnormal, before subtracting any survival terms.
+    if a >= 40.0 {
+        return Ok(if upper { 0.0 } else { 1.0 });
+    }
+    if a <= -40.0 {
+        return Ok(if upper { 1.0 } else { 0.0 });
+    }
+    let second_log = if b < -8.0 {
+        // Laplace's continued fraction for Mills' ratio Phi(-t)/phi(t).
+        // Unlike the old five-term asymptotic series this remains accurate
+        // at the t=8 boundary needed by small survival probabilities.
+        let t = -b;
+        let mut denominator = t;
+        for n in (1..=128).rev() {
+            denominator = t + f64::from(n) / denominator;
+        }
+        -0.5 * a * a - 0.5 * std::f64::consts::TAU.ln() - denominator.ln()
+    } else {
+        2.0 * shape / mean + special::normal_log_cdf(b)?
+    };
+    if upper {
+        let first_log = special::normal_log_cdf(-a)?;
+        if first_log == f64::NEG_INFINITY {
+            return Ok(0.0);
+        }
+        let difference = second_log - first_log;
+        if difference >= 0.0 {
+            return Err(SolverError::new("numerical_range", "Inverse-Gaussian survival terms cannot be separated in finite arithmetic."));
+        }
+        Ok((first_log + (-difference.exp()).ln_1p()).exp())
+    } else {
+        Ok((special::normal_cdf(a)? + second_log.exp()).clamp(0.0, 1.0))
+    }
+}
+pub(crate) fn truncation_probabilities(base: &PreparedDistribution, lower: Option<f64>, upper: Option<f64>) -> Result<(f64, f64, bool)> {
+    let lower_cdf_point = |x: f64| if base.has_atoms() { x.next_down() } else { x };
+    let lo = lower.map_or(Ok(0.0), |x| base.cdf(lower_cdf_point(x)))?;
+    if lo > 0.5 && !base.is_discrete() {
+        let low_tail = upper.map_or(Ok(0.0), |x| base.reflected_cdf(-x))?;
+        let high_tail = lower.map_or(Ok(1.0), |x| base.reflected_cdf(-lower_cdf_point(x)))?;
+        Ok((low_tail, high_tail, true))
+    } else {
+        Ok((lo, upper.map_or(Ok(1.0), |x| base.cdf(x))?, false))
+    }
+}
 /// Generalized inverse on the ordered finite-f64 lattice. Unlike a coordinate
 /// tolerance, adjacent-value termination preserves exact discrete atoms in
 /// mixtures, which may be fed into discontinuous simulation evaluators.
@@ -343,9 +420,118 @@ fn beta_quantile(a: f64, b: f64, p: f64) -> Result<f64> {
     if p == 1.0 {
         return Ok(1.0);
     }
-    special::invert(p, -743.0, 40.0, special::logistic, |x| special::beta_i(a, b, x))
+    if p > 0.5 {
+        Ok(1.0 - special::invert(1.0 - p, -743.0, 40.0, special::logistic, |x| special::beta_i(b, a, x))?)
+    } else {
+        special::invert(p, -743.0, 40.0, special::logistic, |x| special::beta_i(a, b, x))
+    }
 }
 impl PreparedExtra {
+    pub(crate) fn has_atoms(&self) -> bool {
+        match self {
+            Self::Continuous(v) => v.windows(2).any(|p| p[0] == p[1]),
+            Self::Mixture { components, .. } => components.iter().any(PreparedDistribution::has_atoms),
+            Self::Shift { base, .. } | Self::Truncated { base, .. } => base.has_atoms(),
+            Self::Compound { .. } => true,
+            _ => self.is_discrete(),
+        }
+    }
+    pub(crate) fn reflected_quantile(&self, p: f64) -> Result<f64> {
+        if let Self::Scalar(d) = self {
+            if let Some(mirror) = crate::affine::mirrored(d) {
+                return PreparedDistribution::new(&mirror)?.quantile(p);
+            }
+            match d {
+                D::Gamma { shape, scale } => return Ok(-scale * gamma_upper_quantile(*shape, p)?),
+                D::Erlang { shape, scale } => return Ok(-scale * gamma_upper_quantile(f64::from(*shape), p)?),
+                D::ChiSquared { degrees_of_freedom } => return Ok(-2.0 * gamma_upper_quantile(degrees_of_freedom * 0.5, p)?),
+                _ => (),
+            }
+        }
+        if let Self::Shift { base, shift, scale } = self {
+            return if *scale > 0.0 {
+                Ok(scale.mul_add(base.reflected_quantile(p)?, -shift))
+            } else {
+                Ok((-scale).mul_add(base.quantile(p)?, -shift))
+            };
+        }
+        self.quantile(if p == 0.0 || p == 1.0 {
+            1.0 - p
+        } else if self.is_discrete() {
+            (1.0 - p).next_up().min(1.0)
+        } else {
+            1.0 - p
+        })
+        .map(|x| -x)
+    }
+    pub(crate) fn reflected_cdf(&self, x: f64) -> Result<f64> {
+        if let Self::Scalar(d) = self {
+            if let Some(mirror) = crate::affine::mirrored(d) {
+                return PreparedDistribution::new(&mirror)?.cdf(x);
+            }
+            match d {
+                D::Gamma { shape, scale } => return if x >= 0.0 { Ok(1.0) } else { special::gamma_q(*shape, -x / scale) },
+                D::Erlang { shape, scale } => return if x >= 0.0 { Ok(1.0) } else { special::gamma_q(f64::from(*shape), -x / scale) },
+                D::ChiSquared { degrees_of_freedom } => return if x >= 0.0 { Ok(1.0) } else { special::gamma_q(degrees_of_freedom * 0.5, -x * 0.5) },
+                D::InverseGamma { shape, scale } => return if x >= 0.0 { Ok(1.0) } else { special::gamma_p(*shape, -scale / x) },
+                D::Beta { alpha, beta } => {
+                    return if x >= 0.0 {
+                        Ok(1.0)
+                    } else if x <= -1.0 {
+                        Ok(0.0)
+                    } else {
+                        special::beta_i(*beta, *alpha, 1.0 + x)
+                    };
+                }
+                _ => (),
+            }
+        }
+        if self.is_discrete() {
+            return Ok(self.interval_log_mass(-x, f64::INFINITY)?.exp().clamp(0.0, 1.0));
+        }
+        Ok(1.0 - self.cdf(-x)?)
+    }
+    pub(crate) fn is_discrete(&self) -> bool {
+        match self {
+            Self::Points { .. } => true,
+            Self::Scalar(d) => crate::density::is_discrete(d),
+            Self::Shift { base, .. } | Self::Truncated { base, .. } => base.is_discrete(),
+            Self::Mixture { components, .. } => components.iter().all(PreparedDistribution::is_discrete),
+            _ => false,
+        }
+    }
+    pub(crate) fn interval_log_mass(&self, lower: f64, upper: f64) -> Result<f64> {
+        if lower > upper {
+            return Ok(f64::NEG_INFINITY);
+        }
+        match self {
+            Self::Scalar(d) => crate::mass::interval(d, lower, upper),
+            Self::Points { values, probabilities, .. } => {
+                crate::mass::log_sum(values.iter().zip(probabilities).filter(|(v, _)| **v >= lower && **v <= upper).map(|(_, p)| p.ln()))
+            }
+            Self::Shift { base, shift, scale } => {
+                if let Some((left, right)) = crate::affine::preimage(lower, upper, *shift, *scale) {
+                    base.interval_log_mass(left, right)
+                } else {
+                    Ok(f64::NEG_INFINITY)
+                }
+            }
+            Self::Truncated { base, lower: bound_low, upper: bound_high, .. } => {
+                let left = bound_low.unwrap_or(f64::NEG_INFINITY);
+                let right = bound_high.unwrap_or(f64::INFINITY);
+                Ok(base.interval_log_mass(lower.max(left), upper.min(right))? - base.interval_log_mass(left, right)?)
+            }
+            Self::Mixture { components, weights } => crate::mass::log_sum(
+                components
+                    .iter()
+                    .zip(weights)
+                    .filter(|(_, w)| **w > 0.0)
+                    .map(|(d, w)| d.interval_log_mass(lower, upper).map(|p| p + w.ln()))
+                    .collect::<Result<Vec<_>>>()?,
+            ),
+            _ => Err(SolverError::new("density_unavailable", "No discrete interval mass is available for this family.")),
+        }
+    }
     pub fn quantile(&self, p: f64) -> Result<f64> {
         if !probability(p) {
             return Err(domain());
@@ -359,22 +545,40 @@ impl PreparedExtra {
                 let weight = pos - i as f64;
                 (1.0 - weight) * v[i] + weight * v[j]
             }
-            Self::Points { values, cumulative } => {
+            Self::Points { values, cumulative, .. } => {
+                if p == 1.0 {
+                    return values.last().copied().ok_or_else(domain);
+                }
                 let i = cumulative.partition_point(|x| *x < p).min(values.len() - 1);
                 values[i]
             }
             Self::Shift { base, shift, scale } => {
-                let target = if *scale > 0.0 {
-                    p
-                } else if p == 0.0 || p == 1.0 {
-                    1.0 - p
+                if *scale < 0.0 {
+                    (-scale).mul_add(base.reflected_quantile(p)?, *shift)
                 } else {
-                    (1.0 - p).next_up().min(1.0)
-                };
-                scale.mul_add(base.quantile(target)?, *shift)
+                    let target = if *scale > 0.0 {
+                        p
+                    } else if p == 0.0 || p == 1.0 {
+                        1.0 - p
+                    } else {
+                        (1.0 - p).next_up().min(1.0)
+                    };
+                    scale.mul_add(base.quantile(target)?, *shift)
+                }
             }
-            Self::Truncated { base, lower, upper, lo, hi } => {
-                let target = (lo + p * (hi - lo)).max(lo.next_up()).min(*hi);
+            Self::Truncated { base, lower, upper, lo, hi, mass, upper_tail } => {
+                if *upper_tail {
+                    let target = (-p).mul_add(*mass, *hi).max(*lo).min(hi.next_down());
+                    let mut q = -base.reflected_quantile(target)?;
+                    if let Some(v) = lower {
+                        q = q.max(*v);
+                    }
+                    if let Some(v) = upper {
+                        q = q.min(*v);
+                    }
+                    return Ok(q);
+                }
+                let target = p.mul_add(*mass, *lo).max(lo.next_up()).min(*hi);
                 let mut q = base.quantile(target)?;
                 if let Some(v) = lower {
                     q = q.max(*v);
@@ -411,21 +615,21 @@ impl PreparedExtra {
                     if p == 0.0 {
                         0.0
                     } else {
-                        scale * continuous_inverse(p, |x| special::gamma_p(*shape, x), true)?
+                        scale * gamma_quantile(*shape, p)?
                     }
                 }
                 D::ChiSquared { degrees_of_freedom } => {
                     if p == 0.0 {
                         0.0
                     } else {
-                        2.0 * continuous_inverse(p, |x| special::gamma_p(0.5 * degrees_of_freedom, x), true)?
+                        2.0 * gamma_quantile(0.5 * degrees_of_freedom, p)?
                     }
                 }
                 D::Erlang { shape, scale } => {
                     if p == 0.0 {
                         0.0
                     } else {
-                        scale * continuous_inverse(p, |x| special::gamma_p(f64::from(*shape), x), true)?
+                        scale * gamma_quantile(f64::from(*shape), p)?
                     }
                 }
                 D::InverseGamma { shape, scale } => {
@@ -559,9 +763,11 @@ impl PreparedExtra {
                     }
                 }
                 D::SkewNormal { location, scale, shape } => scale.mul_add(continuous_inverse(p, |x| skew_cdf(x, *shape), false)?, *location),
-                D::InverseGaussian { .. } => {
+                D::InverseGaussian { mean, shape } => {
                     if p == 0.0 {
                         0.0
+                    } else if p > 0.5 {
+                        special::invert(1.0 - p, -709.0, 743.0, |t| (-t).exp(), |x| inverse_gaussian_probability(x, *mean, *shape, true))?
                     } else {
                         continuous_inverse(p, |x| self.cdf(x), true)?
                     }
@@ -618,21 +824,28 @@ impl PreparedExtra {
                     (lower as f64 + fraction) / (v.len() - 1) as f64
                 }
             }
-            Self::Points { values, cumulative } => {
+            Self::Points { values, cumulative, .. } => {
                 let upper = values.partition_point(|v| *v <= x);
                 if upper == 0 { 0.0 } else { cumulative[upper - 1] }
             }
             Self::Shift { base, shift, scale } => {
+                if base.is_discrete() {
+                    return if let Some((left, right)) = crate::affine::preimage(f64::NEG_INFINITY, x, *shift, *scale) {
+                        if *scale > 0.0 { base.cdf(right) } else { Ok(base.interval_log_mass(left, right)?.exp().clamp(0.0, 1.0)) }
+                    } else {
+                        Ok(0.0)
+                    };
+                }
                 let z = standardize(x, *shift, *scale);
-                if *scale > 0.0 { base.cdf(z)? } else { 1.0 - base.cdf(z.next_down())? }
+                if *scale > 0.0 { base.cdf(z)? } else { base.reflected_cdf(-z)? }
             }
-            Self::Truncated { base, lo, hi, lower, upper } => {
+            Self::Truncated { base, mass, lower, upper, .. } => {
                 if lower.is_some_and(|v| x < v) {
                     0.0
                 } else if upper.is_some_and(|v| x >= v) {
                     1.0
                 } else {
-                    (base.cdf(x)? - lo) / (hi - lo)
+                    base.interval_probability(lower.unwrap_or(f64::NEG_INFINITY), x)? / mass
                 }
             }
             Self::Mixture { components, weights } => {
@@ -786,25 +999,7 @@ impl PreparedExtra {
                     }
                 }
                 D::SkewNormal { location, scale, shape } => skew_cdf(standardize(x, *location, *scale), *shape)?,
-                D::InverseGaussian { mean, shape } => {
-                    if x <= 0.0 {
-                        0.0
-                    } else if x == f64::INFINITY {
-                        1.0
-                    } else {
-                        let root = (shape / x).sqrt();
-                        let a = root * (x / mean - 1.0);
-                        let b = -root * (x / mean + 1.0);
-                        let second = if b < -8.0 {
-                            let inv = 1.0 / (b * b);
-                            let mills = 1.0 - inv + 3.0 * inv.powi(2) - 15.0 * inv.powi(3) + 105.0 * inv.powi(4);
-                            (-0.5 * a * a - (-b).ln() - 0.918_938_533_204_672_7 + mills.ln()).exp()
-                        } else {
-                            (2.0 * shape / mean).exp() * normal_cdf(b)?
-                        };
-                        normal_cdf(a)? + second
-                    }
-                }
+                D::InverseGaussian { mean, shape } => inverse_gaussian_probability(x, *mean, *shape, false)?,
                 _ => return crate::reference_families::cdf(d, x),
             },
         };

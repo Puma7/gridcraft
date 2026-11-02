@@ -52,7 +52,17 @@ def main():
     parser.add_argument('--executable', type=Path, required=True)
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--python-site', type=Path)
+    parser.add_argument('--lp-cases', type=int, default=72)
+    parser.add_argument('--integer-cases', type=int, default=48)
+    parser.add_argument('--qp-cases', type=int, default=36)
+    parser.add_argument('--simulation-seeds', type=int, default=1)
+    parser.add_argument('--simulation-trials', type=int, default=32768)
+    parser.add_argument('--sobol-replicates', type=int, default=8)
+    parser.add_argument('--qualify-refusals', action='store_true')
     args = parser.parse_args()
+    if not (1<=args.lp_cases<=10000 and 1<=args.integer_cases<=10000 and 1<=args.qp_cases<=10000
+            and 1<=args.simulation_seeds<=64 and 1024<=args.simulation_trials<=1048576 and 1<=args.sobol_replicates<=256):
+        parser.error('Oracle matrix dimensions exceed their bounded test ranges')
     if args.python_site:
         sys.path.insert(0, str(args.python_site))
     import numpy as np
@@ -82,10 +92,16 @@ def main():
         response, error = call(command, request)
         try:
             if error is not None:
-                if allow_rejection and 'unstructured_failure' not in error:
+                if (allow_rejection or args.qualify_refusals) and 'unstructured_failure' not in error:
                     records.append({'case': label, 'command': command, 'status': 'explicit_rejection', 'request_sha256': fingerprint})
                     return
                 raise AssertionError('Unexpected process rejection: ' + str(error))
+            if args.qualify_refusals and command.startswith('solve'):
+                candidate=solve_result(response)
+                if candidate['feasibility']=='unknown' and candidate['optimality']=='unknown' and candidate['values'] is None:
+                    records.append({'case':label,'command':command,'status':'honest_inconclusive','request_sha256':fingerprint,
+                                    'termination':candidate['termination'],'reason':'No claimed mathematical result at the configured numerical/work limit'})
+                    return
             detail = verify(response) or {}
             status = 'honest_inconclusive' if detail.pop('honest_inconclusive', False) else 'passed'
             records.append({'case': label, 'command': command, 'status': status, 'request_sha256': fingerprint, **detail})
@@ -114,7 +130,7 @@ def main():
 
     # A different LP engine is the numerical reference; constants are excluded
     # from comparisons so they cannot hide a wrong decision behind roundoff.
-    for index in range(72):
+    for index in range(args.lp_cases):
         n = 2 + index % 4
         bounds = [(-rng.randint(1, 5), rng.randint(1, 8)) for _ in range(n)]
         costs = [rng.randint(-8, 8) for _ in range(n)]
@@ -139,7 +155,7 @@ def main():
             check(f'lp-{index}-{command}', command, request, lambda response, p=problem, e=expected: validate_solution(p, response, e))
 
     # A finite integer oracle has no optimization library dependency.
-    for index in range(48):
+    for index in range(args.integer_cases):
         n = 2 + index % 3
         bounds = [(-2, 4) for _ in range(n)]
         costs = [rng.randint(-5, 5) for _ in range(n)]
@@ -153,7 +169,7 @@ def main():
               lambda response, p=problem, e=expected: validate_solution(p, response, e))
 
     # Coupled convex quadratics with an independently constructed KKT witness.
-    for index in range(36):
+    for index in range(args.qp_cases):
         n = 2 + index % 3
         r = np.array([[rng.randint(-3, 3) for _ in range(n)] for _ in range(n)], dtype=float)
         h = r.T @ r + np.eye(n)
@@ -236,7 +252,7 @@ def main():
 
     # Fixed anchors use an ideal-IID Hoeffding/union sanity threshold, not a
     # claim that a finite PRNG or an entire CDF has been proved correct.
-    n = 32768
+    n = args.simulation_trials
     families = [
         ({'kind':'uniform','low':-2.,'high':5.}, stats.uniform(loc=-2,scale=7)),
         ({'kind':'normal','mean':1.,'std_dev':2.}, stats.norm(loc=1,scale=2)),
@@ -249,11 +265,13 @@ def main():
         ({'kind':'binomial','trials':20,'probability':.3}, stats.binom(20,.3)),
         ({'kind':'bernoulli','probability':.3}, stats.bernoulli(.3)),
     ]
-    anchors_total = len(families)*2*5
+    anchors_total = len(families)*2*5*args.simulation_seeds
     threshold = math.sqrt(math.log(2*anchors_total/1e-8)/(2*n))
-    for method in ['monte_carlo','latin_hypercube']:
+    for seed_index in range(args.simulation_seeds):
+      for method in ['monte_carlo','latin_hypercube']:
         for distribution, reference in families:
-            request = {'inputs':[distribution], 'options':{'trials':n,'seed':str(SEED),'method':method,'retain_samples':True,'max_memory_bytes':32*1024*1024}}
+            simulation_seed=SEED if seed_index==0 else (2**64-1 if seed_index==1 else SEED+seed_index*7919)
+            request = {'inputs':[distribution], 'options':{'trials':n,'seed':str(simulation_seed),'method':method,'retain_samples':True,'max_memory_bytes':32*1024*1024}}
             def simulation_check(response, rv=reference):
                 result = response['result']
                 assert result['termination'] == 'completed' and result['completed_trials'] == n
@@ -282,10 +300,10 @@ def main():
                     errors.append(abs(observed-expected))
                 assert max(errors) <= threshold, ('CDF_anchors',max(errors),threshold)
                 return {'max_cdf_anchor_error':max(errors),'cdf_tolerance':threshold,'mean':mean,'variance':variance}
-            check(method+'-'+distribution['kind'], 'simulate', request, simulation_check)
+            check(method+'-'+distribution['kind']+('' if seed_index==0 else '-seed-'+str(seed_index)), 'simulate', request, simulation_check)
     # Quasi-Monte Carlo is compared to exact integrals, not an IID confidence
     # interval. Independent randomizations are separate qualified checks.
-    for replicate in range(8):
+    for replicate in range(args.sobol_replicates):
         request={'inputs':[{'kind':'uniform','low':0.,'high':1.}]*2,
                  'outputs':[{'op':'multiply','left':{'op':'variable','index':0},'right':{'op':'variable','index':1}}],
                  'options':{'base':{'trials':4096,'seed':str(SEED),'retain_samples':True},
@@ -324,6 +342,7 @@ def main():
     check('bounded-adaptive-MC','simulate-advanced',adaptive,stopping_check)
 
     report={'schema':'solvercraft.independent-process-oracles.v1','seed':SEED,'binary_sha256':identity,
+            'matrix':{key:getattr(args,key) for key in ['lp_cases','integer_cases','qp_cases','simulation_seeds','simulation_trials','sobol_replicates','qualify_refusals']},
             'numpy_version':np.__version__,'scipy_version':scipy.__version__,
             'counts':{status:sum(row['status']==status for row in records) for status in ['passed','failed','explicit_rejection','honest_inconclusive']},'cases':records}
     args.report.parent.mkdir(parents=True,exist_ok=True)

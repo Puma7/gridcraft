@@ -1,6 +1,6 @@
 //! Frozen, inspectable family catalog. Compositional modifiers are separate entries.
 use serde::Serialize;
-pub const CATALOG_VERSION: &str = "solvercraft-baseline17-r4-catalog-v2";
+pub const CATALOG_VERSION: &str = "solvercraft-baseline17-r4-catalog-v3";
 #[derive(Debug, Clone, Copy, Serialize)]
 pub struct DistributionDescriptor {
     pub id: &'static str,
@@ -32,7 +32,7 @@ pub const DISTRIBUTIONS: &[DistributionDescriptor] = &[
     entry!("constant", false, true, "Point mass."),
     entry!("uniform", true, false, "Finite endpoints."),
     entry!("discrete_uniform", true, true, "Integer endpoints have magnitude <2^53."),
-    entry!("normal", true, false, "Legacy CDF approximation absolute error about 1.5e-7."),
+    entry!("normal", true, false, "CDF uses direct regularized-gamma upper tails; addressed normal inverse draws unchanged."),
     entry!("lognormal", true, false, "Normal parameters are on the log scale."),
     entry!("triangular", true, false, "Finite low <= mode <= high."),
     entry!("beta_pert", true, false, "Weighted Beta-PERT on finite bounds."),

@@ -294,16 +294,23 @@ fn log_density_valid(d: &D, x: f64) -> Result<f64> {
             (numerator / denominator).ln()
         }
         D::ShiftScale { base, shift, scale } => {
-            log_density_valid(base, standardize(x, *shift, *scale))? - if is_discrete(base) { 0.0 } else { scale.abs().ln() }
+            if is_discrete(base) {
+                if let Some((lower, upper)) = crate::affine::preimage(x, x, *shift, *scale) {
+                    crate::mass::interval(base, lower, upper)?
+                } else {
+                    neg
+                }
+            } else {
+                log_density_valid(base, standardize(x, *shift, *scale))? - scale.abs().ln()
+            }
         }
         D::Truncated { base, lower, upper } => {
             if lower.is_some_and(|v| x < v) || upper.is_some_and(|v| x > v) {
                 neg
             } else {
                 let prep = crate::PreparedDistribution::new(base)?;
-                let lo = lower.map_or(Ok(0.0), |v| prep.cdf(v.next_down()))?;
-                let hi = upper.map_or(Ok(1.0), |v| prep.cdf(v))?;
-                log_density_valid(base, x)? - (hi - lo).ln()
+                let mass = prep.interval_probability(lower.unwrap_or(f64::NEG_INFINITY), upper.unwrap_or(f64::INFINITY))?;
+                log_density_valid(base, x)? - mass.ln()
             }
         }
         D::Mixture { components, weights } => {

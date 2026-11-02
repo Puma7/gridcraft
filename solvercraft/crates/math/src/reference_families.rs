@@ -72,7 +72,7 @@ pub(crate) fn log_ratio(x: f64, scale: f64) -> f64 {
 fn ln_expm1(x: f64) -> f64 {
     if x > 40.0 { x + (-(-x).exp()).ln_1p() } else { x.exp_m1().ln() }
 }
-fn logseries_tail(p: f64, k: u64) -> Result<f64> {
+pub(crate) fn logseries_tail(p: f64, k: u64) -> Result<f64> {
     if k == 0 {
         return Ok(1.0);
     }
@@ -149,6 +149,9 @@ pub fn quantile(d: &D, p: f64) -> Result<f64> {
         D::HyperbolicSecant { location, scale } => {
             if p == 0.0 || p == 1.0 {
                 return Err(range());
+            }
+            if p == 0.5 {
+                return Ok(*location);
             }
             let z = if p < 0.5 { (std::f64::consts::FRAC_PI_2 * p).tan().ln() } else { -((std::f64::consts::FRAC_PI_2 * (1.0 - p)).tan()).ln() };
             scale.mul_add(z, *location)

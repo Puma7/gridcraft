@@ -1,5 +1,10 @@
 # Current acceptance against the original 96 requirements
 
+Latest numerical evidence: the [expanded qualification](numerical-expansion-2026-11-02.md)
+extends the first review with larger independent matrices and additional
+repairs, including explicit precision refusals. These limits apply to the
+bounded historical criteria below; their original rows remain unchanged.
+
 Numerical follow-up, 2026-11-02: the [independent numerical review](numerical-review-2026-11-02.md)
 found and repaired silent errors that the historical final7 gates below did not
 detect. Its current tests and qualifications supersede numerical confidence in

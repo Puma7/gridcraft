@@ -209,12 +209,19 @@ impl Coefficient {
     }
     fn add(&mut self, value: f64) -> Result<()> {
         checked(value, "polynomial coefficient")?;
-        let next = checked(self.main + value, "polynomial coefficient aggregation")?;
-        let residual = if self.main.abs() >= value.abs() { (self.main - next) + value } else { (value - next) + self.main };
-        let correction = checked(self.correction + residual, "polynomial coefficient correction")?;
-        self.main = next;
+        let mut sum = solvercraft_model::ExactProducts::default();
+        sum.add(self.main)?;
+        sum.add(self.correction)?;
+        sum.add(value)?;
+        let main = sum.clone().finish()?;
+        sum.add(-main)?;
+        let correction = sum.clone().finish()?;
+        sum.add(-correction)?;
+        if sum.exact_sign()? != std::cmp::Ordering::Equal {
+            return Err(error("numeric_range", "Polynomial coefficient exceeds the bounded two-component representation; rescale the expression."));
+        }
+        self.main = main;
         self.correction = correction;
-        checked(self.value(), "polynomial coefficient total")?;
         Ok(())
     }
     fn value(self) -> f64 {
@@ -222,6 +229,17 @@ impl Coefficient {
     }
     fn parts(self) -> [f64; 2] {
         [self.main, self.correction]
+    }
+    fn scalar(self) -> Result<f64> {
+        let value = checked(self.value(), "polynomial coefficient")?;
+        let mut exact = solvercraft_model::ExactProducts::default();
+        exact.add(self.main)?;
+        exact.add(self.correction)?;
+        exact.add(-value)?;
+        if exact.exact_sign()? != std::cmp::Ordering::Equal {
+            return Err(error("numeric_range", "Final polynomial coefficient is not exactly representable; rescale the expression."));
+        }
+        Ok(value)
     }
 }
 /// A monomial has zero, one or two sorted variable handles. Higher degrees
@@ -241,8 +259,8 @@ impl Polynomial {
     fn degree(&self) -> usize {
         self.terms.keys().map(Vec::len).max().unwrap_or(0)
     }
-    fn as_constant(&self) -> Option<f64> {
-        if self.degree() == 0 { Some(self.terms.get(&Vec::new()).copied().map(Coefficient::value).unwrap_or(0.0)) } else { None }
+    fn as_constant(&self) -> Result<Option<f64>> {
+        if self.degree() == 0 { self.terms.get(&Vec::new()).copied().map_or(Ok(Some(0.0)), |v| v.scalar().map(Some)) } else { Ok(None) }
     }
 }
 struct Budget {
@@ -278,13 +296,29 @@ impl Budget {
         }
         Ok(())
     }
+    fn insert_product(&mut self, result: &mut Polynomial, monomial: Vec<usize>, left: f64, right: f64) -> Result<()> {
+        let product = checked(left * right, "polynomial coefficient product")?;
+        let residual = left.mul_add(right, -product);
+        let mut exact = solvercraft_model::ExactProducts::default();
+        exact.add_product(left, right)?;
+        exact.add(-product)?;
+        exact.add(-residual)?;
+        if exact.exact_sign()? != std::cmp::Ordering::Equal {
+            return Err(error("numeric_range", "Polynomial product residual underflows its bounded representation; rescale the expression."));
+        }
+        self.insert(result, monomial.clone(), product)?;
+        if residual != 0.0 {
+            self.insert(result, monomial, residual)?;
+        }
+        Ok(())
+    }
 }
 fn add(left: Polynomial, right: Polynomial, right_scale: f64, budget: &mut Budget) -> Result<Polynomial> {
     let mut result = left;
     for (monomial, coefficient) in right.terms {
         for part in coefficient.parts() {
             if part != 0.0 {
-                budget.insert(&mut result, monomial.clone(), part * right_scale)?;
+                budget.insert_product(&mut result, monomial.clone(), part, right_scale)?;
             }
         }
     }
@@ -295,7 +329,7 @@ fn scale(poly: Polynomial, factor: f64, budget: &mut Budget) -> Result<Polynomia
     for (monomial, coefficient) in poly.terms {
         for part in coefficient.parts() {
             if part != 0.0 {
-                budget.insert(&mut result, monomial.clone(), part * factor)?;
+                budget.insert_product(&mut result, monomial.clone(), part, factor)?;
             }
         }
     }
@@ -306,7 +340,24 @@ fn divide(poly: Polynomial, divisor: f64, budget: &mut Budget) -> Result<Polynom
     for (monomial, coefficient) in poly.terms {
         for part in coefficient.parts() {
             if part != 0.0 {
-                budget.insert(&mut result, monomial.clone(), checked(part / divisor, "division")?)?;
+                let quotient = checked(part / divisor, "division")?;
+                // Product residuals are retained by later transformations.
+                // Rounding 1/3 here, then retaining the residual of multiplying
+                // by 3, would turn (x/3)*3-x == 0 into a nonzero row and could
+                // falsely report a feasible identity as infeasible. Require an
+                // exact quotient rather than changing the represented model.
+                let mut residual = solvercraft_model::ExactProducts::default();
+                residual.add(part)?;
+                residual.add_product(-quotient, divisor)?;
+                // Exact accumulation also catches a remainder below the
+                // minimum subnormal, for which an FMA alone rounds to zero.
+                if residual.exact_sign()? != std::cmp::Ordering::Equal {
+                    return Err(error(
+                        "numeric_range",
+                        "Polynomial coefficient division is not exactly representable; rescale the expression or provide an explicit rounded coefficient.",
+                    ));
+                }
+                budget.insert(&mut result, monomial.clone(), quotient)?;
             }
         }
     }
@@ -325,7 +376,7 @@ fn multiply(left: &Polynomial, right: &Polynomial, budget: &mut Budget) -> Resul
             for left in left_coefficient.parts() {
                 for right in right_coefficient.parts() {
                     if left != 0.0 && right != 0.0 {
-                        budget.insert(&mut result, monomial.clone(), left * right)?;
+                        budget.insert_product(&mut result, monomial.clone(), left, right)?;
                     }
                 }
             }
@@ -334,7 +385,7 @@ fn multiply(left: &Polynomial, right: &Polynomial, budget: &mut Budget) -> Resul
     Ok(Some(result))
 }
 fn fold_unary(poly: Option<Polynomial>, op: fn(f64) -> f64) -> Result<Option<Polynomial>> {
-    match poly.and_then(|p| p.as_constant()) {
+    match poly.map(|p| p.as_constant()).transpose()?.flatten() {
         Some(value) => Ok(Some(Polynomial::constant(checked(op(value), "constant folding")?))),
         None => Ok(None),
     }
@@ -367,7 +418,7 @@ fn polynomial(expr: &Expr, budget: &mut Budget) -> Result<Option<Polynomial>> {
         Expr::Divide { left, right } => {
             let l = polynomial(left, budget)?;
             let r = polynomial(right, budget)?;
-            match (l, r.and_then(|p| p.as_constant())) {
+            match (l, r.map(|p| p.as_constant()).transpose()?.flatten()) {
                 (_, Some(0.0)) => Err(error("domain_error", "division by zero")),
                 (Some(l), Some(r)) => Ok(Some(divide(l, r, budget)?)),
                 _ => Ok(None),
@@ -387,10 +438,10 @@ fn polynomial(expr: &Expr, budget: &mut Budget) -> Result<Option<Polynomial>> {
             match p {
                 None => Ok(None),
                 Some(p) if *exponent == 1 => Ok(Some(p)),
-                Some(p) if p.as_constant().is_some() => {
-                    Ok(Some(Polynomial::constant(checked(p.as_constant().unwrap_or(0.0).powf(f64::from(*exponent)), "power")?)))
-                }
                 Some(p) if *exponent == 2 => multiply(&p, &p, budget),
+                Some(p) if p.as_constant()?.is_some() => {
+                    Ok(Some(Polynomial::constant(checked(p.as_constant()?.unwrap_or(0.0).powf(f64::from(*exponent)), "power")?)))
+                }
                 Some(_) => Ok(None),
             }
         }
@@ -401,8 +452,8 @@ fn polynomial(expr: &Expr, budget: &mut Budget) -> Result<Option<Polynomial>> {
         Expr::Sqrt { value } => fold_unary(polynomial(value, budget)?, f64::sqrt),
         Expr::Abs { value } => fold_unary(polynomial(value, budget)?, f64::abs),
         Expr::Minimum { left, right } | Expr::Maximum { left, right } => {
-            let l = polynomial(left, budget)?.and_then(|p| p.as_constant());
-            let r = polynomial(right, budget)?.and_then(|p| p.as_constant());
+            let l = polynomial(left, budget)?.map(|p| p.as_constant()).transpose()?.flatten();
+            let r = polynomial(right, budget)?.map(|p| p.as_constant()).transpose()?.flatten();
             match (l, r) {
                 (Some(l), Some(r)) => Ok(Some(Polynomial::constant(if matches!(expr, Expr::Minimum { .. }) { l.min(r) } else { l.max(r) }))),
                 _ => Ok(None),
@@ -437,7 +488,7 @@ fn require_polynomial(expr: &Expr, budget: &mut Budget, location: &str) -> Resul
 fn objective(poly: Polynomial, direction: Direction) -> Result<Objective> {
     let mut objective = Objective { direction, offset: 0.0, linear: Vec::new(), quadratic: Vec::new() };
     for (monomial, coefficient) in poly.terms {
-        let coefficient = checked(coefficient.value(), "objective coefficient")?;
+        let coefficient = coefficient.scalar()?;
         match monomial.as_slice() {
             [] => objective.offset = coefficient,
             [variable] => objective.linear.push(LinearTerm { variable: *variable, coefficient }),
@@ -509,7 +560,7 @@ pub fn compile(model: &ExpressionModel, options: &SolveOptions) -> Result<Optimi
         let mut terms = Vec::new();
         let mut rhs = 0.0;
         for (monomial, coefficient) in combined.terms {
-            let coefficient = checked(coefficient.value(), "constraint coefficient")?;
+            let coefficient = coefficient.scalar()?;
             match monomial.as_slice() {
                 [] => rhs = checked(-coefficient, "constraint rhs")?,
                 [variable] => terms.push(LinearTerm { variable: *variable, coefficient }),

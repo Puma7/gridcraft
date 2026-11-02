@@ -1,0 +1,1696 @@
+{
+  "schema": "solvercraft.expansion-witnesses-public.v1",
+  "external_distribution_before_examples": [
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "operation": "quantile",
+      "expected": 45.074095556097625,
+      "actual": {
+        "value": 45.073988635436514
+      },
+      "p": 0.999999999999,
+      "tolerance": 9.014819111219525e-05,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "operation": "quantile",
+      "expected": 50.84417133244917,
+      "actual": {
+        "value": 50.844062376687575
+      },
+      "p": 0.999999999999,
+      "tolerance": 0.00010168834266489833,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.1, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 0.1
+      },
+      "operation": "quantile",
+      "expected": 43.39536096152526,
+      "actual": {
+        "value": 43.39525441445909
+      },
+      "p": 0.999999999999,
+      "tolerance": 8.679072192305053e-05,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.5, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 0.5
+      },
+      "operation": "quantile",
+      "expected": 47.863796878759935,
+      "actual": {
+        "value": 47.86368910736802
+      },
+      "p": 0.999999999999,
+      "tolerance": 9.572759375751986e-05,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "inverse_gaussian",
+        "mean": 2.0,
+        "shape": 1.0
+      },
+      "operation": "quantile",
+      "expected": 172.02028696421306,
+      "actual": {
+        "value": 172.01960984588914
+      },
+      "p": 0.999999999999,
+      "tolerance": 0.0003440405739284261,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"alpha\": 0.001, \"beta\": 123.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.001,
+        "beta": 123.0
+      },
+      "operation": "quantile",
+      "expected": 0.13520538748424232,
+      "actual": {
+        "value": 0.13520501551264452
+      },
+      "p": 0.999999999999,
+      "tolerance": 2.7041077496848466e-07,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"alpha\": 0.001, \"beta\": 1000.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.001,
+        "beta": 1000.0
+      },
+      "operation": "quantile",
+      "expected": 0.017647061020213555,
+      "actual": {
+        "value": 0.017647009228239974
+      },
+      "p": 0.999999999999,
+      "tolerance": 3.5294122040427107e-08,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"kind\": \"hyperbolic_secant\", \"location\": -3.0, \"scale\": 1e+50}",
+      "distribution": {
+        "kind": "hyperbolic_secant",
+        "location": -3.0,
+        "scale": 1e+50
+      },
+      "operation": "quantile",
+      "expected": -3.0,
+      "actual": {
+        "value": 1.1102230246251566e+34
+      },
+      "p": 0.5,
+      "tolerance": 6e-06,
+      "reference_kind": "exact_symmetric_median"
+    },
+    {
+      "case": "{\"kind\": \"hyperbolic_secant\", \"location\": 0.0, \"scale\": 1e+50}",
+      "distribution": {
+        "kind": "hyperbolic_secant",
+        "location": 0.0,
+        "scale": 1e+50
+      },
+      "operation": "quantile",
+      "expected": 0.0,
+      "actual": {
+        "value": 1.1102230246251566e+34
+      },
+      "p": 0.5,
+      "tolerance": 1e-10,
+      "reference_kind": "exact_symmetric_median"
+    },
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 0.3, \"shape\": 0.2}",
+      "distribution": {
+        "kind": "inverse_gaussian",
+        "mean": 0.3,
+        "shape": 0.2
+      },
+      "operation": "quantile",
+      "expected": 19.734010550988028,
+      "actual": {
+        "value": 19.73396392938027
+      },
+      "p": 0.999999999999,
+      "tolerance": 3.946802110197605e-05,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"high\": 5.0, \"kind\": \"beta_pert\", \"low\": -2.0, \"mode\": -2.0, \"weight\": 100.0}",
+      "distribution": {
+        "kind": "beta_pert",
+        "low": -2.0,
+        "mode": -2.0,
+        "high": 5.0,
+        "weight": 100.0
+      },
+      "operation": "quantile",
+      "expected": -0.3245886699473106,
+      "actual": {
+        "value": -0.3245915964070212
+      },
+      "p": 0.999999999999,
+      "tolerance": 6.491773398946212e-07,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"high\": 5.0, \"kind\": \"beta_pert\", \"low\": -2.0, \"mode\": -1.2999999999999998, \"weight\": 100.0}",
+      "distribution": {
+        "kind": "beta_pert",
+        "low": -2.0,
+        "mode": -1.2999999999999998,
+        "high": 5.0,
+        "weight": 100.0
+      },
+      "operation": "quantile",
+      "expected": 0.9468896218263416,
+      "actual": {
+        "value": 0.9468867241711446
+      },
+      "p": 0.999999999999,
+      "tolerance": 1.893779243652683e-06,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"shift_scale\", \"scale\": -10.0, \"shift\": -2.0}",
+      "distribution": {
+        "kind": "shift_scale",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "shift": -2.0,
+        "scale": -10.0
+      },
+      "operation": "quantile",
+      "expected": -72.34483825301132,
+      "actual": {
+        "value": -72.34502385117146
+      },
+      "p": 1e-12,
+      "tolerance": 0.00014468967650602262,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"shift_scale\", \"scale\": -10.0, \"shift\": -2.0}",
+      "distribution": {
+        "kind": "shift_scale",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "shift": -2.0,
+        "scale": -10.0
+      },
+      "operation": "cdf",
+      "expected": 0.0009999999999999998,
+      "actual": {
+        "value": 0.0010000683130457766
+      },
+      "x": -32.90232306167813,
+      "tolerance": 2e-08
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"shift_scale\", \"scale\": -10.0, \"shift\": -2.0}",
+      "distribution": {
+        "kind": "shift_scale",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "shift": -2.0,
+        "scale": -10.0
+      },
+      "operation": "cdf",
+      "expected": 0.01,
+      "actual": {
+        "value": 0.00999997710011491
+      },
+      "x": -25.26347874040841,
+      "tolerance": 2e-08
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"cauchy\", \"location\": 0.0, \"scale\": 1.0}, \"kind\": \"shift_scale\", \"scale\": -10.0, \"shift\": -2.0}",
+      "distribution": {
+        "kind": "shift_scale",
+        "base": {
+          "kind": "cauchy",
+          "location": 0.0,
+          "scale": 1.0
+        },
+        "shift": -2.0,
+        "scale": -10.0
+      },
+      "operation": "quantile",
+      "expected": -3183098861839.907,
+      "actual": {
+        "value": -3183522728862.0146
+      },
+      "p": 1e-12,
+      "tolerance": 6366197.7236798145,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": -4.0, \"upper\": 2.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": -4.0,
+        "upper": 2.0
+      },
+      "operation": "quantile",
+      "expected": -3.999999992698076,
+      "actual": {
+        "value": -3.999889471186049
+      },
+      "p": 1e-12,
+      "tolerance": 7.999999985396152e-06,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": -4.0, \"upper\": 2.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": -4.0,
+        "upper": 2.0
+      },
+      "operation": "quantile",
+      "expected": -3.9999269914170434,
+      "actual": {
+        "value": -3.999816502160208
+      },
+      "p": 1e-08,
+      "tolerance": 7.999853982834086e-06,
+      "reference_kind": "scipy"
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": -4.0, \"upper\": 2.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": -4.0,
+        "upper": 2.0
+      },
+      "operation": "cdf",
+      "expected": 0.0009999999999999998,
+      "actual": {
+        "value": 0.0010000547748372343
+      },
+      "x": -3.0876029192562573,
+      "tolerance": 2e-08
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": -4.0, \"upper\": 2.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": -4.0,
+        "upper": 2.0
+      },
+      "operation": "cdf",
+      "expected": 0.010000000000000012,
+      "actual": {
+        "value": 0.009999962519285983
+      },
+      "x": -2.3337711843966646,
+      "tolerance": 2e-08
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": 4.0, \"upper\": 5.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": 4.0,
+        "upper": 5.0
+      },
+      "operation": "logdensity",
+      "expected": 1.4502550083169812,
+      "actual": {
+        "value": 1.4497981753839326
+      },
+      "x": 4.0,
+      "tolerance": 2.0001450255008314e-06
+    },
+    {
+      "case": "{\"base\": {\"kind\": \"normal\", \"mean\": 0.0, \"std_dev\": 1.0}, \"kind\": \"truncated\", \"lower\": 4.0, \"upper\": 5.0}",
+      "distribution": {
+        "kind": "truncated",
+        "base": {
+          "kind": "normal",
+          "mean": 0.0,
+          "std_dev": 1.0
+        },
+        "lower": 4.0,
+        "upper": 5.0
+      },
+      "operation": "logdensity",
+      "expected": 1.4502550083160433,
+      "actual": {
+        "value": 1.4497981753829947
+      },
+      "x": 4.0000000000002345,
+      "tolerance": 2.0001450255008314e-06
+    }
+  ],
+  "boundary_before": {
+    "schema": "solvercraft.expanded-boundary-witnesses.v1",
+    "state": "before",
+    "executable_sha256": "ef1034b5eff99a3545ad952ab9f911e5bc5a6876f1b231b4218221f64909f446",
+    "cases": [
+      {
+        "case": "division_identity_guard",
+        "command": "solve-expr",
+        "request": {
+          "model": {
+            "name": "non-dyadic identity constraint",
+            "variables": [
+              {
+                "name": "x",
+                "lower": 1,
+                "upper": 2,
+                "kind": "continuous"
+              }
+            ],
+            "direction": "minimize",
+            "objective": {
+              "op": "constant",
+              "value": 0
+            },
+            "constraints": [
+              {
+                "left": {
+                  "op": "subtract",
+                  "left": {
+                    "op": "multiply",
+                    "left": {
+                      "op": "divide",
+                      "left": {
+                        "op": "variable",
+                        "index": 0
+                      },
+                      "right": {
+                        "op": "constant",
+                        "value": 3
+                      }
+                    },
+                    "right": {
+                      "op": "constant",
+                      "value": 3
+                    }
+                  },
+                  "right": {
+                    "op": "variable",
+                    "index": 0
+                  }
+                },
+                "relation": "equal",
+                "right": {
+                  "op": "constant",
+                  "value": 0
+                },
+                "name": "division identity"
+              }
+            ]
+          }
+        },
+        "request_sha256": "5128e18587d3cf63d30f8699f184a7461d0138077a9918c89b7ed26eba173a78",
+        "required_behavior": "final guard: reject inexact division before falsely classifying the original identity",
+        "matched_required_behavior": false,
+        "result": {
+          "values": [
+            1.0
+          ],
+          "objective": 0.0
+        },
+        "error": null
+      },
+      {
+        "case": "linear_product",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              },
+              "right": {
+                "op": "constant",
+                "value": 134217729.0
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 1.801439877791744e+16
+              },
+              "right": {
+                "op": "variable",
+                "index": 0
+              }
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "3b526ddae3d54cfa4f3c5821b9db1f9490e5cf8bfa52b32c72ec863503f633f7",
+        "required_behavior": "exact coefficient1",
+        "matched_required_behavior": false,
+        "result": {
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [],
+            "quadratic": []
+          }
+        },
+        "error": null
+      },
+      {
+        "case": "quadratic_product",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 1.801439877791744e+16
+              },
+              "right": {
+                "op": "power",
+                "base": {
+                  "op": "variable",
+                  "index": 0
+                },
+                "exponent": 2
+              }
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "e343300eaff51f394c2717b96b79a4e19b443afb6fed1bf910239d1b365080a4",
+        "required_behavior": "exact quadratic coefficient1",
+        "matched_required_behavior": false,
+        "result": {
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [],
+            "quadratic": []
+          }
+        },
+        "error": null
+      },
+      {
+        "case": "original_ast_guard",
+        "command": "solve-expr",
+        "request": {
+          "model": {
+            "name": "synthetic boundary witness",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": 0,
+                "upper": 1
+              }
+            ],
+            "direction": "maximize",
+            "objective": {
+              "op": "subtract",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "constant",
+                    "value": 134217729.0
+                  },
+                  "right": {
+                    "op": "variable",
+                    "index": 0
+                  }
+                },
+                "right": {
+                  "op": "constant",
+                  "value": 134217729.0
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 1.801439877791744e+16
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              }
+            },
+            "constraints": []
+          }
+        },
+        "request_sha256": "09713511eda355c581f35e7932b6b681d90dd072a959a939c6fe312ddd39094c",
+        "required_behavior": "reject original AST0 versus exact compiled1 at the selected point",
+        "matched_required_behavior": false,
+        "result": {
+          "values": [
+            0.0
+          ],
+          "objective": 0.0
+        },
+        "error": null
+      },
+      {
+        "case": "zero_tail_cvar",
+        "command": "risk",
+        "request": {
+          "problem": {
+            "name": "constant mean",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": -2.0,
+                "upper": 2.0
+              }
+            ],
+            "constraints": [],
+            "scenarios": [
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  -1.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  0.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  1.0
+                ]
+              }
+            ],
+            "measure": {
+              "kind": "conditional_value_at_risk",
+              "confidence": 0.0
+            }
+          }
+        },
+        "request_sha256": "496a2bf0439ea0e87e25f285db0152b89de7610b2e25f2286f9ec6aa1dcdd056",
+        "required_behavior": "mean/CVaR constant-1; no unboundedness",
+        "matched_required_behavior": false,
+        "result": {
+          "solve": {
+            "termination": "completed",
+            "feasibility": "feasible",
+            "optimality": "unbounded",
+            "values": [
+              -2.0,
+              -3.0,
+              4.0,
+              2.0,
+              0.0
+            ],
+            "objective": -1.0,
+            "best_bound": null,
+            "relative_gap": null,
+            "max_violation": 0.0,
+            "statistics": {
+              "evaluations": 1,
+              "iterations": 6,
+              "nodes": 0
+            },
+            "engine": "solvercraft-dense-simplex-0.2",
+            "warnings": [
+              "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+            ]
+          },
+          "variance": null,
+          "expected_loss": -1.0,
+          "cvar": -1.0
+        },
+        "error": null
+      },
+      {
+        "case": "adjacent_variance",
+        "command": "risk",
+        "request": {
+          "problem": {
+            "name": "adjacent dyadic population",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": 0.0,
+                "upper": 0.0
+              }
+            ],
+            "constraints": [],
+            "scenarios": [
+              {
+                "weight": 1.0,
+                "offset": 10000000000.0,
+                "coefficients": [
+                  0.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": 10000000000.000002,
+                "coefficients": [
+                  0.0
+                ]
+              }
+            ],
+            "measure": {
+              "kind": "mean_variance",
+              "penalty": 0.0
+            }
+          }
+        },
+        "request_sha256": "7f75b29ce7fb83ad845b6c65b151234bfa7cde91e6e888ba842e6b1fe30a87fe",
+        "required_behavior": "population variance(delta^2)/4",
+        "matched_required_behavior": false,
+        "result": {
+          "solve": {
+            "termination": "completed",
+            "feasibility": "feasible",
+            "optimality": "optimal",
+            "values": [
+              0.0
+            ],
+            "objective": 10000000000.0,
+            "best_bound": 10000000000.0,
+            "relative_gap": 0.0,
+            "max_violation": 0.0,
+            "statistics": {
+              "evaluations": 1,
+              "iterations": 1,
+              "nodes": 0
+            },
+            "engine": "solvercraft-dense-simplex-0.2",
+            "warnings": [
+              "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+            ]
+          },
+          "variance": 1.8189894035458565e-12,
+          "expected_loss": 10000000000.0,
+          "cvar": null
+        },
+        "error": null
+      },
+      {
+        "case": "invisible_tree_cost",
+        "command": "decision-tree",
+        "request": {
+          "tree": {
+            "root": 0,
+            "utility": {
+              "kind": "linear"
+            },
+            "nodes": [
+              {
+                "kind": "decision",
+                "alternatives": [
+                  {
+                    "child": 1,
+                    "cost": 1
+                  },
+                  {
+                    "child": 1,
+                    "cost": 0
+                  }
+                ]
+              },
+              {
+                "kind": "terminal",
+                "payoff": 1e+16
+              }
+            ]
+          }
+        },
+        "request_sha256": "2ad8fd5d41d0c54a310af3422a5c144986acd4c1cebf406481f74132de862a8e",
+        "required_behavior": "explicit precision refusal; do not select the costly action",
+        "matched_required_behavior": false,
+        "result": {
+          "choices": [
+            0,
+            null
+          ]
+        },
+        "error": null
+      },
+      {
+        "case": "false_fd_stationarity",
+        "command": "solve-constrained",
+        "request": {
+          "model": {
+            "name": "synthetic boundary witness",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": -3,
+                "upper": 3
+              }
+            ],
+            "direction": "minimize",
+            "objective": {
+              "op": "add",
+              "left": {
+                "op": "constant",
+                "value": 1024
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 0.25
+                },
+                "right": {
+                  "op": "power",
+                  "base": {
+                    "op": "add",
+                    "left": {
+                      "op": "variable",
+                      "index": 0
+                    },
+                    "right": {
+                      "op": "constant",
+                      "value": 2
+                    }
+                  },
+                  "exponent": 2
+                }
+              }
+            },
+            "constraints": []
+          },
+          "nonlinear": {
+            "derivative_mode": "finite_difference",
+            "finite_difference_step": 1e-06
+          },
+          "start": [
+            -3.0
+          ]
+        },
+        "request_sha256": "4dccd301a11ff3ff1d45c19b9c1d6871edbf58d2f871a46e064d0041d1cf2fb0",
+        "required_behavior": "quadratic minimum at-2, not stationary at-3",
+        "matched_required_behavior": true,
+        "result": {
+          "values": [
+            -2.0
+          ],
+          "objective": 1024.0
+        },
+        "error": null
+      },
+      {
+        "case": "invisible_cara_cost",
+        "command": "information-value",
+        "request": {
+          "problem": {
+            "state_probabilities": [
+              1.0
+            ],
+            "action_payoffs": [
+              [
+                0.0
+              ]
+            ],
+            "signal_likelihoods": [
+              [
+                1.0
+              ]
+            ],
+            "acquisition_cost": 1.0,
+            "utility": {
+              "kind": "exponential",
+              "risk_tolerance": 1e+16
+            }
+          }
+        },
+        "request_sha256": "f4731f35481eaa0dcf0ec992c9a3f88fba58255a4ad6181852fb6ae04667a268",
+        "required_behavior": "explicit precision refusal for constant-payoff net-cost-1",
+        "matched_required_behavior": false,
+        "result": {
+          "net_value_of_signal": 0.0,
+          "baseline_certainty_equivalent": -0.0,
+          "signal_certainty_equivalent": -0.0
+        },
+        "error": null
+      },
+      {
+        "case": "decimal_product_policy",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 0.1
+              },
+              "right": {
+                "op": "variable",
+                "index": 0
+              }
+            },
+            "right": {
+              "op": "constant",
+              "value": 0.1
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "54768bc02416702edc552824d9bd394f98f38f808dd2d15df145571f516ee8e5",
+        "required_behavior": "documented exact-coefficient policy: refuse nonrepresentable final product",
+        "matched_required_behavior": false,
+        "result": {
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 0.010000000000000002
+              }
+            ],
+            "quadratic": []
+          }
+        },
+        "error": null
+      }
+    ],
+    "matched": 1,
+    "total": 10,
+    "qualification": "The decimal product entry characterizes a newly explicit arithmetic-support policy, not a claim that nearest-rounded old coefficients were outside their prior contract."
+  },
+  "boundary_after": {
+    "schema": "solvercraft.expanded-boundary-witnesses.v1",
+    "state": "after",
+    "executable_sha256": "34a04ddc7e8b12eb06d2160c6a88d95446fe8fc8c730f14d023bceb078808129",
+    "cases": [
+      {
+        "case": "division_identity_guard",
+        "command": "solve-expr",
+        "request": {
+          "model": {
+            "name": "non-dyadic identity constraint",
+            "variables": [
+              {
+                "name": "x",
+                "lower": 1,
+                "upper": 2,
+                "kind": "continuous"
+              }
+            ],
+            "direction": "minimize",
+            "objective": {
+              "op": "constant",
+              "value": 0
+            },
+            "constraints": [
+              {
+                "left": {
+                  "op": "subtract",
+                  "left": {
+                    "op": "multiply",
+                    "left": {
+                      "op": "divide",
+                      "left": {
+                        "op": "variable",
+                        "index": 0
+                      },
+                      "right": {
+                        "op": "constant",
+                        "value": 3
+                      }
+                    },
+                    "right": {
+                      "op": "constant",
+                      "value": 3
+                    }
+                  },
+                  "right": {
+                    "op": "variable",
+                    "index": 0
+                  }
+                },
+                "relation": "equal",
+                "right": {
+                  "op": "constant",
+                  "value": 0
+                },
+                "name": "division identity"
+              }
+            ]
+          }
+        },
+        "request_sha256": "5128e18587d3cf63d30f8699f184a7461d0138077a9918c89b7ed26eba173a78",
+        "required_behavior": "final guard: reject inexact division before falsely classifying the original identity",
+        "matched_required_behavior": true,
+        "result": null,
+        "error": {
+          "code": "numeric_range",
+          "message": "Polynomial coefficient division is not exactly representable; rescale the expression or provide an explicit rounded coefficient."
+        }
+      },
+      {
+        "case": "linear_product",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              },
+              "right": {
+                "op": "constant",
+                "value": 134217729.0
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 1.801439877791744e+16
+              },
+              "right": {
+                "op": "variable",
+                "index": 0
+              }
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "3b526ddae3d54cfa4f3c5821b9db1f9490e5cf8bfa52b32c72ec863503f633f7",
+        "required_behavior": "exact coefficient1",
+        "matched_required_behavior": true,
+        "result": {
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1.0
+              }
+            ],
+            "quadratic": []
+          }
+        },
+        "error": null
+      },
+      {
+        "case": "quadratic_product",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "subtract",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 134217729.0
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              }
+            },
+            "right": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 1.801439877791744e+16
+              },
+              "right": {
+                "op": "power",
+                "base": {
+                  "op": "variable",
+                  "index": 0
+                },
+                "exponent": 2
+              }
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "e343300eaff51f394c2717b96b79a4e19b443afb6fed1bf910239d1b365080a4",
+        "required_behavior": "exact quadratic coefficient1",
+        "matched_required_behavior": true,
+        "result": {
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 1.0
+              }
+            ]
+          }
+        },
+        "error": null
+      },
+      {
+        "case": "original_ast_guard",
+        "command": "solve-expr",
+        "request": {
+          "model": {
+            "name": "synthetic boundary witness",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": 0,
+                "upper": 1
+              }
+            ],
+            "direction": "maximize",
+            "objective": {
+              "op": "subtract",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "multiply",
+                  "left": {
+                    "op": "constant",
+                    "value": 134217729.0
+                  },
+                  "right": {
+                    "op": "variable",
+                    "index": 0
+                  }
+                },
+                "right": {
+                  "op": "constant",
+                  "value": 134217729.0
+                }
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 1.801439877791744e+16
+                },
+                "right": {
+                  "op": "variable",
+                  "index": 0
+                }
+              }
+            },
+            "constraints": []
+          }
+        },
+        "request_sha256": "09713511eda355c581f35e7932b6b681d90dd072a959a939c6fe312ddd39094c",
+        "required_behavior": "reject original AST0 versus exact compiled1 at the selected point",
+        "matched_required_behavior": true,
+        "result": null,
+        "error": {
+          "code": "numerical_failure",
+          "message": "Compiled objective disagrees with the original expression at the candidate; rescale or reformulate the model"
+        }
+      },
+      {
+        "case": "zero_tail_cvar",
+        "command": "risk",
+        "request": {
+          "problem": {
+            "name": "constant mean",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": -2.0,
+                "upper": 2.0
+              }
+            ],
+            "constraints": [],
+            "scenarios": [
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  -1.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  0.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": -1.0,
+                "coefficients": [
+                  1.0
+                ]
+              }
+            ],
+            "measure": {
+              "kind": "conditional_value_at_risk",
+              "confidence": 0.0
+            }
+          }
+        },
+        "request_sha256": "496a2bf0439ea0e87e25f285db0152b89de7610b2e25f2286f9ec6aa1dcdd056",
+        "required_behavior": "mean/CVaR constant-1; no unboundedness",
+        "matched_required_behavior": true,
+        "result": {
+          "solve": {
+            "termination": "completed",
+            "feasibility": "feasible",
+            "optimality": "optimal",
+            "values": [
+              -2.0
+            ],
+            "objective": -1.0,
+            "best_bound": -1.0,
+            "relative_gap": 0.0,
+            "max_violation": 0.0,
+            "statistics": {
+              "evaluations": 1,
+              "iterations": 1,
+              "nodes": 0
+            },
+            "engine": "solvercraft-dense-simplex-0.3",
+            "warnings": [
+              "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+            ]
+          },
+          "variance": null,
+          "expected_loss": -1.0,
+          "cvar": -1.0
+        },
+        "error": null
+      },
+      {
+        "case": "adjacent_variance",
+        "command": "risk",
+        "request": {
+          "problem": {
+            "name": "adjacent dyadic population",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": 0.0,
+                "upper": 0.0
+              }
+            ],
+            "constraints": [],
+            "scenarios": [
+              {
+                "weight": 1.0,
+                "offset": 10000000000.0,
+                "coefficients": [
+                  0.0
+                ]
+              },
+              {
+                "weight": 1.0,
+                "offset": 10000000000.000002,
+                "coefficients": [
+                  0.0
+                ]
+              }
+            ],
+            "measure": {
+              "kind": "mean_variance",
+              "penalty": 0.0
+            }
+          }
+        },
+        "request_sha256": "7f75b29ce7fb83ad845b6c65b151234bfa7cde91e6e888ba842e6b1fe30a87fe",
+        "required_behavior": "population variance(delta^2)/4",
+        "matched_required_behavior": true,
+        "result": {
+          "solve": {
+            "termination": "completed",
+            "feasibility": "feasible",
+            "optimality": "optimal",
+            "values": [
+              0.0
+            ],
+            "objective": 10000000000.0,
+            "best_bound": 10000000000.0,
+            "relative_gap": 0.0,
+            "max_violation": 0.0,
+            "statistics": {
+              "evaluations": 1,
+              "iterations": 1,
+              "nodes": 0
+            },
+            "engine": "solvercraft-dense-simplex-0.3",
+            "warnings": [
+              "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+            ]
+          },
+          "variance": 9.094947017729282e-13,
+          "expected_loss": 10000000000.0,
+          "cvar": null
+        },
+        "error": null
+      },
+      {
+        "case": "invisible_tree_cost",
+        "command": "decision-tree",
+        "request": {
+          "tree": {
+            "root": 0,
+            "utility": {
+              "kind": "linear"
+            },
+            "nodes": [
+              {
+                "kind": "decision",
+                "alternatives": [
+                  {
+                    "child": 1,
+                    "cost": 1
+                  },
+                  {
+                    "child": 1,
+                    "cost": 0
+                  }
+                ]
+              },
+              {
+                "kind": "terminal",
+                "payoff": 1e+16
+              }
+            ]
+          }
+        },
+        "request_sha256": "2ad8fd5d41d0c54a310af3422a5c144986acd4c1cebf406481f74132de862a8e",
+        "required_behavior": "explicit precision refusal; do not select the costly action",
+        "matched_required_behavior": true,
+        "result": null,
+        "error": {
+          "code": "invalid_decision_tree",
+          "message": "Edge cost exceeds supported finite utility precision"
+        }
+      },
+      {
+        "case": "false_fd_stationarity",
+        "command": "solve-constrained",
+        "request": {
+          "model": {
+            "name": "synthetic boundary witness",
+            "variables": [
+              {
+                "name": "x",
+                "kind": "continuous",
+                "lower": -3,
+                "upper": 3
+              }
+            ],
+            "direction": "minimize",
+            "objective": {
+              "op": "add",
+              "left": {
+                "op": "constant",
+                "value": 1024
+              },
+              "right": {
+                "op": "multiply",
+                "left": {
+                  "op": "constant",
+                  "value": 0.25
+                },
+                "right": {
+                  "op": "power",
+                  "base": {
+                    "op": "add",
+                    "left": {
+                      "op": "variable",
+                      "index": 0
+                    },
+                    "right": {
+                      "op": "constant",
+                      "value": 2
+                    }
+                  },
+                  "exponent": 2
+                }
+              }
+            },
+            "constraints": []
+          },
+          "nonlinear": {
+            "derivative_mode": "finite_difference",
+            "finite_difference_step": 1e-06
+          },
+          "start": [
+            -3.0
+          ]
+        },
+        "request_sha256": "4dccd301a11ff3ff1d45c19b9c1d6871edbf58d2f871a46e064d0041d1cf2fb0",
+        "required_behavior": "quadratic minimum at-2, not stationary at-3",
+        "matched_required_behavior": true,
+        "result": {
+          "values": [
+            -2.0
+          ],
+          "objective": 1024.0
+        },
+        "error": null
+      },
+      {
+        "case": "invisible_cara_cost",
+        "command": "information-value",
+        "request": {
+          "problem": {
+            "state_probabilities": [
+              1.0
+            ],
+            "action_payoffs": [
+              [
+                0.0
+              ]
+            ],
+            "signal_likelihoods": [
+              [
+                1.0
+              ]
+            ],
+            "acquisition_cost": 1.0,
+            "utility": {
+              "kind": "exponential",
+              "risk_tolerance": 1e+16
+            }
+          }
+        },
+        "request_sha256": "f4731f35481eaa0dcf0ec992c9a3f88fba58255a4ad6181852fb6ae04667a268",
+        "required_behavior": "explicit precision refusal for constant-payoff net-cost-1",
+        "matched_required_behavior": true,
+        "result": null,
+        "error": {
+          "code": "invalid_decision_tree",
+          "message": "Exponential utility loses the input payoff at supported finite precision"
+        }
+      },
+      {
+        "case": "decimal_product_policy",
+        "command": "compile",
+        "request": {
+          "name": "synthetic boundary witness",
+          "variables": [
+            {
+              "name": "x",
+              "kind": "continuous",
+              "lower": 0,
+              "upper": 1
+            }
+          ],
+          "direction": "maximize",
+          "objective": {
+            "op": "multiply",
+            "left": {
+              "op": "multiply",
+              "left": {
+                "op": "constant",
+                "value": 0.1
+              },
+              "right": {
+                "op": "variable",
+                "index": 0
+              }
+            },
+            "right": {
+              "op": "constant",
+              "value": 0.1
+            }
+          },
+          "constraints": []
+        },
+        "request_sha256": "54768bc02416702edc552824d9bd394f98f38f808dd2d15df145571f516ee8e5",
+        "required_behavior": "documented exact-coefficient policy: refuse nonrepresentable final product",
+        "matched_required_behavior": true,
+        "result": null,
+        "error": {
+          "code": "numeric_range",
+          "message": "Final polynomial coefficient is not exactly representable; rescale the expression."
+        }
+      }
+    ],
+    "matched": 10,
+    "total": 10,
+    "qualification": "The decimal product entry characterizes a newly explicit arithmetic-support policy, not a claim that nearest-rounded old coefficients were outside their prior contract."
+  },
+  "prepublication_division_regression": {
+    "qualification": "Discovered in the first unpublished expanded candidate, repaired before the PR update; not attributed to baseline e50da565.",
+    "candidate_executable_sha256": "c6858b7e0f8bb01aabd8553533e6f165c356b1d0408cc2d971f5d78f1c9ec738",
+    "synthetic_request": {
+      "model": {
+        "name": "non-dyadic identity constraint",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 1,
+            "upper": 2,
+            "kind": "continuous"
+          }
+        ],
+        "direction": "minimize",
+        "objective": {
+          "op": "constant",
+          "value": 0
+        },
+        "constraints": [
+          {
+            "left": {
+              "op": "subtract",
+              "left": {
+                "op": "multiply",
+                "left": {
+                  "op": "divide",
+                  "left": {
+                    "op": "variable",
+                    "index": 0
+                  },
+                  "right": {
+                    "op": "constant",
+                    "value": 3
+                  }
+                },
+                "right": {
+                  "op": "constant",
+                  "value": 3
+                }
+              },
+              "right": {
+                "op": "variable",
+                "index": 0
+              }
+            },
+            "relation": "equal",
+            "right": {
+              "op": "constant",
+              "value": 0
+            },
+            "name": "division identity"
+          }
+        ]
+      }
+    },
+    "incorrect_result": {
+      "termination": "completed",
+      "feasibility": "infeasible",
+      "optimality": "unknown",
+      "values": null,
+      "objective": null,
+      "best_bound": null,
+      "relative_gap": null,
+      "max_violation": null,
+      "statistics": {
+        "evaluations": 1,
+        "iterations": 1,
+        "nodes": 0
+      },
+      "engine": "solvercraft-dense-simplex-0.3",
+      "warnings": [
+        "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+      ]
+    },
+    "exact_original_witness": [
+      1.0
+    ],
+    "final_behavior": "numeric_range before a changed polynomial can reach infeasibility certification"
+  }
+}

@@ -94,6 +94,16 @@ where
         } else {
             None
         };
+        // A point one ULP inside a finite bound must not give nearly all
+        // central weight to that microscopic side: f(x)-f(neighbor) can round
+        // to zero even for a large true slope, especially with an offset.
+        // A second-order estimate on the resolved side avoids that artificial
+        // stationary point. Moderately unequal steps retain the central rule.
+        let (left, right) = match (left, right) {
+            (Some((ha, _)), Some((hb, _))) if ha < hb * 0.125 => (None, right),
+            (Some((ha, _)), Some((hb, _))) if hb < ha * 0.125 => (left, None),
+            pair => pair,
+        };
         let derivative = match (left, right) {
             (Some((ha, da)), Some((hb, db))) => {
                 let scale = ha.max(hb);

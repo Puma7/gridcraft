@@ -45,7 +45,7 @@ fn baseline_simulation_reports_the_numerical_catalog_revision_without_changing_r
     )
     .unwrap();
     assert_eq!(solvercraft_math::SAMPLING_VERSION, "solvercraft-addressed-mix64-v2");
-    assert_eq!(result.sampling_version, "solvercraft-addressed-mix64-v2/solvercraft-baseline17-r4-catalog-v2");
+    assert_eq!(result.sampling_version, "solvercraft-addressed-mix64-v2/solvercraft-baseline17-r4-catalog-v3");
 }
 
 #[test]

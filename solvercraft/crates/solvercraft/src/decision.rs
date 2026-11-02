@@ -26,6 +26,12 @@ impl Utility {
         if !value.is_finite() || (matches!(self, Self::Exponential { .. }) && value == 0.0) {
             return Err(invalid("Utility exceeds supported finite precision"));
         }
+        if let Self::Exponential { risk_tolerance } = self {
+            let reconstructed = -risk_tolerance * (-value).ln();
+            if !reconstructed.is_finite() || (reconstructed - payoff).abs() > 64.0 * f64::EPSILON * payoff.abs().max(1.0) {
+                return Err(invalid("Exponential utility loses the input payoff at supported finite precision"));
+            }
+        }
         Ok(value)
     }
     fn cost(self, utility: f64, cost: f64) -> Result<f64> {
@@ -33,7 +39,7 @@ impl Utility {
             Self::Linear {} => utility - cost,
             Self::Exponential { risk_tolerance } => utility * (cost / risk_tolerance).exp(),
         };
-        if !value.is_finite() || (matches!(self, Self::Exponential { .. }) && value == 0.0) {
+        if !value.is_finite() || (matches!(self, Self::Exponential { .. }) && value == 0.0) || (cost != 0.0 && value == utility) {
             return Err(invalid("Edge cost exceeds supported finite utility precision"));
         }
         Ok(value)
@@ -423,7 +429,16 @@ pub fn information_value(problem: &InformationProblem, max_memory_bytes: u64) ->
         let mut best = f64::NEG_INFINITY;
         let mut choice = 0;
         for (action, payoffs) in problem.action_payoffs.iter().enumerate() {
-            let utilities: Vec<_> = payoffs.iter().map(|p| problem.utility.value(*p - problem.acquisition_cost)).collect::<Result<_>>()?;
+            let utilities: Vec<_> = payoffs
+                .iter()
+                .map(|p| {
+                    let adjusted = *p - problem.acquisition_cost;
+                    if problem.acquisition_cost != 0.0 && adjusted == *p {
+                        return Err(invalid("Acquisition cost exceeds supported finite payoff precision"));
+                    }
+                    problem.utility.value(adjusted)
+                })
+                .collect::<Result<_>>()?;
             let value = crate::risk::weighted_mean(&utilities, &joint)?;
             if value > best {
                 best = value;

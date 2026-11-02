@@ -69,6 +69,34 @@ fn workbook_optimization_preserves_the_unit_improvement_and_checks_calc_before_a
 }
 
 #[test]
+fn worksheet_product_cancellation_is_checked_against_calc_without_document_changes() {
+    let mut s = session();
+    set(&mut s, "A1", "0");
+    set(&mut s, "B1", "=134217729*A1*134217729-18014398777917440*A1");
+    let before = s.doc().unwrap().wb.clone();
+    let error = s
+        .execute("solvercraft.solve", json!({"objective":"B1","variables":[{"cell":"A1","lower":0,"upper":1}],"goal":"max"}))
+        .expect_err("Original Calc and exact compiled product differ at candidate x=1");
+    assert!(error.to_string().contains("disagrees"), "{error}");
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+    assert_eq!(value(&s, "Sheet1", "A1"), Value::number(0.0));
+}
+
+#[test]
+fn worksheet_inexact_division_cannot_claim_an_identity_is_infeasible() {
+    let mut s = session();
+    set(&mut s, "A1", "1");
+    set(&mut s, "B1", "=(A1/3)*3-A1");
+    let before = s.doc().unwrap().wb.clone();
+    assert_eq!(value(&s, "Sheet1", "B1"), Value::number(0.0));
+    let error = s
+        .execute("solvercraft.solve", json!({"objective":"A1","variables":[{"cell":"A1","lower":1,"upper":2}],"constraints":["B1 = 0"],"goal":"min"}))
+        .expect_err("Inexact compiled division must refuse before an incorrect infeasibility result");
+    assert!(error.to_string().contains("numeric_range"), "{error}");
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+}
+
+#[test]
 fn explicit_negative_lower_bound_overrides_the_nonnegative_default() {
     let mut s = session();
     set(&mut s, "A1", "0");
