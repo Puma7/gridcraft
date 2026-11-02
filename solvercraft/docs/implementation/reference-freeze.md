@@ -76,7 +76,7 @@ with explicit identifying claims. Their literal vendor arities/defaults remain
 open [source questions](reference-open-questions.md), not invented compatible
 worksheet calls. Numerical support limits remain in [reference-gaps.md](reference-gaps.md).
 
-The supported converter has nineteen top-level required-argument PSI forms with
+The historical final6 converter had nineteen top-level required-argument PSI forms with
 explicitly lossy `solvercraft_nominal` outside values and refusal under
 `preserve_vendor`. Unsupported nesting/properties/extra arguments are preserved
 whole. Final6 evidence contains 25 new native engine contract tests, 21 Calc tests
@@ -91,6 +91,57 @@ original criteria; full reference/default/property compatibility remains
 explicitly incomplete. The 111 mathematical entries, nineteen imported forms
 and 272 inventory records describe different scopes. SDK math or inventory
 checks are never relabelled as literal PSI or universal browser execution.
+
+### Final7 implementation overlay: 31 qualified core forms
+
+The external `reference-catalog.json` source inventory stays frozen. The
+maintained `reference-implementation.json` overlay now records 31 active core
+imports and 80 distribution-name worksheet gaps, from the same 111 mathematical
+and 272 full-reference entries. This is not a change to the original 96 criteria
+or a claim of full vendor compatibility. Actual final7 gate evidence is linked below.
+
+The additional twelve are ChiSquare, Erlang, FDist, Logistic, MaxExtreme,
+MinExtreme, Rayleigh, Reciprocal, Student, Levy, Kumaraswamy and HypSecant.
+All are scalar required-argument cores. Cauchy/Laplace/HyperGeo remain excluded
+for the explicit source/mapping discrepancies documented in
+[reference-gaps.md](reference-gaps.md). No Alt, property or vendor display-default
+compatibility is silently added. The [31-form scope](reference-gaps.md)
+records PDF pages, domains, numeric limits and the shared registry.
+
+The canonical immutable `gridcraft_calc::PSI_CORE_SIGNATURES` registry supplies
+`legacy_name`, `worksheet_name` and `required_arguments` for all 31 forms. Calc
+decoding, known-function recognition, host import and reported capabilities use
+this shared contract rather than separate name/arity maps. Its counts are vendor
+required core arguments; the optional numeric SC nominal override is not a
+vendor property or an extra imported PSI argument.
+
+Discovery now returns `nominal` and `nominal_basis` per input, with explicit
+`analytic_mean`, `median_fallback` or `explicit_override` values. Simulation
+requests and manifests retain `worksheet_nominal: {value, basis}` separately
+from the effective sampling `distribution`. A caller can pass public
+Discovery.inputs/outputs into simulation without removing these metadata fields.
+An explicit simulation distribution does not silently relabel the worksheet's
+outside value: a worksheet override 8 and sampled Constant 7 remain distinct.
+
+Final7 now has executed source-bound qualification for the enlarged 31-form
+contract. All ten host CI stages passed with 2904 tests passed, zero failed and
+one pre-existing ignored; SDK 630 passed with zero failures/ignored. Native UI 6,
+chart module 8 numerical+1 lifecycle and actual Chrome SDK 13 also passed. These
+scoped counts are not added together to manufacture a total.
+
+The actual product worker passed all 9 bodies on its first attempt. Both import
+bodies passed: the existing 19-form body ran 2048 trials; the new 12-form body ran
+4096 trials with seed 42. Its 24 empirical CDF anchors had maximum absolute error
+0.020751953125 against the declared prefix tolerance 0.054792830314635735.
+This is finite prefix-test evidence, not a universal distribution accuracy or
+confidence guarantee. Observed admission was 0.765 ms, status 1 ms, heartbeat 12 ms,
+active progress gap 58 ms and 29 progress updates; no hard realtime or universal
+25 ms promise follows from these observations.
+
+The [final7 summary](final7-verification-summary.json) and [actual worker report](browser-worker-final7-report.json) identify this run. Raw code/input SHA-256: `8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065`; LF-canonical SHA-256: `dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472`. Historical final6 evidence remains separately labelled below.
+
+Current native PSI evidence comprises 31 separately named positive forms and 9 negative/policy groups (40 engine tests), plus 37 Calc tests. These selectors are present in the [final7 native test excerpt](gates-final7/host/host-ci.txt). The [CDF-prefix witness](psi-core12-cdf-final7-report.json) records the 24 comparisons and their outside-value basis. These public files are compact projections/excerpts, not complete private diagnostic dumps.
+
 
 `crates/compile/tests/reference_catalog.rs` checks source identity, all 272 unique entries/test IDs, page ranges, retained unsupported families, visible conflicts and open acceptance semantics. These are inventory-integrity tests, not distribution or import parity tests. Actual functional acceptance must exercise each claimed signature and default, an independent numerical oracle where appropriate, and the platform being claimed. A cross-compilation check is not a browser execution test.
 

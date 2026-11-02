@@ -1,0 +1,69 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/final7-source-delta-report.json",
+  "full_local_report_sha256": "1bdecc5037f73fbc963b8865fbcd8540d3147a526e37d47a5b0fb09057da83e2",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "source_changes": [
+    {
+      "path": "solvercraft/docs/implementation/reference-implementation.json",
+      "raw_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+      "lf_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108"
+    },
+    {
+      "path": "crates/calc/src/eval/solvercraft/tests.rs",
+      "raw_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41",
+      "lf_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+    },
+    {
+      "path": "crates/calc/src/eval/solvercraft.rs",
+      "raw_sha256": "b0231210c557472a136443f50353402f061357c6e98ed72e01556f47ad3cfd84",
+      "lf_sha256": "b0231210c557472a136443f50353402f061357c6e98ed72e01556f47ad3cfd84"
+    },
+    {
+      "path": "crates/calc/src/eval/special.rs",
+      "raw_sha256": "33b6ad90dad954843310afd7cf562cc1e9343df4e3cc32c4f2ea84d730a245b3",
+      "lf_sha256": "33b6ad90dad954843310afd7cf562cc1e9343df4e3cc32c4f2ea84d730a245b3"
+    },
+    {
+      "path": "crates/calc/src/lib.rs",
+      "raw_sha256": "c9b9fcde78458e17d127ccb17c0bba62cfaf8549862e56515b1cadcf48b06353",
+      "lf_sha256": "c9b9fcde78458e17d127ccb17c0bba62cfaf8549862e56515b1cadcf48b06353"
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+      "raw_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754",
+      "lf_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/worksheet.rs",
+      "raw_sha256": "e7d19b860973e9380b788137f80f29d731af490e1f597459aa1331235d2d8376",
+      "lf_sha256": "e7d19b860973e9380b788137f80f29d731af490e1f597459aa1331235d2d8376"
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft.rs",
+      "raw_sha256": "afdd5734fad1ff6864138188d152c71ed3f50ec74b3182888d77a4e92144ac3d",
+      "lf_sha256": "afdd5734fad1ff6864138188d152c71ed3f50ec74b3182888d77a4e92144ac3d"
+    }
+  ],
+  "sdk_files_unchanged": 151,
+  "changed_source_files": 8
+}

@@ -1,7 +1,7 @@
 {
   "schema": "solvercraft.acceptance-current.v1",
   "review_date": "2026-11-01",
-  "assessment_kind": "Final6 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; all worker attempts retained",
+  "assessment_kind": "Final7 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; final6 history retained",
   "original_csv": {
     "path": "docs/masterplan/requirements.csv",
     "sha256": "699e87ae50a62ff5605b0d40dee38f4b2f8b7200a4c92f825d2972a57e24de55",
@@ -12,7 +12,7 @@
     "original_field_mismatches": 0
   },
   "scope_rule": "Assess the original wording. Explicitly supported mathematical capability restrictions are not universal parity. A partial subset, source-only workflow, planned test ID or old green checkpoint does not close a missing original criterion.",
-  "source_state": "Frozen final6: 791 matching code/compilation-input files. Accepted native/SDK source-stable gates and actual Chrome execution are separately recorded; the controlled worker repeat passed after one failed additional timing guard, not an all-attempts-green assertion.",
+  "source_state": "Frozen final7: 791 matching code/compilation-input files; actual native/SDK/browser gates and every declared worker attempt recorded separately.",
   "statuses": {
     "accepted_bounded": "Original criterion has executed functional evidence within its explicit supported contract; no claim of all platforms/all inputs/commercial parity.",
     "partial": "An actual portion of the original criterion remains missing or in flight.",
@@ -23,18 +23,12 @@
     "accepted_bounded": 96
   },
   "evidence_notes": [
-    "Final6 primary evidence is docs/implementation/final6-verification-summary.json with explicit report paths, raw/canonical source identities and release binary SHA. Final5 reports remain historical and unchanged.",
-    "Host cargo xtask ci: all 10 stages accepted, 2873 passed, 0 failed, 1 pre-existing ignored (recalc_with_range_formulas_scales_linearly), 547.6406820999691 s. The ignored test is not passed.",
-    "SDK: 630 passed, 0 failed, 0 ignored with formatting/all-target Clippy. Native UI 6; chart module 8 numerical+1 lifecycle. Scoped suites are not added again to fabricate totals.",
-    "Actual Chrome SDK 13 passed. Worker initial attempt 7 passed/1 failed at a 26 ms observation against an additional strictly-below 25 ms heartbeat guard. Exactly one unchanged controlled repeat passed 8/0. Aggregate all-attempts-passed=false; the initial cause is not demonstrated. R081 nineteen-signature body passed in both attempts.",
-    "Worker repeat observed admission 0.81 ms, status 1 ms, active progress gap 57 ms, heartbeat 12 ms. Original R023 normal-model status-access target is 250 ms; no 25 ms product or hard realtime guarantee is added.",
-    "R046: all 111 frozen mathematical capability names have individual positive SDK-test associations in the actual 630-test run; 73 distinct test bodies, 13 sourcefiles. Exact vendor Alt grammar remains separate and open.",
-    "R081: 19 supported top-level numeric calls have individually named native tests plus real-browser execution. There are 25 new engine contract tests and 21 Calc tests; default outside_policy=solvercraft_nominal is explicitly lossy, preserve_vendor refuses, nesting/properties remain unsupported and preserved.",
-    "Final release oracles LP 30, QP 20, robust 20+4 tiny signed cases, 3 exact binary variants and 1 node-limit control passed. Five fresh processes per LP/streaming-MC workload record hardware/seed/RAM/time/error. Same release binary and shared host; the quieter follow-up is not an engine speedup claim.",
-    "All 96 original CSV rows and all 8 fields each are copied directly with UTF-8-sig csv.DictReader and compared exactly. CSV SHA is unchanged. Original planned TEST-Rxxx labels remain historical; no repository encoding defect or repair is claimed.",
-    "Scalar SciPy grid is separate finite evidence: 150 parameterizations, 1349 quantile+1361 CDF+1361 logdensity=4071 comparisons, 0 failures; 1 independently warned reference excluded. It is not universal or vendor-function parity.",
-    "Public final6 diagnostics are fixed-field projections of actual local reports. Public text files are strict test/result/summary excerpts with omitted lines blanked so existing line numbers remain stable. Full original diagnostics stay private; arbitrary stdout/stderr, environment, argv, driver/session dumps, complete feature trees and local NOTICE-hash metadata are not published.",
-    "Binary-oracle provenance correction: v1 reused a mutable request dictionary, so the third case stored wrong request metadata although minimization to -500 was actually executed. Historical final5 v1 is unchanged. The validator reran only the three binary cases plus one node-limit control on the identical 68a6 release binary using deep-copied case snapshots and a separate node request. The current final6 projection records minimize/negative coefficients/-500, default seed 0 (not 42) and max_nodes=1 correctly; its private full-report SHA is 60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa."
+    "Final7 primary evidence: docs/implementation/final7-verification-summary.json; actual reported counts only. Scoped suite counts are not added to global totals.",
+    "Host 2904/0/1; SDK 630/0/0 passed/failed/ignored. Ignored is not passed.",
+    "Actual Chrome SDK 13; worker attempts: initial: 9 passed/0 failed/0 ignored, exit 0; aggregate_all_attempts_passed=true.",
+    "R081: native 31 distinct signatures/40 contract bodies; Calc 37; browser bodies 19 signatures/2048 trials/19 outputs; 12 signatures/4096 trials/12 outputs/24 CDF anchors.",
+    "All 96 original rows/8 fields and bounded statuses remain unchanged. Neither 111 mathematical cores nor 31 selected imports implies 272-function/full commercial parity.",
+    "Historical final6 worker timing failure/repeat and binary-oracle provenance erratum remain unchanged under checkpoint_history.final6 and in the Markdown historical block."
   ],
   "evidence_index": {
     "MODEL": [
@@ -91,8 +85,7 @@
       "docs/implementation/host-checkpoint.json",
       "../crates/engine/src/cmd/solvercraft/host_tests.rs",
       "../crates/engine/tests/it/solvercraft_deep_review.rs",
-      "docs/implementation/gates-final6/host/summary.json",
-      "docs/implementation/final6-verification-summary.json"
+      "docs/implementation/final7-verification-summary.json"
     ],
     "WORKSHEET": [
       "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
@@ -104,16 +97,9 @@
     "UI": [
       "../crates/ui-egui/tests/solvercraft_acceptance.rs",
       "../crates/ui-egui/src/solvercraft.rs",
-      "../crates/ui-egui/src/solvercraft/report.rs",
-      "docs/implementation/native-ui-controls-final6-report.json"
+      "../crates/ui-egui/src/solvercraft/report.rs"
     ],
-    "WORKER": [
-      "docs/implementation/browser-worker-final6-report.json",
-      "docs/implementation/trunk-final6-build-report.json",
-      "docs/implementation/worker-browser-final6-build-report.json",
-      "docs/implementation/browser-worker-final6-initial-report.json",
-      "docs/implementation/browser-worker-final6-rerun-report.json"
-    ],
+    "WORKER": [],
     "API": [
       "crates/solvercraft/tests/api_review.rs",
       "crates/cli/tests/api_review.rs",
@@ -136,8 +122,7 @@
     ],
     "SOBOL": [
       "crates/math/src/sobol.rs",
-      "crates/math/tests/numerical_review.rs",
-      "docs/implementation/browser-smoke-final6-report.json"
+      "crates/math/tests/numerical_review.rs"
     ],
     "FIT": [
       "crates/simulation/tests/numerical_review.rs",
@@ -170,8 +155,7 @@
       "crates/solvercraft/tests/runtime_review.rs",
       "docs/implementation/stochastic.md",
       "docs/qa/ellipsoid-precision.md",
-      "docs/implementation/robust-oracle-fixed-debug-report.json",
-      "docs/implementation/robust-oracle-final6-report.json"
+      "docs/implementation/robust-oracle-fixed-debug-report.json"
     ],
     "RECOURSE": [
       "crates/solvercraft/tests/stochastic.rs",
@@ -186,35 +170,17 @@
       "docs/qa/original-scope-audit.md"
     ],
     "DEPS": [
-      "docs/implementation/dependency-final6-inventory.json",
       "docs/implementation/engines.md",
       "licenses/THIRD_PARTY.md",
       "crates/math/third_party/BOOST_LICENSE_1_0.txt"
     ],
-    "BROWSER": [
-      "docs/implementation/browser-smoke-final6-report.json",
-      "docs/implementation/browser-worker-final6-report.json",
-      "docs/implementation/trunk-final6-build-report.json",
-      "docs/implementation/worker-browser-final6-build-report.json",
-      "docs/implementation/browser-worker-final6-initial-report.json",
-      "docs/implementation/browser-worker-final6-rerun-report.json"
-    ],
+    "BROWSER": [],
     "PERF": [
-      "docs/implementation/performance-final6-report.json",
-      "docs/implementation/linear-oracle-final6-report.json",
-      "docs/implementation/quadratic-oracle-final6-report.json",
-      "docs/implementation/robust-oracle-final6-report.json",
-      "docs/implementation/exact-binary-oracle-final6-report.json",
-      "docs/implementation/release-final6-build-report.json"
+      "docs/implementation/performance-final7-report.json"
     ],
     "GATES": [
-      "docs/implementation/verification-final6.md",
-      "docs/implementation/final6-verification-summary.json",
-      "docs/implementation/gates-final6/host/summary.json",
-      "docs/implementation/gates-final6/host/report.json",
-      "docs/implementation/gates-final6/sdk/summary.json",
-      "docs/implementation/gates-final6/sdk/report.json",
-      "docs/implementation/release-final6-build-report.json",
+      "docs/implementation/verification-final7.md",
+      "docs/implementation/final7-verification-summary.json",
       "docs/implementation/public-evidence.md"
     ],
     "MANIFEST": [
@@ -225,7 +191,7 @@
       "crates/solvercraft/src/workflow.rs",
       "docs/implementation/run-manifests.md",
       "docs/implementation/sdk-runtime.md",
-      "docs/implementation/verification-final6.md"
+      "docs/implementation/verification-final7.md"
     ],
     "MIP": [
       "crates/engines/tests/integer_rounding.rs",
@@ -234,14 +200,7 @@
       "docs/implementation/engines.md"
     ],
     "FINAL": [
-      "docs/implementation/final6-verification-summary.json",
-      "docs/implementation/gates-final6/host/summary.json",
-      "docs/implementation/gates-final6/host/report.json",
-      "docs/implementation/gates-final6/sdk/summary.json",
-      "docs/implementation/gates-final6/sdk/report.json",
-      "docs/implementation/release-final6-build-report.json",
-      "docs/implementation/browser-worker-final6-report.json",
-      "docs/implementation/frozen-final6-source-report.json",
+      "docs/implementation/final7-verification-summary.json",
       "docs/implementation/public-evidence.md"
     ],
     "PSI": [
@@ -249,11 +208,31 @@
       "../crates/calc/src/eval/solvercraft/tests.rs",
       "tests/worker-browser/tests/worker.rs",
       "docs/implementation/gridcraft.md",
-      "docs/qa/original-scope-audit.md",
-      "docs/implementation/gates-final6/host/host-ci.txt",
-      "docs/implementation/browser-worker-final6-report.json",
+      "docs/qa/original-scope-audit.md"
+    ],
+    "HISTORY_FINAL6": [
+      "docs/implementation/browser-smoke-final6-report.json",
       "docs/implementation/browser-worker-final6-initial-report.json",
-      "docs/implementation/browser-worker-final6-rerun-report.json"
+      "docs/implementation/browser-worker-final6-report.json",
+      "docs/implementation/browser-worker-final6-rerun-report.json",
+      "docs/implementation/dependency-final6-inventory.json",
+      "docs/implementation/exact-binary-oracle-final6-report.json",
+      "docs/implementation/final6-verification-summary.json",
+      "docs/implementation/frozen-final6-source-report.json",
+      "docs/implementation/gates-final6/host/host-ci.txt",
+      "docs/implementation/gates-final6/host/report.json",
+      "docs/implementation/gates-final6/host/summary.json",
+      "docs/implementation/gates-final6/sdk/report.json",
+      "docs/implementation/gates-final6/sdk/summary.json",
+      "docs/implementation/linear-oracle-final6-report.json",
+      "docs/implementation/native-ui-controls-final6-report.json",
+      "docs/implementation/performance-final6-report.json",
+      "docs/implementation/quadratic-oracle-final6-report.json",
+      "docs/implementation/release-final6-build-report.json",
+      "docs/implementation/robust-oracle-final6-report.json",
+      "docs/implementation/trunk-final6-build-report.json",
+      "docs/implementation/verification-final6.md",
+      "docs/implementation/worker-browser-final6-build-report.json"
     ]
   },
   "requirements": [
@@ -294,12 +273,16 @@
           "crates/solvercraft/tests/run_manifest.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/solvercraft/tests/workflow_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
+          "docs/implementation/verification-final7.md"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/verification-final6.md"
         ]
       }
@@ -410,10 +393,13 @@
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -448,10 +434,13 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -484,11 +473,14 @@
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/compile/src/tests.rs",
           "crates/compile/tests/deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/qa/compiler-review.md"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -690,6 +682,10 @@
           "crates/engines/tests/exact_bridge.rs",
           "crates/model/README.md",
           "docs/implementation/engines.md",
+          "docs/implementation/performance-final7-report.json",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/exact-binary-oracle-final6-report.json",
           "docs/implementation/linear-oracle-final6-report.json",
           "docs/implementation/performance-final6-report.json",
@@ -842,10 +838,13 @@
           "crates/solvercraft/tests/runtime_review.rs",
           "crates/solvercraft/tests/saa_risk.rs",
           "docs/implementation/engines.md",
-          "docs/implementation/robust-oracle-final6-report.json",
           "docs/implementation/robust-oracle-fixed-debug-report.json",
           "docs/implementation/stochastic.md",
-          "docs/qa/ellipsoid-precision.md"
+          "docs/qa/ellipsoid-precision.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/robust-oracle-final6-report.json"
         ]
       }
     },
@@ -917,11 +916,14 @@
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/nonlinear_workflows.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/nonlinear.md"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -955,10 +957,13 @@
           "crates/solvercraft/src/heuristic_tests.rs",
           "crates/solvercraft/src/multistart.rs",
           "crates/solvercraft/tests/nonlinear_workflows.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1024,6 +1029,9 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-smoke-final6-report.json",
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
@@ -1051,7 +1059,7 @@
           "HOST",
           "WORKER"
         ],
-        "guarantee": "Admission returns job ID/revision and pins the original sheet/snapshot. Final6 real-browser repeat measured 0.81 ms admission; native threaded-barrier/parameter-job controls pass. No automatic apply or UI dialog.",
+        "guarantee": "Admission returns job ID/revision and pins the original snapshot; current measured admission 0.765 ms. Native parameter/barrier controls pass; no automatic apply or UI dialog.",
         "remaining_work": "Bounded supported native/browser jobs; arbitrary caller code is not preemptible.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
@@ -1060,13 +1068,16 @@
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/trunk-final6-build-report.json",
           "docs/implementation/worker-browser-final6-build-report.json"
         ]
@@ -1085,13 +1096,13 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Actual final6 product-worker progress and nonblocking status/admission, with both timing attempts retained",
+        "implementation": "Actual final7 product-worker progress and status/admission, with all declared attempts retained",
         "evidence_keys": [
           "WORKER",
           "HOST"
         ],
-        "guarantee": "Unchanged controlled repeat observed maximum active progress gap 57 ms, status query 1 ms, admission 0.81 ms and heartbeat 12 ms. This meets the original normal-model 250 ms status-access target in the measured case.",
-        "remaining_work": "Initial attempt failed an additional strictly-below 25 ms heartbeat guard at 26 ms; cause unproven and aggregate_all_attempts_passed=false. First-attempt full progress/status maxima are unavailable. No 25 ms product, hard realtime or arbitrary-callback guarantee.",
+        "guarantee": "Metrics for attempt 0 (initial): admission 0.765 ms, status 1 ms, active progress gap 58 ms, heartbeat 12 ms. Observed status meets the original normal-model 250 ms target.",
+        "remaining_work": "Current declared attempts: initial: 9 passed/0 failed/0 ignored, exit 0; aggregate_all_attempts_passed=true. Historical final6 timing failure/cause uncertainty remains preserved. No hard realtime/25ms product or arbitrary-callback guarantee.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
           "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
@@ -1099,13 +1110,16 @@
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/trunk-final6-build-report.json",
           "docs/implementation/worker-browser-final6-build-report.json"
         ]
@@ -1143,10 +1157,13 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
+          "docs/implementation/engines.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
-          "docs/implementation/engines.md",
           "docs/implementation/trunk-final6-build-report.json",
           "docs/implementation/worker-browser-final6-build-report.json"
         ]
@@ -1183,13 +1200,16 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/native-ui-controls-final6-report.json",
           "docs/implementation/trunk-final6-build-report.json",
           "docs/implementation/worker-browser-final6-build-report.json"
@@ -1227,13 +1247,16 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/native-ui-controls-final6-report.json",
           "docs/implementation/trunk-final6-build-report.json",
           "docs/implementation/worker-browser-final6-build-report.json"
@@ -1275,10 +1298,13 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1390,6 +1416,9 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
@@ -1424,10 +1453,13 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
@@ -1459,6 +1491,9 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
@@ -1524,10 +1559,13 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
@@ -1565,10 +1603,13 @@
           "crates/engines/tests/convex_qp.rs",
           "crates/engines/tests/mixed_conic.rs",
           "docs/implementation/engines.md",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1601,10 +1642,13 @@
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/engines/tests/basis.rs",
           "crates/engines/tests/certificate_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1645,12 +1689,16 @@
           "crates/solvercraft/tests/run_manifest.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/solvercraft/tests/workflow_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
+          "docs/implementation/verification-final7.md"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/verification-final6.md"
         ]
       }
@@ -1681,10 +1729,13 @@
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1714,10 +1765,13 @@
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1747,10 +1801,13 @@
         "evidence": [
           "../crates/engine/src/cmd/solvercraft/host_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1773,7 +1830,7 @@
           "WORKSHEET"
         ],
         "guarantee": "Deterministic native threaded-barrier regression verifies that changing shared active-tab view cannot retarget queued omitted-sheet or nested parameter requests.",
-        "remaining_work": "Final6 rebuilt browser proof is accepted; unsupported dynamic formulas remain explicit.",
+        "remaining_work": "Final7 rebuilt browser proof is accepted; unsupported dynamic formulas remain explicit.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
           "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
@@ -1785,10 +1842,13 @@
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1823,10 +1883,13 @@
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1861,10 +1924,13 @@
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -1960,7 +2026,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "All 111 frozen distribution/Alt/custom/special/time-series mathematical capabilities have individually associated positive tests in final6 SDK 630",
+        "implementation": "All 111 frozen distribution/Alt/custom/special/time-series mathematical capabilities have individually associated positive tests in final7 SDK 630",
         "evidence_keys": [
           "REF",
           "MATH",
@@ -1976,6 +2042,19 @@
         "evidence": [
           "crates/math/tests/deep_review.rs",
           "crates/math/tests/numerical_review.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/reference-catalog.json",
+          "docs/implementation/reference-freeze.md",
+          "docs/implementation/reference-gaps.md",
+          "docs/implementation/reference-implementation.json",
+          "docs/implementation/simulation.md",
+          "docs/qa/distribution-oracle-report.json",
+          "docs/qa/original-scope-audit.md",
+          "tests/e2e/distribution_oracle.py",
+          "tests/e2e/reference_matrix.py"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/frozen-final6-source-report.json",
@@ -1983,17 +2062,7 @@
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/public-evidence.md",
-          "docs/implementation/reference-catalog.json",
-          "docs/implementation/reference-freeze.md",
-          "docs/implementation/reference-gaps.md",
-          "docs/implementation/reference-implementation.json",
-          "docs/implementation/release-final6-build-report.json",
-          "docs/implementation/simulation.md",
-          "docs/qa/distribution-oracle-report.json",
-          "docs/qa/original-scope-audit.md",
-          "tests/e2e/distribution_oracle.py",
-          "tests/e2e/reference_matrix.py"
+          "docs/implementation/release-final6-build-report.json"
         ]
       }
     },
@@ -2140,6 +2209,10 @@
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
           "docs/implementation/simulation.md",
+          "docs/implementation/verification-final7.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/verification-final6.md"
         ]
       }
@@ -2205,8 +2278,11 @@
           "crates/math/tests/numerical_review.rs",
           "crates/simulation/src/intervals.rs",
           "crates/simulation/tests/numerical_review.rs",
-          "docs/implementation/browser-smoke-final6-report.json",
-          "docs/implementation/simulation.md"
+          "docs/implementation/simulation.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/browser-smoke-final6-report.json"
         ]
       }
     },
@@ -2516,12 +2592,12 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Six real native UI tests plus eight renderer-used numerical contracts and one retained-result lifecycle test passed final6",
+        "implementation": "Final7 native UI 6 passed; renderer numerical contracts 8 and retained-result lifecycle 1 passed",
         "evidence_keys": [
           "UI",
           "HOST"
         ],
-        "guarantee": "All five sample chart choices and parameter Tornado are exercised; tiny/large/subnormal/independent-axis data and retained quantiles are checked. The nine-test chart-module count includes one lifecycle case, not nine numerical oracles.",
+        "guarantee": "All five sample chart choices and parameter Tornado are exercised; tiny/large/subnormal/independent-axis data and retained quantiles are checked. The chart total 9 is not a count of numerical oracles alone.",
         "remaining_work": "Only the declared data/display contracts and executed UI/browser scope are accepted; no complete PSI or arbitrary platform chart parity.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
@@ -2533,10 +2609,13 @@
           "../crates/ui-egui/src/solvercraft.rs",
           "../crates/ui-egui/src/solvercraft/report.rs",
           "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/host-checkpoint.json",
           "docs/implementation/native-ui-controls-final6-report.json"
         ]
       }
@@ -2570,11 +2649,14 @@
           "../crates/engine/tests/it/solvercraft_deep_review.rs",
           "crates/simulation/tests/advanced.rs",
           "crates/simulation/tests/numerical_review.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json",
           "docs/implementation/simulation.md"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     },
@@ -2596,7 +2678,7 @@
           "WORKSHEET"
         ],
         "guarantee": "Six executed native controls include 29 formulas x100 addressed vectors with exact-bit Calc comparison, error/coercion/names/clock/history/cancel cases.",
-        "remaining_work": "The final6 product-worker differential check is accepted; no arbitrary unsupported formula semantics are inferred.",
+        "remaining_work": "The final7 product-worker differential check is accepted; no arbitrary unsupported formula semantics are inferred.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
           "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
@@ -2796,10 +2878,13 @@
           "crates/solvercraft/tests/ellipsoid.rs",
           "crates/solvercraft/tests/runtime_review.rs",
           "crates/solvercraft/tests/saa_risk.rs",
-          "docs/implementation/robust-oracle-final6-report.json",
           "docs/implementation/robust-oracle-fixed-debug-report.json",
           "docs/implementation/stochastic.md",
-          "docs/qa/ellipsoid-precision.md"
+          "docs/qa/ellipsoid-precision.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/robust-oracle-final6-report.json"
         ]
       }
     },
@@ -3131,7 +3216,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "19 advertised top-level numeric PSI import forms and explicit conversion policies pass 25 new native engine contract tests, 21 Calc tests and the real-browser 19-signature body in both attempts",
+        "implementation": "31 advertised top-level numeric PSI forms pass 40 native contract bodies, 37 Calc bodies, and distinct real-browser bodies: 19 signatures/2048 trials/19 outputs; 12 signatures/4096 trials/12 outputs/24 CDF anchors",
         "evidence_keys": [
           "REF",
           "PSI",
@@ -3139,8 +3224,8 @@
           "WORKER",
           "FINAL"
         ],
-        "guarantee": "Original SC-23 selects supported signatures; it does not require 272 imports. Native per-signature cases verify asymmetric parameter/CDF oracles, discovery, actual trial evaluation, previews and undo. Default solvercraft_nominal is explicitly lossy; preserve_vendor refuses context loss. Unsupported nested/property/extra calls are preserved whole.",
-        "remaining_work": "No missing case within the advertised 19-form/policy contract. Full vendor display lifecycle, unadvertised defaults/properties/Alt calls and remaining worksheet names are unsupported compatibility backlog, not implemented capabilities. Browser evidence is one executed body over 19 signatures, 2048 trials, 19 outputs, not 19 separate browser bodies.",
+        "guarantee": "Original SC-23 selects supported signatures; it does not require 272 imports. Native per-signature cases verify asymmetric parameter/CDF oracles, discovery, actual trial evaluation, previews and undo. Default solvercraft_nominal is explicitly lossy; preserve_vendor refuses context loss. Unsupported nested/property/extra calls are preserved whole. Labelled analytic_mean, median_fallback and explicit_override provenance is retained separately from the uncertain distribution; this is not vendor display-state equivalence.",
+        "remaining_work": "No missing case within the advertised 31-form/policy contract. Full vendor display lifecycle, unadvertised defaults/properties/Alt calls and remaining worksheet names remain unsupported. Actual browser body scopes are separate: 19 signatures/2048 trials/19 outputs; 12 signatures/4096 trials/12 outputs/24 CDF anchors; no 31-signature/4096-trial combined body is inferred.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
           "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
@@ -3150,6 +3235,18 @@
           "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
           "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
           "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/reference-catalog.json",
+          "docs/implementation/reference-freeze.md",
+          "docs/implementation/reference-gaps.md",
+          "docs/implementation/reference-implementation.json",
+          "docs/qa/original-scope-audit.md",
+          "tests/e2e/reference_matrix.py",
+          "tests/worker-browser/tests/worker.rs"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
@@ -3160,18 +3257,9 @@
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/gridcraft.md",
-          "docs/implementation/public-evidence.md",
-          "docs/implementation/reference-catalog.json",
-          "docs/implementation/reference-freeze.md",
-          "docs/implementation/reference-gaps.md",
-          "docs/implementation/reference-implementation.json",
           "docs/implementation/release-final6-build-report.json",
           "docs/implementation/trunk-final6-build-report.json",
-          "docs/implementation/worker-browser-final6-build-report.json",
-          "docs/qa/original-scope-audit.md",
-          "tests/e2e/reference_matrix.py",
-          "tests/worker-browser/tests/worker.rs"
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -3236,9 +3324,12 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/dependency-final6-inventory.json",
           "docs/implementation/engines.md",
-          "licenses/THIRD_PARTY.md"
+          "licenses/THIRD_PARTY.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/dependency-final6-inventory.json"
         ]
       }
     },
@@ -3333,12 +3424,15 @@
           "crates/math/src/sobol.rs",
           "crates/math/tests/numerical_review.rs",
           "crates/math/third_party/BOOST_LICENSE_1_0.txt",
-          "docs/implementation/browser-smoke-final6-report.json",
-          "docs/implementation/dependency-final6-inventory.json",
           "docs/implementation/engines.md",
           "docs/qa/distribution-oracle-report.json",
           "licenses/THIRD_PARTY.md",
-          "tests/e2e/distribution_oracle.py"
+          "tests/e2e/distribution_oracle.py",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/browser-smoke-final6-report.json",
+          "docs/implementation/dependency-final6-inventory.json"
         ]
       }
     },
@@ -3373,15 +3467,19 @@
           "crates/engines/tests/exact_bridge.rs",
           "crates/model/README.md",
           "crates/solvercraft/tests/stochastic.rs",
+          "docs/implementation/performance-final7-report.json",
+          "docs/implementation/stochastic.md",
+          "docs/qa/distribution-oracle-report.json",
+          "tests/e2e/distribution_oracle.py",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/exact-binary-oracle-final6-report.json",
           "docs/implementation/linear-oracle-final6-report.json",
           "docs/implementation/performance-final6-report.json",
           "docs/implementation/quadratic-oracle-final6-report.json",
           "docs/implementation/release-final6-build-report.json",
-          "docs/implementation/robust-oracle-final6-report.json",
-          "docs/implementation/stochastic.md",
-          "docs/qa/distribution-oracle-report.json",
-          "tests/e2e/distribution_oracle.py"
+          "docs/implementation/robust-oracle-final6-report.json"
         ]
       }
     },
@@ -3398,38 +3496,41 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Pure-Rust numerical default closure: actual final6 Chrome SDK 13 and 8 worker bodies in the controlled repeat",
+        "implementation": "Pure-Rust numerical default closure: actual final7 Chrome SDK 13 and worker 9 unique bodies",
         "evidence_keys": [
           "BROWSER",
           "WORKER",
           "DEPS",
           "FINAL"
         ],
-        "guarantee": "Source-bound Trunk/test-WASM builds and actual browser execution are separate from compile checks. R081 passed in both attempts; controlled repeat 8/0 follows initial 7/1 on the additional heartbeat guard.",
-        "remaining_work": "Only listed Chrome cases are runtime evidence; aggregate all-attempts-passed=false and initial cause unproven. No universal browser/platform or hard timing guarantee.",
+        "guarantee": "Source-bound builds and actual browser runtime are distinct checks. Current declared worker attempts: initial: 9 passed/0 failed/0 ignored, exit 0. Import runtime scopes: 19 signatures/2048 trials/19 outputs; 12 signatures/4096 trials/12 outputs/24 CDF anchors.",
+        "remaining_work": "Only explicitly executed Chrome cases are runtime evidence; aggregate_all_attempts_passed=true. Historical final6 failure remains disclosed. No universal platform or hard timing guarantee.",
         "platforms": [
           "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
         ],
         "evidence": [
           "crates/math/third_party/BOOST_LICENSE_1_0.txt",
+          "docs/implementation/engines.md",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/public-evidence.md",
+          "licenses/THIRD_PARTY.md"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-smoke-final6-report.json",
           "docs/implementation/browser-worker-final6-initial-report.json",
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/browser-worker-final6-rerun-report.json",
           "docs/implementation/dependency-final6-inventory.json",
-          "docs/implementation/engines.md",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/frozen-final6-source-report.json",
           "docs/implementation/gates-final6/host/report.json",
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/public-evidence.md",
           "docs/implementation/release-final6-build-report.json",
           "docs/implementation/trunk-final6-build-report.json",
-          "docs/implementation/worker-browser-final6-build-report.json",
-          "licenses/THIRD_PARTY.md"
+          "docs/implementation/worker-browser-final6-build-report.json"
         ]
       }
     },
@@ -3446,7 +3547,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Final6 source-bound resource/error/admission gates include AST/nonzero/trial/output/transform checks before expansion",
+        "implementation": "Final7 source-bound resource/error/admission gates include AST/nonzero/trial/output/transform checks before expansion",
         "evidence_keys": [
           "API",
           "CERT",
@@ -3454,7 +3555,7 @@
           "SIM",
           "FINAL"
         ],
-        "guarantee": "AST/nonzero/trial/output/transform admission and original robust-support regressions pass within SDK 630/host 2873, including strict import range/apply types before scanning/editing. Quotas are checked accounting boundaries, not measured universal RSS ceilings.",
+        "guarantee": "AST/nonzero/trial/output/transform admission and original robust-support regressions pass within SDK 630/host 2904, including strict import range/apply types before scanning/editing. Quotas are checked accounting boundaries, not measured universal RSS ceilings.",
         "remaining_work": "Configured quotas are accounting/input/output bounds, not an OS-RSS quota or hard preemption guarantee; declared size/numeric limits remain.",
         "platforms": [
           "Windows native Rust 1.95: executed cited SDK/process suites.",
@@ -3472,6 +3573,11 @@
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
           "crates/types/src/lib.rs",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/simulation.md"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/frozen-final6-source-report.json",
@@ -3479,9 +3585,7 @@
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/public-evidence.md",
-          "docs/implementation/release-final6-build-report.json",
-          "docs/implementation/simulation.md"
+          "docs/implementation/release-final6-build-report.json"
         ]
       }
     },
@@ -3498,14 +3602,14 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Validated indices/shapes, structured errors and dependency-adapter failure paths pass final6 negative/regression gates",
+        "implementation": "Validated indices/shapes, structured errors and dependency-adapter failure paths pass final7 negative/regression gates",
         "evidence_keys": [
           "API",
           "CERT",
           "DEPS",
           "FINAL"
         ],
-        "guarantee": "SDK 630 and host 2873 passed with zero failures; one existing host performance test remains ignored. Panic containment/slot recovery and structured negative paths are exercised. The separate initial worker timing assertion is disclosed, not hidden as a product panic.",
+        "guarantee": "SDK 630/0/0 and host 2904/0/1 passed/failed/ignored. Structured negative/panic-containment paths are exercised. Historical final6 timing failure remains disclosed separately.",
         "remaining_work": "No universal no-panic theorem: abort/OOM/panic-abort and arbitrary nonreturning or panicking caller code remain outside recoverable direct-call guarantees.",
         "platforms": [
           "Windows native Rust 1.95: executed cited SDK/process suites.",
@@ -3520,18 +3624,21 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
+          "docs/implementation/engines.md",
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/public-evidence.md",
+          "licenses/THIRD_PARTY.md"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/dependency-final6-inventory.json",
-          "docs/implementation/engines.md",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/frozen-final6-source-report.json",
           "docs/implementation/gates-final6/host/report.json",
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/public-evidence.md",
-          "docs/implementation/release-final6-build-report.json",
-          "licenses/THIRD_PARTY.md"
+          "docs/implementation/release-final6-build-report.json"
         ]
       }
     },
@@ -3553,7 +3660,7 @@
           "REF"
         ],
         "guarantee": "All 272 frozen reference records retain test/platform/guarantee/source evidence and visible full-vendor gaps. An inventory record or planned ID is not execution; original 96 criteria have their own scoped acceptance.",
-        "remaining_work": "Full-reference compatibility gaps remain visible despite bounded acceptance of 111 math cores and 19 advertised imports. Matrix completeness is not 272-function implementation.",
+        "remaining_work": "Full-reference compatibility gaps remain visible despite bounded acceptance of 111 math cores and 31 advertised imports. Matrix completeness is not 272-function implementation.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
@@ -3580,17 +3687,22 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Five fresh release processes per bounded LP and streaming-MC workload record hardware/seed/RAM/runtime/error/versions",
+        "implementation": "5 fresh release processes per recorded bounded workload, with hardware/seed/RAM/runtime/error metadata",
         "evidence_keys": [
           "PERF",
           "FINAL"
         ],
-        "guarantee": "The same recorded release binary has five fresh processes per workload. LP 100 variables/500 rows median 180.8091 ms, peak 11,677,696 bytes, objective error 0; MC 100000 trials/20 inputs/10 outputs median 527.5174 ms, peak 6,893,568 bytes, maximum mean error 0.001469193929023671.",
+        "guarantee": "continuous_lp_100_variables_500_rows: median 194.541 ms, peak 11,681,792 bytes; streaming_mc_100000_trials_20_inputs_10_outputs: median 432.793 ms, peak 6,799,360 bytes. Individual errors, hardware, seeds and versions are retained in the actual linked performance report; no speedup/commercial comparison is inferred.",
         "remaining_work": "Shared-host/quieter follow-up measurements, not a demonstrated engine speedup or Frontline comparison. Proposed medium 10000-variable/50000-row/500000-nonzero performance and time-to-first-feasible remain unmeasured.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/performance-final7-report.json",
+          "docs/implementation/public-evidence.md"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/exact-binary-oracle-final6-report.json",
           "docs/implementation/final6-verification-summary.json",
@@ -3601,7 +3713,6 @@
           "docs/implementation/gates-final6/sdk/summary.json",
           "docs/implementation/linear-oracle-final6-report.json",
           "docs/implementation/performance-final6-report.json",
-          "docs/implementation/public-evidence.md",
           "docs/implementation/quadratic-oracle-final6-report.json",
           "docs/implementation/release-final6-build-report.json",
           "docs/implementation/robust-oracle-final6-report.json"
@@ -3621,17 +3732,22 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Final6 unchanged-source cargo xtask ci passed all 10 stages; SDK fmt/clippy 630, UI 6/chart 8+1, ChromeSDK 13 and controlled-repeat Worker 8 are recorded",
+        "implementation": "Final7 unchanged-source host CI 10 stages; SDK format/Clippy/tests, UI/chart and actual Chrome/worker gates are separately recorded",
         "evidence_keys": [
           "GATES",
           "FINAL"
         ],
-        "guarantee": "Host 2873 passed/0 failed/1 existingignored in 547.64 s; SDK 630/0/0. Worker initial 7/1 and one identical repeat 8/0 are both retained; R081 case passed in both. All reported native/SDK code-input digests stayed unchanged.",
-        "remaining_work": "Existing ignored recalc_with_range_formulas_scales_linearly is not passed. Additional 25 ms heartbeat check failed once at 26 ms; cause unproven, aggregate_all_attempts_passed=false. This is not an all-attempts-green or universal parity certificate.",
+        "guarantee": "Host 2904/0/1 passed/failed/ignored in 89.4699 s; SDK 630/0/0. Worker: initial: 9 passed/0 failed/0 ignored, exit 0. Accepted source identity stayed unchanged.",
+        "remaining_work": "Ignored tests remain ignored, not passed. Current aggregate_all_attempts_passed=true; historical final6 initial failure and unproven cause remain disclosed. No universal parity certificate.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
+          "docs/implementation/final7-verification-summary.json",
+          "docs/implementation/public-evidence.md",
+          "docs/implementation/verification-final7.md"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/browser-worker-final6-report.json",
           "docs/implementation/final6-verification-summary.json",
           "docs/implementation/frozen-final6-source-report.json",
@@ -3639,7 +3755,6 @@
           "docs/implementation/gates-final6/host/summary.json",
           "docs/implementation/gates-final6/sdk/report.json",
           "docs/implementation/gates-final6/sdk/summary.json",
-          "docs/implementation/public-evidence.md",
           "docs/implementation/release-final6-build-report.json",
           "docs/implementation/verification-final6.md"
         ]
@@ -3663,26 +3778,30 @@
           "REF",
           "GATES"
         ],
-        "guarantee": "Current final6 links, original-scope audit and exact target/conversion semantics are reconciled; historical final5/265-test checkpoints remain labelled.",
+        "guarantee": "Current final7 links, original-scope audit and exact target/conversion semantics are reconciled; historical final5/265-test checkpoints remain labelled.",
         "remaining_work": "Full vendor/import gaps stay explicit. The original CSV and all 768 fields are preserved; no historical repository-encoding repair is claimed.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
         "evidence": [
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/report.json",
-          "docs/implementation/gates-final6/host/summary.json",
-          "docs/implementation/gates-final6/sdk/report.json",
-          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/public-evidence.md",
           "docs/implementation/reference-catalog.json",
           "docs/implementation/reference-freeze.md",
           "docs/implementation/reference-gaps.md",
           "docs/implementation/reference-implementation.json",
-          "docs/implementation/release-final6-build-report.json",
-          "docs/implementation/verification-final6.md",
+          "docs/implementation/verification-final7.md",
           "docs/qa/original-scope-audit.md",
           "tests/e2e/reference_matrix.py"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/verification-final6.md"
         ]
       }
     },
@@ -3704,8 +3823,8 @@
           "MANIFEST",
           "API"
         ],
-        "guarantee": "Actual process tests verify one error JSON, empty stdout, original code/message, repeated/changed fingerprints, configuration/platform and honest unknown engine without a typed result. Latest scoped CLI package: 66 tests, Clippy and formatting passed after the integer-rounding correction.",
-        "remaining_work": "Raw decode failures stay bare because no typed run was admitted; low-level numerical APIs are wrapped by managed run entrypoints. Final6 browser/source gates are recorded; arbitrary external embeddings must use their managed run contract.",
+        "guarantee": "Actual process tests verify one error JSON, empty stdout, original code/message, repeated/changed fingerprints, configuration/platform and honest unknown engine without a typed result. Historical pre-final6 scoped CLI package: 66 tests, Clippy and formatting passed after the integer-rounding correction.",
+        "remaining_work": "Raw decode failures stay bare because no typed run was admitted; low-level numerical APIs are wrapped by managed run entrypoints. Final7 browser/source gates are recorded; arbitrary external embeddings must use their managed run contract.",
         "platforms": [
           "Windows native Rust 1.95: executed cited SDK/process suites.",
           "WASM: compile/runtime coverage is only the explicitly listed BROWSER/WORKER cases, not automatically this entire criterion."
@@ -3722,6 +3841,10 @@
           "crates/solvercraft/tests/workflow_review.rs",
           "docs/implementation/run-manifests.md",
           "docs/implementation/sdk-runtime.md",
+          "docs/implementation/verification-final7.md",
+          "docs/implementation/final7-verification-summary.json"
+        ],
+        "historical_evidence_final6": [
           "docs/implementation/verification-final6.md"
         ]
       }
@@ -3757,29 +3880,37 @@
           "crates/solvercraft/tests/api_review.rs",
           "crates/solvercraft/tests/contracts_e2e.rs",
           "crates/solvercraft/tests/server_e2e.rs",
-          "docs/implementation/final6-verification-summary.json",
-          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final7-verification-summary.json",
           "docs/implementation/gridcraft.md",
           "docs/implementation/host-checkpoint.json"
+        ],
+        "historical_evidence_final6": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json"
         ]
       }
     }
   ],
   "final_verification": {
-    "candidate": "final6",
-    "summary": "docs/implementation/final6-verification-summary.json",
-    "raw_code_and_compilation_input_digest_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
-    "canonical_code_and_compilation_input_digest_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
-    "source_and_compilation_input_files": 791,
+    "schema": "solvercraft.final-verification.v2",
+    "candidate": "final7",
+    "date_utc": "2026-11-01",
+    "raw_code_and_compilation_input_digest_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+    "canonical_code_and_compilation_input_digest_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
     "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+    "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+    "source_and_compilation_input_files": 791,
+    "rust_source_files": 750,
+    "active_and_frozen_source_files_match": true,
     "source_unchanged_during_native_and_sdk_gates": true,
+    "performance_repetitions_per_workload": 5,
     "host_ci": {
-      "passed": 2873,
-      "failed": 0,
+      "elapsed_seconds": 89.4698756999569,
       "ignored": 1,
-      "test_summary_targets": 38,
-      "elapsed_seconds": 547.6406820999691,
       "accepted": true,
+      "failed": 0,
+      "test_summary_targets": 38,
+      "passed": 2904,
       "ci_stages": [
         "i18n-report",
         "fmt",
@@ -3794,102 +3925,554 @@
       ]
     },
     "sdk": {
-      "passed": 630,
-      "failed": 0,
+      "all_gates_accepted": true,
       "ignored": 0,
+      "failed": 0,
       "test_summary_targets": 74,
-      "all_gates_accepted": true
+      "passed": 630
     },
     "native_ui": {
-      "passed": 6,
-      "failed": 0,
-      "ignored": 0,
-      "accepted": true
-    },
-    "chart_module": {
-      "passed": 9,
-      "failed": 0,
       "ignored": 0,
       "accepted": true,
+      "failed": 0,
+      "passed": 6
+    },
+    "chart_module": {
+      "ignored": 0,
+      "accepted": true,
+      "failed": 0,
+      "lifecycle_tests": 1,
       "numerical_tests": 8,
-      "lifecycle_tests": 1
+      "passed": 9
     },
     "actual_chrome_sdk": {
-      "passed": 13,
-      "failed": 0,
+      "exit_code": 0,
       "ignored": 0,
+      "failed": 0,
       "test_summary_targets": 1,
-      "exit_code": 0
+      "passed": 13
     },
     "actual_worker": {
-      "unique_test_bodies": 8,
-      "aggregate_all_attempts_passed": false,
+      "unique_test_bodies": 9,
+      "aggregate_all_attempts_passed": true,
       "attempts": [
         {
           "kind": "initial",
-          "passed": 7,
-          "failed": 1,
-          "ignored": 0,
-          "exit_code": 1,
-          "observed_max_window_heartbeat_gap_ms": 26
-        },
-        {
-          "kind": "controlled_repeat",
-          "passed": 8,
+          "passed": 9,
           "failed": 0,
-          "ignored": 0,
           "exit_code": 0,
-          "observed_max_window_heartbeat_gap_ms": 12.0
+          "observed_max_window_heartbeat_gap_ms": 12.0,
+          "ignored": 0
         }
       ]
     },
-    "worker_repeat_observed_metrics": {
-      "admission_ms": 0.8099999999999999,
-      "heartbeat_ticks": 152,
-      "max_observed_progress_gap_ms": 57.0,
-      "max_status_ms": 1.0,
+    "worker_observed_metrics": {
+      "admission_ms": 0.7649999999999999,
+      "worker_compute_ms": 1450.4550000000002,
       "max_window_heartbeat_gap_ms": 12.0,
-      "observed_progress_updates": 30,
-      "startup_ms": 25.865,
-      "worker_compute_ms": 1480.335
+      "observed_progress_updates": 29,
+      "startup_ms": 24.725,
+      "max_status_ms": 1.0,
+      "heartbeat_ticks": 148,
+      "attempt_index": 0,
+      "max_observed_progress_gap_ms": 58.0,
+      "attempt_kind": "initial"
     },
     "r081": {
-      "native_distinct_signature_tests": 19,
-      "native_policy_negative_test_groups": 6,
-      "real_browser_signatures": 19,
-      "worker_trials": 2048,
-      "worker_outputs": 19,
-      "unsupported_preserved": [
-        "nested Psi call",
-        "documented PsiStatic property"
-      ],
-      "vendor_display_context_implemented": false,
-      "conversion_policy": "explicitly lossy solvercraft_nominal; preserve_vendor refuses"
+      "real_browser_signatures": 31,
+      "native_policy_negative_test_groups": 9,
+      "native_distinct_signature_tests": 31,
+      "native_contract_test_bodies": 40,
+      "calc_test_bodies": 37,
+      "browser_bodies": [
+        {
+          "name": "actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals",
+          "passed": true,
+          "outputs": 19,
+          "trials": 2048,
+          "signatures": 19
+        },
+        {
+          "name": "actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors",
+          "passed": true,
+          "outputs": 12,
+          "trials": 4096,
+          "cdf_anchors": 24,
+          "signatures": 12
+        }
+      ]
     },
-    "performance_repetitions_per_workload": 5,
+    "oracles": {
+      "node_limit_controls_passed": 1,
+      "qp_passed": 20,
+      "lp_passed": 30,
+      "robust_vertex_passed": 20,
+      "failed": 0,
+      "robust_tiny_infeasible_passed": 4,
+      "exact_binary_variants_passed": 3
+    },
+    "reports": {
+      "gate_report": {
+        "gates-final7/host/report.json": "solvercraft/docs/implementation/gates-final7/host/report.json",
+        "gates-final7/sdk/report.json": "solvercraft/docs/implementation/gates-final7/sdk/report.json"
+      },
+      "gate_summary": {
+        "gates-final7/host/summary.json": "solvercraft/docs/implementation/gates-final7/host/summary.json",
+        "gates-final7/sdk/summary.json": "solvercraft/docs/implementation/gates-final7/sdk/summary.json"
+      },
+      "test_excerpt": {
+        "gates-final7/host/host-ci.txt": "solvercraft/docs/implementation/gates-final7/host/host-ci.txt",
+        "gates-final7/host/host-ui.txt": "solvercraft/docs/implementation/gates-final7/host/host-ui.txt",
+        "gates-final7/host/host-charts.txt": "solvercraft/docs/implementation/gates-final7/host/host-charts.txt",
+        "gates-final7/sdk/sdk-fmt.txt": "solvercraft/docs/implementation/gates-final7/sdk/sdk-fmt.txt",
+        "gates-final7/sdk/sdk-clippy.txt": "solvercraft/docs/implementation/gates-final7/sdk/sdk-clippy.txt",
+        "gates-final7/sdk/sdk-tests.txt": "solvercraft/docs/implementation/gates-final7/sdk/sdk-tests.txt"
+      },
+      "browser_sdk": {
+        "browser-smoke-final7-report.json": "solvercraft/docs/implementation/browser-smoke-final7-report.json"
+      },
+      "worker_attempt": {
+        "browser-worker-final7-initial-report.json": "solvercraft/docs/implementation/browser-worker-final7-initial-report.json"
+      },
+      "worker_composite": {
+        "browser-worker-final7-report.json": "solvercraft/docs/implementation/browser-worker-final7-report.json"
+      },
+      "cdf_witness": {
+        "psi-core12-cdf-final7-report.json": "solvercraft/docs/implementation/psi-core12-cdf-final7-report.json"
+      },
+      "build": {
+        "trunk-final7-build-report.json": "solvercraft/docs/implementation/trunk-final7-build-report.json",
+        "worker-browser-final7-build-report.json": "solvercraft/docs/implementation/worker-browser-final7-build-report.json",
+        "release-final7-build-report.json": "solvercraft/docs/implementation/release-final7-build-report.json"
+      },
+      "oracle": {
+        "linear-oracle-final7-report.json": "solvercraft/docs/implementation/linear-oracle-final7-report.json",
+        "quadratic-oracle-final7-report.json": "solvercraft/docs/implementation/quadratic-oracle-final7-report.json",
+        "robust-oracle-final7-report.json": "solvercraft/docs/implementation/robust-oracle-final7-report.json",
+        "exact-binary-oracle-final7-report.json": "solvercraft/docs/implementation/exact-binary-oracle-final7-report.json"
+      },
+      "performance": {
+        "performance-final7-report.json": "solvercraft/docs/implementation/performance-final7-report.json"
+      },
+      "snapshot": {
+        "frozen-final7-source-report.json": "solvercraft/docs/implementation/frozen-final7-source-report.json"
+      },
+      "delta": {
+        "final7-source-delta-report.json": "solvercraft/docs/implementation/final7-source-delta-report.json"
+      },
+      "inventory": {
+        "dependency-final7-inventory.json": "solvercraft/docs/implementation/dependency-final7-inventory.json",
+        "worker-browser-final7-dependency-inventory.json": "solvercraft/docs/implementation/worker-browser-final7-dependency-inventory.json"
+      },
+      "native_ui": {
+        "native-ui-controls-final7-report.json": "solvercraft/docs/implementation/native-ui-controls-final7-report.json"
+      },
+      "summary": {
+        "final7-verification-summary.json": "solvercraft/docs/implementation/final7-verification-summary.json"
+      },
+      "prose": {
+        "verification-final7.md": "solvercraft/docs/implementation/verification-final7.md"
+      },
+      "ledger": {
+        "public-evidence-projection-final7.json": "solvercraft/docs/implementation/public-evidence-projection-final7.json"
+      }
+    },
+    "actual_app_visual_evidence": {
+      "inspected": true,
+      "screenshot_sha256": "dc4c740aa6bd43b16439f81b9d2e7180d3a481f5d6dc295754f8aded1b12d4fa",
+      "source_report": "solvercraft/docs/implementation/browser-worker-final7-initial-report.json",
+      "scope_code": "fresh_actual_trunk_pane"
+    },
     "existing_ignored_test": "recalc_with_range_formulas_scales_linearly",
-    "scope": "Executed original criteria within bounded math/API contracts; 96 accepted_bounded does not mean full 272-PSI/Frontline parity or all worker attempts passed.",
-    "public_evidence_format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
-    "binary_oracle_provenance": {
-      "report": "docs/implementation/exact-binary-oracle-final6-report.json",
-      "private_corrected_full_report_sha256": "60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa",
-      "exact_optimal_cases": 3,
-      "node_limit_controls": 1,
-      "third_case_direction": "minimize",
-      "third_case_objective": -500,
-      "seed_supplied": false,
-      "effective_seed_decimal": "0",
-      "node_limit": 1,
-      "same_release_binary": true,
-      "historical_final5_v1_unchanged": true
-    }
+    "historical_final6_summary": "solvercraft/docs/implementation/final6-verification-summary.json",
+    "historical_final6_worker_attempts": "solvercraft/docs/implementation/browser-worker-final6-report.json",
+    "historical_binary_oracle_erratum": "solvercraft/docs/implementation/exact-binary-oracle-final6-report.json",
+    "scope": "Bounded executed contracts;31 selected imports are not272-function/full commercial parity. Historical final6 attempts and provenance erratum remain separate.",
+    "public_diagnostic_format": "Fixed-field projections and strict line-preserved test/result/summary excerpts; complete original diagnostics remain private.",
+    "public_evidence": {
+      "format": "Fixed-field public JSON and strict line-preserved test/result excerpts",
+      "complete_original_diagnostics_public": false,
+      "sdk_test_excerpt_path": "solvercraft/docs/implementation/gates-final7/sdk/sdk-tests.txt",
+      "sdk_test_excerpt_sha256": "d4271edae2862ee474da09552c445f564cf34bff79050ba5b22880dce8abb7a5",
+      "host_test_excerpt_path": "solvercraft/docs/implementation/gates-final7/host/host-ci.txt",
+      "host_test_excerpt_sha256": "f729bbd26b887e3ad45c9fc89d36a5af993729d2c48eddb1dc310370741079c2"
+    },
+    "summary": "docs/implementation/final7-verification-summary.json"
   },
   "public_evidence": {
     "format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
     "complete_original_diagnostics_public": false,
-    "full_local_report_sha256_meaning": "Hash of the private complete diagnostic source, not a claim that its full stdout/metadata are published",
-    "sdk_test_excerpt_sha256": "dec9422d0180c8e3960e97e8df072584c7cad0291f0e783f3ad6f197ecb1158b",
-    "host_test_excerpt_sha256": "65b3376b2b69b40f25fdb40d92d5f892ed48181fe8e2db150f20ac1b017cb41c",
-    "guide": "docs/implementation/public-evidence.md"
+    "guide": "docs/implementation/public-evidence.md",
+    "sdk_test_excerpt_path": "docs/implementation/gates-final7/sdk/sdk-tests.txt",
+    "sdk_test_excerpt_sha256": "d4271edae2862ee474da09552c445f564cf34bff79050ba5b22880dce8abb7a5",
+    "host_test_excerpt_path": "docs/implementation/gates-final7/host/host-ci.txt",
+    "host_test_excerpt_sha256": "f729bbd26b887e3ad45c9fc89d36a5af993729d2c48eddb1dc310370741079c2"
+  },
+  "checkpoint_history": {
+    "final6": {
+      "assessment_kind": "Final6 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; all worker attempts retained",
+      "source_state": "Frozen final6: 791 matching code/compilation-input files. Accepted native/SDK source-stable gates and actual Chrome execution are separately recorded; the controlled worker repeat passed after one failed additional timing guard, not an all-attempts-green assertion.",
+      "final_verification": {
+        "candidate": "final6",
+        "summary": "docs/implementation/final6-verification-summary.json",
+        "raw_code_and_compilation_input_digest_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+        "canonical_code_and_compilation_input_digest_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+        "source_and_compilation_input_files": 791,
+        "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+        "source_unchanged_during_native_and_sdk_gates": true,
+        "host_ci": {
+          "passed": 2873,
+          "failed": 0,
+          "ignored": 1,
+          "test_summary_targets": 38,
+          "elapsed_seconds": 547.6406820999691,
+          "accepted": true,
+          "ci_stages": [
+            "i18n-report",
+            "fmt",
+            "clippy",
+            "test",
+            "doctest",
+            "assets",
+            "layers",
+            "wasm",
+            "parity",
+            "keytips"
+          ]
+        },
+        "sdk": {
+          "passed": 630,
+          "failed": 0,
+          "ignored": 0,
+          "test_summary_targets": 74,
+          "all_gates_accepted": true
+        },
+        "native_ui": {
+          "passed": 6,
+          "failed": 0,
+          "ignored": 0,
+          "accepted": true
+        },
+        "chart_module": {
+          "passed": 9,
+          "failed": 0,
+          "ignored": 0,
+          "accepted": true,
+          "numerical_tests": 8,
+          "lifecycle_tests": 1
+        },
+        "actual_chrome_sdk": {
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "test_summary_targets": 1,
+          "exit_code": 0
+        },
+        "actual_worker": {
+          "unique_test_bodies": 8,
+          "aggregate_all_attempts_passed": false,
+          "attempts": [
+            {
+              "kind": "initial",
+              "passed": 7,
+              "failed": 1,
+              "ignored": 0,
+              "exit_code": 1,
+              "observed_max_window_heartbeat_gap_ms": 26
+            },
+            {
+              "kind": "controlled_repeat",
+              "passed": 8,
+              "failed": 0,
+              "ignored": 0,
+              "exit_code": 0,
+              "observed_max_window_heartbeat_gap_ms": 12.0
+            }
+          ]
+        },
+        "worker_repeat_observed_metrics": {
+          "admission_ms": 0.8099999999999999,
+          "heartbeat_ticks": 152,
+          "max_observed_progress_gap_ms": 57.0,
+          "max_status_ms": 1.0,
+          "max_window_heartbeat_gap_ms": 12.0,
+          "observed_progress_updates": 30,
+          "startup_ms": 25.865,
+          "worker_compute_ms": 1480.335
+        },
+        "r081": {
+          "native_distinct_signature_tests": 19,
+          "native_policy_negative_test_groups": 6,
+          "real_browser_signatures": 19,
+          "worker_trials": 2048,
+          "worker_outputs": 19,
+          "unsupported_preserved": [
+            "nested Psi call",
+            "documented PsiStatic property"
+          ],
+          "vendor_display_context_implemented": false,
+          "conversion_policy": "explicitly lossy solvercraft_nominal; preserve_vendor refuses"
+        },
+        "performance_repetitions_per_workload": 5,
+        "existing_ignored_test": "recalc_with_range_formulas_scales_linearly",
+        "scope": "Executed original criteria within bounded math/API contracts; 96 accepted_bounded does not mean full 272-PSI/Frontline parity or all worker attempts passed.",
+        "public_evidence_format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
+        "binary_oracle_provenance": {
+          "report": "docs/implementation/exact-binary-oracle-final6-report.json",
+          "private_corrected_full_report_sha256": "60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa",
+          "exact_optimal_cases": 3,
+          "node_limit_controls": 1,
+          "third_case_direction": "minimize",
+          "third_case_objective": -500,
+          "seed_supplied": false,
+          "effective_seed_decimal": "0",
+          "node_limit": 1,
+          "same_release_binary": true,
+          "historical_final5_v1_unchanged": true
+        }
+      },
+      "evidence_notes": [
+        "Final6 primary evidence is docs/implementation/final6-verification-summary.json with explicit report paths, raw/canonical source identities and release binary SHA. Final5 reports remain historical and unchanged.",
+        "Host cargo xtask ci: all 10 stages accepted, 2873 passed, 0 failed, 1 pre-existing ignored (recalc_with_range_formulas_scales_linearly), 547.6406820999691 s. The ignored test is not passed.",
+        "SDK: 630 passed, 0 failed, 0 ignored with formatting/all-target Clippy. Native UI 6; chart module 8 numerical+1 lifecycle. Scoped suites are not added again to fabricate totals.",
+        "Actual Chrome SDK 13 passed. Worker initial attempt 7 passed/1 failed at a 26 ms observation against an additional strictly-below 25 ms heartbeat guard. Exactly one unchanged controlled repeat passed 8/0. Aggregate all-attempts-passed=false; the initial cause is not demonstrated. R081 nineteen-signature body passed in both attempts.",
+        "Worker repeat observed admission 0.81 ms, status 1 ms, active progress gap 57 ms, heartbeat 12 ms. Original R023 normal-model status-access target is 250 ms; no 25 ms product or hard realtime guarantee is added.",
+        "R046: all 111 frozen mathematical capability names have individual positive SDK-test associations in the actual 630-test run; 73 distinct test bodies, 13 sourcefiles. Exact vendor Alt grammar remains separate and open.",
+        "R081: 19 supported top-level numeric calls have individually named native tests plus real-browser execution. There are 25 new engine contract tests and 21 Calc tests; default outside_policy=solvercraft_nominal is explicitly lossy, preserve_vendor refuses, nesting/properties remain unsupported and preserved.",
+        "Final release oracles LP 30, QP 20, robust 20+4 tiny signed cases, 3 exact binary variants and 1 node-limit control passed. Five fresh processes per LP/streaming-MC workload record hardware/seed/RAM/time/error. Same release binary and shared host; the quieter follow-up is not an engine speedup claim.",
+        "All 96 original CSV rows and all 8 fields each are copied directly with UTF-8-sig csv.DictReader and compared exactly. CSV SHA is unchanged. Original planned TEST-Rxxx labels remain historical; no repository encoding defect or repair is claimed.",
+        "Scalar SciPy grid is separate finite evidence: 150 parameterizations, 1349 quantile+1361 CDF+1361 logdensity=4071 comparisons, 0 failures; 1 independently warned reference excluded. It is not universal or vendor-function parity.",
+        "Public final6 diagnostics are fixed-field projections of actual local reports. Public text files are strict test/result/summary excerpts with omitted lines blanked so existing line numbers remain stable. Full original diagnostics stay private; arbitrary stdout/stderr, environment, argv, driver/session dumps, complete feature trees and local NOTICE-hash metadata are not published.",
+        "Binary-oracle provenance correction: v1 reused a mutable request dictionary, so the third case stored wrong request metadata although minimization to -500 was actually executed. Historical final5 v1 is unchanged. The validator reran only the three binary cases plus one node-limit control on the identical 68a6 release binary using deep-copied case snapshots and a separate node request. The current final6 projection records minimize/negative coefficients/-500, default seed 0 (not 42) and max_nodes=1 correctly; its private full-report SHA is 60c193c40707b83632dd2ce2aee7b8fb62f8489c3fb7ae6e1ea06069c12e9afa."
+      ],
+      "public_evidence": {
+        "format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
+        "complete_original_diagnostics_public": false,
+        "full_local_report_sha256_meaning": "Hash of the private complete diagnostic source, not a claim that its full stdout/metadata are published",
+        "sdk_test_excerpt_sha256": "dec9422d0180c8e3960e97e8df072584c7cad0291f0e783f3ad6f197ecb1158b",
+        "host_test_excerpt_sha256": "65b3376b2b69b40f25fdb40d92d5f892ed48181fe8e2db150f20ac1b017cb41c",
+        "guide": "docs/implementation/public-evidence.md"
+      },
+      "evidence_index": {
+        "MODEL": [
+          "crates/types/src/lib.rs",
+          "crates/model/src/lib.rs",
+          "crates/model/README.md"
+        ],
+        "COMPILE": [
+          "crates/compile/tests/deep_review.rs",
+          "crates/compile/src/tests.rs",
+          "docs/qa/compiler-review.md"
+        ],
+        "DIFF": [
+          "crates/compile/src/finite_difference.rs",
+          "crates/solvercraft/src/nonlinear_tests.rs",
+          "crates/solvercraft/tests/workflow_review.rs"
+        ],
+        "ENGINES": [
+          "crates/engines/tests/deep_review.rs",
+          "crates/engines/tests/conic.rs",
+          "docs/implementation/engines.md"
+        ],
+        "CERT": [
+          "crates/engines/tests/certificate_review.rs",
+          "crates/engines/tests/exact_bridge.rs",
+          "crates/model/README.md"
+        ],
+        "QP": [
+          "crates/engines/tests/convex_qp.rs",
+          "crates/engines/tests/mixed_conic.rs",
+          "docs/implementation/engines.md"
+        ],
+        "BASIS": [
+          "crates/engines/tests/basis.rs",
+          "crates/engines/tests/certificate_review.rs"
+        ],
+        "NLP": [
+          "crates/solvercraft/src/constrained_tests.rs",
+          "crates/solvercraft/tests/nonlinear_workflows.rs",
+          "docs/implementation/nonlinear.md"
+        ],
+        "HEURISTIC": [
+          "crates/solvercraft/src/heuristic_tests.rs",
+          "crates/solvercraft/src/multistart.rs",
+          "crates/solvercraft/tests/nonlinear_workflows.rs"
+        ],
+        "GLOBAL": [
+          "crates/solvercraft/src/global_tests.rs",
+          "crates/solvercraft/tests/global_review.rs",
+          "crates/solvercraft/tests/nonlinear_workflows.rs"
+        ],
+        "HOST": [
+          "docs/implementation/gridcraft.md",
+          "docs/implementation/host-checkpoint.json",
+          "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "../crates/engine/tests/it/solvercraft_deep_review.rs",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/final6-verification-summary.json"
+        ],
+        "WORKSHEET": [
+          "../crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
+          "../crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
+          "docs/implementation/gridcraft.md",
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "../crates/calc/src/eval/solvercraft/tests.rs"
+        ],
+        "UI": [
+          "../crates/ui-egui/tests/solvercraft_acceptance.rs",
+          "../crates/ui-egui/src/solvercraft.rs",
+          "../crates/ui-egui/src/solvercraft/report.rs",
+          "docs/implementation/native-ui-controls-final6-report.json"
+        ],
+        "WORKER": [
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json"
+        ],
+        "API": [
+          "crates/solvercraft/tests/api_review.rs",
+          "crates/cli/tests/api_review.rs",
+          "crates/solvercraft/tests/contracts_e2e.rs",
+          "crates/solvercraft/tests/server_e2e.rs"
+        ],
+        "MATH": [
+          "crates/math/tests/deep_review.rs",
+          "crates/math/tests/numerical_review.rs",
+          "docs/implementation/simulation.md"
+        ],
+        "ORACLE": [
+          "tests/e2e/distribution_oracle.py",
+          "docs/qa/distribution-oracle-report.json"
+        ],
+        "SIM": [
+          "crates/simulation/tests/advanced.rs",
+          "crates/simulation/tests/numerical_review.rs",
+          "docs/implementation/simulation.md"
+        ],
+        "SOBOL": [
+          "crates/math/src/sobol.rs",
+          "crates/math/tests/numerical_review.rs",
+          "docs/implementation/browser-smoke-final6-report.json"
+        ],
+        "FIT": [
+          "crates/simulation/tests/numerical_review.rs",
+          "crates/simulation/src/fitting.rs",
+          "docs/implementation/simulation.md"
+        ],
+        "INTERVAL": [
+          "crates/simulation/src/intervals.rs",
+          "crates/simulation/tests/numerical_review.rs",
+          "docs/implementation/simulation.md"
+        ],
+        "SAA": [
+          "crates/solvercraft/tests/saa_risk.rs",
+          "crates/solvercraft/src/saa.rs",
+          "docs/implementation/stochastic.md"
+        ],
+        "RISK": [
+          "crates/solvercraft/tests/saa_risk.rs",
+          "crates/solvercraft/tests/runtime_review.rs",
+          "crates/solvercraft/src/risk.rs"
+        ],
+        "LOGIC": [
+          "crates/solvercraft/tests/advanced_models.rs",
+          "crates/engines/tests/discrete.rs",
+          "docs/implementation/stochastic.md"
+        ],
+        "ROBUST": [
+          "crates/solvercraft/tests/ellipsoid.rs",
+          "crates/solvercraft/tests/saa_risk.rs",
+          "crates/solvercraft/tests/runtime_review.rs",
+          "docs/implementation/stochastic.md",
+          "docs/qa/ellipsoid-precision.md",
+          "docs/implementation/robust-oracle-fixed-debug-report.json",
+          "docs/implementation/robust-oracle-final6-report.json"
+        ],
+        "RECOURSE": [
+          "crates/solvercraft/tests/stochastic.rs",
+          "docs/implementation/stochastic.md"
+        ],
+        "REF": [
+          "docs/implementation/reference-freeze.md",
+          "docs/implementation/reference-catalog.json",
+          "docs/implementation/reference-implementation.json",
+          "docs/implementation/reference-gaps.md",
+          "tests/e2e/reference_matrix.py",
+          "docs/qa/original-scope-audit.md"
+        ],
+        "DEPS": [
+          "docs/implementation/dependency-final6-inventory.json",
+          "docs/implementation/engines.md",
+          "licenses/THIRD_PARTY.md",
+          "crates/math/third_party/BOOST_LICENSE_1_0.txt"
+        ],
+        "BROWSER": [
+          "docs/implementation/browser-smoke-final6-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/trunk-final6-build-report.json",
+          "docs/implementation/worker-browser-final6-build-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json"
+        ],
+        "PERF": [
+          "docs/implementation/performance-final6-report.json",
+          "docs/implementation/linear-oracle-final6-report.json",
+          "docs/implementation/quadratic-oracle-final6-report.json",
+          "docs/implementation/robust-oracle-final6-report.json",
+          "docs/implementation/exact-binary-oracle-final6-report.json",
+          "docs/implementation/release-final6-build-report.json"
+        ],
+        "GATES": [
+          "docs/implementation/verification-final6.md",
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/public-evidence.md"
+        ],
+        "MANIFEST": [
+          "crates/solvercraft/tests/workflow_review.rs",
+          "crates/solvercraft/tests/owned_control.rs",
+          "crates/solvercraft/tests/run_manifest.rs",
+          "crates/cli/tests/manifests.rs",
+          "crates/solvercraft/src/workflow.rs",
+          "docs/implementation/run-manifests.md",
+          "docs/implementation/sdk-runtime.md",
+          "docs/implementation/verification-final6.md"
+        ],
+        "MIP": [
+          "crates/engines/tests/integer_rounding.rs",
+          "crates/cli/tests/end_to_end.rs",
+          "crates/cli/tests/manifests.rs",
+          "docs/implementation/engines.md"
+        ],
+        "FINAL": [
+          "docs/implementation/final6-verification-summary.json",
+          "docs/implementation/gates-final6/host/summary.json",
+          "docs/implementation/gates-final6/host/report.json",
+          "docs/implementation/gates-final6/sdk/summary.json",
+          "docs/implementation/gates-final6/sdk/report.json",
+          "docs/implementation/release-final6-build-report.json",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/frozen-final6-source-report.json",
+          "docs/implementation/public-evidence.md"
+        ],
+        "PSI": [
+          "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "../crates/calc/src/eval/solvercraft/tests.rs",
+          "tests/worker-browser/tests/worker.rs",
+          "docs/implementation/gridcraft.md",
+          "docs/qa/original-scope-audit.md",
+          "docs/implementation/gates-final6/host/host-ci.txt",
+          "docs/implementation/browser-worker-final6-report.json",
+          "docs/implementation/browser-worker-final6-initial-report.json",
+          "docs/implementation/browser-worker-final6-rerun-report.json"
+        ]
+      }
+    }
   }
 }

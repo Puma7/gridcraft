@@ -1,0 +1,78 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/gates-final7/host/report.json",
+  "full_local_report_sha256": "0457bccc1699a6a3556bf298089d9467b01744288690dbc855da73db4a2721d6",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "results": {
+    "elapsed_seconds": 89.4698756999569,
+    "ignored": 1,
+    "accepted": true,
+    "failed": 0,
+    "test_summary_targets": 38,
+    "passed": 2904,
+    "ci_stages": [
+      "i18n-report",
+      "fmt",
+      "clippy",
+      "test",
+      "doctest",
+      "assets",
+      "layers",
+      "wasm",
+      "parity",
+      "keytips"
+    ]
+  },
+  "source_unchanged_before_after": true,
+  "gates": [
+    {
+      "name": "host-ci",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 89.4698756999569,
+      "source_digest_before": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_digest_after": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_changed_during_run": false,
+      "accepted": true
+    },
+    {
+      "name": "host-ui",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 5.87467160000233,
+      "source_digest_before": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_digest_after": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_changed_during_run": false,
+      "accepted": true
+    },
+    {
+      "name": "host-charts",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.964974600006826,
+      "source_digest_before": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_digest_after": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+      "source_changed_during_run": false,
+      "accepted": true
+    }
+  ]
+}

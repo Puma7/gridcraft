@@ -1,0 +1,92 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/browser-worker-final7-initial-report.json",
+  "full_local_report_sha256": "f6ba179e794a13400bb4124e348c7e72eef5f3adf83042bb070ebef5afbaa2eb",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "actual_browser": true,
+  "exit_code": 0,
+  "runner_exit_code": 0,
+  "elapsed_seconds": 22.89112290000776,
+  "test_wasm_sha256": "e7bb5371ea5c61f7741312a2674fbecb0f0b2d9c59f58dada504577c20650d26",
+  "test_results": [
+    "test hard_cancel_and_deadline_never_invent_an_unreceived_incumbent ... ok",
+    "test editing_the_live_workbook_makes_worker_result_stale_without_changing_its_snapshot ... ok",
+    "test actual_worker_solves_preview_apply_undo_and_rejects_stale_cross_document_use ... ok",
+    "test actual_worker_simulation_reports_progress_while_window_timers_remain_responsive ... ok",
+    "test actual_worker_simulation_preserves_calc_rounding_for_each_output_and_trial ... ok",
+    "test actual_worker_auto_miqp_honors_the_original_integer_domain ... ok",
+    "test actual_trunk_app_canvas_loads_and_renders_in_the_same_browser ... ok",
+    "test actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors ... ok",
+    "test actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals ... ok"
+  ],
+  "parsed_public_test_result_lines": 9,
+  "results": {
+    "kind": "initial",
+    "passed": 9,
+    "failed": 0,
+    "exit_code": 0,
+    "observed_max_window_heartbeat_gap_ms": 12.0,
+    "ignored": 0
+  },
+  "r081": {
+    "real_browser_signatures": 31,
+    "native_policy_negative_test_groups": 9,
+    "native_distinct_signature_tests": 31,
+    "native_contract_test_bodies": 40,
+    "calc_test_bodies": 37,
+    "browser_bodies": [
+      {
+        "name": "actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals",
+        "passed": true,
+        "outputs": 19,
+        "trials": 2048,
+        "signatures": 19
+      },
+      {
+        "name": "actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors",
+        "passed": true,
+        "outputs": 12,
+        "trials": 4096,
+        "cdf_anchors": 24,
+        "signatures": 12
+      }
+    ]
+  },
+  "actual_app_visual_evidence": {
+    "inspected": true,
+    "screenshot_sha256": "dc4c740aa6bd43b16439f81b9d2e7180d3a481f5d6dc295754f8aded1b12d4fa",
+    "source_report": "solvercraft/docs/implementation/browser-worker-final7-initial-report.json",
+    "scope_code": "fresh_actual_trunk_pane"
+  },
+  "observed_metrics": {
+    "admission_ms": 0.7649999999999999,
+    "worker_compute_ms": 1450.4550000000002,
+    "max_window_heartbeat_gap_ms": 12.0,
+    "observed_progress_updates": 29,
+    "startup_ms": 24.725,
+    "max_status_ms": 1.0,
+    "heartbeat_ticks": 148,
+    "attempt_index": 0,
+    "max_observed_progress_gap_ms": 58.0,
+    "attempt_kind": "initial"
+  }
+}

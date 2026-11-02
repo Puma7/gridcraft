@@ -1,6 +1,66 @@
 # Original scope audit: R046 and R081
 
-Audit date: 2026-11-01. This is a documentation-only assessment of the original requirements against the already executed final6 snapshot. It does not rerun gates, change production files, alter the frozen reference/catalog or update global acceptance counts. Final5 remains separately preserved historical evidence. The current assessment uses the independent final6 reports and retains both worker attempts.
+Audit date: 2026-11-01. This documentation-only audit retains the historical final6 original-criterion proof and the source-bound final7 extension. It does not rerun gates, change production files, alter the frozen reference/catalog or update global acceptance counts. Final5 remains separately preserved historical evidence. The final6 assessment below uses its independent reports and retains both worker attempts; the active final7 extension is separately qualified below.
+
+## Final7: source-bound qualification of 31 core imports
+
+This extension adds 12 scalar core forms to the previously accepted 19, without
+changing any original 96 CSV field or the frozen external reference. The current
+branch's shared registry and maintained implementation matrix list 31 forms;
+80 distribution-name worksheet adapters remain unsupported. The final6
+mathematical and 19-form log associations below remain historical evidence for
+that snapshot, not acceptance evidence for the new code.
+
+The canonical immutable `gridcraft_calc::PSI_CORE_SIGNATURES` registry supplies
+`legacy_name`, `worksheet_name` and `required_arguments` for all 31 forms. Calc
+decoding, known-function recognition, host import and reported capabilities use
+this shared contract rather than separate name/arity maps. Its counts are vendor
+required core arguments; the optional numeric SC nominal override is not a
+vendor property or an extra imported PSI argument.
+
+Discovery now returns `nominal` and `nominal_basis` per input, with explicit
+`analytic_mean`, `median_fallback` or `explicit_override` values. Simulation
+requests and manifests retain `worksheet_nominal: {value, basis}` separately
+from the effective sampling `distribution`. A caller can pass public
+Discovery.inputs/outputs into simulation without removing these metadata fields.
+An explicit simulation distribution does not silently relabel the worksheet's
+outside value: a worksheet override 8 and sampled Constant 7 remain distinct.
+
+Student df=1 is a labelled median fallback, while df=2 has analytic mean 0 even
+though its variance is undefined. FDist denominator df<=2 uses median fallback;
+a larger denominator uses its finite mean. Levy always uses a labelled median
+fallback. All are explicit SC outside-value policies, not vendor display-state
+compatibility. Basis labels must be retained even when a mean and median happen
+to have the same numerical value.
+
+Final7 now has executed source-bound qualification for the enlarged 31-form
+contract. All ten host CI stages passed with 2904 tests passed, zero failed and
+one pre-existing ignored; SDK 630 passed with zero failures/ignored. Native UI 6,
+chart module 8 numerical+1 lifecycle and actual Chrome SDK 13 also passed. These
+scoped counts are not added together to manufacture a total.
+
+The actual product worker passed all 9 bodies on its first attempt. Both import
+bodies passed: the existing 19-form body ran 2048 trials; the new 12-form body ran
+4096 trials with seed 42. Its 24 empirical CDF anchors had maximum absolute error
+0.020751953125 against the declared prefix tolerance 0.054792830314635735.
+This is finite prefix-test evidence, not a universal distribution accuracy or
+confidence guarantee. Observed admission was 0.765 ms, status 1 ms, heartbeat 12 ms,
+active progress gap 58 ms and 29 progress updates; no hard realtime or universal
+25 ms promise follows from these observations.
+
+The [final7 summary](../implementation/final7-verification-summary.json) and [actual worker report](../implementation/browser-worker-final7-report.json) identify this run. Raw code/input SHA-256: `8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065`; LF-canonical SHA-256: `dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472`. Historical final6 evidence remains separately labelled below.
+
+Current native PSI evidence comprises 31 separately named positive forms and 9 negative/policy groups (40 engine tests), plus 37 Calc tests. These selectors are present in the [final7 native test excerpt](../implementation/gates-final7/host/host-ci.txt). The [CDF-prefix witness](../implementation/psi-core12-cdf-final7-report.json) records the 24 comparisons and their outside-value basis. These public files are compact projections/excerpts, not complete private diagnostic dumps.
+
+
+The new twelve are ChiSquare, Erlang, FDist, Logistic, MaxExtreme, MinExtreme,
+Rayleigh, Reciprocal, Student, Levy, Kumaraswamy and HypSecant. Their
+[source-page/domain table](../implementation/reference-gaps.md) includes the
+four-argument affine Kumaraswamy constructor and HypSecant native-SD conversion
+`SDKscale = beta * FRAC_2_PI`. Cauchy/Laplace/HyperGeo, optional properties, Alt
+calls and nested PSI randomness remain unsupported, not silently completed.
+The final7 reports/excerpts have their own source identities;
+shared current acceptance/verification pages are maintained by the integrator.
 
 ## Unchanged original contract
 
@@ -65,7 +125,7 @@ The mathematical owner confirmed both positive implementations and no known reje
 - Seven baseline entries have only a host-test locator in that matrix. Their positive, already executed SDK tests are supplied explicitly in AppendixA under `Audit supplement`; no compiled JSON is edited.
 - 111 entries matched, 73 distinct positive test bodies, 13 source files; no selected failed/ignored/unmatched test. AppendixA gives exact source/test/log-line associations; AppendixC gives source hashes.
 - Public test-result excerpt [SDK log](../implementation/gates-final6/sdk/sdk-tests.txt) SHA-256: `dec9422d0180c8e3960e97e8df072584c7cad0291f0e783f3ad6f197ecb1158b`.
-- Frozen [implementation matrix](../implementation/reference-implementation.json) SHA-256: `8b27561b6955c05b7e9c946d8ef8ad231395ba2c6a1705c82496e1eb00f5c3d8`.
+- Historical final6 implementation-matrix SHA-256: `8b27561b6955c05b7e9c946d8ef8ad231395ba2c6a1705c82496e1eb00f5c3d8`. The [maintained matrix](../implementation/reference-implementation.json) now describes the active final7 overlay; that current file is not claimed to retain the historical whole-file hash. Mathematical source/test associations below retain their stated final6 scope.
 - Accepted final6 raw code/input digest: `c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7`; canonical digest: `0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76`. [Primary summary](../implementation/final6-verification-summary.json).
 
 The matrix status `partial_parameterization` on the two literal Alt records describes unresolved vendor grammar. It is not silently changed to full PSI compatibility, and it does not add an undocumented-overload condition to the original mathematical criterion.

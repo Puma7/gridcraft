@@ -94,6 +94,10 @@ fn sdk_error(e: impl std::fmt::Display) -> EngineError {
 }
 
 fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
+    let psi_signatures = gridcraft_calc::PSI_CORE_SIGNATURES
+        .iter()
+        .map(|signature| json!({"legacy_name":signature.legacy_name,"worksheet_name":signature.worksheet_name,"required_arguments":signature.required_arguments}))
+        .collect::<Vec<_>>();
     Ok(json!({
         "schema_version": 1,
         "preview_only": true,
@@ -107,7 +111,7 @@ fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
             "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX", "NOW", "TODAY", "SC.OUTPUT"
         ],
         "worksheet_declarations":["SC.UNIFORM","SC.DISCRETEUNIFORM","SC.NORMAL","SC.LOGNORMAL","SC.TRIANGULAR","SC.BETAPERT","SC.BETA","SC.GAMMA","SC.EXPONENTIAL","SC.WEIBULL","SC.BERNOULLI","SC.BINOMIAL","SC.POISSON","SC.NEGATIVEBINOMIAL","SC.GEOMETRIC","SC.EMPIRICAL","SC.EMPIRICALCONTINUOUS","SC.OUTPUT"],
-        "psi_import":{"core_numeric_signatures":19,"top_level_declarations_only":true,"nested_and_property_calls":"preserved as unsupported","outside_policy_default":"solvercraft_nominal","outside_policies":["solvercraft_nominal","preserve_vendor"],"vendor_display_context_preserved":false,"property_modifiers":false,"ordinary_cell_policy":"SC finite analytic mean; explicit labelled median fallback for undefined/unavailable means","cumul_subset":"unambiguous strictly increasing knots; no endpoint atoms"},
+        "psi_import":{"core_numeric_signatures":psi_signatures.len(),"signatures":psi_signatures,"top_level_declarations_only":true,"nested_and_property_calls":"preserved as unsupported","outside_policy_default":"solvercraft_nominal","outside_policies":["solvercraft_nominal","preserve_vendor"],"vendor_display_context_preserved":false,"property_modifiers":false,"ordinary_cell_policy":"SC finite analytic mean; explicit labelled median fallback for undefined/unavailable means","cumul_subset":"unambiguous strictly increasing knots; no endpoint atoms"},
         "reports":{"answer":true,"lp_checked_basis_shadow_prices_and_intervals":true,"simultaneous_parameter_changes":"must revalidate basis"},
         "worksheet_statistics":{"SC.MEAN":"explicit finite sample range","SC.QUANTILE":"empirical lower inverse CDF","SC.CVAR":"fractional upper loss tail"},
         "saved_models":{"schema_version":1,"xlsx_part":"xl/solvercraft/models.json","binding_migration":"hidden formula names; invalidated bindings fail explicitly"},
@@ -1059,6 +1063,7 @@ fn simulate_snapshot(
     }
     let mut bindings = Vec::new();
     let mut distributions = Vec::new();
+    let mut worksheet_nominals = Vec::new();
     for input in inputs {
         let text = input.get("cell").and_then(Json::as_str).ok_or_else(|| bad(SOLVE, "Each simulation input needs a cell"))?;
         let c = cells(wb, base, text, 1)?.into_iter().next().ok_or_else(|| bad(SOLVE, "Input cell is missing"))?;
@@ -1069,7 +1074,8 @@ fn simulate_snapshot(
         if sh.spill_anchor(c.1).is_some() {
             return Err(bad(SOLVE, "A simulation input cannot be a derived spill cell; choose an independent constant input"));
         }
-        let declared = worksheet::input_distribution_at(wb, c.0, c.1, snapshot_time(p)?)?;
+        let declared = worksheet::input_declaration_at(wb, c.0, c.1, snapshot_time(p)?)?;
+        let worksheet_nominal = declared.as_ref().map(|d| json!({"value":d.nominal,"basis":d.nominal_basis.as_str()}));
         if sh.cell(c.1).is_some_and(|c| c.formula.is_some()) && declared.is_none() {
             return Err(bad(SOLVE, "Simulation inputs must be constant cells or SC distribution declarations"));
         }
@@ -1077,12 +1083,13 @@ fn simulate_snapshot(
             input
                 .get("distribution")
                 .cloned()
-                .or_else(|| declared.and_then(|d| serde_json::to_value(d).ok()))
+                .or_else(|| declared.and_then(|d| serde_json::to_value(d.distribution).ok()))
                 .ok_or_else(|| bad(SOLVE, "Input distribution is required"))?,
         )
         .map_err(sdk_error)?;
         bindings.push(c);
         distributions.push(distribution);
+        worksheet_nominals.push(worksheet_nominal);
     }
     let outputs = p.get("outputs").ok_or_else(|| bad(SOLVE, "outputs is required"))?;
     let output_entries = match outputs {
@@ -1111,7 +1118,14 @@ fn simulate_snapshot(
     let inputs = bindings
         .iter()
         .zip(&distributions)
-        .map(|((sheet, cell), distribution)| Ok(json!({"cell":binding_name(wb,*sheet,*cell)?,"distribution":distribution})))
+        .zip(worksheet_nominals)
+        .map(|(((sheet, cell), distribution), worksheet_nominal)| {
+            let mut input = json!({"cell":binding_name(wb,*sheet,*cell)?,"distribution":distribution});
+            if let Some(nominal) = worksheet_nominal {
+                input["worksheet_nominal"] = nominal;
+            }
+            Ok(input)
+        })
         .collect::<Result<Vec<_>>>()?;
     // Preserve the original total budget for a rerun; the engine budget records
     // the separate conservative IR reservation deducted for this execution.

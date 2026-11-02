@@ -19,7 +19,9 @@ fn declaration(name: &str, args: &[Value]) -> WorksheetDistribution {
 fn verify(name: &str, formula: &str, args: Vec<Value>, nominal: f64, probe: f64, cdf: f64, invalid: Vec<Value>) {
     assert_eq!(distribution_arity(name), Some(args.len()), "{name}");
     let default = declaration(name, &args);
-    close(default.nominal, nominal, 2e-12, name);
+    // Levy uses the existing approximate normal inverse for its median.
+    let nominal_tolerance = if name == "SC.PSI.LEVY" { 3e-7 } else { 2e-12 };
+    close(default.nominal, nominal, nominal_tolerance, name);
     // These CDF anchors use independent analytic identities, not nominal mean
     // or a roundtrip through the decoder. They distinguish parameter swaps.
     close(solvercraft_math::cdf(&default.distribution, probe).unwrap(), cdf, 3e-7, name);
@@ -58,7 +60,7 @@ fn verify(name: &str, formula: &str, args: Vec<Value>, nominal: f64, probe: f64,
         let Value::Number(actual) = crate::evaluate_at(&wb, 0, at, formula, now) else {
             panic!("formula did not return a number: {formula}");
         };
-        close(actual, nominal, 2e-12, formula);
+        close(actual, nominal, nominal_tolerance, formula);
         let body = formula.strip_suffix(')').unwrap();
         assert_eq!(crate::evaluate_at(&wb, 0, at, &format!("{body},{value})"), now), n(value), "formula nominal override: {formula}");
     }
@@ -292,6 +294,227 @@ fn sc_psi_nominal_policy_does_not_consult_calc_rng_or_trial_display_state() {
         }
     }
     assert_eq!(host.draws, 0, "SC nominal cells must not draw pseudo pre-run samples");
+}
+
+psi_case!(
+    psi_levy_default_override_domain_and_independent_parameters,
+    "SC.PSI.LEVY",
+    "SC.PSI.LEVY(2,3)",
+    vec![n(2.0), n(3.0)],
+    2.0 + 3.0 / 0.674_489_750_196_081_7_f64.powi(2),
+    5.0,
+    0.317_310_507_862_914_1,
+    vec![n(2.0), n(0.0)]
+);
+psi_case!(
+    psi_chisquare_default_override_domain_and_independent_parameters,
+    "SC.PSI.CHISQUARE",
+    "SC.PSI.CHISQUARE(6)",
+    vec![n(6.0)],
+    6.0,
+    2.0,
+    1.0 - 2.5 * (-1.0_f64).exp(),
+    vec![n(0.0)]
+);
+psi_case!(
+    psi_erlang_default_override_domain_and_independent_parameters,
+    "SC.PSI.ERLANG",
+    "SC.PSI.ERLANG(3,2)",
+    vec![n(3.0), n(2.0)],
+    6.0,
+    2.0,
+    1.0 - 2.5 * (-1.0_f64).exp(),
+    vec![n(2.5), n(2.0)]
+);
+psi_case!(
+    psi_fdist_default_override_domain_and_independent_parameters,
+    "SC.PSI.FDIST",
+    "SC.PSI.FDIST(2,6)",
+    vec![n(2.0), n(6.0)],
+    1.5,
+    3.0,
+    0.875,
+    vec![n(-1.0), n(6.0)]
+);
+psi_case!(
+    psi_kumaraswamy_default_override_domain_and_independent_parameters,
+    "SC.PSI.KUMARASWAMY",
+    "SC.PSI.KUMARASWAMY(2,3,2,10)",
+    vec![n(2.0), n(3.0), n(2.0), n(10.0)],
+    198.0 / 35.0,
+    6.0,
+    0.578125,
+    vec![n(2.0), n(3.0), n(10.0), n(2.0)]
+);
+psi_case!(
+    psi_logistic_default_override_domain_and_independent_parameters,
+    "SC.PSI.LOGISTIC",
+    "SC.PSI.LOGISTIC(2,3)",
+    vec![n(2.0), n(3.0)],
+    2.0,
+    2.0 + 3.0 * 3.0_f64.ln(),
+    0.75,
+    vec![n(2.0), n(-3.0)]
+);
+psi_case!(
+    psi_maxextreme_default_override_domain_and_independent_parameters,
+    "SC.PSI.MAXEXTREME",
+    "SC.PSI.MAXEXTREME(2,3)",
+    vec![n(2.0), n(3.0)],
+    2.0 + 3.0 * 0.577_215_664_901_532_9,
+    2.0 + 3.0 * 2.0_f64.ln(),
+    (-0.5_f64).exp(),
+    vec![n(2.0), n(0.0)]
+);
+psi_case!(
+    psi_minextreme_default_override_domain_and_independent_parameters,
+    "SC.PSI.MINEXTREME",
+    "SC.PSI.MINEXTREME(2,3)",
+    vec![n(2.0), n(3.0)],
+    2.0 - 3.0 * 0.577_215_664_901_532_9,
+    2.0 - 3.0 * 2.0_f64.ln(),
+    1.0 - (-0.5_f64).exp(),
+    vec![n(2.0), n(0.0)]
+);
+psi_case!(
+    psi_rayleigh_default_override_domain_and_independent_parameters,
+    "SC.PSI.RAYLEIGH",
+    "SC.PSI.RAYLEIGH(3)",
+    vec![n(3.0)],
+    3.0 * std::f64::consts::FRAC_PI_2.sqrt(),
+    6.0,
+    1.0 - (-2.0_f64).exp(),
+    vec![n(0.0)]
+);
+psi_case!(
+    psi_reciprocal_default_override_domain_and_independent_parameters,
+    "SC.PSI.RECIPROCAL",
+    "SC.PSI.RECIPROCAL(2,18)",
+    vec![n(2.0), n(18.0)],
+    16.0 / 9.0_f64.ln(),
+    6.0,
+    0.5,
+    vec![n(0.0), n(18.0)]
+);
+psi_case!(
+    psi_student_default_override_domain_and_independent_parameters,
+    "SC.PSI.STUDENT",
+    "SC.PSI.STUDENT(2)",
+    vec![n(2.0)],
+    0.0,
+    1.0,
+    0.5 + 1.0 / (2.0 * 3.0_f64.sqrt()),
+    vec![n(0.0)]
+);
+psi_case!(
+    psi_hypsecant_default_override_domain_and_independent_parameters,
+    "SC.PSI.HYPSECANT",
+    "SC.PSI.HYPSECANT(2,3)",
+    vec![n(2.0), n(3.0)],
+    2.0,
+    2.0 + 3.0 * std::f64::consts::FRAC_2_PI * 1.0_f64.asinh(),
+    0.75,
+    vec![n(2.0), n(0.0)]
+);
+
+#[test]
+fn nominal_basis_preserves_mean_median_fallback_and_equal_numeric_overrides() {
+    use solvercraft_math::nominal::{NominalStatistic, nominal_summary};
+    for (name, args, wanted_value, basis) in [
+        ("SC.PSI.LEVY", vec![n(2.0), n(3.0)], 2.0 + 3.0 / 0.674_489_750_196_081_7_f64.powi(2), WorksheetNominalBasis::MedianFallback),
+        ("SC.PSI.STUDENT", vec![n(1.0)], 0.0, WorksheetNominalBasis::MedianFallback),
+        ("SC.PSI.STUDENT", vec![n(2.0)], 0.0, WorksheetNominalBasis::AnalyticMean),
+        ("SC.PSI.FDIST", vec![n(2.0), n(2.0)], 1.0, WorksheetNominalBasis::MedianFallback),
+        ("SC.PSI.FDIST", vec![n(2.0), n(6.0)], 1.5, WorksheetNominalBasis::AnalyticMean),
+        ("SC.PSI.NORMAL", vec![n(7.0), n(2.0)], 7.0, WorksheetNominalBasis::AnalyticMean),
+    ] {
+        let declared = declaration(name, &args);
+        close(declared.nominal, wanted_value, if name == "SC.PSI.LEVY" { 3e-7 } else { 2e-12 }, name);
+        assert_eq!(declared.nominal_basis, basis, "{name}");
+        let sdk = nominal_summary(&declared.distribution).unwrap();
+        assert_eq!(
+            sdk.statistic,
+            if basis == WorksheetNominalBasis::MedianFallback { NominalStatistic::MedianFallback } else { NominalStatistic::Mean }
+        );
+        assert_eq!(basis.as_str(), if basis == WorksheetNominalBasis::MedianFallback { "median_fallback" } else { "analytic_mean" });
+        let mut supplied = args;
+        supplied.push(n(declared.nominal));
+        let overridden = declaration(name, &supplied);
+        assert_eq!(overridden.nominal, declared.nominal);
+        assert_eq!(overridden.nominal_basis, WorksheetNominalBasis::ExplicitOverride);
+        assert_eq!(overridden.nominal_basis.as_str(), "explicit_override");
+    }
+}
+
+#[test]
+fn shared_psi_core_signatures_are_unique_registered_and_arity_consistent() {
+    let mut legacy = std::collections::BTreeSet::new();
+    let mut worksheet = std::collections::BTreeSet::new();
+    for signature in PSI_CORE_SIGNATURES {
+        assert!(legacy.insert(signature.legacy_name));
+        assert!(worksheet.insert(signature.worksheet_name));
+        assert_eq!(distribution_arity(signature.worksheet_name), Some(signature.required_arguments));
+        assert!(crate::SPECIAL_FUNCTIONS.contains(&signature.worksheet_name), "{} missing registration", signature.worksheet_name);
+        assert!(crate::is_known_function(signature.worksheet_name));
+        assert_eq!(signature.worksheet_name, format!("SC.PSI.{}", signature.legacy_name.strip_prefix("Psi").unwrap().to_ascii_uppercase()));
+    }
+    assert!(!legacy.contains("PsiHyperGeo"), "unresolved source convention must remain unsupported");
+    assert!(!legacy.contains("PsiCauchy"));
+    assert!(!legacy.contains("PsiLaplace"));
+}
+
+#[test]
+fn native_psi_integer_df_and_sdk_capacity_errors_are_not_hidden_by_nominals() {
+    for (name, args) in [
+        ("SC.PSI.CHISQUARE", vec![n(1.5)]),
+        ("SC.PSI.FDIST", vec![n(1.5), n(3.0)]),
+        ("SC.PSI.FDIST", vec![n(3.0), n(1.5)]),
+        ("SC.PSI.STUDENT", vec![n(1.5)]),
+        ("SC.PSI.ERLANG", vec![n(0.0), n(2.0)]),
+        ("SC.PSI.CHISQUARE", vec![n(10001.0)]),
+        ("SC.PSI.STUDENT", vec![n(10001.0)]),
+        ("SC.PSI.ERLANG", vec![n(10001.0), n(2.0)]),
+        ("SC.PSI.FDIST", vec![n(3.0), n(10001.0)]),
+        ("SC.PSI.FDIST", vec![n(10001.0), n(3.0)]),
+    ] {
+        assert!(matches!(worksheet_distribution(name, &args), Err(CellError::Num)), "{name} {args:?}");
+        let mut with_override = args;
+        with_override.push(n(1.0));
+        assert!(matches!(worksheet_distribution(name, &with_override), Err(CellError::Num)), "{name} override must not bypass domain");
+    }
+    // General SDK distributions retain their wider real-df mathematical domain.
+    assert!(solvercraft_math::validate_distribution(&D::StudentT { degrees_of_freedom: 1.5, location: 0.0, scale: 1.0 }).is_ok());
+}
+
+#[test]
+fn native_psi_location_affine_bounds_and_hypsecant_stddev_conventions_are_exact() {
+    let levy = declaration("SC.PSI.LEVY", &[n(-3.0), n(2.0)]);
+    close(solvercraft_math::cdf(&levy.distribution, -1.0).unwrap(), 0.317_310_507_862_914_1, 3e-7, "Levy negative location");
+    assert_eq!(levy.nominal_basis, WorksheetNominalBasis::MedianFallback);
+    let kumara = declaration("SC.PSI.KUMARASWAMY", &[n(2.0), n(3.0), n(-2.0), n(6.0)]);
+    close(kumara.nominal, 58.0 / 35.0, 2e-12, "Kumaraswamy affine mean");
+    close(solvercraft_math::cdf(&kumara.distribution, 2.0).unwrap(), 37.0 / 64.0, 2e-12, "Kumaraswamy affine CDF");
+    let hyp = declaration("SC.PSI.HYPSECANT", &[n(3.0), n(2.0)]);
+    let D::HyperbolicSecant { location, scale } = hyp.distribution else {
+        panic!("wrong hyperbolic secant mapping");
+    };
+    assert_eq!(location, 3.0);
+    close(scale, 4.0 / std::f64::consts::PI, 2e-15, "native beta to SDK scale");
+    close(
+        solvercraft_math::cdf(&D::HyperbolicSecant { location, scale }, 5.0).unwrap(),
+        std::f64::consts::FRAC_2_PI * std::f64::consts::FRAC_PI_2.exp().atan(),
+        2e-12,
+        "HypSecant native CDF",
+    );
+    close(std::f64::consts::PI.powi(2) * scale * scale / 4.0, 4.0, 2e-15, "HypSecant native variance beta²");
+    for name in ["SC.PSI.LOGISTIC", "SC.PSI.MAXEXTREME", "SC.PSI.MINEXTREME", "SC.PSI.HYPSECANT"] {
+        let declared = declaration(name, &[n(-3.0), n(2.0)]);
+        assert!(declared.nominal.is_finite(), "negative real location rejected: {name}");
+        assert_eq!(declared.nominal_basis, WorksheetNominalBasis::AnalyticMean);
+    }
+    assert!(matches!(worksheet_distribution("SC.PSI.KUMARASWAMY", &[n(0.0), n(3.0), n(-2.0), n(6.0)]), Err(CellError::Num)));
+    assert!(matches!(worksheet_distribution("SC.PSI.KUMARASWAMY", &[n(2.0), n(0.0), n(-2.0), n(6.0)]), Err(CellError::Num)));
+    assert!(matches!(worksheet_distribution("SC.PSI.KUMARASWAMY", &[n(2.0), n(3.0), n(1.0), n(1.0)]), Err(CellError::Num)));
 }
 
 #[test]

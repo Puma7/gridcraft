@@ -38,7 +38,7 @@ def load_and_audit() -> tuple[dict, dict[str, dict]]:
             if hashlib.sha256(content).hexdigest() != test["source_file_sha256"]:
                 raise ValueError("Test evidence source changed; refresh matrix: " + test["path"])
             leaf = test["test"].split("::")[-1]
-            if not re.search(r"\bfn\s+" + re.escape(leaf) + r"\s*\(", content.decode("utf-8")):
+            if not re.search(r"(?:\bfn\s+" + re.escape(leaf) + r"\s*\(|\b(?:psi_case|case|scalar_case)!\s*\(\s*" + re.escape(leaf) + r"\s*,)", content.decode("utf-8")):
                 raise ValueError("Named executable test is absent: " + test["test"])
             if not re.fullmatch(r"[A-Za-z_]\w*(?:::[A-Za-z_]\w*)*", test["test"]):
                 raise ValueError("Invalid Rust test selector.")

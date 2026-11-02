@@ -1,6 +1,6 @@
 # Gridcraft host integration
 
-Implementation evidence, 2026-10-31. This document describes actual host source and
+Implementation evidence, 2026-11-01. This document describes actual host source and
 executed host checks, not standalone SDK tests counted as UI evidence. The pinned
 requirements remain in `../masterplan/requirements.csv` unchanged.
 
@@ -292,7 +292,7 @@ engine all-target Clippy -Dwarnings check passed in54.31s after this fixture fix
 Use task-local TEMP/TMP under $WORKSPACE_ROOT/solvercraft-temp/grid-host-tests;
 the sandbox's default package temp is outside the task's writable roots.
 
-## Selected PSI import contract (R081 follow-up)
+## Initial selected PSI import contract (R081 final6 history)
 
 The converter advertises 19 selected top-level numeric signatures. Its default
 `outside_policy: "solvercraft_nominal"` deliberately converts their outside-run
@@ -327,3 +327,67 @@ all-target Clippy with `-D warnings` in 10.68 seconds under Rust 1.95. The
 separate Calc-owner suite passed its 21 selected-signature/nominal tests and
 all-target Clippy. Final6 full-host and eight-body real-browser-worker results
 are recorded separately by independent validation after this source freeze.
+
+## Second scalar PSI rollout
+
+The next rollout adds twelve source-checked scalar signatures to the existing
+nineteen. `gridcraft_calc::PSI_CORE_SIGNATURES` supplies the immutable shared
+legacy name, worksheet name and required argument count. Engine capabilities
+derive their advertised count and full signature list from that registry.
+No property, alternate-parameter or nested PSI support is inferred from the
+additional SDK distribution families.
+
+| Signature used in the host test | Independent CDF anchor | SC outside-value basis |
+|---|---|---|
+| `PsiChiSquare(2)` | `F(2)=1-exp(-1)` | Analytic mean 2 |
+| `PsiErlang(2,3)` | `F(3)=1-2/exp(1)` | Analytic mean 6 |
+| `PsiFDist(2,4)` | `F(2)=3/4` | Analytic mean 2 |
+| `PsiLogistic(3,2)` | `F(5)=exp(1)/(1+exp(1))` | Analytic mean 3 |
+| `PsiMaxExtreme(3,2)` | `F(5)=exp(-exp(-1))` | Analytic mean `3+2*EulerGamma` |
+| `PsiMinExtreme(3,2)` | `F(5)=1-exp(-exp(1))` | Analytic mean `3-2*EulerGamma` |
+| `PsiRayleigh(2)` | `F(2)=1-exp(-1/2)` | Analytic mean `2*sqrt(pi/2)` |
+| `PsiReciprocal(2,8)` | `F(4)=1/2` | Analytic mean `6/ln(4)` |
+| `PsiStudent(1)` | `F(1)=3/4` | Median fallback 0; population mean undefined |
+| `PsiLevy(3,2)` | `F(5)=erfc(1/sqrt(2))` | Median fallback; population mean undefined |
+| `PsiKumaraswamy(2,3,2,8)` | `F(5)=37/64` | Analytic mean `166/35` |
+| `PsiHypSecant(3,2)` | `F(5)=(2/pi)*atan(exp(pi/2))` | Analytic mean 3 |
+
+The HypSecant second vendor argument is its standard deviation. The internal
+hyperbolic-secant exponential scale is `beta*(2/pi)`, so a direct alias would
+sample the wrong distribution. ChiSquare, FDist and Student require positive
+integral degrees of freedom in these PSI signatures; Erlang requires positive
+integral shape. SDK numerical limits remain separate from vendor domains.
+Kumaraswamy preserves both shape arguments and the affine min/max bounds.
+Cauchy, Laplace and HyperGeo remain whole-formula unsupported because the
+reference inconsistencies were not resolved for these import contracts.
+
+Discovery inputs add `nominal` and `nominal_basis` (`analytic_mean`,
+`median_fallback`, `explicit_override`). They can be passed directly as
+`simulate.inputs` with no metadata filtering. Canonical simulation requests and
+manifests record a separate `worksheet_nominal: {value,basis}` when the sampled
+cell is a worksheet declaration. That is the declaration's outside value; it
+does not replace or describe an explicit simulation-distribution override.
+These labels describe SC's existing lossy policy and never claim vendor display
+state. A retained sample average is not a finite population-mean assertion for
+Student with one degree of freedom, Levy, or F with denominator df at most two.
+
+The twelve individually named `scalar_case!` tests in
+`crates/engine/src/cmd/solvercraft/psi_import_tests.rs` exercise real import,
+ordinary Calc, discovery, immutable trials, unfiltered Discovery-to-Simulate
+roundtrips, preview rejection for apply, and atomic import undo. Each also checks
+its domain, error propagation, missing/extra/blank arguments, Alt, property and
+nested-call retention, plus strict vendor-preservation refusal. Additional
+tests check the registry against actual known functions, negative Levy location,
+undefined-mean F fallback, and separation of an own nominal override from the
+sampled distribution. The original nineteen tests remain a separately named
+subset. Current execution evidence is recorded after source freeze; a new ninth
+real browser-worker body is independently owned and is not counted as passed
+merely because native source or tests exist.
+
+Native checkpoint: the full engine library passed 719/719 tests at default
+parallelism in 11.36 seconds, including all 40 PSI host contract tests. Engine
+all-target Clippy with `-D warnings` passed in 22.57 seconds under exact Rust
+1.95 with `--locked`. The Calc owner separately passed 37 PSI decoder tests and
+all-target Clippy. Fresh full-host/WASM/browser gates remain independently
+recorded after this checkpoint; earlier final6 results belong to its older
+nineteen-signature snapshot.

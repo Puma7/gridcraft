@@ -16,6 +16,9 @@ fn formula(s: &Session, cell: &str) -> String {
     s.doc().unwrap().wb.active().unwrap().cell(CellRef::parse(cell).unwrap()).unwrap().formula.as_ref().unwrap().text.clone()
 }
 fn check_case(source: &str, kind: &str, parameters: &[(&str, f64)], nominal: f64, x: f64, probability: f64) {
+    check_case_with_basis(source, kind, parameters, nominal, x, probability, "analytic_mean");
+}
+fn check_case_with_basis(source: &str, kind: &str, parameters: &[(&str, f64)], nominal: f64, x: f64, probability: f64, basis: &str) {
     let mut s = session();
     set(&mut s, "A1", source);
     set(&mut s, "B1", "=SC.OUTPUT(A1)");
@@ -36,16 +39,22 @@ fn check_case(source: &str, kind: &str, parameters: &[(&str, f64)], nominal: f64
     let discovered = s.execute("solvercraft.worksheet.discover", json!({})).unwrap();
     assert_eq!(discovered["inputs"].as_array().unwrap().len(), 1);
     assert_eq!(discovered["outputs"].as_array().unwrap().len(), 2);
+    near(discovered["inputs"][0]["nominal"].as_f64().unwrap(), nominal);
+    assert_eq!(discovered["inputs"][0]["nominal_basis"], basis);
     let descriptor = &discovered["inputs"][0]["distribution"];
     assert_eq!(descriptor["kind"], kind, "{source}");
     for (name, value) in parameters {
-        near(descriptor[name].as_f64().unwrap(), *value);
+        let field = name.split('.').fold(descriptor, |current, key| &current[key]);
+        near(field.as_f64().unwrap(), *value);
     }
     let distribution: Distribution = serde_json::from_value(descriptor.clone()).unwrap();
     near(::solvercraft::math::cdf(&distribution, x).unwrap(), probability);
     let before = Arc::clone(&s.doc().unwrap().wb);
     let preview = s.execute("solvercraft.simulate", json!({"options":{"trials":32,"seed":"18446744073709551615","retain_samples":true}})).unwrap();
     assert_eq!(preview["result"]["completed_trials"], 32);
+    near(preview["request"]["inputs"][0]["worksheet_nominal"]["value"].as_f64().unwrap(), nominal);
+    assert_eq!(preview["request"]["inputs"][0]["worksheet_nominal"]["basis"], basis);
+    assert_eq!(preview["manifest"]["bindings"]["inputs"][0]["worksheet_nominal"], preview["request"]["inputs"][0]["worksheet_nominal"]);
     let rows = preview["result"]["samples"].as_array().unwrap();
     assert_eq!(rows.len(), 32);
     for (trial, row) in rows.iter().enumerate() {
@@ -54,6 +63,9 @@ fn check_case(source: &str, kind: &str, parameters: &[(&str, f64)], nominal: f64
         let expected = ::solvercraft::math::sample(&distribution, u64::MAX, 0, trial as u64).unwrap();
         assert_eq!(row[0].as_f64().unwrap().to_bits(), expected.to_bits(), "{source} trial{trial}");
     }
+    // Discovery is an actual public input DTO: retain its metadata unchanged.
+    let roundtrip = s.execute("solvercraft.simulate", json!({"inputs":discovered["inputs"],"outputs":discovered["outputs"],"options":{"trials":2,"seed":"18446744073709551615","retain_samples":true}})).unwrap();
+    assert_eq!(roundtrip["result"]["samples"].as_array().unwrap(), &rows[..2]);
     assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
     assert!(s.execute("solvercraft.result.apply", preview).is_err());
     assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
@@ -314,4 +326,274 @@ fn explicit_invalid_selection_and_apply_types_cannot_broaden_an_import() {
     assert_eq!(scoped["changes"].as_array().unwrap().len(), 1);
     assert_eq!(formula(&s, "A2"), two);
     assert_ne!(formula(&s, "A1"), one);
+}
+
+// The second scalar rollout is kept separate from the original nineteen cases.
+// Its CDF identities are analytic oracles, including the heavy-tail families
+// whose SC outside value is a labelled median, not a population mean.
+fn scalar_failure_modes(source: &str, invalid: &str) {
+    let body = source.strip_prefix('=').unwrap();
+    let (name, arguments) = body.split_once('(').unwrap();
+    let arguments = arguments.strip_suffix(')').unwrap().split(',').collect::<Vec<_>>();
+    let mut blank = arguments.clone();
+    blank[0] = "";
+    for unsupported in [
+        format!("={name}({})", arguments[..arguments.len() - 1].join(",")),
+        format!("={name}({},42)", arguments.join(",")),
+        format!("={name}({})", blank.join(",")),
+        format!("={name}({},PsiStatic(4))", arguments.join(",")),
+        format!("=1+{body}"),
+        format!("={name}Alt({})", arguments.join(",")),
+    ] {
+        let mut s = session();
+        set(&mut s, "A1", &unsupported);
+        let before = Arc::clone(&s.doc().unwrap().wb);
+        let revision = s.doc().unwrap().revision;
+        let history = (s.doc().unwrap().undo.len(), s.doc().unwrap().redo.len());
+        let response = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).unwrap();
+        assert_eq!(response["changes"], json!([]), "{unsupported}");
+        assert_eq!(response["applied"], false);
+        assert_eq!(response["unsupported"].as_array().unwrap().len(), 1);
+        assert_eq!(response["unsupported"][0]["preserved"], true);
+        assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+        assert_eq!(s.doc().unwrap().revision, revision);
+        assert_eq!((s.doc().unwrap().undo.len(), s.doc().unwrap().redo.len()), history);
+    }
+    let mut error_arguments = arguments.clone();
+    error_arguments[0] = "1/0";
+    let mut bad_sources = vec![invalid.to_string(), format!("={name}({})", error_arguments.join(","))];
+    if name == "PsiFDist" {
+        bad_sources.extend(["=PsiFDist(1.5,4)".to_string(), "=PsiFDist(2,1.5)".to_string()]);
+    }
+    for bad_source in bad_sources {
+        let mut s = session();
+        set(&mut s, "A1", &bad_source);
+        set(&mut s, "B1", "=SC.OUTPUT(A1)");
+        let imported = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).unwrap();
+        assert_eq!(imported["changes"].as_array().unwrap().len(), 1, "{bad_source}");
+        assert!(matches!(s.doc().unwrap().wb.active().unwrap().value(CellRef::parse("A1").unwrap()), Value::Error(_)), "{bad_source}");
+        if bad_source.contains("1/0") {
+            assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::parse("A1").unwrap()), Value::Error(gridcraft_core::CellError::Div0));
+        }
+        let before = Arc::clone(&s.doc().unwrap().wb);
+        assert!(s.execute("solvercraft.worksheet.discover", json!({})).is_err(), "{bad_source}");
+        assert!(s.execute("solvercraft.simulate", json!({"options":{"trials":2}})).is_err(), "{bad_source}");
+        assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+    }
+    let mut s = session();
+    set(&mut s, "A1", source);
+    let before = Arc::clone(&s.doc().unwrap().wb);
+    let strict = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true,"outside_policy":"preserve_vendor"})).unwrap();
+    assert_eq!(strict["changes"], json!([]));
+    assert_eq!(strict["unsupported"][0]["reason"], "vendor_display_context_unavailable");
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+}
+macro_rules! scalar_case {
+    ($name:ident,$source:expr,$kind:expr,$parameters:expr,$nominal:expr,$x:expr,$cdf:expr,$basis:expr,$invalid:expr) => {
+        #[test]
+        fn $name() {
+            check_case_with_basis($source, $kind, $parameters, $nominal, $x, $cdf, $basis);
+            scalar_failure_modes($source, $invalid);
+        }
+    };
+}
+scalar_case!(
+    psi_levy_uses_location_scale_and_a_labelled_median,
+    "=PsiLevy(3,2)",
+    "levy",
+    &[("location", 3.0), ("scale", 2.0)],
+    3.0 + 2.0 / 0.674_489_750_196_081_7_f64.powi(2),
+    5.0,
+    0.317_310_507_862_914_1,
+    "median_fallback",
+    "=PsiLevy(3,0)"
+);
+scalar_case!(
+    psi_chisquare_requires_integral_df_and_preserves_gamma_scale,
+    "=PsiChiSquare(2)",
+    "chi_squared",
+    &[("degrees_of_freedom", 2.0)],
+    2.0,
+    2.0,
+    1.0 - 1.0 / std::f64::consts::E,
+    "analytic_mean",
+    "=PsiChiSquare(1.5)"
+);
+scalar_case!(
+    psi_erlang_requires_integer_shape_and_keeps_scale,
+    "=PsiErlang(2,3)",
+    "erlang",
+    &[("shape", 2.0), ("scale", 3.0)],
+    6.0,
+    3.0,
+    1.0 - 2.0 / std::f64::consts::E,
+    "analytic_mean",
+    "=PsiErlang(1.5,3)"
+);
+scalar_case!(
+    psi_fdist_preserves_numerator_and_denominator_df,
+    "=PsiFDist(2,4)",
+    "f",
+    &[("numerator_df", 2.0), ("denominator_df", 4.0)],
+    2.0,
+    2.0,
+    0.75,
+    "analytic_mean",
+    "=PsiFDist(0,4)"
+);
+scalar_case!(
+    psi_kumaraswamy_preserves_both_shapes_and_nonunit_bounds,
+    "=PsiKumaraswamy(2,3,2,8)",
+    "shift_scale",
+    &[("base.alpha", 2.0), ("base.beta", 3.0), ("shift", 2.0), ("scale", 6.0)],
+    166.0 / 35.0,
+    5.0,
+    37.0 / 64.0,
+    "analytic_mean",
+    "=PsiKumaraswamy(2,3,8,2)"
+);
+scalar_case!(
+    psi_logistic_uses_location_and_positive_scale,
+    "=PsiLogistic(3,2)",
+    "logistic",
+    &[("location", 3.0), ("scale", 2.0)],
+    3.0,
+    5.0,
+    std::f64::consts::E / (1.0 + std::f64::consts::E),
+    "analytic_mean",
+    "=PsiLogistic(3,0)"
+);
+scalar_case!(
+    psi_maxextreme_keeps_maximum_orientation,
+    "=PsiMaxExtreme(3,2)",
+    "gumbel",
+    &[("location", 3.0), ("scale", 2.0)],
+    3.0 + 2.0 * 0.577_215_664_901_532_9,
+    5.0,
+    (-1.0 / std::f64::consts::E).exp(),
+    "analytic_mean",
+    "=PsiMaxExtreme(3,0)"
+);
+scalar_case!(
+    psi_minextreme_keeps_minimum_orientation,
+    "=PsiMinExtreme(3,2)",
+    "min_extreme",
+    &[("location", 3.0), ("scale", 2.0)],
+    3.0 - 2.0 * 0.577_215_664_901_532_9,
+    5.0,
+    1.0 - (-std::f64::consts::E).exp(),
+    "analytic_mean",
+    "=PsiMinExtreme(3,0)"
+);
+scalar_case!(
+    psi_rayleigh_uses_scale_not_variance,
+    "=PsiRayleigh(2)",
+    "rayleigh",
+    &[("scale", 2.0)],
+    2.0 * std::f64::consts::FRAC_PI_2.sqrt(),
+    2.0,
+    1.0 - (-0.5_f64).exp(),
+    "analytic_mean",
+    "=PsiRayleigh(0)"
+);
+scalar_case!(
+    psi_reciprocal_has_positive_loguniform_bounds,
+    "=PsiReciprocal(2,8)",
+    "reciprocal",
+    &[("low", 2.0), ("high", 8.0)],
+    6.0 / 4.0_f64.ln(),
+    4.0,
+    0.5,
+    "analytic_mean",
+    "=PsiReciprocal(0,8)"
+);
+scalar_case!(
+    psi_student_one_df_has_cauchy_cdf_and_median_fallback,
+    "=PsiStudent(1)",
+    "student_t",
+    &[("degrees_of_freedom", 1.0), ("location", 0.0), ("scale", 1.0)],
+    0.0,
+    1.0,
+    0.75,
+    "median_fallback",
+    "=PsiStudent(1.5)"
+);
+scalar_case!(
+    psi_hypsecant_converts_sd_parameter_to_sdk_scale,
+    "=PsiHypSecant(3,2)",
+    "hyperbolic_secant",
+    &[("location", 3.0), ("scale", 4.0 / std::f64::consts::PI)],
+    3.0,
+    5.0,
+    2.0 / std::f64::consts::PI * std::f64::consts::FRAC_PI_2.exp().atan(),
+    "analytic_mean",
+    "=PsiHypSecant(3,0)"
+);
+
+#[test]
+fn shared_psi_registry_drives_capabilities_and_actual_known_worksheet_functions() {
+    let mut s = session();
+    let capabilities = s.execute("solvercraft.capabilities", json!({})).unwrap();
+    let signatures = capabilities["psi_import"]["signatures"].as_array().unwrap();
+    assert_eq!(signatures.len(), 31);
+    assert_eq!(capabilities["psi_import"]["core_numeric_signatures"], signatures.len());
+    let mut unique = HashSet::new();
+    for signature in signatures {
+        let worksheet = signature["worksheet_name"].as_str().unwrap();
+        assert!(unique.insert(worksheet));
+        assert!(gridcraft_calc::is_known_function(worksheet), "{worksheet}");
+        assert_eq!(gridcraft_calc::distribution_arity(worksheet), Some(signature["required_arguments"].as_u64().unwrap() as usize));
+        assert!(!signature["legacy_name"].as_str().unwrap().ends_with("Alt"));
+    }
+    for source in ["=PsiCauchy(3,2)", "=PsiLaplace(3,2)", "=PsiHyperGeo(3,4,10)"] {
+        set(&mut s, "A1", source);
+        let before = Arc::clone(&s.doc().unwrap().wb);
+        let response = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).unwrap();
+        assert_eq!(response["changes"], json!([]));
+        assert_eq!(response["unsupported"][0]["reason"], "unsupported_signature");
+        assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+    }
+}
+
+#[test]
+fn explicit_simulation_distribution_and_worksheet_outside_override_have_separate_provenance() {
+    let mut s = session();
+    // This third argument is an SC extension, never a supported Psi property.
+    set(&mut s, "A1", "=SC.PSI.STUDENT(1,8)");
+    set(&mut s, "B1", "=SC.OUTPUT(A1)");
+    let discovery = s.execute("solvercraft.worksheet.discover", json!({})).unwrap();
+    assert_eq!(discovery["inputs"][0]["nominal"], 8.0);
+    assert_eq!(discovery["inputs"][0]["nominal_basis"], "explicit_override");
+    let before = Arc::clone(&s.doc().unwrap().wb);
+    let preview = s.execute("solvercraft.simulate",json!({"inputs":[{"cell":"A1","distribution":{"kind":"constant","value":7}}],"outputs":discovery["outputs"],"options":{"trials":2,"retain_samples":true}})).unwrap();
+    assert_eq!(preview["result"]["samples"], json!([[7.0], [7.0]]));
+    assert_eq!(preview["request"]["inputs"][0]["distribution"], json!({"kind":"constant","value":7.0}));
+    assert_eq!(preview["request"]["inputs"][0]["worksheet_nominal"], json!({"value":8.0,"basis":"explicit_override"}));
+    assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::parse("A1").unwrap()), Value::Number(8.0));
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+}
+
+#[test]
+fn additional_scalar_domains_keep_real_locations_and_undefined_f_mean_labelled() {
+    check_case_with_basis(
+        "=PsiLevy(-3,2)",
+        "levy",
+        &[("location", -3.0), ("scale", 2.0)],
+        -3.0 + 2.0 / 0.674_489_750_196_081_7_f64.powi(2),
+        -1.0,
+        0.317_310_507_862_914_1,
+        "median_fallback",
+    );
+    // F(2,2) has no population mean. Its median and F(1)=1/2 remain finite.
+    check_case_with_basis("=PsiFDist(2,2)", "f", &[("numerator_df", 2.0), ("denominator_df", 2.0)], 1.0, 1.0, 0.5, "median_fallback");
+    // Two t degrees of freedom have a mean, despite an undefined variance.
+    check_case_with_basis(
+        "=PsiStudent(2)",
+        "student_t",
+        &[("degrees_of_freedom", 2.0), ("location", 0.0), ("scale", 1.0)],
+        0.0,
+        std::f64::consts::SQRT_2,
+        0.5 + std::f64::consts::SQRT_2 / 4.0,
+        "analytic_mean",
+    );
 }

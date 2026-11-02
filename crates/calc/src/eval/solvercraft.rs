@@ -3,6 +3,66 @@
 use super::{CellError, Ev, Evaluator, Expr, Value, err};
 use solvercraft_types::Distribution as D;
 
+/// Canonical, immutable core-signature list shared by decoder and host import.
+/// The count is vendor required arguments only. The optional numeric SC nominal
+/// override is our extension and is deliberately absent from this catalog.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct PsiCoreSignature {
+    pub legacy_name: &'static str,
+    pub worksheet_name: &'static str,
+    pub required_arguments: usize,
+}
+pub const PSI_CORE_SIGNATURES: &[PsiCoreSignature] = &[
+    PsiCoreSignature { legacy_name: "PsiUniform", worksheet_name: "SC.PSI.UNIFORM", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiIntUniform", worksheet_name: "SC.PSI.INTUNIFORM", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiNormal", worksheet_name: "SC.PSI.NORMAL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiLogNormal", worksheet_name: "SC.PSI.LOGNORMAL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiLogNorm2", worksheet_name: "SC.PSI.LOGNORM2", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiTriangular", worksheet_name: "SC.PSI.TRIANGULAR", required_arguments: 3 },
+    PsiCoreSignature { legacy_name: "PsiPert", worksheet_name: "SC.PSI.PERT", required_arguments: 3 },
+    PsiCoreSignature { legacy_name: "PsiBeta", worksheet_name: "SC.PSI.BETA", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiGamma", worksheet_name: "SC.PSI.GAMMA", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiExponential", worksheet_name: "SC.PSI.EXPONENTIAL", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiWeibull", worksheet_name: "SC.PSI.WEIBULL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiBernoulli", worksheet_name: "SC.PSI.BERNOULLI", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiBinomial", worksheet_name: "SC.PSI.BINOMIAL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiPoisson", worksheet_name: "SC.PSI.POISSON", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiNegBinomial", worksheet_name: "SC.PSI.NEGBINOMIAL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiGeometric", worksheet_name: "SC.PSI.GEOMETRIC", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiDisUniform", worksheet_name: "SC.PSI.DISUNIFORM", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiDiscrete", worksheet_name: "SC.PSI.DISCRETE", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiCumul", worksheet_name: "SC.PSI.CUMUL", required_arguments: 4 },
+    PsiCoreSignature { legacy_name: "PsiLevy", worksheet_name: "SC.PSI.LEVY", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiChiSquare", worksheet_name: "SC.PSI.CHISQUARE", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiErlang", worksheet_name: "SC.PSI.ERLANG", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiFDist", worksheet_name: "SC.PSI.FDIST", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiKumaraswamy", worksheet_name: "SC.PSI.KUMARASWAMY", required_arguments: 4 },
+    PsiCoreSignature { legacy_name: "PsiLogistic", worksheet_name: "SC.PSI.LOGISTIC", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiMaxExtreme", worksheet_name: "SC.PSI.MAXEXTREME", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiMinExtreme", worksheet_name: "SC.PSI.MINEXTREME", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiRayleigh", worksheet_name: "SC.PSI.RAYLEIGH", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiReciprocal", worksheet_name: "SC.PSI.RECIPROCAL", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiStudent", worksheet_name: "SC.PSI.STUDENT", required_arguments: 1 },
+    PsiCoreSignature { legacy_name: "PsiHypSecant", worksheet_name: "SC.PSI.HYPSECANT", required_arguments: 2 },
+];
+
+/// Provenance of an ordinary-cell value; none of these imply vendor display state.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum WorksheetNominalBasis {
+    AnalyticMean,
+    MedianFallback,
+    ExplicitOverride,
+}
+impl WorksheetNominalBasis {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::AnalyticMean => "analytic_mean",
+            Self::MedianFallback => "median_fallback",
+            Self::ExplicitOverride => "explicit_override",
+        }
+    }
+}
+
 /// A worksheet declaration is metadata plus a deterministic ordinary-cell value.
 /// Sampling is performed once per declared cell/trial by the host. `nominal` is
 /// Solvercraft's explicit ordinary-cell policy: a supplied trailing numeric
@@ -12,17 +72,11 @@ use solvercraft_types::Distribution as D;
 pub struct WorksheetDistribution {
     pub distribution: D,
     pub nominal: f64,
+    pub nominal_basis: WorksheetNominalBasis,
 }
 pub fn distribution_arity(name: &str) -> Option<usize> {
-    if let Some(name) = name.strip_prefix("SC.PSI.") {
-        return Some(match name {
-            "UNIFORM" | "INTUNIFORM" | "NORMAL" | "LOGNORMAL" | "LOGNORM2" | "BETA" | "GAMMA" | "WEIBULL" | "BINOMIAL" | "NEGBINOMIAL"
-            | "DISCRETE" => 2,
-            "TRIANGULAR" | "PERT" => 3,
-            "EXPONENTIAL" | "BERNOULLI" | "POISSON" | "GEOMETRIC" | "DISUNIFORM" => 1,
-            "CUMUL" => 4,
-            _ => return None,
-        });
+    if name.starts_with("SC.PSI.") {
+        return PSI_CORE_SIGNATURES.iter().find(|s| s.worksheet_name == name).map(|s| s.required_arguments);
     }
     Some(match name {
         "SC.UNIFORM"
@@ -134,18 +188,28 @@ pub fn worksheet_distribution(name: &str, args: &[Value]) -> Result<Option<Works
         }
         _ => return Err(CellError::Name),
     };
+    finish_distribution(distribution, args.get(count))
+}
+fn finish_distribution(distribution: D, supplied_nominal: Option<&Value>) -> Result<Option<WorksheetDistribution>, CellError> {
     solvercraft_math::validate_distribution(&distribution).map_err(|_| CellError::Num)?;
-    let nominal = if let Some(value) = args.get(count) {
-        scalar(value)?
+    let (nominal, nominal_basis) = if let Some(value) = supplied_nominal {
+        (scalar(value)?, WorksheetNominalBasis::ExplicitOverride)
     } else {
-        solvercraft_math::nominal::nominal_value(&distribution).map_err(|_| CellError::Num)?
+        let summary = solvercraft_math::nominal::nominal_summary(&distribution).map_err(|_| CellError::Num)?;
+        (
+            summary.value,
+            match summary.statistic {
+                solvercraft_math::nominal::NominalStatistic::Mean => WorksheetNominalBasis::AnalyticMean,
+                solvercraft_math::nominal::NominalStatistic::MedianFallback => WorksheetNominalBasis::MedianFallback,
+            },
+        )
     };
     if let D::Uniform { low, high } | D::Triangular { low, high, .. } | D::BetaPert { low, high, .. } = &distribution
         && (nominal < *low || nominal > *high)
     {
         return Err(CellError::Num);
     }
-    Ok(Some(WorksheetDistribution { distribution, nominal }))
+    Ok(Some(WorksheetDistribution { distribution, nominal, nominal_basis }))
 }
 
 fn psi_distribution(name: &str, args: &[Value]) -> Result<Option<WorksheetDistribution>, CellError> {
@@ -154,6 +218,33 @@ fn psi_distribution(name: &str, args: &[Value]) -> Result<Option<WorksheetDistri
         return Err(CellError::Value);
     }
     let number = |i: usize| args.get(i).ok_or(CellError::Value).and_then(scalar);
+    let direct = match name {
+        "LEVY" => Some(D::Levy { location: number(0)?, scale: number(1)? }),
+        "CHISQUARE" => Some(D::ChiSquared { degrees_of_freedom: f64::from(uint(number(0)?)?) }),
+        "ERLANG" => Some(D::Erlang { shape: uint(number(0)?)?, scale: number(1)? }),
+        "FDIST" => Some(D::F { numerator_df: f64::from(uint(number(0)?)?), denominator_df: f64::from(uint(number(1)?)?) }),
+        "KUMARASWAMY" => {
+            let low = number(2)?;
+            let high = number(3)?;
+            if low >= high {
+                return Err(CellError::Num);
+            }
+            Some(D::ShiftScale { base: Box::new(D::Kumaraswamy { alpha: number(0)?, beta: number(1)? }), shift: low, scale: high - low })
+        }
+        "LOGISTIC" => Some(D::Logistic { location: number(0)?, scale: number(1)? }),
+        "MAXEXTREME" => Some(D::Gumbel { location: number(0)?, scale: number(1)? }),
+        "MINEXTREME" => Some(D::MinExtreme { location: number(0)?, scale: number(1)? }),
+        "RAYLEIGH" => Some(D::Rayleigh { scale: number(0)? }),
+        "RECIPROCAL" => Some(D::Reciprocal { low: number(0)?, high: number(1)? }),
+        "STUDENT" => Some(D::StudentT { degrees_of_freedom: f64::from(uint(number(0)?)?), location: 0.0, scale: 1.0 }),
+        // Frozen reference285–286 uses beta=standard deviation, whereas the
+        // SDK parameter scales the exponent directly: sdk_scale=2*beta/pi.
+        "HYPSECANT" => Some(D::HyperbolicSecant { location: number(0)?, scale: number(1)? * std::f64::consts::FRAC_2_PI }),
+        _ => None,
+    };
+    if let Some(distribution) = direct {
+        return finish_distribution(distribution, args.get(count));
+    }
     let target = match name {
         "UNIFORM" | "INTUNIFORM" => {
             if number(0)? >= number(1)? {

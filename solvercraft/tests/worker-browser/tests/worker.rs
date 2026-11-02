@@ -546,3 +546,294 @@ async fn actual_trunk_app_canvas_loads_and_renders_in_the_same_browser() {
     sleep(2500).await;
     iframe.remove();
 }
+
+#[wasm_bindgen_test(async)]
+async fn actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors() {
+    struct Case {
+        formula: &'static str,
+        kind: &'static str,
+        nominal: f64,
+        basis: &'static str,
+        anchors: [(f64, f64); 2],
+    }
+    let inv_e = (-1.0_f64).exp();
+    let e = 1.0 / inv_e;
+    let euler_gamma = 0.5772156649015329;
+    let normal_quartile = 0.6744897501960817_f64;
+    let levy_median = 3.0 + 2.0 / (normal_quartile * normal_quartile);
+    let hypsecant_hi = std::f64::consts::FRAC_2_PI * std::f64::consts::FRAC_PI_2.exp().atan();
+    // These are closed-form references, not calls to the SDK CDF. Levy uses
+    // erfc(1/sqrt(2)) and erfc(sqrt(2)), independently evaluated constants.
+    // Student(df=1) and Levy have no finite population mean; their outside
+    // values are labelled median fallbacks, never population-mean oracles.
+    let cases = [
+        Case {
+            formula: "PsiChiSquare(2)",
+            kind: "chi_squared",
+            nominal: 2.0,
+            basis: "analytic_mean",
+            anchors: [(2.0, 1.0 - inv_e), (4.0, 1.0 - inv_e * inv_e)],
+        },
+        Case {
+            formula: "PsiErlang(2,3)",
+            kind: "erlang",
+            nominal: 6.0,
+            basis: "analytic_mean",
+            anchors: [(3.0, 1.0 - 2.0 * inv_e), (6.0, 1.0 - 3.0 * inv_e * inv_e)],
+        },
+        Case { formula: "PsiFDist(2,4)", kind: "f", nominal: 2.0, basis: "analytic_mean", anchors: [(1.0, 5.0 / 9.0), (2.0, 0.75)] },
+        Case {
+            formula: "PsiLogistic(3,2)",
+            kind: "logistic",
+            nominal: 3.0,
+            basis: "analytic_mean",
+            anchors: [(1.0, 1.0 / (1.0 + e)), (5.0, e / (1.0 + e))],
+        },
+        Case {
+            formula: "PsiMaxExtreme(3,2)",
+            kind: "gumbel",
+            nominal: 3.0 + 2.0 * euler_gamma,
+            basis: "analytic_mean",
+            anchors: [(1.0, (-e).exp()), (5.0, (-inv_e).exp())],
+        },
+        Case {
+            formula: "PsiMinExtreme(3,2)",
+            kind: "min_extreme",
+            nominal: 3.0 - 2.0 * euler_gamma,
+            basis: "analytic_mean",
+            anchors: [(1.0, 1.0 - (-inv_e).exp()), (5.0, 1.0 - (-e).exp())],
+        },
+        Case {
+            formula: "PsiRayleigh(2)",
+            kind: "rayleigh",
+            nominal: 2.0 * std::f64::consts::FRAC_PI_2.sqrt(),
+            basis: "analytic_mean",
+            anchors: [(2.0, 1.0 - (-0.5_f64).exp()), (4.0, 1.0 - inv_e * inv_e)],
+        },
+        Case {
+            formula: "PsiReciprocal(2,8)",
+            kind: "reciprocal",
+            nominal: 6.0 / 4.0_f64.ln(),
+            basis: "analytic_mean",
+            anchors: [(4.0, 0.5), (4.0 * 2.0_f64.sqrt(), 0.75)],
+        },
+        Case { formula: "PsiStudent(1)", kind: "student_t", nominal: 0.0, basis: "median_fallback", anchors: [(-1.0, 0.25), (1.0, 0.75)] },
+        Case {
+            formula: "PsiLevy(3,2)",
+            kind: "levy",
+            nominal: levy_median,
+            basis: "median_fallback",
+            anchors: [(3.5, 0.04550026389635842), (5.0, 0.3173105078629141)],
+        },
+        Case {
+            formula: "PsiKumaraswamy(2,3,2,8)",
+            kind: "shift_scale",
+            nominal: 166.0 / 35.0,
+            basis: "analytic_mean",
+            anchors: [(4.0, 217.0 / 729.0), (5.0, 37.0 / 64.0)],
+        },
+        Case {
+            formula: "PsiHypSecant(3,2)",
+            kind: "hyperbolic_secant",
+            nominal: 3.0,
+            basis: "analytic_mean",
+            anchors: [(1.0, 1.0 - hypsecant_hi), (5.0, hypsecant_hi)],
+        },
+    ];
+    let expected_distributions = [
+        json!({"kind":"chi_squared","degrees_of_freedom":2.0}),
+        json!({"kind":"erlang","shape":2,"scale":3.0}),
+        json!({"kind":"f","numerator_df":2.0,"denominator_df":4.0}),
+        json!({"kind":"logistic","location":3.0,"scale":2.0}),
+        json!({"kind":"gumbel","location":3.0,"scale":2.0}),
+        json!({"kind":"min_extreme","location":3.0,"scale":2.0}),
+        json!({"kind":"rayleigh","scale":2.0}),
+        json!({"kind":"reciprocal","low":2.0,"high":8.0}),
+        json!({"kind":"student_t","degrees_of_freedom":1.0,"location":0.0,"scale":1.0}),
+        json!({"kind":"levy","location":3.0,"scale":2.0}),
+        json!({"kind":"shift_scale","base":{"kind":"kumaraswamy","alpha":2.0,"beta":3.0},"shift":2.0,"scale":6.0}),
+        json!({"kind":"hyperbolic_secant","location":3.0,"scale":2.0*std::f64::consts::FRAC_2_PI}),
+    ];
+    fn input_for_row(inputs: &[Json], row: usize) -> &Json {
+        inputs.iter().find(|input| input["cell"].as_str().expect("input cell").ends_with(&format!("!A{row}"))).expect("declared input row")
+    }
+    let formula = |s: &Session, cell: &str| {
+        s.active()
+            .expect("document")
+            .wb
+            .active()
+            .expect("sheet")
+            .cell(CellRef::parse(cell).expect("reference"))
+            .expect("cell")
+            .formula
+            .as_ref()
+            .expect("formula")
+            .text
+            .clone()
+    };
+    let mut session = workbook();
+    for (index, case) in cases.iter().enumerate() {
+        let row = index + 1;
+        session.execute("cell.set", json!({"cell":format!("A{row}"),"input":format!("={}",case.formula)})).expect("additional vendor input");
+        session.execute("cell.set", json!({"cell":format!("B{row}"),"input":format!("=SC.OUTPUT(A{row})")})).expect("additional output");
+    }
+    let originals: Vec<String> = (1..=cases.len()).map(|row| formula(&session, &format!("A{row}"))).collect();
+    let initial_revision = session.active().expect("document").revision;
+    let refused = session
+        .execute("solvercraft.worksheet.importPsi", json!({"apply":true,"outside_policy":"preserve_vendor"}))
+        .expect("explicit vendor-context refusal");
+    assert_eq!(refused["apply_requested"], true);
+    assert_eq!(refused["applied"], false);
+    assert!(refused["changes"].as_array().expect("changes").is_empty());
+    assert_eq!(refused["unsupported"].as_array().expect("refusals").len(), cases.len());
+    assert!(
+        refused["unsupported"]
+            .as_array()
+            .expect("refusals")
+            .iter()
+            .all(|entry| entry["reason"] == "vendor_display_context_unavailable" && entry["preserved"] == true)
+    );
+    assert_eq!(session.active().expect("document").revision, initial_revision);
+    for (index, original) in originals.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+    let preview = session.execute("solvercraft.worksheet.importPsi", json!({})).expect("additional import preview");
+    assert_eq!(preview["applied"], false);
+    assert_eq!(preview["outside_policy"], "solvercraft_nominal");
+    assert_eq!(preview["vendor_display_context_preserved"], false);
+    assert_eq!(preview["changes"].as_array().expect("proposed changes").len(), cases.len());
+    assert!(preview["unsupported"].as_array().expect("unsupported").is_empty());
+    assert_eq!(session.active().expect("document").revision, initial_revision);
+    let applied = session.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).expect("explicit additional import");
+    assert_eq!(applied["applied"], true);
+    assert_eq!(session.active().expect("document").revision, initial_revision + 1);
+    session.execute("edit.undo", json!({})).expect("one undo for twelve imports");
+    for (index, original) in originals.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+    session.execute("edit.redo", json!({})).expect("one redo for twelve imports");
+    let discovery = session.execute("solvercraft.worksheet.discover", json!({})).expect("discover twelve additional declarations");
+    let raw_inputs = discovery["inputs"].as_array().expect("raw discovery inputs");
+    assert_eq!(raw_inputs.len(), cases.len());
+    assert_eq!(discovery["outputs"].as_array().expect("outputs").len(), cases.len());
+    let mut outside_values = Vec::new();
+    for (index, case) in cases.iter().enumerate() {
+        let input = input_for_row(raw_inputs, index + 1);
+        assert_eq!(input["distribution"]["kind"], case.kind);
+        assert_eq!(input["distribution"], expected_distributions[index], "parameter convention for {}", case.formula);
+        assert_eq!(input["nominal_basis"], case.basis);
+        let outside = match value(&session, &format!("A{}", index + 1)) {
+            Value::Number(value) => value,
+            other => panic!("numeric nominal required: {other:?}"),
+        };
+        let relative_tolerance = if case.basis == "median_fallback" { 1e-8 } else { 1e-10 };
+        assert!(
+            (outside - case.nominal).abs() <= relative_tolerance * (1.0 + case.nominal.abs()),
+            "independent outside reference for {}: {outside}",
+            case.formula
+        );
+        assert_eq!(input["nominal"].as_f64(), Some(outside));
+        outside_values.push(outside);
+    }
+    let live_revision = session.active().expect("document").revision;
+    // Pass the actual discovery arrays unmodified. In particular, do not strip
+    // nominal/nominal_basis to hide a discovery-to-run metadata incompatibility.
+    let job = session
+        .execute(
+            "solvercraft.job.start",
+            json!({"kind":"simulation","request":{
+                "inputs":discovery["inputs"].clone(),"outputs":discovery["outputs"].clone(),
+                "options":{"trials":4096,"seed":"42","retain_samples":true,"max_memory_bytes":33554432}
+            }}),
+        )
+        .expect("real worker with unmodified discovery data");
+    assert_eq!(job["execution"], "browser_worker_snapshot");
+    let id = &job["id"];
+    completed(&mut session, id).await;
+    let result = session.execute("solvercraft.job.result", json!({"id":id})).expect("additional PSI worker result");
+    assert_eq!(result["result"]["termination"], "completed");
+    assert_eq!(result["result"]["completed_trials"], 4096);
+    for (index, case) in cases.iter().enumerate() {
+        let captured = input_for_row(result["request"]["inputs"].as_array().expect("captured request inputs"), index + 1);
+        let manifested = input_for_row(result["manifest"]["bindings"]["inputs"].as_array().expect("manifest input bindings"), index + 1);
+        let nominal = json!({"value":outside_values[index],"basis":case.basis});
+        assert_eq!(captured["worksheet_nominal"], nominal);
+        assert_eq!(manifested["worksheet_nominal"], nominal);
+        assert_eq!(captured["distribution"], expected_distributions[index]);
+        assert_eq!(manifested["distribution"], expected_distributions[index]);
+    }
+    let rows = result["result"]["samples"].as_array().expect("retained sampled rows");
+    assert_eq!(rows.len(), 4096);
+    let outputs = result["outputs"].as_array().expect("output ordering");
+    assert_eq!(outputs.len(), cases.len());
+    let indexes: Vec<usize> = outputs
+        .iter()
+        .map(|output| {
+            output
+                .as_str()
+                .expect("output name")
+                .rsplit('!')
+                .next()
+                .expect("cell")
+                .strip_prefix('B')
+                .expect("output column")
+                .parse::<usize>()
+                .expect("output row")
+                - 1
+        })
+        .collect();
+    assert!(indexes.iter().all(|index| *index < cases.len()));
+    let mut counts = [[0_u32; 2]; 12];
+    for row in rows {
+        let values = row.as_array().expect("sample row");
+        assert_eq!(values.len(), cases.len());
+        for (column, index) in indexes.iter().copied().enumerate() {
+            let sample = values[column].as_f64().expect("finite sample");
+            assert!(sample.is_finite());
+            if matches!(index, 0 | 1 | 2 | 6) {
+                assert!(sample >= 0.0, "nonnegative support for {}", cases[index].formula);
+            }
+            if index == 9 {
+                assert!(sample >= 3.0, "Levy lower support");
+            }
+            if matches!(index, 7 | 10) {
+                assert!((2.0..=8.0).contains(&sample), "bounded support for {}", cases[index].formula);
+            }
+            for (anchor, (threshold, _)) in cases[index].anchors.iter().enumerate() {
+                counts[index][anchor] += u32::from(sample <= *threshold);
+            }
+        }
+    }
+    // Hoeffding plus a union bound over 24 fixed Bernoulli-CDF comparisons:
+    // for an ideal IID sampler the combined bound is 1e-9. This is a fixed-seed
+    // numerical sanity threshold, not a proof of the PRNG or the full CDF.
+    let union_failure_probability = 1e-9_f64;
+    let comparisons = cases.len() * 2;
+    let cdf_tolerance = ((2.0 * comparisons as f64 / union_failure_probability).ln() / (2.0 * rows.len() as f64)).sqrt();
+    let mut max_cdf_error = 0.0_f64;
+    let mut witnesses = Vec::new();
+    for (index, case) in cases.iter().enumerate() {
+        let observed = [f64::from(counts[index][0]) / 4096.0, f64::from(counts[index][1]) / 4096.0];
+        let expected = [case.anchors[0].1, case.anchors[1].1];
+        let errors = [(observed[0] - expected[0]).abs(), (observed[1] - expected[1]).abs()];
+        for error in errors {
+            max_cdf_error = max_cdf_error.max(error);
+            assert!(error <= cdf_tolerance, "independent sampled CDF for {}: error{error}, tolerance{cdf_tolerance}", case.formula);
+        }
+        witnesses.push(json!({"case_index":index,"cdf_thresholds":[case.anchors[0].0,case.anchors[1].0],"expected_cdf":expected,"observed_counts":counts[index],"observed_cdf":observed,"absolute_errors":errors,"outside_nominal":outside_values[index],"nominal_basis":case.basis,"passed":true}));
+    }
+    assert_eq!(session.active().expect("document").revision, live_revision);
+    for (index, outside) in outside_values.iter().enumerate() {
+        assert_eq!(value(&session, &format!("A{}", index + 1)), Value::Number(*outside));
+    }
+    session.execute("solvercraft.job.forget", json!({"id":id})).expect("release additional PSI result");
+    session.execute("edit.undo", json!({})).expect("worker retained no workbook edit");
+    for (index, original) in originals.iter().enumerate() {
+        assert_eq!(&formula(&session, &format!("A{}", index + 1)), original);
+    }
+    // Fixed bounded numerical fields only; full diagnostics remain private.
+    console_log!(
+        "PSI_CORE12_CDF_WITNESS {}",
+        json!({"schema_version":1,"families":12,"trials":4096,"seed_decimal":"42","comparisons":comparisons,"union_failure_probability":union_failure_probability,"cdf_tolerance":cdf_tolerance,"max_absolute_cdf_error":max_cdf_error,"cases":witnesses})
+    );
+}

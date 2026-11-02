@@ -1,7 +1,7 @@
 //! Worksheet declarations and explicit, signature-aware legacy formula import.
 use super::{
-    Cell, CellRef, CommandSpec, Distribution, FormulaExpr, Json, MAX_BINDINGS, Result, SOLVE, Session, Value, Workbook, bad, binding_name, cells,
-    cmd, edit, has_doc, json, sdk_error,
+    Cell, CellRef, CommandSpec, FormulaExpr, Json, MAX_BINDINGS, Result, SOLVE, Session, Value, Workbook, bad, binding_name, cells, cmd, edit,
+    has_doc, json, sdk_error,
 };
 
 const SCAN_CELLS: usize = 200_000;
@@ -29,14 +29,14 @@ fn top_call(wb: &Workbook, sheet: usize, cell: CellRef) -> Option<(String, Vec<F
         _ => None,
     }
 }
-pub(super) fn input_distribution_at(wb: &Workbook, sheet: usize, cell: CellRef, now: f64) -> Result<Option<Distribution>> {
+pub(super) fn input_declaration_at(wb: &Workbook, sheet: usize, cell: CellRef, now: f64) -> Result<Option<gridcraft_calc::WorksheetDistribution>> {
     let Some((name, args)) = top_call(wb, sheet, cell) else { return Ok(None) };
     if gridcraft_calc::distribution_arity(&name).is_none() {
         return Ok(None);
     }
     let values =
         args.iter().map(|expression| gridcraft_calc::evaluate_at(wb, sheet, cell, &gridcraft_formula::print(expression), now)).collect::<Vec<_>>();
-    gridcraft_calc::worksheet_distribution(&name, &values).map(|declaration| declaration.map(|d| d.distribution)).map_err(sdk_error)
+    gridcraft_calc::worksheet_distribution(&name, &values).map_err(sdk_error)
 }
 pub(super) fn discover(wb: &Workbook) -> Result<(Vec<Json>, Vec<String>)> {
     discover_at(wb, gridcraft_calc::now_serial())
@@ -49,11 +49,11 @@ pub(super) fn discover_at(wb: &Workbook, now: f64) -> Result<(Vec<Json>, Vec<Str
     let mut outputs = Vec::new();
     for (si, sheet) in wb.sheets.iter().enumerate() {
         for (cell, _) in sheet.cells.iter() {
-            if let Some(distribution) = input_distribution_at(wb, si, cell, now)? {
+            if let Some(declaration) = input_declaration_at(wb, si, cell, now)? {
                 if inputs.len() >= MAX_BINDINGS {
                     return Err(bad(SOLVE, "Too many SC distribution inputs"));
                 }
-                inputs.push(json!({"cell":binding_name(wb,si,cell)?,"distribution":distribution}));
+                inputs.push(json!({"cell":binding_name(wb,si,cell)?,"distribution":declaration.distribution,"nominal":declaration.nominal,"nominal_basis":declaration.nominal_basis.as_str()}));
             }
             if top_call(wb, si, cell).is_some_and(|(name, _)| name == "SC.OUTPUT") {
                 if outputs.len() >= MAX_BINDINGS {
@@ -68,7 +68,7 @@ pub(super) fn discover_at(wb: &Workbook, now: f64) -> Result<(Vec<Json>, Vec<Str
 fn discover_command(s: &mut Session, _: &Json) -> Result<Json> {
     let (inputs, outputs) = discover(&s.doc()?.wb)?;
     Ok(
-        json!({"inputs":inputs,"outputs":outputs,"parameter_semantics":"fixed_at_run_snapshot","outside_simulation":"deterministic mean, or explicit nominal override","trial_semantics":"one sample per declared input per trial"}),
+        json!({"inputs":inputs,"outputs":outputs,"parameter_semantics":"fixed_at_run_snapshot","outside_simulation":"finite analytic mean; labelled median fallback for undefined/unavailable means; optional explicit nominal override","trial_semantics":"one sample per declared input per trial"}),
     )
 }
 

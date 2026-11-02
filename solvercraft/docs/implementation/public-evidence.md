@@ -37,3 +37,14 @@ The [binary-oracle export erratum](binary-oracle-export-erratum.md) explains the
 corrected request-recording metadata and the fresh 3+1 check. License details are
 in [the checked-in third-party notices](../../licenses/THIRD_PARTY.md), with
 public package/version/SPDX inventories linked from the verification summary.
+
+## Current final7 expansion
+
+[The final7 ledger](public-evidence-projection-final7.json) records fresh compact
+projections for the corrected frozen source and actual 31-form import contract.
+[Final7 verification](verification-final7.md) separates the completed preliminary
+runs from the final corrected-metadata run. Its first actual Worker attempt passed
+9/0, including the unchanged 19-form body and a new twelve-form/24-anchor body.
+This does not replace or erase the historical final6 attempts described above.
+Full final7 diagnostic reports remain local; new public reports were created
+directly from closed-field projections, without a public raw intermediate copy.

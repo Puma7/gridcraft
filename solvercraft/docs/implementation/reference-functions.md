@@ -18,9 +18,50 @@ mathematical capability names to positive cases in the actual SDK 630 run
 (73 test bodies, 13 source files) and records the source hashes/log lines. R046
 has bounded mathematical acceptance. Exact Pearson 6Alt/WeibullAlt vendor arity
 remains open; that does not erase the executed mathematical constructors.
-R081 separately accepts only its nineteen advertised top-level conversion
+The historical final6 R081 assessment accepted its nineteen top-level conversion
 forms/policies, with native and real-browser evidence and disclosed outside
 value loss. It does not promote these typed constructors to worksheet aliases.
+
+## Final7: qualified 31-form worksheet expansion
+
+Twelve additional scalar core adapters bring the active registry to 31; they do
+not create new Alt constructors or alter the 111 mathematical/272 reference
+scopes. The exact additions and required arities are in
+[reference-gaps.md](reference-gaps.md). The enlarged contract now has actual
+final7 native/SDK/browser qualification: all ten host stages with 2904 passed,
+zero failed and one existing ignored; SDK 630, UI 6, charts 8 numerical+1 lifecycle,
+Chrome SDK 13 and first-attempt Worker 9 all passed. The old 19 and new 12 import
+bodies both passed. The new 4096-trial seed 42 prefix checked 24 empirical CDF
+anchors with maximum error 0.020751953125 below tolerance 0.054792830314635735.
+These are scoped empirical results, not full-vendor or universal tail guarantees.
+The [final7 summary](final7-verification-summary.json) and [actual worker report](browser-worker-final7-report.json) identify this run. Raw code/input SHA-256: `8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065`; LF-canonical SHA-256: `dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472`. Historical final6 evidence remains separately labelled below.
+
+Current native PSI evidence comprises 31 separately named positive forms and 9 negative/policy groups (40 engine tests), plus 37 Calc tests. These selectors are present in the [final7 native test excerpt](gates-final7/host/host-ci.txt). The [CDF-prefix witness](psi-core12-cdf-final7-report.json) records the 24 comparisons and their outside-value basis. These public files are compact projections/excerpts, not complete private diagnostic dumps.
+
+
+
+HypSecant requires a genuine parameter conversion: the frozen guide's native
+beta is the standard deviation, while the SDK HyperbolicSecant has variance
+`pi^2 * scale^2 / 4`. Use `beta * FRAC_2_PI`, not `(2 * beta) / pi`, to avoid an
+unnecessary intermediate overflow. Kumaraswamy requires all four arguments:
+`X = min + (max-min)*Y`, with Y on [0,1]. This is affine in the sampled Y, not a
+claim of affine dependence on its shape parameters. Shared SDK validation still
+bounds df/k at 10000, Kumaraswamy shapes to [1e-4,1e4] and requires finite positive
+width. These are numerical capacities, not additional vendor domain claims.
+
+Student df=1 is a labelled median fallback, while df=2 has analytic mean 0 even
+though its variance is undefined. FDist denominator df<=2 uses median fallback;
+a larger denominator uses its finite mean. Levy always uses a labelled median
+fallback. All are explicit SC outside-value policies, not vendor display-state
+compatibility. Basis labels must be retained even when a mean and median happen
+to have the same numerical value.
+
+The canonical immutable `gridcraft_calc::PSI_CORE_SIGNATURES` registry supplies
+`legacy_name`, `worksheet_name` and `required_arguments` for all 31 forms. Calc
+decoding, known-function recognition, host import and reported capabilities use
+this shared contract rather than separate name/arity maps. Its counts are vendor
+required core arguments; the optional numeric SC nominal override is not a
+vendor property or an extra imported PSI argument.
 
 ## Public mathematical contracts
 

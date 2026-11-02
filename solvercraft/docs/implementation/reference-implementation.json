@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "frontline-2025q1-executable-map-v1",
+  "version": "frontline-2025q1-executable-map-v2-31-core-imports",
   "frozen_source_sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
   "requirements_source": "docs/masterplan/requirements.csv",
   "scope": {
@@ -11,7 +11,8 @@
       "core_parameter_subset_tested": 27,
       "partial_parameterization": 2
     },
-    "note": "R046 scopes distribution/Alt/custom/special/time-series chapters; R081 import semantics and R091 matrix cover all272. This is no completion certificate."
+    "note": "R046 scopes distribution/Alt/custom/special/time-series chapters; R081 import semantics and R091 matrix cover all272. This is no completion certificate.",
+    "host_core_imports": 31
   },
   "functions": [
     {
@@ -1167,19 +1168,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "400d10b560c31ba8ce6a4db94918b15fa66753945d144b884e96288647d2c13f"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_chisquare_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiChiSquare core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_chisquare_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_chisquare_requires_integral_df_and_preserves_gamma_scale",
+          "public_api": "top-level PsiChiSquare core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_chisquare_requires_integral_df_and_preserves_gamma_scale",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiChiSquare-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiChiSquareAlt",
@@ -1539,19 +1582,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "400d10b560c31ba8ce6a4db94918b15fa66753945d144b884e96288647d2c13f"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_erlang_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiErlang core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_erlang_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_erlang_requires_integer_shape_and_keeps_scale",
+          "public_api": "top-level PsiErlang core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_erlang_requires_integer_shape_and_keeps_scale",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiErlang-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiExponential",
@@ -1856,19 +1941,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "400d10b560c31ba8ce6a4db94918b15fa66753945d144b884e96288647d2c13f"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_fdist_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiFDist core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_fdist_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_fdist_preserves_numerator_and_denominator_df",
+          "public_api": "top-level PsiFDist core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_fdist_preserves_numerator_and_denominator_df",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiFDist-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiFrechet",
@@ -2174,19 +2301,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "ab26c5e33e9dc4c6b21512afab2c0ade86aa4f8c3799abb5bb0cdc28f58737b1"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_hypsecant_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiHypSecant core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_hypsecant_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_hypsecant_converts_sd_parameter_to_sdk_scale",
+          "public_api": "top-level PsiHypSecant core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_hypsecant_converts_sd_parameter_to_sdk_scale",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiHypSecant-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiHypSecantAlt",
@@ -2526,19 +2695,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "ab26c5e33e9dc4c6b21512afab2c0ade86aa4f8c3799abb5bb0cdc28f58737b1"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_kumaraswamy_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiKumaraswamy core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_kumaraswamy_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_kumaraswamy_preserves_both_shapes_and_nonunit_bounds",
+          "public_api": "top-level PsiKumaraswamy core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_kumaraswamy_preserves_both_shapes_and_nonunit_bounds",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiKumaraswamy-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiLaplace",
@@ -2691,19 +2902,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "ab26c5e33e9dc4c6b21512afab2c0ade86aa4f8c3799abb5bb0cdc28f58737b1"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_levy_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiLevy core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_levy_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_levy_uses_location_scale_and_a_labelled_median",
+          "public_api": "top-level PsiLevy core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_levy_uses_location_scale_and_a_labelled_median",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiLevy-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiLevyAlt",
@@ -2801,19 +3054,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "400d10b560c31ba8ce6a4db94918b15fa66753945d144b884e96288647d2c13f"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_logistic_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiLogistic core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_logistic_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_logistic_uses_location_and_positive_scale",
+          "public_api": "top-level PsiLogistic core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_logistic_uses_location_and_positive_scale",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiLogistic-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiLogisticAlt",
@@ -3303,19 +3598,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "e735f41b3db85145180ff63de8481544a6716ee27cea610a45b996601cdc6465"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_maxextreme_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiMaxExtreme core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_maxextreme_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_maxextreme_keeps_maximum_orientation",
+          "public_api": "top-level PsiMaxExtreme core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_maxextreme_keeps_maximum_orientation",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMaxExtreme-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiMaxExtremeAlt",
@@ -3599,19 +3936,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "ab26c5e33e9dc4c6b21512afab2c0ade86aa4f8c3799abb5bb0cdc28f58737b1"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_minextreme_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiMinExtreme core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_minextreme_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_minextreme_keeps_minimum_orientation",
+          "public_api": "top-level PsiMinExtreme core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_minextreme_keeps_minimum_orientation",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMinExtreme-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiMinExtremeAlt",
@@ -4576,19 +4955,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "e735f41b3db85145180ff63de8481544a6716ee27cea610a45b996601cdc6465"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_rayleigh_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiRayleigh core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_rayleigh_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_rayleigh_uses_scale_not_variance",
+          "public_api": "top-level PsiRayleigh core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_rayleigh_uses_scale_not_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiRayleigh-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiRayleighAlt",
@@ -4686,19 +5107,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "ab26c5e33e9dc4c6b21512afab2c0ade86aa4f8c3799abb5bb0cdc28f58737b1"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_reciprocal_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiReciprocal core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_reciprocal_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_reciprocal_has_positive_loguniform_bounds",
+          "public_api": "top-level PsiReciprocal core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_reciprocal_has_positive_loguniform_bounds",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiReciprocal-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiStudent",
@@ -4741,19 +5204,61 @@
           ],
           "working_directory": ".",
           "source_file_sha256": "400d10b560c31ba8ce6a4db94918b15fa66753945d144b884e96288647d2c13f"
+        },
+        {
+          "path": "../crates/calc/src/eval/solvercraft/tests.rs",
+          "test": "eval::solvercraft::tests::psi_student_default_override_domain_and_independent_parameters",
+          "public_api": "top-level PsiStudent core import; own explicit nominal policy",
+          "scope": "Calc independent parameter CDF, nominal value, override and invalid-domain/arity/error contract.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-calc",
+            "--lib",
+            "eval::solvercraft::tests::psi_student_default_override_domain_and_independent_parameters",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5cd656072b161e233339059358275dee97d424fef3f63b5d241d00cdf383ec41"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::psi_student_one_df_has_cauchy_cdf_and_median_fallback",
+          "public_api": "top-level PsiStudent core import; own explicit nominal policy",
+          "scope": "Actual import/Calc/discovery/simulation with independent parameter/CDF, whole-formula retention and immutable-workbook checks.",
+          "execution": "executed_windows_rust1.95_targeted_calc37_engine719",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::psi_student_one_df_has_cauchy_cdf_and_median_fallback",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiStudent-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
-        "browser": "No per-function browser execution evidence mapped."
+        "native": "Windows Rust1.95: positive named Calc and actual host simulation tests executed in the31-core extension, with strict domains and explicit nominal basis.",
+        "browser": "Actual worker coverage is tracked separately in release evidence; native tests do not imply full per-function browser/domain parity."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_verified_core_signature_no_properties",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Full domains, optional/property semantics and native/browser per-reference parity still open; core evidence is itemized below."
+      "remaining_gap": "Selected top-level numeric core and own nominal/retention policies are tested. Full vendor display lifecycle, properties, optional signatures, full domains and complete reference parity remain unverified."
     },
     {
       "id": "PSI-PsiStudentAlt",
