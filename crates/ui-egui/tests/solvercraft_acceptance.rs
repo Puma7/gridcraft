@@ -224,7 +224,7 @@ fn simulation_chart_choices_and_parameter_tornado_use_completed_preview_data() {
         "Chart acceptance",
         json!({
             "inputs":[{"cell":"A1","distribution":{"kind":"uniform","low":1.0,"high":3.0}}],
-            "outputs":"B1:C1","options":{"trials":64,"seed":"42","retain_samples":true}
+            "outputs":"B1:C1","options":{"trials":64,"seed":"42","retain_samples":true,"max_memory_bytes":8388608}
         }),
         "Simulation chart type",
     );
@@ -268,7 +268,7 @@ fn simulation_chart_choices_and_parameter_tornado_use_completed_preview_data() {
         "Tornado acceptance",
         json!({
             "inputs":[{"cell":"A1","distribution":{"kind":"constant","value":2.0}}],"outputs":"B1",
-            "options":{"trials":16,"seed":"42","retain_samples":true},
+            "options":{"trials":16,"seed":"42","retain_samples":true,"max_memory_bytes":8388608},
             "parameter_grid":[{"cell":"C1","low":5.0,"base":10.0,"high":15.0}],
             "parameter_cases":[{"name":"Base","values":[{"cell":"C1","value":10.0}]},
                 {"name":"C1 low","values":[{"cell":"C1","value":5.0}]},
@@ -303,7 +303,7 @@ fn pane_reviews_legacy_formulas_before_conversion() {
     h.run_steps(4);
     h.get_by_label("Import simulation formulas").click();
     h.run_steps(4);
-    let hint = "Scans the workbook for Psi formulas and previews changes. The scan leaves cells untouched.";
+    let hint = "Finds Psi formulas and embedded simulation settings. The scan leaves cells untouched.";
     assert!(h.query_by_label(hint).is_none());
     h.get_by_label("Help with the import scan").click();
     h.run_steps(4);
@@ -323,4 +323,28 @@ fn pane_reviews_legacy_formulas_before_conversion() {
     assert!(h.query_by_label("Solvercraft simulation inputs").is_none(), "worksheet mode hides manual JSON inputs");
     h.state_mut().run("edit.undo", json!({})).unwrap();
     assert_eq!(current_formula(&h), "2*A1+PSIOUTPUT()");
+}
+
+#[test]
+fn pane_updates_statistic_cells_from_a_completed_run() {
+    let mut h = harness();
+    h.state_mut().run("cell.set", json!({"cell":"C1","input":"=PsiMean(B1)"})).unwrap();
+    h.state_mut().run("cell.set", json!({"cell":"D1","input":"=PsiTarget(B1,4)"})).unwrap();
+    let previous = value(&h, "C1");
+    let preview = simulate_saved_model(
+        &mut h,
+        "Worksheet statistics",
+        json!({"inputs":[{"cell":"A1","distribution":{"kind":"constant","value":2.0}}],"outputs":"B1","options":{"trials":16,"max_memory_bytes":1048576}}),
+        "Simulation chart type",
+    );
+    assert_eq!(preview["worksheet_statistics"].as_array().unwrap().len(), 2);
+    assert_eq!(value(&h, "C1"), previous);
+    h.get_by_label("Update statistic cells").scroll_to_me();
+    h.run_steps(8);
+    h.get_by_label("Update statistic cells").click();
+    h.run_steps(8);
+    assert_eq!(value(&h, "C1"), Value::Number(4.0));
+    assert_eq!(value(&h, "D1"), Value::Number(1.0));
+    h.state_mut().run("edit.undo", json!({})).unwrap();
+    assert_eq!(value(&h, "C1"), previous);
 }

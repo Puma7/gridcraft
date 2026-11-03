@@ -168,3 +168,38 @@ fn moment_fit_is_separate_from_ols_and_checks_the_requested_subfamily() {
     assert!(moment_fit_supported(0.0, 0.0, 0.0, 3.0).is_err());
     assert_eq!(moment_fit_supported(10.0, 1e300, 4.0, 41.0).unwrap_err().code, "numerical_range");
 }
+
+#[test]
+fn adaptive_certificate_accepts_a_fourteen_term_shape_outside_dominance_bound() {
+    let a = vec![0.2, 1.0, 1.5, 6.0, 0.2, -0.1, 0.15, 0.05, -0.2, 0.15, 0.125, -0.1, 0.175, -0.075];
+    let d = prepared(a.clone(), None, None);
+    assert!(d.certificate().method.contains("adaptive intervals"));
+    let mut previous = f64::NEG_INFINITY;
+    for index in 1..100 {
+        let p = f64::from(index) / 100.0;
+        let t = p - 0.5;
+        let z = (p / (1.0 - p)).ln();
+        let expected = a[0]
+            + a[1] * z
+            + a[2] * t * z
+            + a[3] * t
+            + a[4] * t.powi(2)
+            + a[5] * t.powi(2) * z
+            + a[6] * t.powi(3)
+            + a[7] * t.powi(3) * z
+            + a[8] * t.powi(4)
+            + a[9] * t.powi(4) * z
+            + a[10] * t.powi(5)
+            + a[11] * t.powi(5) * z
+            + a[12] * t.powi(6)
+            + a[13] * t.powi(6) * z;
+        let quantile = d.quantile(p).unwrap();
+        assert!(quantile > previous);
+        previous = quantile;
+        close(quantile, expected, 2e-14);
+        close(d.cdf(expected).unwrap(), p, 2e-13);
+    }
+    let mut nonmonotone = a;
+    nonmonotone[3] = -4.01;
+    assert_eq!(PreparedMetalog::new(&Metalog { coefficients: nonmonotone, lower: None, upper: None }).unwrap_err().code, "metalog_uncertified");
+}

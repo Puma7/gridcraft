@@ -535,7 +535,7 @@ fn shared_psi_registry_drives_capabilities_and_actual_known_worksheet_functions(
     let mut s = session();
     let capabilities = s.execute("solvercraft.capabilities", json!({})).unwrap();
     let signatures = capabilities["psi_import"]["signatures"].as_array().unwrap();
-    assert_eq!(signatures.len(), 31);
+    assert_eq!(signatures.len(), 32);
     assert_eq!(capabilities["psi_import"]["core_numeric_signatures"], signatures.len());
     let mut unique = HashSet::new();
     for signature in signatures {
@@ -596,4 +596,24 @@ fn additional_scalar_domains_keep_real_locations_and_undefined_f_mean_labelled()
         0.5 + std::f64::consts::SQRT_2 / 4.0,
         "analytic_mean",
     );
+}
+
+#[test]
+fn metalog_import_preserves_omitted_bounds_and_requires_coefficients() {
+    let mut s = session();
+    set(&mut s, "A1", "=_xll.PsiMetalog(,,{2,3})");
+    set(&mut s, "A2", "=_xll.PsiMetalog(0,,{2,3})");
+    set(&mut s, "A3", "=_xll.PsiMetalog(0,10,)");
+    let report = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).unwrap();
+    assert_eq!(report["changes"].as_array().unwrap().len(), 2);
+    assert_eq!(report["unsupported"][0]["reason"], "unsupported_missing_required_argument");
+    let discovery = s.execute("solvercraft.worksheet.discover", json!({})).unwrap();
+    let inputs = discovery["inputs"].as_array().unwrap();
+    assert_eq!(inputs.len(), 2);
+    assert_eq!(inputs[0]["distribution"]["kind"], "metalog");
+    assert_eq!(inputs[0]["distribution"]["lower"], Json::Null);
+    assert_eq!(inputs[0]["distribution"]["upper"], Json::Null);
+    assert_eq!(inputs[0]["nominal"].as_f64(), Some(2.0));
+    assert_eq!(inputs[1]["distribution"]["lower"].as_f64(), Some(0.0));
+    assert_eq!(inputs[1]["nominal"].as_f64(), Some(2.0_f64.exp()));
 }

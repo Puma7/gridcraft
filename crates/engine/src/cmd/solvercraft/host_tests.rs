@@ -755,3 +755,76 @@ fn psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_stati
     s.execute("edit.undo", json!({})).unwrap();
     assert!(s.doc().unwrap().wb.sheet(0).unwrap().cell(binding).unwrap().formula.as_ref().unwrap().array.is_some());
 }
+
+#[test]
+fn completed_job_updates_statistics_from_streamed_trials_and_undoes_without_changing_formulas() {
+    let _guard = async_fixture();
+    let mut s = session();
+    set(&mut s, "A1", "=SC.DISCRETEUNIFORM(0,1)");
+    set(&mut s, "B1", "=A1");
+    set(&mut s, "C1", "=_xll.PsiMean(B1)");
+    set(&mut s, "D1", "=PsiTarget(B1,0)");
+    set(&mut s, "E1", "=C1+D1");
+    let value = |s: &Session, cell: &str| s.doc().unwrap().wb.sheet(0).unwrap().value(CellRef::parse(cell).unwrap());
+    assert_eq!(value(&s, "C1"), Value::Error(gridcraft_core::CellError::NA));
+    let request = json!({"kind":"simulation","request":{"options":{"trials":256,"seed":"82","retain_samples":false}}});
+    let job = s.execute("solvercraft.job.start", request.clone()).unwrap();
+    let id = &job["id"];
+    let preview = wait(&mut s, id);
+    assert_eq!(preview["outputs"], json!(["Sheet1!B1"]));
+    assert_eq!(preview["result"]["samples"], Json::Null);
+    let mean = preview["result"]["summaries"][0]["mean"].as_f64().unwrap();
+    let stats = preview["worksheet_statistics"].as_array().unwrap();
+    assert_eq!(stats.len(), 2);
+    assert_eq!(stats[0]["value"].as_f64(), Some(mean));
+    assert_eq!(stats[1]["value"].as_f64(), Some(1.0 - mean));
+    assert_eq!(s.execute("solvercraft.job.applyStatistics", json!({"id":id})).unwrap()["updated"], 2);
+    assert_eq!(value(&s, "C1"), Value::number(mean));
+    assert_eq!(value(&s, "D1"), Value::number(1.0 - mean));
+    assert_eq!(value(&s, "E1"), Value::number(1.0));
+    let source = s.doc().unwrap().wb.sheet(0).unwrap().cell(CellRef::parse("C1").unwrap()).unwrap().formula.as_ref().unwrap().text.clone();
+    assert!(source.to_ascii_uppercase().contains("PSIMEAN"));
+    assert!(s.execute("solvercraft.job.applyStatistics", json!({"id":id})).is_err());
+    s.execute("edit.undo", json!({})).unwrap();
+    assert_eq!(value(&s, "C1"), Value::Error(gridcraft_core::CellError::NA));
+    s.execute("edit.redo", json!({})).unwrap();
+    assert_eq!(value(&s, "C1"), Value::number(mean));
+    set(&mut s, "A1", "=SC.DISCRETEUNIFORM(1,2)");
+    assert_eq!(value(&s, "C1"), Value::Error(gridcraft_core::CellError::NA));
+    assert_eq!(value(&s, "E1"), Value::Error(gridcraft_core::CellError::NA));
+    let stale = s.execute("solvercraft.job.start", request).unwrap();
+    wait(&mut s, &stale["id"]);
+    set(&mut s, "B1", "=A1*2");
+    assert!(s.execute("solvercraft.job.applyStatistics", json!({"id":stale["id"]})).is_err());
+    assert_eq!(value(&s, "C1"), Value::Error(gridcraft_core::CellError::NA));
+}
+
+#[test]
+fn incomplete_simulation_statistics_never_offer_publishable_values() {
+    use ::solvercraft::types::{SampleSummary, SimulationResult, Termination};
+    let mut s = session();
+    set(&mut s, "C1", "=PsiTarget(B1,0)");
+    let wb = &s.doc().unwrap().wb;
+    let output = [(0, CellRef::parse("B1").unwrap())];
+    let result = |termination, completed_trials| SimulationResult {
+        termination,
+        completed_trials,
+        summaries: vec![SampleSummary {
+            count: completed_trials,
+            mean: 0.0,
+            variance: None,
+            minimum: 0.0,
+            maximum: 0.0,
+            quantiles: Vec::new(),
+            value_at_risk_95: None,
+            conditional_value_at_risk_95: None,
+        }],
+        samples: None,
+        sampling_version: String::new(),
+        warnings: Vec::new(),
+    };
+    for status in [Termination::Cancelled, Termination::TimeLimit, Termination::Completed] {
+        let stats = super::statistics::Statistics::collect(wb, &output, 4).unwrap();
+        assert!(stats.finish(wb, &["Sheet1!B1".into()], &result(status, 3), 4).unwrap().is_empty());
+    }
+}

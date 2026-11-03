@@ -3886,8 +3886,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": "metalog::PreparedMetalog::new",
-        "sdk_mapping_note": "Executed certified numeric subset only; see individual evidence limitations and docs/implementation/metalog.md.",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Converts the bounded coefficient-array signature and checks global monotonicity. Fitting and unsupported modifiers remain open.",
+        "psi_import": "partial_coefficient_array_with_optional_bounds",
         "complete_reference_semantics": false,
         "r046_scope": "distribution_catalog_core; worksheet/import/default/property compatibility separately R081",
         "r046_core_status": "core_subset_tested"
@@ -10458,8 +10458,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": "online_mean",
-        "sdk_mapping_note": "Direct cell reference designates the output. Worksheet statistic and simulation or slice selection remain open. Mean is available from the run result.",
-        "psi_import": "discovery_only_direct_output_reference",
+        "sdk_mapping_note": "Reads the current completed run for a single local or qualified cell reference. Optional run or slice selection and session-to-session statistic persistence remain open.",
+        "psi_import": "partial_completed_run_single_cell_mean",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },
@@ -11689,8 +11689,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": null,
-        "sdk_mapping_note": "No verified equivalent mapped in this reference snapshot.",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Reads the inclusive empirical probability at a finite literal threshold in the completed run. Optional run or slice selection remains open.",
+        "psi_import": "partial_completed_run_inclusive_literal_threshold",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },

@@ -121,6 +121,15 @@ pub(super) fn specs() -> Vec<CommandSpec> {
         cmd!(query "solvercraft.job.cancel","Cancel Solvercraft browser worker",[],None,"{id:string} -> terminate this worker; no untransmitted incumbent is claimed.",has_doc,cancel),
         cmd!(query "solvercraft.job.forget","Forget Solvercraft browser job",[],None,"{id:string} -> releases terminal worker/result state.",has_doc,forget),
         cmd!(
+            "solvercraft.job.applyStatistics",
+            "Update worksheet statistics",
+            [],
+            None,
+            "{id:string} -> apply statistics from the completed simulation to the matching workbook revision as one undo step.",
+            has_doc,
+            apply_statistics
+        ),
+        cmd!(
             "solvercraft.job.apply",
             "Apply Solvercraft browser result",
             [],
@@ -458,6 +467,10 @@ fn forget(s: &mut Session, p: &Json) -> Result<Json> {
         jobs.remove(&id);
         Ok(json!({"forgotten":id.to_string()}))
     })
+}
+fn apply_statistics(s: &mut Session, p: &Json) -> Result<Json> {
+    let preview = retained_result(s, p)?;
+    super::statistics::apply(s, &preview)
 }
 fn apply_job(s: &mut Session, p: &Json) -> Result<Json> {
     let preview = retained_result(s, p)?;

@@ -4,9 +4,12 @@ use super::{
     has_doc, json, sdk_error, snapshot,
 };
 
-const SCAN_CELLS: usize = 200_000;
+mod embedded;
+
+pub(super) const SCAN_CELLS: usize = 200_000;
 pub(super) fn specs() -> Vec<CommandSpec> {
     vec![
+        cmd!(query "solvercraft.worksheet.importSimulationSettings", "Read embedded simulation settings", [], None, "{} -> request and notes. Reads supported settings into an explicit simulation draft without editing the workbook or running an add-in.", has_doc, embedded::import),
         cmd!(query "solvercraft.worksheet.discover", "Discover Solvercraft worksheet bindings", [], None, "{} -> supported SC distribution inputs and SC.OUTPUT cells. Parameters are captured once per run; each input shares one value per trial.", has_doc, discover_command),
         cmd!(
             "solvercraft.worksheet.importPsi",
@@ -19,7 +22,7 @@ pub(super) fn specs() -> Vec<CommandSpec> {
         ),
     ]
 }
-fn top_call(wb: &Workbook, sheet: usize, cell: CellRef) -> Option<(String, Vec<FormulaExpr>)> {
+pub(super) fn top_call(wb: &Workbook, sheet: usize, cell: CellRef) -> Option<(String, Vec<FormulaExpr>)> {
     let mut expression = wb.sheet(sheet)?.cell(cell)?.formula.as_ref()?.expr()?;
     while let FormulaExpr::Paren(inner) = expression {
         expression = *inner;
@@ -40,8 +43,13 @@ pub(super) fn input_declaration_at(wb: &Workbook, sheet: usize, cell: CellRef, n
     if gridcraft_calc::distribution_arity(&name).is_none() {
         return Ok(None);
     }
-    let values =
-        args.iter().map(|expression| gridcraft_calc::evaluate_at(wb, sheet, cell, &gridcraft_formula::print(expression), now)).collect::<Vec<_>>();
+    let values = args
+        .iter()
+        .map(|expression| match expression {
+            FormulaExpr::Missing => Value::Empty,
+            _ => gridcraft_calc::evaluate_at(wb, sheet, cell, &gridcraft_formula::print(expression), now),
+        })
+        .collect::<Vec<_>>();
     gridcraft_calc::worksheet_distribution(&name, &values).map_err(sdk_error)
 }
 pub(super) fn discover(wb: &Workbook) -> Result<(Vec<Json>, Vec<String>)> {
@@ -75,21 +83,8 @@ pub(super) fn discover_at(wb: &Workbook, now: f64) -> Result<(Vec<Json>, Vec<Str
     }
     Ok((inputs, outputs))
 }
-/// A direct, current-run mean formula designates its source cell as an output.
-/// The preserved statistics formula itself remains outside worksheet evaluation.
 fn output_binding(wb: &Workbook, cell: super::CellBinding, name: &str, args: &[FormulaExpr]) -> Option<super::CellBinding> {
-    if name == "SC.OUTPUT" {
-        return Some(cell);
-    }
-    if psi_name(name).eq_ignore_ascii_case("PSIMEAN")
-        && let [FormulaExpr::Ref(reference)] = args
-        && reference.range().count() == 1
-        && let Ok(sheet) = super::reference_sheet(wb, cell.0, reference)
-    {
-        let source = (sheet, reference.range().start);
-        return (source != cell).then_some(source);
-    }
-    None
+    if name == "SC.OUTPUT" { Some(cell) } else { super::statistics::source(wb, cell, name, args) }
 }
 fn discover_command(s: &mut Session, _: &Json) -> Result<Json> {
     let (inputs, outputs) = discover(&s.doc()?.wb)?;
@@ -105,7 +100,7 @@ enum PsiContext {
     Output,
     Unsupported(&'static str),
 }
-fn psi_name(name: &str) -> &str {
+pub(super) fn psi_name(name: &str) -> &str {
     match name.split_once('.') {
         Some((prefix, function)) if prefix.eq_ignore_ascii_case("_xll") || prefix.eq_ignore_ascii_case("_xludf") => function,
         _ => name,
@@ -123,12 +118,18 @@ fn unparenthesized(mut expression: &FormulaExpr) -> &FormulaExpr {
     expression
 }
 
+fn missing_required_argument(name: &str, args: &[FormulaExpr]) -> bool {
+    args.iter()
+        .enumerate()
+        .any(|(index, argument)| matches!(argument, FormulaExpr::Missing) && !(psi_name(name).eq_ignore_ascii_case("PSIMETALOG") && index < 2))
+}
+
 fn distribution(expression: &FormulaExpr, base_case: bool) -> Option<FormulaExpr> {
     let FormulaExpr::Call(name, args) = unparenthesized(expression) else { return None };
     let normalized = psi_name(name).to_ascii_uppercase();
     let target = format!("SC.PSI.{}", normalized.strip_prefix("PSI")?);
     let arity = gridcraft_calc::distribution_arity(&target)?;
-    if args.len() != arity + usize::from(base_case) || args.iter().any(|arg| matches!(arg, FormulaExpr::Missing)) {
+    if args.len() != arity + usize::from(base_case) || missing_required_argument(name, args) {
         return None;
     }
     let mut converted = args[..arity].to_vec();
@@ -199,7 +200,7 @@ fn psi_context(expression: &FormulaExpr, outside_policy: &str) -> PsiContext {
         PsiContext::Converted(FormulaExpr::Call("SC.OUTPUT".into(), vec![converted]))
     } else if !root_is_psi || count != 1 {
         PsiContext::Unsupported("unsupported_nested_psi_or_property")
-    } else if matches!(root, FormulaExpr::Call(_, args) if args.iter().any(|arg| matches!(arg, FormulaExpr::Missing))) {
+    } else if matches!(root, FormulaExpr::Call(name, args) if missing_required_argument(name, args)) {
         PsiContext::Unsupported("unsupported_missing_required_argument")
     } else {
         PsiContext::Core
@@ -291,7 +292,13 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
             FormulaExpr::Call(name, args)
         });
         if !rejected.is_empty() {
-            unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":"unsupported_signature","source_formula":source_formula,"signatures":rejected,"preserved":true}));
+            let reason = match unparenthesized(&expression) {
+                FormulaExpr::Call(name, args) if super::statistics::source(wb, (si, cell), name, args).is_some() => "run_statistic",
+                _ => "unsupported_signature",
+            };
+            unsupported.push(
+                json!({"cell":binding_name(wb,si,cell)?,"reason":reason,"source_formula":source_formula,"signatures":rejected,"preserved":true}),
+            );
             continue;
         }
         if changed {

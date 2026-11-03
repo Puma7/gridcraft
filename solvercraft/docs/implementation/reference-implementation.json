@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "legacy-2025q1-executable-map-v3",
+  "version": "legacy-2025q1-executable-map-v4",
   "frozen_source_sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
   "requirements_source": "docs/masterplan/requirements.csv",
   "scope": {
@@ -12,9 +12,10 @@
       "partial_parameterization": 2
     },
     "note": "R046 scopes distribution/Alt/custom/special/time-series chapters; R081 import semantics and R091 matrix cover all272. This is no completion certificate.",
-    "host_core_imports": 31,
+    "host_core_imports": 32,
     "host_bounded_additions": 2,
-    "host_discovery_only": 1
+    "host_discovery_only": 0,
+    "host_run_statistics": 2
   },
   "functions": [
     {
@@ -1211,7 +1212,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiChiSquare-signature-defaults",
@@ -1625,7 +1626,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiErlang-signature-defaults",
@@ -1984,7 +1985,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiFDist-signature-defaults",
@@ -2344,7 +2345,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiHypSecant-signature-defaults",
@@ -2738,7 +2739,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiKumaraswamy-signature-defaults",
@@ -2945,7 +2946,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiLevy-signature-defaults",
@@ -3097,7 +3098,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiLogistic-signature-defaults",
@@ -3641,7 +3642,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMaxExtreme-signature-defaults",
@@ -3751,7 +3752,50 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "0e9a35c6905fbe6483fcd17900fd8bc937eae9df71fe04496cff535a480308e1"
+          "source_file_sha256": "91ff8f0e250d66cb35b4d1ca237f1652031450a16bb40c7bf43441ef350067f6"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/psi_import_tests.rs",
+          "test": "cmd::solvercraft::psi_import_tests::metalog_import_preserves_omitted_bounds_and_requires_coefficients",
+          "public_api": "worksheet command",
+          "scope": "Explicit coefficient-array syntax, omitted bounds and qualified rejection.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::psi_import_tests::metalog_import_preserves_omitted_bounds_and_requires_coefficients",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
+        },
+        {
+          "path": "crates/math/tests/metalog.rs",
+          "test": "adaptive_certificate_accepts_a_fourteen_term_shape_outside_dominance_bound",
+          "public_api": "Distribution",
+          "scope": "Conservative global monotonicity certificate for a synthetic fourteen-term distribution.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "solvercraft-math",
+            "--test",
+            "metalog",
+            "adaptive_certificate_accepts_a_fourteen_term_shape_outside_dominance_bound",
+            "--",
+            "--exact"
+          ],
+          "working_directory": ".",
+          "source_file_sha256": "91ff8f0e250d66cb35b4d1ca237f1652031450a16bb40c7bf43441ef350067f6"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMetalog-signature-defaults",
@@ -3759,12 +3803,12 @@
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_coefficient_array_with_optional_bounds",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Sufficient global derivative certificate only; valid uncertified coefficient sets and upper-only support unsupported."
+      "remaining_gap": "Converts the bounded coefficient-array signature and checks global monotonicity. Fitting and unsupported modifiers remain open."
     },
     {
       "id": "PSI-PsiMetalogFit",
@@ -3806,7 +3850,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "0e9a35c6905fbe6483fcd17900fd8bc937eae9df71fe04496cff535a480308e1"
+          "source_file_sha256": "91ff8f0e250d66cb35b4d1ca237f1652031450a16bb40c7bf43441ef350067f6"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMetalogFit-signature-defaults",
@@ -3861,7 +3905,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "0e9a35c6905fbe6483fcd17900fd8bc937eae9df71fe04496cff535a480308e1"
+          "source_file_sha256": "91ff8f0e250d66cb35b4d1ca237f1652031450a16bb40c7bf43441ef350067f6"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMetalogSPT-signature-defaults",
@@ -3979,7 +4023,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMinExtreme-signature-defaults",
@@ -4089,7 +4133,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "0e9a35c6905fbe6483fcd17900fd8bc937eae9df71fe04496cff535a480308e1"
+          "source_file_sha256": "91ff8f0e250d66cb35b4d1ca237f1652031450a16bb40c7bf43441ef350067f6"
         },
         {
           "path": "crates/math/tests/johnson_moments.rs",
@@ -4998,7 +5042,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiRayleigh-signature-defaults",
@@ -5150,7 +5194,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiReciprocal-signature-defaults",
@@ -5247,7 +5291,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "f81b7e4eca8d73965ab2be97b8936bc35e2e50af7d6e166584689647706d6754"
+          "source_file_sha256": "03b5d7e8f640b13f6a0c96bd9fcd23088bb3f8b7a4dd3193b9804cf023dd5629"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiStudent-signature-defaults",
@@ -7803,7 +7847,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiBaseCase-signature-defaults",
@@ -9436,7 +9480,28 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::completed_job_updates_statistics_from_streamed_trials_and_undoes_without_changing_formulas",
+          "public_api": "worksheet command",
+          "scope": "Run-scoped exact mean and inclusive threshold count, streaming apply, preserved formula and undo.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::completed_job_updates_statistics_from_streamed_trials_and_undoes_without_changing_formulas",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMean-signature-defaults",
@@ -9444,12 +9509,12 @@
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "discovery_only_direct_output_reference",
+      "host_import": "partial_completed_run_single_cell_mean",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Direct cell reference designates the output. Worksheet statistic and simulation or slice selection remain open. Mean is available from the run result."
+      "remaining_gap": "Reads the current completed run for a single local or qualified cell reference. Optional run or slice selection and session-to-session statistic persistence remain open."
     },
     {
       "id": "PSI-PsiMeanCI",
@@ -9644,7 +9709,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
         },
         {
           "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -9665,7 +9730,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiOutput-signature-defaults",
@@ -10256,18 +10321,40 @@
         "url": "internal:legacy-psi-reference#page=378"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::completed_job_updates_statistics_from_streamed_trials_and_undoes_without_changing_formulas",
+          "public_api": "worksheet command",
+          "scope": "Run-scoped exact mean and inclusive threshold count, streaming apply, preserved formula and undo.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::completed_job_updates_statistics_from_streamed_trials_and_undoes_without_changing_formulas",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiTarget-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_inclusive_literal_threshold",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Reads the inclusive empirical probability at a finite literal threshold in the completed run. Optional run or slice selection remains open."
     },
     {
       "id": "PSI-PsiTargetCI",

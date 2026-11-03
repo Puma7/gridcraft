@@ -1,6 +1,8 @@
 //! Keelin's original 2016 Metalog basis, globally certified subset.
 //! OLS is a quantile/CDF least-squares fit, never an MLE or a Johnson moment fit.
 //! Primary reference: https://doi.org/10.1287/deca.2016.0338 .
+mod certificate;
+
 use serde::{Deserialize, Serialize};
 use solvercraft_types::{Result, SolverError};
 pub const MAX_TERMS: usize = 30;
@@ -145,19 +147,15 @@ impl PreparedMetalog {
             penalty = finite(penalty + finite(magnitude * bound)?.next_up())?.next_up();
         }
         let margin = finite(a2 - penalty)?.next_down();
-        if margin <= 0.0 {
-            return Err(error(
-                "metalog_uncertified",
-                "Coefficients fail the sufficient global derivative certificate; a probability grid is not a proof.",
-            ));
-        }
-        Ok(Self {
-            model: model.clone(),
-            certificate: MonotonicityCertificate {
-                derivative_in_logit_lower_bound: margin,
-                method: "global logit derivative dominance; |z|p(1-p)<=1/4; outward-rounded coefficient bounds".into(),
-            },
-        })
+        let (margin, method) = if margin > 0.0 {
+            (margin, "global logit derivative dominance; |z|p(1-p)<=1/4; outward-rounded coefficient bounds")
+        } else {
+            let margin = certificate::certify(&model.coefficients).ok_or_else(|| {
+                error("metalog_uncertified", "Coefficients fail the sufficient global derivative certificate; a probability grid is not a proof.")
+            })?;
+            (margin, "global logit derivative; outward-rounded adaptive intervals and analytic tails")
+        };
+        Ok(Self { model: model.clone(), certificate: MonotonicityCertificate { derivative_in_logit_lower_bound: margin, method: method.into() } })
     }
     pub fn certificate(&self) -> &MonotonicityCertificate {
         &self.certificate

@@ -44,6 +44,7 @@ pub const PSI_CORE_SIGNATURES: &[PsiCoreSignature] = &[
     PsiCoreSignature { legacy_name: "PsiReciprocal", worksheet_name: "SC.PSI.RECIPROCAL", required_arguments: 2 },
     PsiCoreSignature { legacy_name: "PsiStudent", worksheet_name: "SC.PSI.STUDENT", required_arguments: 1 },
     PsiCoreSignature { legacy_name: "PsiHypSecant", worksheet_name: "SC.PSI.HYPSECANT", required_arguments: 2 },
+    PsiCoreSignature { legacy_name: "PsiMetalog", worksheet_name: "SC.PSI.METALOG", required_arguments: 3 },
 ];
 
 /// Provenance of an ordinary-cell value; none of these imply vendor display state.
@@ -219,6 +220,29 @@ fn psi_distribution(name: &str, args: &[Value]) -> Result<Option<WorksheetDistri
     }
     let number = |i: usize| args.get(i).ok_or(CellError::Value).and_then(scalar);
     let direct = match name {
+        "METALOG" => {
+            let bound = |i: usize| match args.get(i).ok_or(CellError::Value)? {
+                Value::Empty => Ok(None),
+                value => scalar(value).map(Some),
+            };
+            let coefficients = match args.get(2).ok_or(CellError::Value)? {
+                Value::Array(array)
+                    if (2..=solvercraft_math::metalog::MAX_TERMS).contains(&array.data.len()) && (array.rows == 1 || array.cols == 1) =>
+                {
+                    array
+                        .data
+                        .iter()
+                        .map(|value| match value {
+                            Value::Number(number) if number.is_finite() => Ok(*number),
+                            Value::Error(error) => Err(*error),
+                            _ => Err(CellError::Value),
+                        })
+                        .collect::<Result<Vec<_>, _>>()?
+                }
+                _ => return Err(CellError::Value),
+            };
+            Some(D::Metalog { coefficients, lower: bound(0)?, upper: bound(1)? })
+        }
         "LEVY" => Some(D::Levy { location: number(0)?, scale: number(1)? }),
         "CHISQUARE" => Some(D::ChiSquared { degrees_of_freedom: f64::from(uint(number(0)?)?) }),
         "ERLANG" => Some(D::Erlang { shape: uint(number(0)?)?, scale: number(1)? }),

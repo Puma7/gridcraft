@@ -9,6 +9,7 @@ const ROWS_PER_PAGE: usize = 20;
 #[derive(Clone, Default)]
 pub(super) struct State {
     report: Option<Arc<Json>>,
+    settings: Option<Arc<Json>>,
     page: usize,
 }
 
@@ -17,6 +18,7 @@ fn reason(code: &str, de: bool) -> &str {
         "unsupported_nested_psi_or_property" => label(de, "Nested Psi function or property", "Verschachtelte Psi-Funktion oder Eigenschaft"),
         "unsupported_missing_required_argument" => label(de, "Required argument missing", "Pflichtargument fehlt"),
         "unsupported_array_formula" => label(de, "Array formula preserved", "Matrixformel bleibt erhalten"),
+        "run_statistic" => label(de, "Updated from a simulation run", "Wert aus einem Simulationslauf"),
         "unsupported_signature" => label(de, "Function or arguments unsupported", "Funktion oder Argumente nicht unterstützt"),
         _ => code,
     }
@@ -29,15 +31,20 @@ pub(super) fn show(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut super::Sta
             help(
                 ui,
                 label(de, "Help with the import scan", "Hilfe zur Importprüfung"),
-                label(de, "Scans the workbook for Psi formulas and previews changes. The scan leaves cells untouched.", "Sucht in der Arbeitsmappe nach Psi-Formeln und zeigt vorgeschlagene Änderungen. Die Zellen bleiben beim Prüfen unverändert."),
+                label(de, "Finds Psi formulas and embedded simulation settings. The scan leaves cells untouched.", "Findet Psi-Formeln und eingebettete Simulationseinstellungen. Die Zellen bleiben beim Prüfen unverändert."),
             );
             scan
         }).inner;
         if scan {
             match app.run("solvercraft.worksheet.importPsi", json!({})) {
                 Ok(report) => {
-                    state.psi_import = State { report: Some(Arc::new(report)), page: 0 };
+                    state.psi_import = State { report: Some(Arc::new(report)), ..State::default() };
                     state.error = None;
+                    match app.run("solvercraft.worksheet.importSimulationSettings", json!({})) {
+                        Ok(settings) if settings["request"].is_object() => state.psi_import.settings = Some(Arc::new(settings)),
+                        Ok(_) => {}
+                        Err(error) => state.error = Some(error),
+                    }
                 }
                 Err(error) => state.error = Some(error),
             }
@@ -52,8 +59,25 @@ pub(super) fn show(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut super::Sta
             format!("{} {} · {} unchanged", changes.len(), if applied { "converted" } else { "convertible" }, unsupported.len())
         });
         let stale = report["snapshot"]["revision"].as_str() != Some(revision);
-        if stale && !applied {
+        if stale && (!applied || state.psi_import.settings.is_some()) {
             ui.label(label(de, "Workbook changed. Scan again before applying.", "Arbeitsmappe geändert. Vor der Übernahme erneut prüfen."));
+        }
+        if let Some(settings) = state.psi_import.settings.clone() {
+            let request = &settings["request"];
+            let inputs = request["inputs"].as_array().map_or(0, Vec::len);
+            let outputs = request["outputs"].as_array().map_or(0, Vec::len);
+            ui.small(if de { format!("{inputs} Eingaben · {outputs} Ausgaben") } else { format!("{inputs} inputs · {outputs} outputs") });
+            ui.horizontal_wrapped(|ui| {
+                if ui.add_enabled(!stale, egui::Button::new(label(de, "Load simulation settings", "Simulationseinstellungen laden"))).clicked() {
+                    super::load(state, json!({"name":label(de,"Imported simulation","Importierte Simulation"),"kind":"simulation","request":request}));
+                    state.imported_settings = true;
+                }
+                help(
+                    ui,
+                    label(de, "Help with embedded settings", "Hilfe zu eingebetteten Einstellungen"),
+                    label(de, "Loads a new draft from workbook settings. The run uses Solvercraft sampling. Workbook cells stay unchanged.", "Lädt einen neuen Entwurf aus der Arbeitsmappe. Für den Lauf gilt das Solvercraft-Stichprobenverfahren. Die Zellen bleiben unverändert."),
+                );
+            });
         }
         let convert = !applied && !changes.is_empty() && ui.horizontal_wrapped(|ui| {
             let convert = ui.add_enabled(!stale, egui::Button::new(label(de, "Convert supported cells", "Unterstützte Zellen konvertieren"))).clicked();

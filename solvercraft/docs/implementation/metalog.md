@@ -1,12 +1,12 @@
 # Metalog and verified PSI constructors
 
-Updated 2026-10-31. These are workbook-independent numerical APIs. They do not imply full worksheet/default/property compatibility with every PSI function in the frozen reference catalog.
+Updated 2026-11-03. The mathematical APIs are workbook independent. The worksheet adapter supports the explicit coefficient vector and supported bound modes.
 
 ## Metalog public API
 
 `math::metalog::Metalog` holds `coefficients`, `lower` and `upper`. `PreparedMetalog::new(&Metalog)` checks the model and returns a reusable prepared distribution with `quantile`, `cdf`, `log_density`, `density`, `model` and `certificate` methods. `fit_cdf(terms,x_values,y_values,lower,upper)` performs Householder-QR ordinary least squares on CDF point pairs. `fit_spt(lower,upper,[q1,q2,q3],p)` uses probabilities `[p,0.5,1-p]`. Both return `MetalogFit` containing the model, observation count, latent-space RMSE, explicit method name and monotonicity certificate.
 
-The basis uses Keelin's original 2016 coefficient order. With `t=p-1/2` and `z=log(p/(1-p))`, its first terms are `1,z,t*z,t,t^2,t^2*z,t^3,t^3*z,...`. This is not silently replaced by a later reordered basis. The SDK caps coefficients at 30; the frozen PSI reference describes only 2-10. An eventual PSI import must apply the reference signature limit separately.
+The basis uses Keelin's original 2016 coefficient order. With `t=p-1/2` and `z=log(p/(1-p))`, its first terms are `1,z,t*z,t,t^2,t^2*z,t^3,t^3*z,...`. This is not silently replaced by a later reordered basis. The SDK and worksheet adapter accept 2–30 coefficients in this order. Worksheet input may be a single row or column. An omitted lower or upper bound is preserved as an absent bound, and the coefficient vector is required.
 
 The latent quantile `M(p)` is used directly for an unbounded model, as `lower+exp(M(p))` for a lower-bounded model, and through a logistic map to `[lower,upper]` for a bounded model. Upper-only bounds are explicitly unsupported, matching the frozen PSI subset. Both finite bounds must have a representable positive width. Unbounded endpoint quantiles are errors; finite endpoints are returned exactly at p=0/1. An interior value that overflows or rounds to a support endpoint is a numerical error, rather than an invented atom.
 
@@ -26,7 +26,9 @@ These give the following global absolute derivative bounds for each basis term:
 | `t^k` | `k*2^(1-k)/4` |
 | `t^k*z` | `2^(-k)+k*2^(1-k)/4` |
 
-The positive `a2` contribution must exceed the outward-rounded sum of adverse coefficient bounds. A positive coefficient of the `t` term contributes nonnegatively and need not be subtracted. A positive certified margin proves a strictly increasing latent quantile and therefore a proper continuous distribution under each supported increasing transform. The check is deliberately sufficient, not necessary: many mathematically valid Metalogs can return `metalog_uncertified`. No coefficient set that merely looks valid at sampled points is accepted. The certificate is a numerical implementation of these stated inequalities, not a complete symbolic feasibility decision procedure.
+For the fast certificate, the positive `a2` contribution must exceed the outward-rounded sum of adverse coefficient bounds. A positive coefficient of the `t` term contributes nonnegatively and need not be subtracted. A positive certified margin proves a strictly increasing latent quantile and therefore a proper continuous distribution under each supported increasing transform. If the fast certificate is inconclusive, the adaptive certificate writes the latent quantile as `A(t)+B(t)*z`. It bounds the logit derivative `F=B+v*(A'+B'*z)` over the two probability tails using `v<=2^-16` and `v*|z|<=16*2^-16`. In the remaining interval it combines the derivative at each subinterval midpoint with an outward-rounded bound on `|dF/dp|` throughout that subinterval. The logarithm enclosure uses a bounded series with an explicit remainder, independent of platform logarithm rounding.
+
+Both methods require a strictly positive bound over the full support. The adaptive route checks at most 8,192 subintervals to depth 24 and limits nonlocation coefficients to magnitude at most `1e100`. If neither route proves positivity, the result is `metalog_uncertified`.
 
 ## Fitting and moment fitting
 
@@ -42,8 +44,8 @@ The custom-CDF constructors interpolate explicitly supplied cumulative probabili
 
 ## Executed evidence and remaining gaps
 
-The eleven public tests in `crates/math/tests/metalog.rs` cover independent logistic quantile/CDF/density identities, a bounded uniform identity, a lower-bounded log-logistic identity, an independently expanded ten-term expression, coefficient recovery from independently generated CDF data, large-offset inverse and OLS cases, SPT recovery under three bound modes, global-certificate rejection, numerical endpoint behavior, density integration and the separate moment-fit subfamilies. Seven tests in `psi_aliases.rs` cover parameter conversions and custom probability mass. The catalog integrity tests do not substitute for these numerical tests.
+The public tests in `crates/math/tests/metalog.rs` cover independent logistic quantile/CDF/density identities, a bounded uniform identity, a lower-bounded log-logistic identity, independently expanded ten- and fourteen-term expressions, coefficient recovery from independently generated CDF data, large-offset inverse and OLS cases, SPT recovery under three bound modes, global-certificate rejection, numerical endpoint behavior, density integration and the separate moment-fit subfamilies. Seven tests in `psi_aliases.rs` cover parameter conversions and custom probability mass. The catalog integrity tests do not substitute for these numerical tests.
 
-Remaining gaps include complete necessary-and-sufficient Metalog feasibility, all valid coefficient sets allowed by legacy PSI, full Johnson SU/SB moment inversion, all alternate parameter selectors, worksheet fitting/import/property/default semantics, and per-function browser execution. R046 remains partial until each frozen function/domain has appropriate tests and evidence.
+Remaining gaps include complete necessary-and-sufficient Metalog feasibility, coefficient vectors outside the certified domains, full Johnson SU/SB moment inversion, all alternate parameter selectors, worksheet fitting and additional property/default semantics, and per-function browser execution. R046 remains partial until each frozen function/domain has appropriate tests and evidence.
 
-Primary mathematical source: T. W. Keelin, [The Metalog Distributions](https://doi.org/10.1287/deca.2016.0338), Decision Analysis 13(4), 243-277, 2016; [author's equations and feasibility notes](https://www.metalogdistributions.com/equations.html). The API ordering and PSI scope are cross-checked against public 2025 Q1 reference pages 297-301. Code and the dominance certificate implementation are independently written; no vendor code or feasibility table is copied.
+Primary mathematical source: T. W. Keelin, [The Metalog Distributions](https://doi.org/10.1287/deca.2016.0338), Decision Analysis 13(4), 243-277, 2016; [author's equations and feasibility notes](https://www.metalogdistributions.com/equations.html). The API ordering and PSI scope are cross-checked against public 2025 Q1 reference pages 297-301. The certificates use the analytic inequalities and interval construction described above.

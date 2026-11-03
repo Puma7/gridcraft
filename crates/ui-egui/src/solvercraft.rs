@@ -46,6 +46,7 @@ struct State {
     parameter_grid: Vec<Parameter>,
     compare_parameters: bool,
     worksheet_bindings: bool,
+    imported_settings: bool,
     psi_import: import::State,
     analysis: Option<Arc<Json>>,
 }
@@ -82,6 +83,7 @@ impl Default for State {
             parameter_grid: vec![Parameter { cell: "C1".into(), low: 1.0, base: 2.0, high: 3.0 }],
             compare_parameters: false,
             worksheet_bindings: false,
+            imported_settings: false,
             psi_import: import::State::default(),
             analysis: None,
         }
@@ -248,6 +250,7 @@ fn load(state: &mut State, model: Json) {
     state.outputs = p["outputs"].as_str().map(str::to_string).unwrap_or_else(|| p["outputs"].to_string());
     state.trials = p["options"]["trials"].as_u64().unwrap_or(1000);
     state.seed = p["options"]["seed"].as_str().unwrap_or("0").into();
+    state.imported_settings = false;
     state.worksheet_bindings = p.get("inputs").is_none() && p.get("outputs").is_none();
     state.compare_parameters = p.get("parameter_cases").is_some();
     if let Some(grid) = p["parameter_grid"].as_array() {
@@ -404,11 +407,19 @@ fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) 
             );
         });
         if !state.worksheet_bindings {
-            ui.label(label(de, "Inputs (JSON)", "Eingaben (JSON)"));
-            ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
-                .accessible_name("Solvercraft simulation inputs");
-            field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
-            pick_reference(ui, label(de, "Use selection as outputs", "Markierung als Ausgaben"), &mut state.outputs, range.as_deref(), de);
+            let imported = state.imported_settings;
+            let mut edit_bindings = |ui: &mut egui::Ui| {
+                ui.label(label(de, "Inputs (JSON)", "Eingaben (JSON)"));
+                ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
+                    .accessible_name("Solvercraft simulation inputs");
+                field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
+                pick_reference(ui, label(de, "Use selection as outputs", "Markierung als Ausgaben"), &mut state.outputs, range.as_deref(), de);
+            };
+            if imported {
+                ui.collapsing(label(de, "Edit imported bindings", "Importierte Zellzuordnung bearbeiten"), edit_bindings);
+            } else {
+                edit_bindings(ui);
+            }
         }
         ui.horizontal(|ui| {
             ui.label(label(de, "Trials", "Versuche"));
@@ -640,6 +651,25 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
                     }
                     Err(e) => state.error = Some(e),
                 }
+            }
+            if preview["worksheet_statistics"].as_array().is_some_and(|rows| !rows.is_empty()) {
+                ui.horizontal_wrapped(|ui| {
+                    let update = label(de, "Update statistic cells", "Statistikzellen aktualisieren");
+                    if ui.add_enabled(state.status["stale"] == json!(false), egui::Button::new(update)).clicked() {
+                        match app.run("solvercraft.job.applyStatistics", json!({"id":id})) {
+                            Ok(_) => {
+                                state.status["stale"] = json!(true);
+                                state.error = None;
+                            }
+                            Err(error) => state.error = Some(error),
+                        }
+                    }
+                    help(
+                        ui,
+                        label(de, "Help with statistic cells", "Hilfe zu Statistikzellen"),
+                        label(de, "Uses this completed run to update the original statistic formulas. Undo restores the previous state.", "Aktualisiert die ursprünglichen Statistikformeln mit diesem abgeschlossenen Lauf. Rückgängig stellt den vorigen Stand wieder her."),
+                    );
+                });
             }
             result_sheet_button(app, ui, &mut state, &id, de);
             ui.collapsing(label(de, "Result details", "Ergebnisdetails"), |ui| {

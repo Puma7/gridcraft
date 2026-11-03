@@ -41,6 +41,8 @@ Public final6 evidence is available as [compact fixed-field reports and strict t
 Open **Data → Solvercraft → Import simulation formulas** and choose
 **Scan workbook**. The preview lists proposed changes and preserved formulas.
 The question-mark controls explain the scan and the conversion policy.
+**Load simulation settings** opens a new draft when supported embedded
+settings are present. It leaves the original workbook cells intact.
 
 **Convert supported cells** applies the preview in one undo step. Rescan if
 the workbook changed. A new simulation draft can discover worksheet
@@ -49,6 +51,9 @@ declarations, while saved models retain their current bindings.
 The importer recognizes supported numeric PSI calls, add-in-prefixed formulas
 and supported scalar legacy-array cells. The bare output marker can accompany
 a numeric formula or a supported distribution. A single numeric base case
-can set the nominal value for a supported distribution. Worksheet statistics
-that require a previous run remain intact. Read statistics from the simulation
-result and select the output cells explicitly when the sheet lacks declarations.
+can set the nominal value for a supported distribution.
+
+After a completed simulation, **Update statistic cells** fills the matching
+single-cell mean and inclusive target-probability formulas with the run values.
+The formulas stay in place. Edits invalidate the run values, and Undo restores
+the prior state. Select output cells explicitly when the sheet lacks declarations.

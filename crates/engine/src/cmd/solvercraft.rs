@@ -23,6 +23,7 @@ mod registry;
 mod reports;
 mod result_sheet;
 mod simulation_ir;
+mod statistics;
 mod worksheet;
 #[cfg(test)]
 mod worksheet_tests;
@@ -1307,8 +1308,15 @@ fn simulate_snapshot(
     program.check_work(opt.trials)?;
     opt.max_memory_bytes =
         opt.max_memory_bytes.checked_sub(program.reserved_bytes()).ok_or_else(|| bad(SOLVE, "Simulation IR exceeds memory budget"))?;
-    let result = ::solvercraft::simulation::simulate(&distributions, &opt, control, |values| program.evaluate(values, control)).map_err(sdk_error)?;
+    let mut worksheet_statistics = statistics::Statistics::collect(wb, &output_cells, opt.trials)?;
+    let result = ::solvercraft::simulation::simulate(&distributions, &opt, control, |values| {
+        let outputs = program.evaluate(values, control)?;
+        worksheet_statistics.observe(&outputs);
+        Ok(outputs)
+    })
+    .map_err(sdk_error)?;
     let names = output_cells.iter().map(|(si, c)| binding_name(wb, *si, *c)).collect::<Result<Vec<_>>>()?;
+    let worksheet_statistics = worksheet_statistics.finish(wb, &names, &result, opt.trials)?;
     let inputs = bindings
         .iter()
         .zip(&distributions)
@@ -1334,7 +1342,9 @@ fn simulate_snapshot(
         json!({"sampler":requested_options.method,"sampling_version":result.sampling_version,"formula_evaluator":"gridcraft-ordered-cell-ir-v1"}),
         json!({"inputs":inputs,"outputs":names}),
     )?;
-    Ok(json!({"result":result,"outputs":names,"request":request,"snapshot":snapshot,"manifest":manifest,"execution":"synchronous_bounded"}))
+    Ok(
+        json!({"result":result,"outputs":names,"worksheet_statistics":worksheet_statistics,"request":request,"snapshot":snapshot,"manifest":manifest,"execution":"synchronous_bounded"}),
+    )
 }
 
 #[cfg(test)]

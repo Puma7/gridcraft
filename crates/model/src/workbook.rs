@@ -138,6 +138,10 @@ pub struct PhoneticString {
     pub props: Option<PhoneticProps>,
 }
 
+/// Session calculation results indexed by worksheet and cell. Each value is
+/// bound to the original canonical formula so ad hoc evaluation cannot reuse it.
+pub type SimulationStatistics = std::collections::BTreeMap<(usize, gridcraft_core::CellRef), (String, f64)>;
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Workbook {
     pub sheets: Vec<Arc<Sheet>>,
@@ -209,6 +213,9 @@ pub struct Workbook {
     /// the links in memory are still written for the old one. Not in JSON.
     #[serde(skip)]
     pub source_path: Option<std::path::PathBuf>,
+    /// Session-only values from a completed worksheet simulation.
+    #[serde(skip)]
+    pub simulation_statistics: Arc<SimulationStatistics>,
 }
 
 fn is_all(s: &ShowObjects) -> bool {
@@ -298,6 +305,7 @@ impl Workbook {
             preserved: None,
             source_dir: None,
             source_path: None,
+            simulation_statistics: Arc::default(),
         }
     }
     pub fn sheet(&self, i: usize) -> Option<&Sheet> {

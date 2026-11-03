@@ -395,15 +395,14 @@ nineteen-signature snapshot.
 ## Import coverage
 
 The [function inventory](reference-implementation.json) tracks 272 entries.
-There are 31 bounded distribution signatures and two bounded conversions for
-output markers and numeric base-case properties. One additional function
-provides discovery of a direct output reference. The worksheet calculation of
-that statistic and the remaining 238 entries have no import conversion.
 The catalog distinguishes SDK mathematical evidence, worksheet import and
-end-to-end model evidence.
+end-to-end model evidence. Bounded worksheet support includes the coefficient-array
+Metalog form, single-cell mean and inclusive target-probability statistics,
+and selected simulation declarations.
 
 Simulation preparation traverses the cell dependency graph iteratively.
 Formula and named-expression depth, work, memory and node bounds still apply.
 Scalar CHOOSE and IF use the spreadsheet evaluator, including an omitted
-false branch for IF. In-cell statistics that require a previous run are
-preserved. The run result exposes the corresponding sample summaries.
+false branch for IF. Supported statistic formulas keep their text. A completed
+job can update the worksheet values for that revision in one undoable edit.
+The settings importer reads bounded embedded data and never loads an add-in.
