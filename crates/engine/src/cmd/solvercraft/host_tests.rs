@@ -680,3 +680,43 @@ fn solvercraft_bond_price_coefficients_use_calc_and_cannot_depend_on_decisions()
     let error = s.execute("solvercraft.validate", request()).unwrap_err();
     assert!(error.to_string().contains("Bond functions require fixed numeric inputs"), "{error}");
 }
+
+#[test]
+fn psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run() {
+    let mut s = session();
+    set(&mut s, "A1", "=PsiUniform(0,2)");
+    set(&mut s, "B1", "=PsiOutput()+A1+A1");
+    set(&mut s, "C1", "=A1+PsiOutput(\"label\")");
+    set(&mut s, "D1", "=IF(TRUE,PsiOutput(),3)");
+    let bytes = gridcraft_xlsx::write_xlsx(&s.doc().unwrap().wb).unwrap();
+    let (workbook, _) = gridcraft_xlsx::read_xlsx(&bytes).unwrap();
+    s.doc_mut().unwrap().wb = Arc::new(workbook);
+    let command = "solvercraft.worksheet.importPsi";
+    let before = super::snapshot(&s).unwrap().revision;
+    let review = s.execute(command, json!({})).unwrap();
+    assert_eq!(review["snapshot"]["revision"], before);
+    assert_eq!(super::snapshot(&s).unwrap().revision, before);
+    let changes = review["changes"].as_array().unwrap();
+    let output = changes.iter().find(|row| row["cell"] == "Sheet1!B1").unwrap();
+    assert_eq!(output["source_formula"], "=PSIOUTPUT()+A1+A1");
+    assert_eq!(output["formula"], "=SC.OUTPUT(0+A1+A1)");
+    assert_eq!(review["unsupported"].as_array().unwrap().len(), 2);
+    assert_eq!(review["applied"], false);
+    set(&mut s, "E1", "1");
+    assert!(s.execute(command, json!({"apply":true,"expected_snapshot":review["snapshot"]})).is_err());
+    let review = s.execute(command, json!({})).unwrap();
+    let applied = s.execute(command, json!({"apply":true,"expected_snapshot":review["snapshot"]})).unwrap();
+    assert_eq!(applied["changes"], review["changes"]);
+    assert_eq!(applied["applied"], true);
+    let discovered = s.execute("solvercraft.worksheet.discover", json!({})).unwrap();
+    assert_eq!(discovered["outputs"], json!(["Sheet1!B1"]));
+    let preview = s.execute("solvercraft.simulate", json!({"options":{"trials":8192,"seed":"340","retain_samples":true}})).unwrap();
+    let mean = preview["result"]["summaries"][0]["mean"].as_f64().unwrap();
+    let variance = preview["result"]["summaries"][0]["variance"].as_f64().unwrap();
+    assert!((mean - 2.0).abs() < 0.06, "{mean}");
+    assert!((variance - 4.0 / 3.0).abs() < 0.06, "{variance}");
+    s.execute("edit.undo", json!({})).unwrap();
+    let restored = s.execute(command, json!({})).unwrap();
+    assert_eq!(restored["changes"], review["changes"]);
+    assert_eq!(restored["unsupported"], review["unsupported"]);
+}

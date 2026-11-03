@@ -293,3 +293,26 @@ fn simulation_chart_choices_and_parameter_tornado_use_completed_preview_data() {
     assert_eq!(value(&h, "B1"), Value::Number(20.0));
     assert_eq!(value(&h, "C1"), Value::Number(10.0));
 }
+
+#[test]
+fn pane_reviews_legacy_formulas_before_conversion() {
+    let mut h = harness();
+    h.state_mut().run("cell.set", json!({"cell":"A1","input":"=PsiUniform(0,2)"})).unwrap();
+    h.state_mut().run("cell.set", json!({"cell":"B1","input":"=2*A1+PsiOutput()"})).unwrap();
+    h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
+    h.run_steps(4);
+    h.get_by_label("Import Frontline simulation").click();
+    h.run_steps(4);
+    h.get_by_label("Scan workbook").click();
+    h.run_steps(4);
+    let current_formula = |h: &common::Harness| {
+        h.state().session.active().unwrap().wb.active().unwrap().cell(CellRef::parse("B1").unwrap()).unwrap().formula.as_ref().unwrap().text.clone()
+    };
+    assert_eq!(current_formula(&h), "2*A1+PSIOUTPUT()");
+    h.get_by_label("Convert supported cells").click();
+    h.run_steps(4);
+    assert_eq!(current_formula(&h), "SC.OUTPUT(2*A1+0)");
+    assert!(h.query_by_label("Run simulation").is_some());
+    h.state_mut().run("edit.undo", json!({})).unwrap();
+    assert_eq!(current_formula(&h), "2*A1+PSIOUTPUT()");
+}

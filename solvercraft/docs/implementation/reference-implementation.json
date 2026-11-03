@@ -9578,18 +9578,18 @@
         "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=371"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": ["psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run", "pane_reviews_legacy_formulas_before_conversion"],
       "planned_exact_signature_test": "TEST-PSI-PsiOutput-signature-defaults",
       "platforms": {
-        "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
+        "native": "Native regression covers XLSX import, review, simulation and undo for the additive zero-argument marker.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_additive_zero_argument_output_marker",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Named outputs, cell-argument declarations, instance selection, Six Sigma properties and implicit discovery through statistics functions remain open."
     },
     {
       "id": "PSI-PsiPercentile",

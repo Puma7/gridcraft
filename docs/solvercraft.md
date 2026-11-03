@@ -35,3 +35,18 @@ Public final6 evidence is available as [compact fixed-field reports and strict t
 | 2026-10-31 | minor | Replace obsolete modal/synchronous scope with async task pane, owned XLSX models, ordered Calc simulation and bounded manifests/evidence |
 | 2026-11-01 | documentation | Link final6 original-criterion acceptance and both worker attempts; retain explicit selected PSI conversion limits |
 | 2026-11-02 | minor | Add standalone Solvercraft app, reusable host SDK and on-demand independent MCP; link final7 selected import scope and reviewed launcher submission |
+
+### Review and import a Frontline simulation
+
+In **Data → Solvercraft**, open **Import Frontline simulation** and choose
+**Scan workbook**. Review the original and proposed formulas and the reasons
+for cells that stay intact. **Convert supported cells** commits the changes in
+one undo step. If the workbook changed, scan again. A new simulation draft uses
+the worksheet declarations. Saved models keep their current bindings.
+
+The bounded importer supports the existing numeric PSI distribution signatures
+and an additive zero-argument `PsiOutput()` marker. The conversion preserves the
+arithmetic and uses an `SC.OUTPUT` declaration to discover the output cell.
+Named outputs and properties remain preserved as unsupported. Use
+[the parity audit](../solvercraft/docs/implementation/frontline-parity-audit.md)
+for the evidence and gaps by function family.

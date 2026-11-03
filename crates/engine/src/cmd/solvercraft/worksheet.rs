@@ -1,7 +1,7 @@
 //! Worksheet declarations and explicit, signature-aware legacy formula import.
 use super::{
     Cell, CellRef, CommandSpec, FormulaExpr, Json, MAX_BINDINGS, Result, SOLVE, Session, Value, Workbook, bad, binding_name, cells, cmd, edit,
-    has_doc, json, sdk_error,
+    has_doc, json, sdk_error, snapshot,
 };
 
 const SCAN_CELLS: usize = 200_000;
@@ -13,7 +13,7 @@ pub(super) fn specs() -> Vec<CommandSpec> {
             "Import supported Psi formulas",
             [],
             None,
-            "{range?:reference,apply?:false,outside_policy?:solvercraft_nominal|preserve_vendor} -> proposed changes and unsupported signatures. Selected top-level numeric Psi calls map to SC.PSI shims; nested stochastic calls, properties and unknown calls are preserved. apply:true commits supported cells as one undo step. Default solvercraft_nominal is an explicitly lossy outside-value conversion; preserve_vendor refuses conversion because vendor display state is unavailable.",
+            "{range?:reference,apply?:false,outside_policy?:solvercraft_nominal|preserve_vendor,expected_snapshot?:{document_uid,revision}} -> proposed changes and unsupported signatures. Selected top-level numeric Psi calls map to SC.PSI shims; nested stochastic calls, properties and unknown calls are preserved. apply:true commits supported cells as one undo step. Default solvercraft_nominal is an explicitly lossy outside-value conversion; preserve_vendor refuses conversion because vendor display state is unavailable.",
             has_doc,
             import_psi
         ),
@@ -75,8 +75,30 @@ fn discover_command(s: &mut Session, _: &Json) -> Result<Json> {
 enum PsiContext {
     Absent,
     Core,
+    Output,
     Unsupported(&'static str),
 }
+fn bare_output(expression: &FormulaExpr) -> bool {
+    matches!(expression, FormulaExpr::Call(name, args)
+        if name.strip_prefix("_xludf.").unwrap_or(name).eq_ignore_ascii_case("PSIOUTPUT") && args.is_empty())
+}
+
+fn additive_output(expression: &FormulaExpr) -> bool {
+    let mut pending = vec![expression];
+    while let Some(node) = pending.pop() {
+        match node {
+            FormulaExpr::Binary(gridcraft_formula::BinOp::Add, left, right) => {
+                pending.push(left);
+                pending.push(right);
+            }
+            FormulaExpr::Paren(inner) => pending.push(inner),
+            _ if bare_output(node) => return true,
+            _ => {}
+        }
+    }
+    false
+}
+
 fn psi_context(expression: &FormulaExpr, outside_policy: &str) -> PsiContext {
     let mut count = 0usize;
     expression.walk(&mut |node| {
@@ -97,6 +119,8 @@ fn psi_context(expression: &FormulaExpr, outside_policy: &str) -> PsiContext {
         matches!(root, FormulaExpr::Call(name, _) if name.strip_prefix("_xludf.").unwrap_or(name).to_ascii_uppercase().starts_with("PSI"));
     if outside_policy == "preserve_vendor" {
         PsiContext::Unsupported("vendor_display_context_unavailable")
+    } else if count == 1 && additive_output(root) {
+        PsiContext::Output
     } else if !root_is_psi || count != 1 {
         PsiContext::Unsupported("unsupported_nested_psi_or_property")
     } else if matches!(root, FormulaExpr::Call(_, args) if args.iter().any(|arg| matches!(arg, FormulaExpr::Missing))) {
@@ -124,6 +148,12 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
     if !matches!(outside_policy, "solvercraft_nominal" | "preserve_vendor") {
         return Err(bad(SOLVE, "outside_policy must be solvercraft_nominal or preserve_vendor"));
     }
+    let stamp = snapshot(s)?;
+    if let Some(expected) = p.get("expected_snapshot")
+        && (expected["document_uid"].as_str() != Some(stamp.document_uid.as_str()) || expected["revision"].as_str() != Some(stamp.revision.as_str()))
+    {
+        return Err(bad(SOLVE, "Workbook changed after Psi preview; scan again"));
+    }
     let wb = &s.doc()?.wb;
     let selected = if let Some(range) = range {
         cells(wb, wb.active_sheet(), range, SCAN_CELLS)?
@@ -137,18 +167,35 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
     let mut unsupported = Vec::new();
     for (si, cell) in selected {
         let Some(original) = wb.sheet(si).and_then(|sh| sh.cell(cell)).and_then(|c| c.formula.as_ref()) else { continue };
-        let Some(expression) = original.expr() else { continue };
-        match psi_context(&expression, outside_policy) {
+        let Some(expression) = original.expr_arc() else { continue };
+        let context = psi_context(&expression, outside_policy);
+        if matches!(context, PsiContext::Absent) {
+            continue;
+        }
+        let source_formula = format!("={}", original.text);
+        if original.array.is_some() || original.dynamic {
+            unsupported.push(
+                json!({"cell":binding_name(wb,si,cell)?,"reason":"unsupported_array_formula","source_formula":source_formula,"preserved":true}),
+            );
+            continue;
+        }
+        match context {
             PsiContext::Absent => continue,
             PsiContext::Unsupported(reason) => {
-                unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":reason,"preserved":true}));
+                unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":reason,"source_formula":source_formula,"preserved":true}));
+                continue;
+            }
+            PsiContext::Output => {
+                let arithmetic = (*expression).clone().map(&mut |node| if bare_output(&node) { FormulaExpr::Number(0.0) } else { node });
+                let converted = FormulaExpr::Call("SC.OUTPUT".into(), vec![arithmetic]);
+                changes.push((si, cell, source_formula, gridcraft_formula::print(&converted)));
                 continue;
             }
             PsiContext::Core => {}
         }
         let mut rejected = Vec::new();
         let mut changed = false;
-        let converted = expression.map(&mut |node| {
+        let converted = (*expression).clone().map(&mut |node| {
             let FormulaExpr::Call(name, args) = node else { return node };
             let normalized = name.strip_prefix("_xludf.").unwrap_or(&name).to_ascii_uppercase();
             if let Some(suffix) = normalized.strip_prefix("PSI") {
@@ -164,21 +211,21 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
             FormulaExpr::Call(name, args)
         });
         if !rejected.is_empty() {
-            unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":"unsupported_signature","signatures":rejected,"preserved":true}));
+            unsupported.push(json!({"cell":binding_name(wb,si,cell)?,"reason":"unsupported_signature","source_formula":source_formula,"signatures":rejected,"preserved":true}));
             continue;
         }
         if changed {
-            changes.push((si, cell, gridcraft_formula::print(&converted)));
+            changes.push((si, cell, source_formula, gridcraft_formula::print(&converted)));
         }
     }
     let proposed = changes
         .iter()
-        .map(|(si, cell, formula)| Ok(json!({"cell":binding_name(wb,*si,*cell)?,"formula":format!("={formula}"),"outside_policy":outside_policy,"vendor_display_context_preserved":false})))
+        .map(|(si, cell, source_formula, formula)| Ok(json!({"cell":binding_name(wb,*si,*cell)?,"source_formula":source_formula,"formula":format!("={formula}"),"outside_policy":outside_policy,"vendor_display_context_preserved":false})))
         .collect::<Result<Vec<_>>>()?;
     let applied = apply && !changes.is_empty();
     if applied {
         edit(s, |cx| {
-            for (si, cell, text) in changes {
+            for (si, cell, _, text) in changes {
                 let sh = cx.sheet_mut(si)?;
                 let style = sh.style_id(cell);
                 sh.set_cell(cell, Cell { value: Value::Empty, formula: Some(std::sync::Arc::new(gridcraft_model::Formula::new(&text))), style });
@@ -188,6 +235,6 @@ fn import_psi(s: &mut Session, p: &Json) -> Result<Json> {
         })?;
     }
     Ok(
-        json!({"applied":applied,"apply_requested":apply,"changes":proposed,"unsupported":unsupported,"outside_policy":outside_policy,"vendor_display_context_preserved":false,"notes":["Core numeric signatures use SC.PSI shims. Nested stochastic calls, omitted required arguments and optional Psi property modifiers are preserved as unsupported.","LogNormal uses arithmetic mean/std; LogNorm2 uses underlying-normal parameters. Exponential uses mean/scale; Gamma/Weibull use shape/scale. Pert weight is fixed4. Geometric/NegBinomial count failures.","SC nominal values use finite analytic means (documented median fallback where unavailable), distinct from Frontline ValueToDisplay settings. No vendor pre-run random, displayed-trial, sample-mean or base-case context is preserved.","PsiCumul supports strictly increasing probability/value knots and unambiguous endpoints; ambiguous endpoint atoms and improper p=0 geometric/negative-binomial parameters fail explicitly."]}),
+        json!({"applied":applied,"apply_requested":apply,"snapshot":stamp,"changes":proposed,"unsupported":unsupported,"outside_policy":outside_policy,"vendor_display_context_preserved":false,"notes":["Core numeric signatures use SC.PSI shims. An additive zero-argument PsiOutput marker maps to SC.OUTPUT. Other nested stochastic calls, omitted required arguments and optional Psi property modifiers are preserved.","LogNormal uses arithmetic mean/std; LogNorm2 uses underlying-normal parameters. Exponential uses mean/scale; Gamma/Weibull use shape/scale. Pert weight is fixed4. Geometric/NegBinomial count failures.","SC nominal values use finite analytic means (documented median fallback where unavailable), distinct from Frontline ValueToDisplay settings. No vendor pre-run random, displayed-trial, sample-mean or base-case context is preserved.","PsiCumul supports strictly increasing probability/value knots and unambiguous endpoints; ambiguous endpoint atoms and improper p=0 geometric/negative-binomial parameters fail explicitly."]}),
     )
 }

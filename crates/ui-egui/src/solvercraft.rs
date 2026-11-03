@@ -3,6 +3,7 @@ use crate::{SheetApp, i18n::Language};
 use serde_json::{Value as Json, json};
 use std::collections::HashMap;
 use std::sync::Arc;
+mod import;
 mod report;
 
 #[derive(Clone)]
@@ -45,6 +46,7 @@ struct State {
     parameter_grid: Vec<Parameter>,
     compare_parameters: bool,
     worksheet_bindings: bool,
+    psi_import: import::State,
     analysis: Option<Arc<Json>>,
 }
 impl Default for State {
@@ -80,6 +82,7 @@ impl Default for State {
             parameter_grid: vec![Parameter { cell: "C1".into(), low: 1.0, base: 2.0, high: 3.0 }],
             compare_parameters: false,
             worksheet_bindings: false,
+            psi_import: import::State::default(),
             analysis: None,
         }
     }
@@ -487,6 +490,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     }
     ui.separator();
     field(ui, label(de, "Model name", "Modellname"), &mut state.name);
+    import::show(app, ui, &mut state, &current_revision, de);
     job_history(app, ui, &mut state, de);
     let before = draft(&state).ok();
     model_editor(app, ui, &mut state, de);
