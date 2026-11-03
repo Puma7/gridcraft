@@ -109,6 +109,15 @@ pub(super) fn specs() -> Vec<CommandSpec> {
         cmd!(query "solvercraft.job.get","Solvercraft browser job status",[],None,"{id:string} -> nonblocking status/progress/stale/timing metadata; no samplematrix copying.",has_doc,get),
         cmd!(query "solvercraft.job.list","List Solvercraft browser jobs",[],None,"{} -> retained jobs owned by this workbook only.",has_doc,list),
         cmd!(query "solvercraft.job.result","Solvercraft browser job result",[],None,"{id:string} -> completed immutable preview. Hardcancel reports Unknown feasibility and no unseen incumbent.",has_doc,result),
+        cmd!(
+            "solvercraft.job.report",
+            "Create Solvercraft result sheet",
+            [],
+            None,
+            "{id:string,name?:string,language?:de|en} -> new sheet with retained results; one undo step.",
+            has_doc,
+            report
+        ),
         cmd!(query "solvercraft.job.cancel","Cancel Solvercraft browser worker",[],None,"{id:string} -> terminate this worker; no untransmitted incumbent is claimed.",has_doc,cancel),
         cmd!(query "solvercraft.job.forget","Forget Solvercraft browser job",[],None,"{id:string} -> releases terminal worker/result state.",has_doc,forget),
         cmd!(
@@ -414,12 +423,19 @@ fn list(s: &mut Session, _: &Json) -> Result<Json> {
     })
 }
 fn result(s: &mut Session, p: &Json) -> Result<Json> {
+    Ok((*retained_result(s, p)?).clone())
+}
+fn report(s: &mut Session, p: &Json) -> Result<Json> {
+    let preview = retained_result(s, p)?;
+    super::result_sheet::write(s, p, &preview)
+}
+fn retained_result(s: &Session, p: &Json) -> Result<Arc<Json>> {
     with_jobs(|jobs| {
         let entry = owned(jobs, s, p)?;
         let state = entry.state.try_borrow().map_err(|_| bad(SOLVE, "Browser job state is busy"))?;
         let result = state.result.as_ref().ok_or_else(|| bad(SOLVE, "Browser job is still pending"))?;
         match result {
-            Ok(value) => Ok((**value).clone()),
+            Ok(value) => Ok(Arc::clone(value)),
             Err(error) => Err(sdk_error(error)),
         }
     })
@@ -444,7 +460,7 @@ fn forget(s: &mut Session, p: &Json) -> Result<Json> {
     })
 }
 fn apply_job(s: &mut Session, p: &Json) -> Result<Json> {
-    let preview = result(s, p)?;
+    let preview = retained_result(s, p)?;
     super::apply(s, &preview)
 }
 

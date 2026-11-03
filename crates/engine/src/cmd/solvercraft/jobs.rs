@@ -1,7 +1,7 @@
 //! Native background jobs evaluate immutable workbook snapshots. Only `apply`
 //! enters the live session's normal transaction path.
 use std::collections::BTreeMap;
-use std::sync::{Mutex, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use ::solvercraft::jobs::{JobHandle, JobStatus};
 use ::solvercraft::runtime::RuntimeLimits;
@@ -72,6 +72,15 @@ pub(super) fn specs() -> Vec<CommandSpec> {
         cmd!(query "solvercraft.job.get", "Solvercraft job status", [], None, "{id:string} -> status/progress/stale/cancel state without copying retained result samples.", has_doc, get),
         cmd!(query "solvercraft.job.list", "List Solvercraft jobs", [], None, "{} -> retained jobs owned by this workbook only; ids and revisions are lossless decimal strings.", has_doc, list),
         cmd!(query "solvercraft.job.result", "Read Solvercraft job result", [], None, "{id:string} -> completed preview or explicit pending/error; no mutation.", has_doc, result),
+        cmd!(
+            "solvercraft.job.report",
+            "Create Solvercraft result sheet",
+            [],
+            None,
+            "{id:string,name?:string,language?:de|en} -> new sheet with retained results; one undo step.",
+            has_doc,
+            report
+        ),
         cmd!(query "solvercraft.job.cancel", "Cancel Solvercraft job", [], None, "{id:string} -> requests cooperative cancellation; a partial result may still be returned.", has_doc, cancel),
         cmd!(query "solvercraft.job.forget", "Forget Solvercraft job", [], None, "{id:string} -> releases a terminal retained job; cancel running jobs before forgetting them.", has_doc, forget),
         cmd!(
@@ -193,10 +202,16 @@ fn list(s: &mut Session, _: &Json) -> Result<Json> {
     )
 }
 fn result(s: &mut Session, p: &Json) -> Result<Json> {
+    Ok((*retained_result(s, p)?).clone())
+}
+fn report(s: &mut Session, p: &Json) -> Result<Json> {
+    let preview = retained_result(s, p)?;
+    super::result_sheet::write(s, p, &preview)
+}
+fn retained_result(s: &Session, p: &Json) -> Result<Arc<Json>> {
     let jobs = lock()?;
     let state = owned(&jobs, s, p)?.handle.snapshot().map_err(sdk_error)?;
-    let output = state.result.ok_or_else(|| bad(SOLVE, "Job is still pending"))?.map_err(sdk_error)?;
-    Ok((*output).clone())
+    state.result.ok_or_else(|| bad(SOLVE, "Job is still pending"))?.map_err(sdk_error)
 }
 fn cancel(s: &mut Session, p: &Json) -> Result<Json> {
     let jobs = lock()?;
@@ -215,6 +230,6 @@ fn forget(s: &mut Session, p: &Json) -> Result<Json> {
     Ok(json!({"forgotten":id.to_string()}))
 }
 fn apply_job(s: &mut Session, p: &Json) -> Result<Json> {
-    let preview = result(s, p)?;
+    let preview = retained_result(s, p)?;
     super::apply(s, &preview)
 }

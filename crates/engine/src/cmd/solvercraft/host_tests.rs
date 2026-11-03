@@ -584,3 +584,31 @@ fn solvercraft_admission_pins_sheet_before_delayed_native_evaluation_and_nested_
     pin_request_sheet(&s.doc().unwrap().wb, &mut simulation_metadata, "simulation").unwrap();
     assert_eq!(simulation_metadata["sheet"], "Sheet1");
 }
+
+#[test]
+fn result_sheet_archives_the_owned_snapshot_and_is_undoable() {
+    let _fixture = async_fixture();
+    let mut s = session();
+    set(&mut s, "A1", "2");
+    set(&mut s, "B1", "=3*A1");
+    let job = s.execute("solvercraft.job.start", json!({"request":request()})).unwrap();
+    let id = &job["id"];
+    let preview = wait(&mut s, id);
+    assert_eq!(preview["initial_values"], json!([2.0]));
+    let mut other = session();
+    assert!(other.execute("solvercraft.job.report", json!({"id":id})).is_err());
+    s.execute("solvercraft.job.apply", json!({"id":id})).unwrap();
+    let report = s.execute("solvercraft.job.report", json!({"id":id,"name":"Review"})).unwrap();
+    assert_eq!(report["sheet"], "Review");
+    let wb = &s.doc().unwrap().wb;
+    let sheet = wb.sheet(wb.sheet_index("Review").unwrap()).unwrap();
+    assert_eq!(sheet.value(CellRef::parse("A3").unwrap()), Value::text("Archived run: workbook has changed."));
+    assert_eq!(sheet.value(CellRef::parse("C13").unwrap()), Value::number(2.0));
+    assert_eq!(sheet.value(CellRef::parse("D13").unwrap()), Value::number(5.0));
+    assert!(s.execute("solvercraft.job.report", json!({"id":id,"name":"Review"})).is_err());
+    s.execute("edit.undo", json!({})).unwrap();
+    assert!(s.doc().unwrap().wb.sheet_index("Review").is_none());
+    assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::default()), Value::number(5.0));
+    s.execute("edit.undo", json!({})).unwrap();
+    assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::default()), Value::number(2.0));
+}

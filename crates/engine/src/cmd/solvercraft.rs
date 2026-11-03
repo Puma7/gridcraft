@@ -18,6 +18,7 @@ mod parameters;
 mod psi_import_tests;
 mod registry;
 mod reports;
+mod result_sheet;
 mod simulation_ir;
 mod worksheet;
 #[cfg(test)]
@@ -865,6 +866,7 @@ fn solve_snapshot(
         verify_workbook_snapshot(wb, calc, &request, &prepared, &rounded)?;
         apply_values = Some(rounded);
     }
+    let initial_values = prepared.bindings.iter().map(|(si, cell)| wb.sheet(*si).and_then(|sh| numeric(&sh.value(*cell)).ok())).collect::<Vec<_>>();
     let nlp: ::solvercraft::nonlinear::NlpOptions =
         serde_json::from_value(request.get("nlp").cloned().unwrap_or_else(|| json!({}))).map_err(sdk_error)?;
     let manifest = manifest::create(
@@ -876,7 +878,7 @@ fn solve_snapshot(
         json!({"variables":prepared.names}),
     )?;
     Ok(
-        json!({"result":result,"apply_values":apply_values,"request":request,"snapshot":snapshot,"bindings":prepared.names,"manifest":manifest,"execution":"synchronous_bounded"}),
+        json!({"result":result,"apply_values":apply_values,"initial_values":initial_values,"request":request,"snapshot":snapshot,"bindings":prepared.names,"manifest":manifest,"execution":"synchronous_bounded"}),
     )
 }
 fn solve_nonlinear(

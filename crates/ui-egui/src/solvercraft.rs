@@ -21,6 +21,9 @@ struct State {
     objective: String,
     variables: String,
     constraints: String,
+    constraint_left: String,
+    constraint_op: String,
+    constraint_right: String,
     goal: String,
     method: String,
     nonnegative: bool,
@@ -53,6 +56,9 @@ impl Default for State {
             objective: "B1".into(),
             variables: "A1".into(),
             constraints: "A1 <= 10".into(),
+            constraint_left: String::new(),
+            constraint_op: "<=".into(),
+            constraint_right: String::new(),
             goal: "max".into(),
             method: "auto".into(),
             nonnegative: true,
@@ -88,6 +94,14 @@ fn field(ui: &mut egui::Ui, title: &str, value: &mut String) {
 fn text_or_json(text: &str) -> Result<Json, String> {
     if text.trim_start().starts_with('[') { serde_json::from_str(text).map_err(|e| e.to_string()) } else { Ok(json!(text)) }
 }
+fn constraint_rows(text: &str) -> Result<Vec<Json>, String> {
+    if text.trim_start().starts_with('[') {
+        serde_json::from_str(text).map_err(|e| e.to_string())
+    } else {
+        Ok(text.lines().map(str::trim).filter(|line| !line.is_empty()).map(|line| json!(line)).collect())
+    }
+}
+
 fn draft(state: &State) -> Result<Json, String> {
     let mut request = state.request.clone();
     if !request.is_object() {
@@ -96,11 +110,7 @@ fn draft(state: &State) -> Result<Json, String> {
     if state.kind == "optimization" {
         request["objective"] = json!(state.objective);
         request["variables"] = text_or_json(&state.variables)?;
-        request["constraints"] = if state.constraints.trim_start().starts_with('[') {
-            serde_json::from_str(&state.constraints).map_err(|e| e.to_string())?
-        } else {
-            json!(state.constraints.lines().map(str::trim).filter(|s| !s.is_empty()).collect::<Vec<_>>())
-        };
+        request["constraints"] = json!(constraint_rows(&state.constraints)?);
         request["goal"] = json!(state.goal);
         request["method"] = json!(state.method);
         request["nonNegative"] = json!(state.nonnegative);
@@ -213,6 +223,9 @@ fn load(state: &mut State, model: Json) {
     state.objective = p["objective"].as_str().unwrap_or("B1").into();
     state.variables = variable_text(&p["variables"]);
     state.constraints = constraint_text(&p["constraints"]);
+    state.constraint_left.clear();
+    state.constraint_op = "<=".into();
+    state.constraint_right.clear();
     state.goal = p["goal"].as_str().unwrap_or("max").into();
     state.target = p["value"].as_f64().map(|v| v.to_string()).unwrap_or_else(|| "0".into());
     state.method = p["method"].as_str().unwrap_or("auto").into();
@@ -258,13 +271,45 @@ pub fn open_model(app: &mut SheetApp, ctx: &egui::Context, id: &str) -> Result<(
     app.run("ui.solvercraft", json!({"on":true})).map(|_| ())
 }
 
-fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
+/// The active range is qualified at capture time so switching sheets later
+/// cannot change the model's meaning.
+fn selected_reference(app: &SheetApp, single_cell: bool) -> Option<String> {
+    let doc = app.session.active()?;
+    let sheet = gridcraft_engine::core::quote_sheet(&doc.wb.active()?.name);
+    let range = doc.selection.current();
+    if single_cell && (doc.selection.ranges.len() != 1 || !range.is_single()) {
+        return None;
+    }
+    let mut refs = doc.selection.ranges.iter().map(|range| format!("{sheet}!{range}"));
+    let first = refs.next()?;
+    if doc.selection.ranges.len() == 1 { Some(first) } else { Some(format!("({first},{})", refs.collect::<Vec<_>>().join(","))) }
+}
+
+fn pick_reference(ui: &mut egui::Ui, title: &str, value: &mut String, selection: Option<&str>, de: bool) {
+    let button = ui.add_enabled(selection.is_some(), egui::Button::new(title));
+    let button = button.on_hover_text(selection.unwrap_or(label(de, "Select one cell first", "Zuerst eine einzelne Zelle markieren")));
+    if button.clicked()
+        && let Some(reference) = selection
+    {
+        *value = reference.to_owned();
+    }
+}
+
+fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) {
+    let cell = selected_reference(app, true);
+    let range = selected_reference(app, false);
     ui.horizontal(|ui| {
         ui.selectable_value(&mut state.kind, "optimization".into(), label(de, "Optimization", "Optimierung"));
         ui.selectable_value(&mut state.kind, "simulation".into(), "Simulation");
     });
     if state.kind == "optimization" {
+        ui.small(label(
+            de,
+            "Select cells on any sheet, then use the selection below.",
+            "Zellen auf einem beliebigen Blatt markieren und unten übernehmen.",
+        ));
         field(ui, label(de, "Objective cell or formula", "Zielzelle oder Formel"), &mut state.objective);
+        pick_reference(ui, label(de, "Use selection as objective", "Markierung als Zielzelle"), &mut state.objective, cell.as_deref(), de);
         ui.horizontal(|ui| {
             ui.selectable_value(&mut state.goal, "min".into(), "Min");
             ui.selectable_value(&mut state.goal, "max".into(), "Max");
@@ -274,9 +319,50 @@ fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
             field(ui, label(de, "Target value", "Zielwert"), &mut state.target);
         }
         field(ui, label(de, "Decision cells", "Entscheidungszellen"), &mut state.variables);
+        // A JSON model may carry integer kinds and bounds. Preserve those
+        // descriptors until the user explicitly edits that field.
+        if !state.variables.trim_start().starts_with('[') {
+            pick_reference(
+                ui,
+                label(de, "Use selection as decision cells", "Markierung als Entscheidungszellen"),
+                &mut state.variables,
+                range.as_deref(),
+                de,
+            );
+        }
         ui.label(label(de, "Constraints (one per line)", "Nebenbedingungen (eine pro Zeile)"));
         ui.add(egui::TextEdit::multiline(&mut state.constraints).desired_rows(4).desired_width(f32::INFINITY))
             .accessible_name("Solvercraft constraints");
+        ui.collapsing(label(de, "Add a constraint from the sheet", "Nebenbedingung aus dem Blatt hinzufügen"), |ui| {
+            field(ui, label(de, "Left cell or expression", "Linke Zelle oder Ausdruck"), &mut state.constraint_left);
+            pick_reference(ui, label(de, "Use selection on the left", "Markierung links einsetzen"), &mut state.constraint_left, cell.as_deref(), de);
+            ui.horizontal(|ui| {
+                for op in ["<=", "=", ">="] {
+                    ui.selectable_value(&mut state.constraint_op, op.into(), op);
+                }
+            });
+            field(ui, label(de, "Right cell or value", "Rechte Zelle oder Wert"), &mut state.constraint_right);
+            pick_reference(
+                ui,
+                label(de, "Use selection on the right", "Markierung rechts einsetzen"),
+                &mut state.constraint_right,
+                cell.as_deref(),
+                de,
+            );
+            let ready = !state.constraint_left.trim().is_empty() && !state.constraint_right.trim().is_empty();
+            if ui.add_enabled(ready, egui::Button::new(label(de, "Add constraint", "Nebenbedingung hinzufügen"))).clicked() {
+                match constraint_rows(&state.constraints) {
+                    Ok(mut rows) => {
+                        rows.push(json!({"lhs":state.constraint_left.trim(),"op":state.constraint_op,"rhs":state.constraint_right.trim()}));
+                        state.constraints = constraint_text(&json!(rows));
+                        state.constraint_left.clear();
+                        state.constraint_right.clear();
+                        state.error = None;
+                    }
+                    Err(error) => state.error = Some(error),
+                }
+            }
+        });
         ui.checkbox(&mut state.nonnegative, label(de, "Unbounded variables are nonnegative", "Variablen ohne Untergrenze sind nichtnegativ"));
         craft_ui::ComboBox::from_id_salt("solvercraft-method")
             .selected_text(&state.method)
@@ -293,6 +379,9 @@ fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
         ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
             .accessible_name("Solvercraft simulation inputs");
         field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
+        if !state.worksheet_bindings {
+            pick_reference(ui, label(de, "Use selection as outputs", "Markierung als Ausgaben"), &mut state.outputs, range.as_deref(), de);
+        }
         ui.horizontal(|ui| {
             ui.label(label(de, "Trials", "Versuche"));
             ui.add(egui::DragValue::new(&mut state.trials).range(1..=1_000_000)).accessible_name(label(de, "Trials", "Versuche"));
@@ -307,6 +396,7 @@ fn model_editor(ui: &mut egui::Ui, state: &mut State, de: bool) {
             for (i, p) in state.parameter_grid.iter_mut().enumerate() {
                 ui.push_id(i, |ui| {
                     field(ui, label(de, "Parameter cell", "Parameterzelle"), &mut p.cell);
+                    pick_reference(ui, label(de, "Use selection as parameter", "Markierung als Parameter"), &mut p.cell, cell.as_deref(), de);
                     ui.horizontal_wrapped(|ui| {
                         for (name, value) in [("Low", &mut p.low), ("Base", &mut p.base), ("High", &mut p.high)] {
                             ui.label(name);
@@ -399,7 +489,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     field(ui, label(de, "Model name", "Modellname"), &mut state.name);
     job_history(app, ui, &mut state, de);
     let before = draft(&state).ok();
-    model_editor(ui, &mut state, de);
+    model_editor(app, ui, &mut state, de);
     if before != draft(&state).ok() {
         state.job = None;
         state.preview = None;
@@ -437,7 +527,12 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
         }
     });
     let running = matches!(state.status["status"].as_str(), Some("queued" | "running"));
-    let start = ui.add_enabled(!running, egui::Button::new(label(de, "Start preview (Ctrl+Enter)", "Vorschau starten (Strg+Enter)"))).clicked()
+    let action = if state.kind == "optimization" {
+        label(de, "Calculate optimization", "Optimierung berechnen")
+    } else {
+        label(de, "Run simulation", "Simulation berechnen")
+    };
+    let start = ui.add_enabled(!running, egui::Button::new(action)).on_hover_text("Ctrl+Enter").clicked()
         || (!running && ui.input(|i| i.modifiers.ctrl && i.key_pressed(egui::Key::Enter)));
     if start {
         match draft(&state) {
@@ -466,7 +561,11 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
             ui.label(format!("{} · {} evaluations · {} nodes", progress["stage"].as_str().unwrap_or(""), progress["evaluations"], progress["nodes"]));
         }
         if state.status["stale"].as_bool() == Some(true) {
-            ui.label(label(de, "Workbook changed: rerun before applying.", "Arbeitsmappe geändert: vor Übernahme neu berechnen."));
+            ui.label(label(
+                de,
+                "Workbook changed: recalculate to apply. You can still archive this run.",
+                "Arbeitsmappe geändert: zur Übernahme neu berechnen. Dieser Lauf bleibt archivierbar.",
+            ));
         }
         if let Some(error) = state.status.get("error").filter(|e| !e.is_null()) {
             ui.colored_label(ui.visuals().error_fg_color, error.to_string());
@@ -490,7 +589,6 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
             }
         }
         if let Some(preview) = state.preview.clone() {
-            result(ui, &preview, &mut state.chart);
             let applicable = preview["result"]["feasibility"] == json!("feasible")
                 && preview["bindings"].as_array().is_some_and(|a| !a.is_empty())
                 && !state.status["stale"].as_bool().unwrap_or(true);
@@ -506,7 +604,11 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
                     Err(e) => state.error = Some(e),
                 }
             }
-            match report::controls(app, ui, &preview, applicable, de) {
+            result_sheet_button(app, ui, &mut state, &id, de);
+            ui.collapsing(label(de, "Result details", "Ergebnisdetails"), |ui| {
+                result(ui, &preview, &mut state.chart);
+            });
+            match report::controls(app, ui, &preview, applicable && state.status["stale"] != json!(true), de) {
                 Ok(Some(report)) => state.analysis = Some(Arc::new(report)),
                 Err(error) => state.error = Some(error),
                 Ok(None) => {}
@@ -570,6 +672,26 @@ fn job_history(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, de: boo
             }
         }
     });
+}
+
+fn result_sheet_button(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, id: &str, de: bool) {
+    let report_button = ui.button(label(de, "Create result sheet", "Ergebnisblatt erstellen"));
+    if report_button
+        .on_hover_text(label(
+            de,
+            "Archives this run as values. To apply a solution, do so before creating the sheet.",
+            "Archiviert diesen Lauf als Werte. Eine Lösung zuerst übernehmen und dann das Blatt erstellen.",
+        ))
+        .clicked()
+    {
+        match app.run("solvercraft.job.report", json!({"id":id,"language":if de {"de"} else {"en"}})) {
+            Ok(_) => {
+                state.status["stale"] = json!(true);
+                state.error = None;
+            }
+            Err(error) => state.error = Some(error),
+        }
+    }
 }
 
 fn result(ui: &mut egui::Ui, preview: &Json, chart: &mut String) {

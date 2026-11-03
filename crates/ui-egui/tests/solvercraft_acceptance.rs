@@ -30,7 +30,9 @@ fn value(harness: &common::Harness, reference: &str) -> Value {
 fn start_preview(h: &mut common::Harness) {
     h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
     h.run_steps(3);
-    h.get_by_label("Start preview (Ctrl+Enter)").click();
+    h.get_by_label("Calculate optimization").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Calculate optimization").click();
     let deadline = Instant::now() + Duration::from_secs(10);
     while h.query_by_label("Apply solution (one undo step)").is_none() && Instant::now() < deadline {
         h.run_steps(4);
@@ -69,10 +71,43 @@ fn pane_preview_requires_apply_and_reverts_in_one_undo_step() {
     h.run_steps(3);
     assert_eq!(value(&h, "A1"), Value::Number(10.0));
     assert_eq!(value(&h, "B1"), Value::Number(20.0));
+    h.get_by_label("Create result sheet").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Create result sheet").click();
+    h.run_steps(4);
+    assert_eq!(h.state().session.active().unwrap().wb.active().unwrap().name, "Solver Result 1");
+    assert_eq!(value(&h, "C13"), Value::Number(2.0));
+    assert_eq!(value(&h, "D13"), Value::Number(10.0));
+    h.state_mut().run("edit.undo", json!({})).unwrap();
+    h.run_steps(4);
+    assert_eq!(value(&h, "A1"), Value::Number(10.0));
     h.state_mut().run("edit.undo", json!({})).unwrap();
     h.run_steps(3);
     assert_eq!(value(&h, "A1"), Value::Number(2.0));
     assert_eq!(value(&h, "B1"), Value::Number(4.0));
+}
+
+#[test]
+fn pane_picks_a_cell_and_disjoint_ranges_on_different_sheets() {
+    use egui::accesskit::Role;
+    let mut h = harness();
+    let app = h.state_mut();
+    app.run("home.insertSheet", json!({"name":"Model input"})).unwrap();
+    app.run("selection.set", json!({"cell":"D5"})).unwrap();
+    app.run("ui.solvercraft", json!({"on":true})).unwrap();
+    h.run_steps(4);
+    h.get_by_label("Use selection as objective").click();
+    h.run_steps(3);
+    assert_eq!(h.get_by_role_and_label(Role::TextInput, "Objective cell or formula").value().as_deref(), Some("'Model input'!D5"));
+    let app = h.state_mut();
+    app.run("home.insertSheet", json!({"name":"Lots"})).unwrap();
+    app.run("selection.set", json!({"range":"B2:B3,D4"})).unwrap();
+    h.run_steps(4);
+    assert!(h.get_by_label("Use selection as objective").accesskit_node().is_disabled());
+    h.get_by_label("Use selection as decision cells").click();
+    h.run_steps(3);
+    assert_eq!(h.get_by_role_and_label(Role::TextInput, "Decision cells").value().as_deref(), Some("(Lots!B2:B3,Lots!D4)"));
+    assert_eq!(h.get_by_role_and_label(Role::TextInput, "Objective cell or formula").value().as_deref(), Some("'Model input'!D5"));
 }
 
 #[test]
@@ -83,7 +118,7 @@ fn workbook_edit_disables_apply_for_a_stale_preview() {
     h.state_mut().run("cell.set", json!({"cell":"A1","input":"3"})).unwrap();
     h.run_steps(20);
     assert!(h.get_by_label("Apply solution (one undo step)").accesskit_node().is_disabled(), "stale preview must visibly disable Apply");
-    assert!(h.query_by_label("Workbook changed: rerun before applying.").is_some());
+    assert!(h.query_by_label("Workbook changed: recalculate to apply. You can still archive this run.").is_some());
     assert_eq!(value(&h, "A1"), Value::Number(3.0));
     assert_eq!(value(&h, "B1"), Value::Number(6.0));
 }
@@ -95,7 +130,7 @@ fn pane_command_honors_visibility_and_german_controls() {
     h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
     h.run_steps(3);
     assert!(h.query_all_by_label("Zielzelle oder Formel").next().is_some());
-    assert!(h.query_by_label("Vorschau starten (Strg+Enter)").is_some());
+    assert!(h.query_by_label("Optimierung berechnen").is_some());
     assert!(h.unnamed_widgets().is_empty(), "visible controls lack accessible names: {:?}", h.unnamed_widgets());
     h.state_mut().run("ui.solvercraft", json!({"on":false})).unwrap();
     h.run_steps(3);
@@ -160,12 +195,18 @@ fn simulate_saved_model(h: &mut common::Harness, name: &str, request: serde_json
     h.run_steps(2);
     h.get_by_label(name).click();
     h.run_steps(2);
-    h.get_by_label("Start preview (Ctrl+Enter)").click();
+    h.get_by_label("Run simulation").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Run simulation").click();
     let deadline = Instant::now() + Duration::from_secs(10);
-    while h.query_by_label(ready_label).is_none() && Instant::now() < deadline {
+    while h.query_by_label("Result details").is_none() && Instant::now() < deadline {
         h.run_steps(4);
         std::thread::sleep(Duration::from_millis(5));
     }
+    h.get_by_label("Result details").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Result details").click();
+    h.run_steps(12);
     assert!(h.query_by_label(ready_label).is_some(), "simulation did not expose {ready_label}");
     let list = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
     let jobs = list["jobs"].as_array().unwrap();

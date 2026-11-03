@@ -254,26 +254,28 @@ fn f64_of(v: &Value) -> f64 {
 
 /// A report: values by (row, col) relative to its top-left corner.
 #[derive(Default)]
-struct Grid {
+pub(super) struct Grid {
     cells: BTreeMap<(u32, u32), Value>,
     /// Cells shown as percentages.
     pct: Vec<(u32, u32)>,
+    /// Explicit widths in points when creating a new sheet.
+    pub(super) column_widths: Vec<f32>,
 }
 
 impl Grid {
-    fn put(&mut self, r: u32, c: u32, v: Value) {
+    pub(super) fn put(&mut self, r: u32, c: u32, v: Value) {
         if !v.is_empty() {
             self.cells.insert((r, c), v);
         }
     }
-    fn txt(&mut self, r: u32, c: u32, t: impl AsRef<str>) {
+    pub(super) fn txt(&mut self, r: u32, c: u32, t: impl AsRef<str>) {
         self.put(r, c, Value::text(t.as_ref()));
     }
     fn num(&mut self, r: u32, c: u32, x: f64) {
         self.put(r, c, Value::number(x));
     }
     /// Writes a row of labels starting at column `c`.
-    fn labels(&mut self, r: u32, c: u32, items: &[&str]) {
+    pub(super) fn labels(&mut self, r: u32, c: u32, items: &[&str]) {
         for (k, t) in items.iter().enumerate() {
             if !t.is_empty() {
                 self.txt(r, c + k as u32, t);
@@ -1054,7 +1056,7 @@ fn anova_single(s: &Session, p: &Json) -> Result<Grid> {
 
 /// Writes the report at `output` (refusing to overwrite data unless `overwrite`) or on a new
 /// sheet.
-fn write_report(s: &mut Session, p: &Json, tool: &str, g: Grid) -> Result<Json> {
+pub(super) fn write_report(s: &mut Session, p: &Json, tool: &str, g: Grid) -> Result<Json> {
     let (rows, cols) = g.extent();
     let (rows, cols) = (rows.max(1), cols.max(1));
     if u64::from(rows) * u64::from(cols) > MAX_OUTPUT_CELLS {
@@ -1112,7 +1114,11 @@ fn write_report(s: &mut Session, p: &Json, tool: &str, g: Grid) -> Result<Json> 
     let new_index = edit(s, |cx| {
         let pct_fmt = NumFmt::new("0.00%");
         if let Some(name) = &new_sheet {
-            cx.wb.sheets.push(std::sync::Arc::new(Sheet::new(name.clone())));
+            let mut sheet = Sheet::new(name.clone());
+            for (col, width) in g.column_widths.iter().enumerate() {
+                sheet.cols.entry(idx(col)).or_default().size = Some(*width);
+            }
+            cx.wb.sheets.push(std::sync::Arc::new(sheet));
             cx.structural = true;
         }
         let pct_styles: Vec<(CellRef, gridcraft_model::StyleId)> = {

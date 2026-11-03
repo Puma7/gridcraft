@@ -288,6 +288,9 @@ impl Builder<'_> {
             Expr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul | BinOp::Div | BinOp::Pow, left, right) => {
                 self.expression(at, left, depth + 1)?.broadcast(self.expression(at, right, depth + 1)?)
             }
+            Expr::Binary(BinOp::Eq | BinOp::Ne | BinOp::Lt | BinOp::Gt | BinOp::Le | BinOp::Ge, left, right) => {
+                self.scalar_arguments(at, [left.as_ref(), right.as_ref()], depth + 1)?
+            }
             Expr::Binary(BinOp::Union, left, right) => {
                 let left = self.expression(at, left, depth + 1)?;
                 let right = self.expression(at, right, depth + 1)?;
@@ -326,9 +329,20 @@ impl Builder<'_> {
         };
         self.expression((definition.scope.unwrap_or(at.0), at.1), &expression, depth + 1)
     }
+    fn scalar_arguments<'a>(&mut self, at: CellBinding, arguments: impl IntoIterator<Item = &'a Expr>, depth: usize) -> Result<Shape> {
+        for argument in arguments {
+            if self.expression(at, argument, depth)?.cells() != 1 {
+                return Err(bad(SOLVE, "Simulation conditionals and comparisons require scalar arguments"));
+            }
+        }
+        Ok(Shape::SCALAR)
+    }
     fn call(&mut self, at: CellBinding, name: &str, arguments: &[Expr], depth: usize) -> Result<Shape> {
         if name == "SC.OUTPUT" && (1..=2).contains(&arguments.len()) {
             return self.expression(at, arguments.first().ok_or_else(|| bad(SOLVE, "SC.OUTPUT requires a value"))?, depth + 1);
+        }
+        if name == "IF" && arguments.len() == 3 {
+            return self.scalar_arguments(at, arguments, depth + 1);
         }
         if matches!(name, "NOW" | "TODAY") && arguments.is_empty() {
             return Ok(Shape::SCALAR);
