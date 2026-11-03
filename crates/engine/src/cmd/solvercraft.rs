@@ -4,6 +4,7 @@
 //! preview immutable snapshots; explicit apply checks identity and revision.
 use std::collections::{HashMap, HashSet};
 
+mod extended_affine;
 #[cfg(test)]
 mod host_tests;
 #[cfg(not(target_arch = "wasm32"))]
@@ -12,8 +13,10 @@ mod jobs;
 #[path = "solvercraft/jobs_web.rs"]
 mod jobs;
 mod legacy;
+mod lot_sizing;
 mod manifest;
 mod parameters;
+mod portfolio;
 #[cfg(test)]
 mod psi_import_tests;
 mod registry;
@@ -138,10 +141,18 @@ struct Snapshot {
 
 struct Prepared {
     model: Option<OptimizationModel>,
+    lot_sizing: Option<lot_sizing::LotSizing>,
+    risk_cap: Option<portfolio::RiskCap>,
     expression: Option<ExpressionModel>,
     bindings: Vec<(usize, CellRef)>,
     names: Vec<Binding>,
     options: SolveOptions,
+}
+
+impl Prepared {
+    fn has_auxiliaries(&self) -> bool {
+        self.model.as_ref().zip(self.expression.as_ref()).is_some_and(|(model, source)| model.variables.len() > source.variables.len())
+    }
 }
 
 fn snapshot(s: &Session) -> Result<Snapshot> {
@@ -193,7 +204,15 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
         let model: OptimizationModel = serde_json::from_value(model.clone()).map_err(sdk_error)?;
         // Compilation/validation also happens in solve; validation must not execute the solver.
         ::solvercraft::model::validate(&model, &opt).map_err(sdk_error)?;
-        return Ok(Prepared { model: Some(model), expression: None, bindings: Vec::new(), names: Vec::new(), options: opt });
+        return Ok(Prepared {
+            model: Some(model),
+            lot_sizing: None,
+            risk_cap: None,
+            expression: None,
+            bindings: Vec::new(),
+            names: Vec::new(),
+            options: opt,
+        });
     }
     let base = match str_param(p, "sheet") {
         Some(name) => wb.sheet_index(name).ok_or_else(|| bad(SOLVE, "The model sheet no longer exists"))?,
@@ -264,24 +283,38 @@ fn prepare(wb: &Workbook, p: &Json) -> Result<Prepared> {
     }
     // Structural compiler failure only permits an explicitly supported
     // expression backend. Other errors retain their original failure meaning.
-    let model = match ::solvercraft::compile::compile(&expr, &opt) {
-        Ok(model) => Some(model),
-        Err(e)
-            if matches!(e.code.as_str(), "unsupported_expression" | "unsupported_constraint")
-                && (opt.method == SolveMethod::DifferentialEvolution
-                    || (matches!(opt.method, SolveMethod::Auto | SolveMethod::ProjectedGradient)
-                        && expr.variables.iter().all(|v| v.kind == VariableKind::Continuous))) =>
-        {
-            ::solvercraft::model::validate(&bounds_model(&expr), &opt).map_err(sdk_error)?;
-            None
+    let lot_sizing = lot_sizing::recognize(&expr, &opt);
+    let risk_cap = portfolio::recognize_risk_cap(&expr, &opt);
+    let model = if lot_sizing.is_some() || risk_cap.is_some() {
+        ::solvercraft::model::validate(&bounds_model(&expr), &opt).map_err(sdk_error)?;
+        None
+    } else {
+        match ::solvercraft::compile::compile(&expr, &opt) {
+            Ok(model) => Some(model),
+            Err(e)
+                if e.code == "numeric_range"
+                    && p.get("extended_affine").and_then(Json::as_bool) == Some(true)
+                    && matches!(opt.method, SolveMethod::Auto | SolveMethod::Simplex | SolveMethod::BranchAndBound) =>
+            {
+                Some(extended_affine::compile(&expr, &opt)?)
+            }
+            Err(e)
+                if matches!(e.code.as_str(), "unsupported_expression" | "unsupported_constraint")
+                    && (opt.method == SolveMethod::DifferentialEvolution
+                        || (matches!(opt.method, SolveMethod::Auto | SolveMethod::ProjectedGradient)
+                            && expr.variables.iter().all(|v| v.kind == VariableKind::Continuous))) =>
+            {
+                ::solvercraft::model::validate(&bounds_model(&expr), &opt).map_err(sdk_error)?;
+                None
+            }
+            Err(e) => return Err(sdk_error(e)),
         }
-        Err(e) => return Err(sdk_error(e)),
     };
     let names = bindings
         .iter()
         .map(|(si, c)| Ok(Binding { sheet: wb.sheet(*si).ok_or(EngineError::NoDocument)?.name.clone(), cell: c.a1() }))
         .collect::<Result<Vec<_>>>()?;
-    Ok(Prepared { model, expression: Some(expr), bindings, names, options: opt })
+    Ok(Prepared { model, lot_sizing, risk_cap, expression: Some(expr), bindings, names, options: opt })
 }
 
 fn variable_bindings(wb: &Workbook, base: usize, source: &Json) -> Result<VariableBindings> {
@@ -552,6 +585,10 @@ impl<'a> Translator<'a> {
     fn expanded(&mut self, base: usize, e: &FormulaExpr, depth: usize) -> Result<Vec<Expr>> {
         self.enter(depth)?;
         match e {
+            FormulaExpr::Name(name) => {
+                let (scope, expression) = self.defined_range(base, name)?;
+                self.expanded(scope, &expression, depth + 1)
+            }
             FormulaExpr::Ref(r) => {
                 let si = reference_sheet(self.wb, base, r)?;
                 let range = r.range();
@@ -727,6 +764,8 @@ impl<'a> Translator<'a> {
                 self.evaluate_fixed(base, &expression)
             }
             "NPV" if args.len() >= 2 => self.fixed_npv(base, args, depth + 1),
+            "AVERAGE" | "VARP" | "VAR.P" | "VAR" | "VAR.S" | "COVAR" | "COVARIANCE.P" | "INDEX" => self.fixed_statistics(base, name, args, depth + 1),
+            "QUADPRODUCT" | "_XLL.QUADPRODUCT" => self.quadratic_product(base, args, depth + 1),
             "SUM" => {
                 let mut terms = Vec::new();
                 for arg in args {
@@ -741,9 +780,9 @@ impl<'a> Translator<'a> {
                 if args.len() > 32 {
                     return Err(bad(SOLVE, "SUMPRODUCT exceeds the 32-array budget"));
                 }
-                let shape = expression_shape(args.first().ok_or_else(|| bad(SOLVE, "Missing SUMPRODUCT argument"))?)?;
+                let shape = self.aggregate_shape(base, &args[0], depth + 1)?;
                 for arg in args {
-                    if expression_shape(arg)? != shape {
+                    if self.aggregate_shape(base, arg, depth + 1)? != shape {
                         return Err(bad(SOLVE, "SUMPRODUCT argument shapes must match"));
                     }
                 }
@@ -822,7 +861,7 @@ fn bounds_model(expr: &ExpressionModel) -> OptimizationModel {
 }
 fn validate_candidate(prepared: &Prepared, values: &[f64]) -> Result<()> {
     let bounds;
-    let model = if let Some(model) = prepared.model.as_ref() {
+    let model = if let Some(model) = prepared.model.as_ref().filter(|_| !prepared.has_auxiliaries()) {
         model
     } else if let Some(expr) = prepared.expression.as_ref() {
         bounds = bounds_model(expr);
@@ -853,10 +892,10 @@ fn validate_candidate(prepared: &Prepared, values: &[f64]) -> Result<()> {
 }
 fn rounded_candidate(prepared: &Prepared, values: &[f64]) -> Result<Vec<f64>> {
     let variables = prepared
-        .model
+        .expression
         .as_ref()
         .map(|m| m.variables.as_slice())
-        .or_else(|| prepared.expression.as_ref().map(|m| m.variables.as_slice()))
+        .or_else(|| prepared.model.as_ref().map(|m| m.variables.as_slice()))
         .ok_or_else(|| bad(SOLVE, "Original variables are missing"))?;
     if variables.len() != values.len() {
         return Err(bad(SOLVE, "Result dimension differs from original variables"));
@@ -885,8 +924,11 @@ fn rounded_candidate(prepared: &Prepared, values: &[f64]) -> Result<Vec<f64>> {
 fn validate(s: &mut Session, p: &Json) -> Result<Json> {
     let prepared = prepare(&s.doc()?.wb, p)?;
     let class = match prepared.model.as_ref() {
+        Some(_) if prepared.has_auxiliaries() => "extended_affine",
         Some(model) if model.objective.quadratic.is_empty() => "linear",
         Some(_) => "quadratic",
+        None if prepared.lot_sizing.is_some() => "separable_lot_sizing",
+        None if prepared.risk_cap.is_some() => "simplex_risk_cap",
         None => "nonlinear_expression",
     };
     Ok(json!({"model":prepared.model,"expression_model":prepared.expression,"bindings":prepared.names,"class":class,"snapshot":snapshot(s)?}))
@@ -913,43 +955,10 @@ fn solve_snapshot(
     pin_request_sheet(wb, &mut request, "optimization")?;
     let prepared = prepare(wb, &request)?;
     request["options"] = json!(prepared.options);
-    let result = match (prepared.expression.as_ref(), prepared.options.method) {
-        (Some(expr), SolveMethod::DifferentialEvolution) => {
-            ::solvercraft::heuristic::solve(expr, &prepared.options, control.as_ref()).map_err(sdk_error)?
-        }
-        (Some(expr), SolveMethod::ProjectedGradient) => {
-            let start = prepared
-                .bindings
-                .iter()
-                .map(|(si, c)| {
-                    let sh = wb.sheet(*si).ok_or(EngineError::NoDocument)?;
-                    numeric(&sh.value(*c))
-                })
-                .collect::<Result<Vec<_>>>()?;
-            solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
-        }
-        (Some(expr), SolveMethod::Auto) if prepared.model.is_none() => {
-            let start = starting_values(wb, &prepared)?;
-            solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
-        }
-        _ => {
-            let model = prepared.model.as_ref().ok_or_else(|| bad(SOLVE, "This method does not support the expression model"))?;
-            match ::solvercraft::engines::solve_owned(model, &prepared.options, std::sync::Arc::clone(&control)) {
-                Ok(result) => result,
-                Err(e)
-                    if matches!(e.code.as_str(), "unsupported_qp" | "unsupported_problem")
-                        && !model.objective.quadratic.is_empty()
-                        && prepared.options.method == SolveMethod::Auto
-                        && prepared.expression.as_ref().is_some_and(|expr| expr.variables.iter().all(|v| v.kind == VariableKind::Continuous)) =>
-                {
-                    let expr = prepared.expression.as_ref().ok_or_else(|| bad(SOLVE, "Missing expression model"))?;
-                    let start = starting_values(wb, &prepared)?;
-                    solve_nonlinear(expr, &start, &prepared.options, &request, control.as_ref())?
-                }
-                Err(e) => return Err(sdk_error(e)),
-            }
-        }
-    };
+    let mut result = solve_prepared(wb, &request, &prepared, control)?;
+    if prepared.has_auxiliaries() {
+        project_extended_result(&prepared, &mut result)?;
+    }
     let mut apply_values = None;
     if let Some(values) = result.values.as_ref()
         && result.feasibility == Feasibility::Feasible
@@ -975,6 +984,95 @@ fn solve_snapshot(
         json!({"result":result,"apply_values":apply_values,"initial_values":initial_values,"request":request,"snapshot":snapshot,"bindings":prepared.names,"manifest":manifest,"execution":"synchronous_bounded"}),
     )
 }
+fn solve_prepared(
+    wb: &Workbook,
+    request: &Json,
+    prepared: &Prepared,
+    control: std::sync::Arc<dyn ::solvercraft::types::RunControl>,
+) -> Result<SolveResult> {
+    if let (Some(route), Some(expression)) = (&prepared.lot_sizing, &prepared.expression) {
+        return Ok(route.solve(expression, &prepared.options, control.as_ref()));
+    }
+    if let (Some(route), Some(expression)) = (&prepared.risk_cap, &prepared.expression) {
+        return Ok(route.solve(expression, &prepared.options, control.as_ref()));
+    }
+    if let Some(model) = prepared.model.as_ref()
+        && prepared.expression.is_some()
+        && !model.objective.quadratic.is_empty()
+        && matches!(prepared.options.method, SolveMethod::Auto | SolveMethod::Simplex)
+        && let Some(result) = portfolio::solve_simplex_quadratic(model, &prepared.options, control.as_ref())?
+        && (prepared.options.method == SolveMethod::Simplex
+            || result.optimality == ::solvercraft::types::Optimality::Optimal
+            || result.termination != ::solvercraft::types::Termination::Completed)
+    {
+        return Ok(result);
+    }
+    let result = match (prepared.expression.as_ref(), prepared.options.method) {
+        (Some(expr), SolveMethod::DifferentialEvolution) => {
+            ::solvercraft::heuristic::solve(expr, &prepared.options, control.as_ref()).map_err(sdk_error)?
+        }
+        (Some(expr), SolveMethod::ProjectedGradient) => {
+            let start = starting_values(wb, prepared)?;
+            solve_nonlinear(expr, &start, &prepared.options, request, control.as_ref())?
+        }
+        (Some(expr), SolveMethod::Auto) if prepared.model.is_none() => {
+            let start = starting_values(wb, prepared)?;
+            solve_nonlinear(expr, &start, &prepared.options, request, control.as_ref())?
+        }
+        _ => {
+            let model = prepared.model.as_ref().ok_or_else(|| bad(SOLVE, "This method does not support the expression model"))?;
+            match ::solvercraft::engines::solve_owned(model, &prepared.options, std::sync::Arc::clone(&control)) {
+                Ok(result) => result,
+                Err(e)
+                    if matches!(e.code.as_str(), "unsupported_qp" | "unsupported_problem")
+                        && !model.objective.quadratic.is_empty()
+                        && prepared.options.method == SolveMethod::Auto
+                        && prepared.expression.as_ref().is_some_and(|expr| expr.variables.iter().all(|v| v.kind == VariableKind::Continuous)) =>
+                {
+                    let expr = prepared.expression.as_ref().ok_or_else(|| bad(SOLVE, "Missing expression model"))?;
+                    let start = starting_values(wb, prepared)?;
+                    solve_nonlinear(expr, &start, &prepared.options, request, control.as_ref())?
+                }
+                Err(e) => return Err(sdk_error(e)),
+            }
+        }
+    };
+    Ok(result)
+}
+
+fn project_extended_result(prepared: &Prepared, result: &mut SolveResult) -> Result<()> {
+    let expression = prepared.expression.as_ref().ok_or_else(|| bad(SOLVE, "Missing source expression"))?;
+    let model = prepared.model.as_ref().ok_or_else(|| bad(SOLVE, "Missing extended model"))?;
+    if let Some(values) = &mut result.values {
+        if values.len() != model.variables.len() {
+            return Err(bad(SOLVE, "Extended solution has an unexpected dimension"));
+        }
+        values.truncate(expression.variables.len());
+        if result.feasibility == Feasibility::Feasible {
+            let original = ::solvercraft::compile::evaluate(&expression.objective, values).map_err(sdk_error)?;
+            let compiled = result.objective.ok_or_else(|| bad(SOLVE, "Extended solution has no objective"))?;
+            let delta = (original - compiled).abs();
+            if delta > prepared.options.feasibility_tolerance * (1.0 + original.abs().max(compiled.abs())) {
+                return Err(bad(SOLVE, "Extended objective disagrees with the original expression"));
+            }
+            if delta > prepared.options.optimality_tolerance && result.optimality == ::solvercraft::types::Optimality::Optimal {
+                result.optimality = ::solvercraft::types::Optimality::BestFound;
+            }
+            result.objective = Some(original);
+            if let Some(bound) = result.best_bound {
+                let outward = match expression.direction {
+                    Direction::Minimize => bound.min(original),
+                    Direction::Maximize => bound.max(original),
+                };
+                result.best_bound = Some(outward);
+                result.relative_gap = Some((outward - original).abs() / original.abs().max(1.0));
+            }
+        }
+    }
+    result.warnings.push("This model uses exact affine auxiliary equalities; displayed values are projected to the original workbook cells.".into());
+    Ok(())
+}
+
 fn solve_nonlinear(
     expr: &ExpressionModel,
     start: &[f64],
@@ -1073,7 +1171,7 @@ fn verify_workbook_snapshot(
     let sheet = str_param(request, "sheet").and_then(|name| wb.sheet_index(name)).unwrap_or(wb.active_sheet());
     let objective = str_param(request, "objective").ok_or_else(|| bad(SOLVE, "Objective is missing"))?;
     let actual = numeric(&gridcraft_calc::evaluate_at(&wb, sheet, CellRef::new(0, 0), objective, time))?;
-    let predicted = match (prepared.model.as_ref(), prepared.expression.as_ref()) {
+    let predicted = match (prepared.model.as_ref().filter(|_| !prepared.has_auxiliaries()), prepared.expression.as_ref()) {
         (Some(model), _) => ::solvercraft::model::evaluate_objective(model, values).map_err(sdk_error)?,
         (_, Some(expr)) => ::solvercraft::compile::evaluate(&expr.objective, values).map_err(sdk_error)?,
         _ => return Err(bad(SOLVE, "The result has no model")),

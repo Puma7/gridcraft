@@ -29,6 +29,9 @@ fn lp_sensitivity(s: &mut Session, p: &Json) -> Result<Json> {
         request["sheet"] = json!(s.doc()?.wb.active().ok_or_else(|| bad(SOLVE, "Active sheet is missing"))?.name);
     }
     let prepared = prepare(&s.doc()?.wb, &request)?;
+    if prepared.has_auxiliaries() {
+        return Err(bad(SOLVE, "LP sensitivity is not available for auxiliary affine formulations"));
+    }
     let model = prepared.model.as_ref().ok_or_else(|| bad(SOLVE, "LP sensitivity requires a structurally compiled linear model"))?;
     let warm: Option<::solvercraft::engines::LpBasis> = p.get("warm_start").cloned().map(serde_json::from_value).transpose().map_err(sdk_error)?;
     let detail = ::solvercraft::engines::solve_lp_with_basis(model, &prepared.options, &NoControl, warm.as_ref()).map_err(sdk_error)?;
@@ -52,8 +55,13 @@ fn answer(s: &mut Session, p: &Json) -> Result<Json> {
     let prepared = prepare(&s.doc()?.wb, request)?;
     let result: SolveResult =
         serde_json::from_value(preview.get("result").cloned().ok_or_else(|| bad(SOLVE, "Result is required"))?).map_err(sdk_error)?;
-    let model =
-        prepared.model.clone().or_else(|| prepared.expression.as_ref().map(bounds_model)).ok_or_else(|| bad(SOLVE, "Original model is missing"))?;
+    let model = prepared
+        .model
+        .as_ref()
+        .filter(|_| !prepared.has_auxiliaries())
+        .cloned()
+        .or_else(|| prepared.expression.as_ref().map(bounds_model))
+        .ok_or_else(|| bad(SOLVE, "Original model is missing"))?;
     let mut variables = Vec::new();
     let mut constraints = Vec::new();
     let mut checked_objective = None;

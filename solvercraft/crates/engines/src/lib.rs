@@ -195,7 +195,7 @@ impl<'a> Budget<'a> {
 }
 
 pub(crate) enum Relaxation {
-    Optimal(Vec<f64>),
+    Optimal(Vec<f64>, Option<f64>),
     Infeasible,
     Unbounded(Vec<f64>),
     Stopped(Termination),
@@ -210,7 +210,20 @@ fn solve_continuous(
 ) -> Result<SolveResult> {
     let outcome = simplex::relax(model, bounds, budget);
     let mut result = match outcome {
-        Relaxation::Optimal(values) => verified_result(model, options, values, Optimality::Optimal)?,
+        Relaxation::Optimal(values, certified) => {
+            let mut result = verified_result(model, options, values, Optimality::Optimal)?;
+            if let Some(bound) = certified
+                && result.feasibility == Feasibility::Feasible
+            {
+                result.best_bound = reported_bound(model, bound).map(|(value, _)| value);
+                result.relative_gap = result.values.as_ref().and_then(|values| {
+                    let working = working_objective(model, values, options).ok()?;
+                    let direction = model.objective.direction;
+                    gap(score(direction, working), bound, score(direction, model.objective.offset))
+                });
+            }
+            result
+        }
         Relaxation::Unbounded(values) => {
             let mut r = verified_result(model, options, values, Optimality::Unbounded)?;
             r.best_bound = None;
@@ -347,8 +360,8 @@ fn solve_mip(
             continue;
         }
         budget.statistics.nodes += 1;
-        let values = match simplex::relax(model, &node.bounds, budget) {
-            Relaxation::Optimal(x) => x,
+        let (values, certified) = match simplex::relax(model, &node.bounds, budget) {
+            Relaxation::Optimal(values, bound) => (values, bound),
             Relaxation::Infeasible => {
                 active_bound = None;
                 continue;
@@ -376,7 +389,7 @@ fn solve_mip(
                 break;
             }
         };
-        let bound = score(model.objective.direction, relaxed_objective);
+        let bound = certified.unwrap_or_else(|| score(model.objective.direction, relaxed_objective));
         active_bound = Some(bound);
         if let Some((_, best)) = &incumbent
             && bound >= *best - options.optimality_tolerance

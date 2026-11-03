@@ -513,9 +513,17 @@ fn legacy(s: &mut Session, p: &Json) -> Result<Json> {
         _ if integer => "auto",
         _ => "projected_gradient",
     });
+    request["extended_affine"] = json!(true);
+    if request["method"] == "projected_gradient" {
+        let mut probe = request.clone();
+        probe["method"] = json!("auto");
+        if super::prepare(wb, &probe).is_ok_and(|prepared| prepared.lot_sizing.is_some()) {
+            request = probe;
+        }
+    }
     let mut result = create(s, &json!({"name":str_param(p,"name").unwrap_or("Imported Solver model"),"request":request}))?;
     result["import_notes"] = json!([
-        "Legacy GRG is not reproduced as a GRG algorithm. Continuous local search uses projected_gradient; integer linear models use auto/branch_and_bound.",
+        "Legacy GRG maps to projected_gradient for local search. A recognized positive reciprocal model uses the certified auto route.",
         "Legacy Simplex with integer domains maps to actual branch_and_bound; a pure Simplex relaxation never silently drops integer restrictions.",
         "Legacy reports and search tuning have no lossless Solvercraft mapping; original solver_* names are preserved."
     ]);

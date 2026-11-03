@@ -24,9 +24,11 @@ struct Tableau {
     rows: Vec<Vec<f64>>,
     basis: Vec<usize>,
     width: usize,
+    repaired_rhs: bool,
 }
 enum Step {
     Optimal,
+    Certified(f64),
     Unbounded(usize),
     Stopped(Termination),
     Numerical(String),
@@ -229,7 +231,7 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         rows.push(values);
         basis.push(basic);
     }
-    let mut tableau = Tableau { rows, basis, width };
+    let mut tableau = Tableau { rows, basis, width, repaired_rhs: false };
     if artificial > 0 {
         let mut phase = allocated(width + 1, 0.0)?;
         for value in phase.iter_mut().take(width).skip(non_artificial) {
@@ -250,6 +252,7 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
                 return Err(Relaxation::Numerical("Phase-one objective unexpectedly became unbounded.".into()));
             }
             Step::Optimal => {}
+            Step::Certified(_) => return Err(Relaxation::Numerical("Unexpected phase-one certificate.".into())),
         }
         let mut artificial_value = solvercraft_model::ExactProducts::default();
         for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
@@ -306,37 +309,16 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         cost[j] = original_cost[c.original] * c.sign;
     }
     let mut objective = allocated(width + 1, 0.0)?;
-    let outcome = simplex(&mut tableau, &mut objective, non_artificial, None, Some(&cost), budget);
-    let unbounded = match outcome {
-        Step::Optimal => None,
-        Step::Unbounded(column) => Some(column),
+    let proof = CycleProof { model, bounds, columns: &columns, offset: &offset, links: &dual_links, costs: &cost, direction };
+    let outcome = simplex(&mut tableau, &mut objective, non_artificial, None, Some(&proof), budget);
+    let (unbounded, certified) = match outcome {
+        Step::Optimal => (None, None),
+        Step::Certified(bound) => (None, Some(bound)),
+        Step::Unbounded(column) => (Some(column), None),
         Step::Stopped(reason) => return Err(Relaxation::Stopped(reason)),
         Step::Numerical(reason) => return Err(Relaxation::Numerical(reason)),
     };
-    let mut transformed = allocated(width, 0.0)?;
-    for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
-        transformed[*basic] = row[width];
-    }
-    let mut values = allocated(n, 0.0)?;
-    for (original, value) in values.iter_mut().enumerate() {
-        if original % 64 == 0 {
-            budget.check().map_err(Relaxation::Stopped)?;
-        }
-        let displacement =
-            || columns.iter().enumerate().filter(|(_, column)| column.original == original).map(|(j, column)| column.sign * transformed[j]);
-        *value = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()))
-            .map_err(|e| Relaxation::Numerical(format!("Original-coordinate reconstruction: {e}")))?;
-        let lost = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()).chain(std::iter::once(-*value)))
-            .map_err(|e| Relaxation::Numerical(format!("Reconstruction precision check: {e}")))?;
-        if lost.abs() > budget.options.feasibility_tolerance {
-            return Err(Relaxation::Numerical(
-                "Original-coordinate reconstruction loses a displacement larger than the feasibility tolerance; rescale the variable.".into(),
-            ));
-        }
-    }
-    if !finite(&values) {
-        return Err(Relaxation::Numerical("Non-finite original-space LP solution.".into()));
-    }
+    let values = original_point(&tableau, &columns, &offset, budget)?;
     // Continuous checks include tighter branch bounds and original linear rows.
     for (x, (lo, hi)) in values.iter().zip(bounds) {
         if lo.is_some_and(|l| *x < l - budget.options.feasibility_tolerance) || hi.is_some_and(|h| *x > h + budget.options.feasibility_tolerance) {
@@ -364,8 +346,36 @@ fn run(model: &OptimizationModel, bounds: &[(Option<f64>, Option<f64>)], budget:
         }
         Ok(Relaxation::Unbounded(values))
     } else {
-        Ok(Relaxation::Optimal(values))
+        Ok(Relaxation::Optimal(values, certified))
     }
+}
+
+fn original_point(tableau: &Tableau, columns: &[Column], offset: &[f64], budget: &Budget<'_>) -> std::result::Result<Vec<f64>, Relaxation> {
+    let mut transformed = allocated(tableau.width, 0.0)?;
+    for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
+        transformed[*basic] = row[tableau.width];
+    }
+    let mut values = allocated(offset.len(), 0.0)?;
+    for (original, value) in values.iter_mut().enumerate() {
+        if original % 64 == 0 {
+            budget.check().map_err(Relaxation::Stopped)?;
+        }
+        let displacement =
+            || columns.iter().enumerate().filter(|(_, column)| column.original == original).map(|(j, column)| column.sign * transformed[j]);
+        *value = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()))
+            .map_err(|e| Relaxation::Numerical(format!("Original-coordinate reconstruction: {e}")))?;
+        let lost = solvercraft_model::compensated_sum(std::iter::once(offset[original]).chain(displacement()).chain(std::iter::once(-*value)))
+            .map_err(|e| Relaxation::Numerical(format!("Reconstruction precision check: {e}")))?;
+        if lost.abs() > budget.options.feasibility_tolerance {
+            return Err(Relaxation::Numerical(
+                "Original-coordinate reconstruction loses a displacement larger than the feasibility tolerance; rescale the variable.".into(),
+            ));
+        }
+    }
+    if !finite(&values) {
+        return Err(Relaxation::Numerical("Non-finite original-space LP solution.".into()));
+    }
+    Ok(values)
 }
 
 fn recession_certificate(
@@ -459,7 +469,7 @@ fn propagate_certificate_box(
     mut bounds: Vec<Bounds>,
     budget: &Budget<'_>,
 ) -> std::result::Result<Vec<Bounds>, Relaxation> {
-    for _ in 0..4 {
+    for _ in 0..16 {
         let previous = bounds.clone();
         for row in &model.constraints {
             budget.check().map_err(Relaxation::Stopped)?;
@@ -629,15 +639,114 @@ fn refresh_objective(t: &Tableau, obj: &mut [f64], costs: &[f64], allowed: usize
     Ok(())
 }
 
+struct CycleProof<'a> {
+    model: &'a OptimizationModel,
+    bounds: &'a [Bounds],
+    columns: &'a [Column],
+    offset: &'a [f64],
+    links: &'a [DualLink],
+    costs: &'a [f64],
+    direction: f64,
+}
+
+impl CycleProof<'_> {
+    fn verify(&self, tableau: &Tableau, budget: &Budget<'_>) -> std::result::Result<Option<f64>, Relaxation> {
+        let weights = self.weights(tableau, budget)?;
+        let bounds = propagate_certificate_box(self.model, crate::certificate_box(self.model, self.bounds), budget)?;
+        let Some(lower) = self.lower_bound(&weights, &bounds, budget)? else { return Ok(None) };
+        let values = original_point(tableau, self.columns, self.offset, budget)?;
+        let mut gap = solvercraft_model::ExactProducts::default();
+        for term in &self.model.objective.linear {
+            gap.add_product(self.direction * term.coefficient, values[term.variable]).map_err(exact_error)?;
+        }
+        gap.add(-lower).map_err(exact_error)?;
+        let tolerance = budget.options.optimality_tolerance;
+        let mut above = gap.clone();
+        above.add(-tolerance).map_err(exact_error)?;
+        gap.add(tolerance).map_err(exact_error)?;
+        use std::cmp::Ordering;
+        let close = above.exact_sign().map_err(exact_error)? != Ordering::Greater && gap.exact_sign().map_err(exact_error)? != Ordering::Less;
+        Ok(close.then_some(lower))
+    }
+
+    fn weights(&self, tableau: &Tableau, budget: &Budget<'_>) -> std::result::Result<Vec<f64>, Relaxation> {
+        let mut weights = allocated(self.model.constraints.len(), 0.0)?;
+        for link in self.links {
+            budget.check().map_err(Relaxation::Stopped)?;
+            let mut sum = solvercraft_model::ExactProducts::default();
+            for (row, basic) in tableau.rows.iter().zip(&tableau.basis) {
+                sum.add_product(self.costs[*basic], row[link.column]).map_err(exact_error)?;
+            }
+            let weight = sum.finish().map_err(exact_error)? * link.multiplier;
+            if !weight.is_finite() {
+                return Err(Relaxation::Numerical("Phase-two dual weight overflowed.".into()));
+            }
+            weights[link.source] = match self.model.constraints[link.source].relation {
+                Relation::LessEqual => weight.min(0.0),
+                Relation::GreaterEqual => weight.max(0.0),
+                Relation::Equal => weight,
+            };
+        }
+        Ok(weights)
+    }
+
+    /// For any feasible x, c*x >= y*b + (c-y*A)*x. Choose each
+    /// coordinate's minimizing endpoint from a box containing the feasible set.
+    /// Accumulate the resulting bound in the original coefficient space.
+    fn lower_bound(&self, weights: &[f64], bounds: &[Bounds], budget: &Budget<'_>) -> std::result::Result<Option<f64>, Relaxation> {
+        use std::cmp::Ordering;
+        let mut reduced = allocated(bounds.len(), solvercraft_model::ExactProducts::default())?;
+        let mut lower = solvercraft_model::ExactProducts::default();
+        for term in &self.model.objective.linear {
+            reduced[term.variable].add(self.direction * term.coefficient).map_err(exact_error)?;
+        }
+        for (row, weight) in self.model.constraints.iter().zip(weights) {
+            budget.check().map_err(Relaxation::Stopped)?;
+            lower.add_product(*weight, row.rhs).map_err(exact_error)?;
+            for term in &row.terms {
+                reduced[term.variable].add_product(-*weight, term.coefficient).map_err(exact_error)?;
+            }
+        }
+        let mut endpoints = allocated(bounds.len(), 0.0)?;
+        for ((reduced, (lo, hi)), endpoint) in reduced.iter().zip(bounds).zip(&mut endpoints) {
+            let chosen = match reduced.exact_sign().map_err(exact_error)? {
+                Ordering::Greater => *lo,
+                Ordering::Less => *hi,
+                Ordering::Equal => Some(0.0),
+            };
+            let Some(value) = chosen else { return Ok(None) };
+            *endpoint = value;
+        }
+        for term in &self.model.objective.linear {
+            lower.add_product(self.direction * term.coefficient, endpoints[term.variable]).map_err(exact_error)?;
+        }
+        for (row, weight) in self.model.constraints.iter().zip(weights) {
+            budget.check().map_err(Relaxation::Stopped)?;
+            for term in &row.terms {
+                lower.add_triple(-*weight, term.coefficient, endpoints[term.variable]).map_err(exact_error)?;
+            }
+        }
+        let outward = lower.finish().map_err(exact_error)?.next_down();
+        Ok(outward.is_finite().then_some(outward))
+    }
+}
+
+fn exact_error(error: solvercraft_types::SolverError) -> Relaxation {
+    Relaxation::Numerical(error.to_string())
+}
+
 fn simplex(
     t: &mut Tableau,
     obj: &mut [f64],
     allowed: usize,
     artificial_start: Option<usize>,
-    original_costs: Option<&[f64]>,
+    proof: Option<&CycleProof<'_>>,
     budget: &mut Budget<'_>,
 ) -> Step {
-    loop {
+    let mut history = [None; 64];
+    let mut cursor = 0;
+    let mut scan_start = 0;
+    'iteration: loop {
         if let Err(reason) = budget.step() {
             return Step::Stopped(reason);
         }
@@ -649,8 +758,8 @@ fn simplex(
             obj[t.width] = 0.0;
             return Step::Optimal;
         }
-        if let Some(costs) = original_costs
-            && let Err(reason) = refresh_objective(t, obj, costs, allowed, budget)
+        if let Some(proof) = proof
+            && let Err(reason) = refresh_objective(t, obj, proof.costs, allowed, budget)
         {
             return match reason {
                 Relaxation::Stopped(reason) => Step::Stopped(reason),
@@ -662,8 +771,34 @@ fn simplex(
         // A small reduced cost can still improve the objective substantially over
         // a wide interval. Never turn it into a zero-gap optimality certificate
         // merely by comparing its magnitude with an absolute gradient threshold.
-        let entering = (0..allowed).find(|j| obj[*j] < 0.0);
+        // A basis may repeat in floating point even with Bland's rule.
+        // Change only the search order on recurrence. No reduced cost is
+        // discarded and each new pivot still undergoes the same checks.
+        let signature = t.basis.iter().fold(0_u64, |hash, column| hash.wrapping_mul(1099511628211).wrapping_add(*column as u64));
+        if history.contains(&Some(signature)) && allowed > 0 {
+            if let Some(proof) = proof {
+                match proof.verify(t, budget) {
+                    Ok(Some(bound)) => return Step::Certified(bound),
+                    Err(Relaxation::Stopped(reason)) => return Step::Stopped(reason),
+                    _ => {}
+                }
+            }
+            scan_start = (scan_start + 1) % allowed;
+            history.fill(None);
+        }
+        history[cursor] = Some(signature);
+        cursor = (cursor + 1) % history.len();
+        let entering = (scan_start..allowed).chain(0..scan_start).find(|j| obj[*j] < 0.0 && !t.basis.contains(j));
         let Some(j) = entering else {
+            if t.repaired_rhs
+                && let Some(proof) = proof
+            {
+                return match proof.verify(t, budget) {
+                    Ok(Some(bound)) => Step::Certified(bound),
+                    Err(Relaxation::Stopped(reason)) => Step::Stopped(reason),
+                    _ => Step::Numerical("Could not certify the original optimum after correcting a negative basic residual.".into()),
+                };
+            }
             return Step::Optimal;
         };
         let mut leaving: Option<(usize, f64)> = None;
@@ -677,6 +812,15 @@ fn simplex(
                 return Step::Numerical("Non-finite ratio test.".into());
             }
             if ratio < -budget.options.feasibility_tolerance {
+                // A small negative basic value can look large after division
+                // by a tiny pivot. Repair only in the basic value's own units.
+                // A repaired phase two must certify its original-space bound.
+                if row[t.width] >= -budget.options.feasibility_tolerance {
+                    t.rows[i][t.width] = 0.0;
+                    t.repaired_rhs = true;
+                    history.fill(None);
+                    continue 'iteration;
+                }
                 return Step::Numerical("Lost primal feasibility during simplex.".into());
             }
             let better = match leaving {
@@ -709,6 +853,54 @@ mod certificate_tests {
     #![allow(clippy::unwrap_used)]
     use super::*;
     use solvercraft_types::{LinearConstraint, LinearTerm, NoControl, Objective, SCHEMA_VERSION, SolveOptions, Variable, VariableKind};
+
+    #[test]
+    fn small_negative_basic_value_does_not_inherit_the_pivots_amplification() {
+        let options = SolveOptions::default();
+        let mut budget = Budget::new(&options, &NoControl);
+        let mut tableau = Tableau { rows: vec![vec![2e-12, 1.0, -1e-13]], basis: vec![1], width: 2, repaired_rhs: false };
+        let mut objective = [-1.0, 0.0, 0.0];
+        assert!(matches!(simplex(&mut tableau, &mut objective, 2, Some(1), None, &mut budget), Step::Optimal));
+        assert!(tableau.repaired_rhs);
+
+        tableau.rows[0][2] = -1e-4;
+        tableau.repaired_rhs = false;
+        assert!(matches!(simplex(&mut tableau, &mut objective, 2, Some(1), None, &mut budget), Step::Numerical(_)));
+        assert!(!tableau.repaired_rhs);
+    }
+
+    #[test]
+    fn cycle_certificate_keeps_the_original_small_descent() {
+        let variable = Variable { name: "v".into(), kind: VariableKind::Continuous, lower: Some(0.0), upper: None };
+        let model = OptimizationModel {
+            schema_version: SCHEMA_VERSION,
+            name: "original lower bound".into(),
+            variables: vec![variable; 2],
+            objective: Objective {
+                direction: Direction::Minimize,
+                offset: 0.0,
+                linear: vec![LinearTerm { variable: 0, coefficient: 2.0 }, LinearTerm { variable: 1, coefficient: 1.0_f64.next_down() }],
+                quadratic: vec![],
+            },
+            constraints: vec![LinearConstraint {
+                name: "demand".into(),
+                relation: Relation::GreaterEqual,
+                rhs: 1.0,
+                terms: vec![LinearTerm { variable: 0, coefficient: 1.0 }, LinearTerm { variable: 1, coefficient: 1.0 }],
+            }],
+        };
+        let options = SolveOptions::default();
+        let budget = Budget::new(&options, &NoControl);
+        let bounds = [(Some(0.0), None); 2];
+        let proof = CycleProof { model: &model, bounds: &bounds, columns: &[], offset: &[], links: &[], costs: &[], direction: 1.0 };
+        // Rounding the reduced cost to zero would falsely certify a finite
+        // lower bound from this dual weight on the unbounded variable.
+        let unbounded = proof.lower_bound(&[1.0], &bounds, &budget).ok().unwrap();
+        assert_eq!(unbounded, None);
+        let bounded = proof.lower_bound(&[1.0], &[(Some(0.0), None), (Some(0.0), Some(2.0))], &budget).ok().unwrap().unwrap();
+        assert!(bounded <= 1.0 - 2.0 * (1.0 - 1.0_f64.next_down()));
+        assert!(bounded > 0.999_999_999_999);
+    }
 
     #[test]
     fn implied_certificate_bounds_propagate_outward_across_original_rows() {

@@ -244,7 +244,8 @@ pub fn lookup(name: &str) -> Option<&'static FnSpec> {
         }
     }
     let (v, map) = registry();
-    map.get(n.as_str()).and_then(|&i| v.get(i))
+    let key = if n == "_XLL.QUADPRODUCT" { "QUADPRODUCT" } else { n.as_str() };
+    map.get(key).and_then(|&i| v.get(i))
 }
 
 /// Every registered function.
