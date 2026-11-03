@@ -353,7 +353,7 @@ fn reference_sheet(wb: &Workbook, base: usize, r: &Reference) -> Result<usize> {
     }
 }
 fn cells(wb: &Workbook, base: usize, text: &str, cap: usize) -> Result<Vec<(usize, CellRef)>> {
-    let expr = parse(text)?;
+    let expr = gridcraft_formula::parse_name(text.trim()).map_err(|error| bad(SOLVE, format!("Invalid cell reference: {error:?}")))?;
     let mut out = Vec::new();
     fn collect(wb: &Workbook, base: usize, expr: &FormulaExpr, cap: usize, depth: usize, out: &mut Vec<(usize, CellRef)>) -> Result<()> {
         if depth > MAX_DEPTH {
@@ -374,6 +374,18 @@ fn cells(wb: &Workbook, base: usize, text: &str, cap: usize) -> Result<Vec<(usiz
                 collect(wb, base, b, cap, depth + 1, out)
             }
             FormulaExpr::Paren(a) => collect(wb, base, a, cap, depth + 1, out),
+            FormulaExpr::Name(name) => {
+                let (scope, bare) = match gridcraft_core::split_sheet(name) {
+                    (Some(sheet), bare) => (wb.sheet_index(&sheet).ok_or_else(|| bad(SOLVE, format!("Unknown sheet: {sheet}")))?, bare),
+                    (None, bare) => (base, bare),
+                };
+                let defined = wb.name(bare, scope).ok_or_else(|| bad(SOLVE, format!("Unknown range name: {name}")))?;
+                let expr = gridcraft_formula::parse_name(&defined.formula).map_err(|error| bad(SOLVE, format!("Invalid range name: {error:?}")))?;
+                if gridcraft_formula::adjust::has_relative_refs(&expr) {
+                    return Err(bad(SOLVE, "Named Solvercraft ranges must use absolute references"));
+                }
+                collect(wb, defined.scope.unwrap_or(scope), &expr, cap, depth + 1, out)
+            }
             _ => Err(bad(SOLVE, "Expected explicit cell references; dynamic references are not supported")),
         }
     }
@@ -623,6 +635,37 @@ impl<'a> Translator<'a> {
             _ => Err(bad(SOLVE, "Unsupported formula construct; no cached-value or numerical-linearity substitution was made")),
         }
     }
+    /// Freeze an NPV only after proving that all its inputs are independent
+    /// numeric literals or stored cells. Calc supplies the workbook semantics.
+    fn fixed_npv(&mut self, base: usize, args: &[FormulaExpr], depth: usize) -> Result<Expr> {
+        for arg in args {
+            self.enter(depth)?;
+            match arg {
+                FormulaExpr::Number(number) if number.is_finite() => {}
+                FormulaExpr::Ref(reference) => {
+                    let sheet = reference_sheet(self.wb, base, reference)?;
+                    let sh = self.wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
+                    let range = reference.range();
+                    if range.count() > MAX_RANGE_CELLS {
+                        return Err(bad(SOLVE, "NPV range exceeds the expansion budget"));
+                    }
+                    for cell in range.iter() {
+                        self.enter(depth)?;
+                        if self.bindings.contains_key(&(sheet, cell))
+                            || sh.spill_anchor(cell).is_some()
+                            || sh.cell(cell).is_some_and(|value| value.formula.is_some())
+                            || !matches!(sh.value(cell), Value::Number(n) if n.is_finite())
+                        {
+                            return Err(bad(SOLVE, "NPV requires fixed numeric inputs in optimization models"));
+                        }
+                    }
+                }
+                _ => return Err(bad(SOLVE, "NPV requires fixed numeric inputs in optimization models")),
+            }
+        }
+        let formula = gridcraft_formula::print(&FormulaExpr::Call("NPV".into(), args.to_vec()));
+        numeric(&gridcraft_calc::evaluate_at(self.wb, base, CellRef::default(), &formula, self.frozen_now)).map(Expr::constant)
+    }
     fn call(&mut self, base: usize, name: &str, args: &[FormulaExpr], depth: usize) -> Result<Expr> {
         self.enter(depth)?;
         match name {
@@ -633,6 +676,7 @@ impl<'a> Translator<'a> {
             "SC.OUTPUT" if (1..=2).contains(&args.len()) => {
                 self.expr(base, args.first().ok_or_else(|| bad(SOLVE, "SC.OUTPUT requires a value"))?, depth + 1)
             }
+            "NPV" if args.len() >= 2 => self.fixed_npv(base, args, depth + 1),
             "SUM" => {
                 let mut terms = Vec::new();
                 for arg in args {

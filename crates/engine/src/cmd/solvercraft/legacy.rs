@@ -5,10 +5,7 @@ use super::{
 };
 
 fn legacy_cells(wb: &Workbook, sheet: usize, text: &str) -> Result<Vec<(usize, super::CellRef)>> {
-    let mut result = Vec::new();
-    for part in text.split(',').map(str::trim).filter(|part| !part.is_empty()) {
-        result.extend(cells(wb, sheet, part, 4096usize.saturating_sub(result.len()))?);
-    }
+    let result = cells(wb, sheet, text, super::MAX_BINDINGS)?;
     if result.is_empty() {
         return Err(bad(SOLVE, "Legacy reference is empty"));
     }

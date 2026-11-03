@@ -612,3 +612,55 @@ fn result_sheet_archives_the_owned_snapshot_and_is_undoable() {
     s.execute("edit.undo", json!({})).unwrap();
     assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::default()), Value::number(2.0));
 }
+
+#[test]
+fn solvercraft_accepts_fixed_npv_coefficients_without_freezing_decision_cells() {
+    let mut s = session();
+    set(&mut s, "D1", "0.1");
+    set(&mut s, "D2", "-20");
+    set(&mut s, "D3", "44");
+    set(&mut s, "B1", "=A1*NPV(D1,D2:D3)");
+    let solved = s.execute("solvercraft.solve", request()).unwrap();
+    let expected = 5.0 * (-20.0 / 1.1 + 44.0 / (1.1 * 1.1));
+    assert!((solved["result"]["objective"].as_f64().unwrap() - expected).abs() < 1e-10);
+    s.execute("solvercraft.result.apply", solved).unwrap();
+    assert_eq!(s.doc().unwrap().wb.active().unwrap().value(CellRef::default()), Value::number(5.0));
+
+    for formula in ["=NPV(D1,A1:D1)", "=NPV(D1,D2:D4)", "=NPV(D1,D2:D3+1)"] {
+        set(&mut s, "B1", formula);
+        let error = s.execute("solvercraft.validate", request()).unwrap_err();
+        assert!(error.to_string().contains("NPV requires fixed numeric inputs"), "{error}");
+    }
+}
+
+#[test]
+fn solvercraft_legacy_import_uses_scoped_names_and_preserves_quoted_cross_sheet_bindings() {
+    let mut s = session();
+    s.execute("home.insertSheet", json!({"name":"Limits, Inc"})).unwrap();
+    set(&mut s, "C1", "3");
+    s.execute("home.insertSheet", json!({"name":"Model"})).unwrap();
+    set(&mut s, "A1", "0");
+    set(&mut s, "B1", "=2*A1");
+    let doc = s.doc_mut().unwrap();
+    let wb = Arc::make_mut(&mut doc.wb);
+    let model = wb.active_sheet();
+    for (name, formula, scope) in [
+        ("Cap", "'Limits, Inc'!$C$1", Some(model)),
+        ("Cap", "Model!$Z$1", None),
+        ("solver_opt", "Model!$B$1", Some(model)),
+        ("solver_adj", "Model!$A$1", Some(model)),
+        ("solver_num", "1", Some(model)),
+        ("solver_lhs1", "Model!$A$1", Some(model)),
+        ("solver_rel1", "1", Some(model)),
+        ("solver_rhs1", "Cap", Some(model)),
+        ("solver_eng", "2", Some(model)),
+    ] {
+        wb.names.push(gridcraft_model::DefinedName { name: name.into(), formula: formula.into(), scope, comment: String::new(), hidden: true });
+    }
+    let imported = s.execute("solvercraft.model.importLegacy", json!({})).unwrap();
+    assert_eq!(imported["request"]["constraints"][0]["rhs"], "'Limits, Inc'!$C$1");
+    let solved = s.execute("solvercraft.solve", imported["request"].clone()).unwrap();
+    assert_eq!(solved["result"]["objective"], 6.0);
+    Arc::make_mut(&mut s.doc_mut().unwrap().wb).names.retain(|name| name.name != "solver_rhs1");
+    assert!(s.execute("solvercraft.model.importLegacy", json!({"name":"Incomplete"})).is_err());
+}

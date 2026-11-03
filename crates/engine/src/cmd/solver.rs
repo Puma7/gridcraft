@@ -42,6 +42,7 @@ mod reports;
 
 use evolutionary::{EvoEnd, evolutionary};
 use lp::{Outcome, Sense, branch_and_bound, linearize, solve_lp};
+pub(crate) use model::qualified_saved_model;
 pub use model::saved_model;
 use model::{Goal, Method, Model, model_params, parse_model, save_model};
 use nlp::{nlp, project};

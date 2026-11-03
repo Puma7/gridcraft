@@ -360,13 +360,19 @@ pub(super) fn save_model(wb: &mut Workbook, m: &Model) {
 
 /// The saved model of a sheet as `data.solver` params, if any.
 pub fn saved_model(wb: &Workbook, sheet: usize) -> Option<Json> {
-    let get = |n: &str| {
-        wb.names
-            .iter()
-            .find(|d| d.name.eq_ignore_ascii_case(n) && (d.scope == Some(sheet) || d.scope.is_none()))
-            .map(|d| d.formula.trim().trim_start_matches('=').to_string())
+    read_saved_model(wb, sheet, false)
+}
+
+/// Solvercraft consumes fully qualified references and refuses incomplete rows.
+pub(crate) fn qualified_saved_model(wb: &Workbook, sheet: usize) -> Option<Json> {
+    read_saved_model(wb, sheet, true)
+}
+
+fn read_saved_model(wb: &Workbook, sheet: usize, qualified: bool) -> Option<Json> {
+    let get = |n: &str| wb.name(n, sheet).map(|d| d.formula.trim().trim_start_matches('=').to_string());
+    let local = |text: String| -> String {
+        if qualified { text } else { text.split(',').map(|part| split_sheet(part.trim()).1.replace('$', "")).collect::<Vec<_>>().join(",") }
     };
-    let local = |t: String| -> String { t.split(',').map(|p| split_sheet(p.trim()).1.replace('$', "")).collect::<Vec<_>>().join(",") };
     let objective = local(get("solver_opt")?);
     if objective.is_empty() {
         return None;
@@ -381,9 +387,20 @@ pub fn saved_model(wb: &Workbook, sheet: usize) -> Option<Json> {
     let mut constraints = Vec::new();
     for k in 1..=count {
         let (Some(lhs), Some(rel)) = (get(&format!("solver_lhs{k}")), get(&format!("solver_rel{k}")).and_then(|r| Rel::from_code(&r))) else {
+            if qualified {
+                return None;
+            }
             continue;
         };
         let lhs = local(lhs);
+        if qualified {
+            let rhs = match rel {
+                Rel::Int | Rel::Bin => String::new(),
+                _ => get(&format!("solver_rhs{k}"))?,
+            };
+            constraints.push(json!({"lhs":lhs,"op":rel.text(),"rhs":rhs}));
+            continue;
+        }
         constraints.push(match rel {
             Rel::Int | Rel::Bin => json!(format!("{lhs} {}", rel.text())),
             _ => {

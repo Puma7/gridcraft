@@ -490,7 +490,8 @@ fn legacy(s: &mut Session, p: &Json) -> Result<Json> {
         .map(|name| wb.sheet_index(name).ok_or_else(|| bad(SOLVE, "Unknown legacy model sheet")))
         .transpose()?
         .unwrap_or(wb.active_sheet());
-    let mut request = super::super::solver::saved_model(wb, sheet).ok_or_else(|| bad(SOLVE, "No saved solver_* model exists on this sheet"))?;
+    let mut request =
+        super::super::solver::qualified_saved_model(wb, sheet).ok_or_else(|| bad(SOLVE, "No saved solver_* model exists on this sheet"))?;
     super::legacy::import_request(wb, sheet, &mut request)?;
     if let Some(seed) = request
         .get("randomSeed")
