@@ -828,3 +828,35 @@ fn incomplete_simulation_statistics_never_offer_publishable_values() {
         assert!(stats.finish(wb, &["Sheet1!B1".into()], &result(status, 3), 4).unwrap().is_empty());
     }
 }
+
+#[test]
+fn worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance() {
+    let _guard = async_fixture();
+    let mut s = session();
+    set(&mut s, "A1", "=SC.DISCRETEUNIFORM(0,1)");
+    for (cell, name) in [("C1", "_xll.PsiMin"), ("D1", "PsiMax"), ("E1", "PsiRange"), ("F1", "PsiVariance"), ("G1", "PsiStdDev")] {
+        set(&mut s, cell, &format!("={name}(A1)"));
+    }
+    let request = |trials| json!({"kind":"simulation","request":{"options":{"method":"latin_hypercube","trials":trials,"seed":"82","retain_samples":false,"max_memory_bytes":1048576}}});
+    let job = s.execute("solvercraft.job.start", request(1)).unwrap();
+    let preview = wait(&mut s, &job["id"]);
+    let stats = preview["worksheet_statistics"].as_array().unwrap();
+    assert_eq!(stats.len(), 3);
+    assert_eq!(stats[2]["value"].as_f64(), Some(0.0));
+    s.execute("solvercraft.job.forget", json!({"id":job["id"]})).unwrap();
+
+    let job = s.execute("solvercraft.job.start", request(4)).unwrap();
+    let preview = wait(&mut s, &job["id"]);
+    assert_eq!(preview["outputs"], json!(["Sheet1!A1"]));
+    assert_eq!(preview["result"]["samples"], Json::Null);
+    assert_eq!(s.execute("solvercraft.job.applyStatistics", json!({"id":job["id"]})).unwrap()["updated"], 5);
+    let wb = &s.doc().unwrap().wb;
+    let expected = [("C1", 0.0), ("D1", 1.0), ("E1", 1.0), ("F1", 1.0 / 3.0), ("G1", (1.0_f64 / 3.0).sqrt())];
+    for (cell, reference) in expected {
+        let position = CellRef::parse(cell).unwrap();
+        let sheet = wb.sheet(0).unwrap();
+        let actual = sheet.value(position).to_number().unwrap();
+        assert!((actual - reference).abs() < 1e-14, "{cell}: {actual}");
+        assert!(sheet.cell(position).unwrap().formula.is_some());
+    }
+}

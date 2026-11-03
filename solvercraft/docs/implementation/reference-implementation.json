@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "legacy-2025q1-executable-map-v4",
+  "version": "legacy-2025q1-executable-map-v5",
   "frozen_source_sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
   "requirements_source": "docs/masterplan/requirements.csv",
   "scope": {
@@ -15,7 +15,7 @@
     "host_core_imports": 32,
     "host_bounded_additions": 2,
     "host_discovery_only": 0,
-    "host_run_statistics": 2
+    "host_run_statistics": 7
   },
   "functions": [
     {
@@ -7847,7 +7847,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiBaseCase-signature-defaults",
@@ -9429,18 +9429,40 @@
         "url": "internal:legacy-psi-reference#page=369"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+          "public_api": "worksheet command",
+          "scope": "Streaming minimum, maximum, range, sample variance and standard deviation, applied to original formulas. Undefined sample variance remains unavailable.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiMax-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_sample_summary",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Maximum of the completed run. Optional run and slice selection remain open."
     },
     {
       "id": "PSI-PsiMean",
@@ -9480,7 +9502,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         },
         {
           "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -9501,7 +9523,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMean-signature-defaults",
@@ -9627,18 +9649,40 @@
         "url": "internal:legacy-psi-reference#page=370"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+          "public_api": "worksheet command",
+          "scope": "Streaming minimum, maximum, range, sample variance and standard deviation, applied to original formulas. Undefined sample variance remains unavailable.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiMin-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_sample_summary",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Minimum of the completed run. Optional run and slice selection remain open."
     },
     {
       "id": "PSI-PsiMode",
@@ -9709,7 +9753,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         },
         {
           "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
@@ -9730,7 +9774,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiOutput-signature-defaults",
@@ -9949,18 +9993,40 @@
         "url": "internal:legacy-psi-reference#page=374"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+          "public_api": "worksheet command",
+          "scope": "Streaming minimum, maximum, range, sample variance and standard deviation, applied to original formulas. Undefined sample variance remains unavailable.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiRange-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_sample_summary",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Finite maximum minus minimum of the completed run. Optional run and slice selection remain open."
     },
     {
       "id": "PSI-PsiSemiDev",
@@ -10228,18 +10294,40 @@
         "url": "internal:legacy-psi-reference#page=377"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+          "public_api": "worksheet command",
+          "scope": "Streaming minimum, maximum, range, sample variance and standard deviation, applied to original formulas. Undefined sample variance remains unavailable.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiStdDev-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_sample_summary",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Square root of available finite sample variance. Optional run and slice selection remain open."
     },
     {
       "id": "PSI-PsiStdErr",
@@ -10341,7 +10429,7 @@
             "--exact"
           ],
           "working_directory": "..",
-          "source_file_sha256": "3208fdb5d756110f3645a49b50e4eabc390348024030235acf4994689b99ff11"
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiTarget-signature-defaults",
@@ -11087,18 +11175,40 @@
         "url": "internal:legacy-psi-reference#page=382"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+          "public_api": "worksheet command",
+          "scope": "Streaming minimum, maximum, range, sample variance and standard deviation, applied to original formulas. Undefined sample variance remains unavailable.",
+          "execution": "native regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::worksheet_sample_statistics_match_a_balanced_stream_and_refuse_missing_variance",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "5114bd7e8630434eef8fc194e3a50bd9ac1c4717712192d718de441bd1834d6b"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiVariance-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_completed_run_sample_summary",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Sample variance with n-1 denominator when finite and at least two trials are available. Optional run and slice selection remain open."
     },
     {
       "id": "PSI-PsiSigmaCPKLower",

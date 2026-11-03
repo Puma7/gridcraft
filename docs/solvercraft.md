@@ -54,6 +54,8 @@ a numeric formula or a supported distribution. A single numeric base case
 can set the nominal value for a supported distribution.
 
 After a completed simulation, **Update statistic cells** fills the matching
-single-cell mean and inclusive target-probability formulas with the run values.
+single-cell mean, minimum, maximum, range, sample variance, sample standard
+deviation and inclusive target-probability formulas with the run values.
+Variance and standard deviation require at least two trials and a finite variance.
 The formulas stay in place. Edits invalidate the run values, and Undo restores
 the prior state. Select output cells explicitly when the sheet lacks declarations.

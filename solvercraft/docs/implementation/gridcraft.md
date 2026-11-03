@@ -397,7 +397,7 @@ nineteen-signature snapshot.
 The [function inventory](reference-implementation.json) tracks 272 entries.
 The catalog distinguishes SDK mathematical evidence, worksheet import and
 end-to-end model evidence. Bounded worksheet support includes the coefficient-array
-Metalog form, single-cell mean and inclusive target-probability statistics,
+Metalog form, single-cell sample summaries and inclusive target probability,
 and selected simulation declarations.
 
 Simulation preparation traverses the cell dependency graph iteratively.

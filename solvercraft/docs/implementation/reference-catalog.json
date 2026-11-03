@@ -10410,8 +10410,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": null,
-        "sdk_mapping_note": "No verified equivalent mapped in this reference snapshot.",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Maximum of the completed run. Optional run and slice selection remain open.",
+        "psi_import": "partial_completed_run_sample_summary",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },
@@ -10658,8 +10658,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": null,
-        "sdk_mapping_note": "No verified equivalent mapped in this reference snapshot.",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Minimum of the completed run. Optional run and slice selection remain open.",
+        "psi_import": "partial_completed_run_sample_summary",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },
@@ -11095,8 +11095,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": null,
-        "sdk_mapping_note": "No verified equivalent mapped in this reference snapshot.",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Finite maximum minus minimum of the completed run. Optional run and slice selection remain open.",
+        "psi_import": "partial_completed_run_sample_summary",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },
@@ -11537,8 +11537,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": "sample_standard_deviation",
-        "sdk_mapping_note": "SDK sample summary; PSI estimator/default signature not verified here",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Square root of available finite sample variance. Optional run and slice selection remain open.",
+        "psi_import": "partial_completed_run_sample_summary",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },
@@ -12841,8 +12841,8 @@
       "defaults": {},
       "implementation": {
         "sdk_equivalent": "sample_variance",
-        "sdk_mapping_note": "SDK sample variance; PSI estimator/default signature not verified here",
-        "psi_import": "unsupported",
+        "sdk_mapping_note": "Sample variance with n-1 denominator when finite and at least two trials are available. Optional run and slice selection remain open.",
+        "psi_import": "partial_completed_run_sample_summary",
         "complete_reference_semantics": false,
         "r046_core_status": "not_distribution_catalog_scope"
       },

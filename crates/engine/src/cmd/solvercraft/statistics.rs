@@ -11,14 +11,27 @@ use super::{
 #[derive(Clone, Copy)]
 enum Kind {
     Mean,
+    Min,
+    Max,
+    Range,
+    Variance,
+    StdDev,
     Target(f64),
 }
 
 fn kind(name: &str, args: &[FormulaExpr]) -> Option<Kind> {
-    let name = super::worksheet::psi_name(name);
+    let name = super::worksheet::psi_name(name).to_ascii_uppercase();
     match args {
-        [FormulaExpr::Ref(_)] if name.eq_ignore_ascii_case("PSIMEAN") => Some(Kind::Mean),
-        [FormulaExpr::Ref(_), threshold] if name.eq_ignore_ascii_case("PSITARGET") => {
+        [FormulaExpr::Ref(_)] => match name.as_str() {
+            "PSIMEAN" => Some(Kind::Mean),
+            "PSIMIN" => Some(Kind::Min),
+            "PSIMAX" => Some(Kind::Max),
+            "PSIRANGE" => Some(Kind::Range),
+            "PSIVARIANCE" => Some(Kind::Variance),
+            "PSISTDDEV" => Some(Kind::StdDev),
+            _ => None,
+        },
+        [FormulaExpr::Ref(_), threshold] if name == "PSITARGET" => {
             let value = match threshold {
                 FormulaExpr::Number(n) => *n,
                 FormulaExpr::Unary(op, expr) => match (op, expr.as_ref()) {
@@ -104,17 +117,25 @@ impl Statistics {
         }
         self.items
             .into_iter()
-            .map(|item| {
-                let summary = result
-                    .summaries
-                    .get(item.output)
-                    .filter(|summary| summary.count == trials)
-                    .ok_or_else(|| bad(SOLVE, "Worksheet statistics require a complete output summary"))?;
-                let (function, value) = match item.kind {
-                    Kind::Mean => ("PsiMean", summary.mean),
-                    Kind::Target(_) => ("PsiTarget", item.count as f64 / trials as f64),
+            .filter_map(|item| {
+                let summary = result.summaries.get(item.output).filter(|summary| summary.count == trials);
+                let Some(summary) = summary else {
+                    return Some(Err(bad(SOLVE, "Worksheet statistics require a complete output summary")));
                 };
-                Ok(json!({"cell":binding_name(wb,item.cell.0,item.cell.1)?,"output":names.get(item.output),"function":function,"value":value}))
+                let (function, value) = match item.kind {
+                    Kind::Mean => ("PsiMean", Some(summary.mean)),
+                    Kind::Min => ("PsiMin", Some(summary.minimum)),
+                    Kind::Max => ("PsiMax", Some(summary.maximum)),
+                    Kind::Range => ("PsiRange", Some(summary.maximum - summary.minimum)),
+                    Kind::Variance => ("PsiVariance", summary.variance),
+                    Kind::StdDev => ("PsiStdDev", summary.variance.map(f64::sqrt)),
+                    Kind::Target(_) => ("PsiTarget", Some(item.count as f64 / trials as f64)),
+                };
+                let value = value.filter(|value| value.is_finite())?;
+                Some(
+                    binding_name(wb, item.cell.0, item.cell.1)
+                        .map(|cell| json!({"cell":cell,"output":names.get(item.output),"function":function,"value":value})),
+                )
             })
             .collect()
     }
