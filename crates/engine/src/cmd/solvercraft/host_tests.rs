@@ -664,3 +664,19 @@ fn solvercraft_legacy_import_uses_scoped_names_and_preserves_quoted_cross_sheet_
     Arc::make_mut(&mut s.doc_mut().unwrap().wb).names.retain(|name| name.name != "solver_rhs1");
     assert!(s.execute("solvercraft.model.importLegacy", json!({"name":"Incomplete"})).is_err());
 }
+
+#[test]
+fn solvercraft_bond_price_coefficients_use_calc_and_cannot_depend_on_decisions() {
+    let mut s = session();
+    set(&mut s, "D1", "1000");
+    set(&mut s, "D2", "40");
+    set(&mut s, "D3", "=PRICE(DATE(2026,1,1),DATE(2028,1,1),D2/D1,0.07,100,1,0)*D1/100");
+    set(&mut s, "B1", "=A1*D3");
+    let solution = s.execute("solvercraft.solve", request()).unwrap();
+    let expected = 5.0 * (40.0 / 1.07 + 1040.0 / 1.07_f64.powi(2));
+    assert!((solution["result"]["objective"].as_f64().unwrap() - expected).abs() < 1e-9);
+    s.execute("solvercraft.result.apply", solution).unwrap();
+    set(&mut s, "B1", "=PRICE(DATE(2026,1,1),DATE(2028,1,1),A1,0.07,100,1,0)");
+    let error = s.execute("solvercraft.validate", request()).unwrap_err();
+    assert!(error.to_string().contains("Bond functions require fixed numeric inputs"), "{error}");
+}

@@ -2,6 +2,7 @@ use crate::{Budget, Relaxation};
 use solvercraft_types::{Direction, OptimizationModel, Relation, Termination};
 
 const PIVOT_EPS: f64 = 1e-12;
+type Bounds = (Option<f64>, Option<f64>);
 struct Column {
     original: usize,
     sign: f64,
@@ -431,7 +432,6 @@ fn infeasibility_certificate(
     links: &[DualLink],
     budget: &Budget<'_>,
 ) -> std::result::Result<bool, Relaxation> {
-    use std::cmp::Ordering;
     let bounds = crate::certificate_box(model, bounds);
     let mut weights = allocated(model.constraints.len(), 0.0)?;
     for link in links {
@@ -445,9 +445,85 @@ fn infeasibility_certificate(
             Relation::Equal => value,
         };
     }
+    if separates_box(model, &bounds, &weights, budget)? {
+        return Ok(true);
+    }
+    // Use bounds implied by original rows only for certification. These
+    // endpoints never enter the simplex tableau or change the search model.
+    let bounds = propagate_certificate_box(model, bounds, budget)?;
+    separates_box(model, &bounds, &weights, budget)
+}
+
+fn propagate_certificate_box(
+    model: &OptimizationModel,
+    mut bounds: Vec<Bounds>,
+    budget: &Budget<'_>,
+) -> std::result::Result<Vec<Bounds>, Relaxation> {
+    for _ in 0..4 {
+        let previous = bounds.clone();
+        for row in &model.constraints {
+            budget.check().map_err(Relaxation::Stopped)?;
+            // Bound worst-case work for dense rows. Omitting a row can only
+            // make the certificate box weaker.
+            if row.terms.len() > 64 {
+                continue;
+            }
+            for sign in [1.0, -1.0] {
+                if (sign > 0.0 && row.relation == Relation::GreaterEqual) || (sign < 0.0 && row.relation == Relation::LessEqual) {
+                    continue;
+                }
+                for (index, target) in row.terms.iter().enumerate() {
+                    let coefficient = sign * target.coefficient;
+                    if coefficient == 0.0 {
+                        continue;
+                    }
+                    let Some(residual) = certificate_residual(row, &previous, index, sign) else { continue };
+                    let ratio = residual / coefficient;
+                    let (lower, upper) = &mut bounds[target.variable];
+                    if coefficient > 0.0 && ratio.next_up().is_finite() {
+                        let value = ratio.next_up();
+                        *upper = Some(upper.map_or(value, |old| old.min(value)));
+                    } else if coefficient < 0.0 && ratio.next_down().is_finite() {
+                        let value = ratio.next_down();
+                        *lower = Some(lower.map_or(value, |old| old.max(value)));
+                    }
+                }
+            }
+        }
+        if bounds == previous {
+            break;
+        }
+    }
+    Ok(bounds)
+}
+
+fn certificate_residual(row: &solvercraft_types::LinearConstraint, bounds: &[(Option<f64>, Option<f64>)], omitted: usize, sign: f64) -> Option<f64> {
+    let mut residual = solvercraft_model::ExactProducts::default();
+    residual.add(sign * row.rhs).ok()?;
+    for (index, term) in row.terms.iter().enumerate() {
+        let coefficient = sign * term.coefficient;
+        if index == omitted || coefficient == 0.0 {
+            continue;
+        }
+        let (lower, upper) = bounds[term.variable];
+        residual.add_product(-coefficient, if coefficient > 0.0 { lower? } else { upper? }).ok()?;
+    }
+    // Round the numerator outward before dividing. A negative divisor flips
+    // the bound direction, which is handled by the caller.
+    let outward = residual.finish().ok()?.next_up();
+    outward.is_finite().then_some(outward)
+}
+
+fn separates_box(
+    model: &OptimizationModel,
+    bounds: &[(Option<f64>, Option<f64>)],
+    weights: &[f64],
+    budget: &Budget<'_>,
+) -> std::result::Result<bool, Relaxation> {
+    use std::cmp::Ordering;
     let mut gradients = allocated(model.variables.len(), solvercraft_model::ExactProducts::default())?;
     let mut separation = solvercraft_model::ExactProducts::default();
-    for (row, weight) in model.constraints.iter().zip(&weights) {
+    for (row, weight) in model.constraints.iter().zip(weights) {
         budget.check().map_err(Relaxation::Stopped)?;
         separation.add_product(*weight, row.rhs).map_err(|e| Relaxation::Numerical(e.to_string()))?;
         for term in &row.terms {
@@ -455,7 +531,7 @@ fn infeasibility_certificate(
         }
     }
     let mut endpoints = allocated(model.variables.len(), 0.0)?;
-    for ((gradient, (low, high)), endpoint) in gradients.iter().zip(&bounds).zip(&mut endpoints) {
+    for ((gradient, (low, high)), endpoint) in gradients.iter().zip(bounds).zip(&mut endpoints) {
         *endpoint = match gradient.exact_sign().map_err(|e| Relaxation::Numerical(e.to_string()))? {
             Ordering::Greater => match high {
                 Some(value) => *value,
@@ -471,7 +547,7 @@ fn infeasibility_certificate(
     for (row, weight) in model.constraints.iter().zip(weights) {
         budget.check().map_err(Relaxation::Stopped)?;
         for term in &row.terms {
-            separation.add_triple(-weight, term.coefficient, endpoints[term.variable]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
+            separation.add_triple(-*weight, term.coefficient, endpoints[term.variable]).map_err(|e| Relaxation::Numerical(e.to_string()))?;
         }
     }
     // Signed row weights imply weighted(Ax)>=weighted(b) for every feasible
@@ -625,5 +701,38 @@ fn simplex(
                 _ => Step::Numerical("Unexpected pivot failure.".into()),
             };
         }
+    }
+}
+
+#[cfg(test)]
+mod certificate_tests {
+    #![allow(clippy::unwrap_used)]
+    use super::*;
+    use solvercraft_types::{LinearConstraint, LinearTerm, NoControl, Objective, SCHEMA_VERSION, SolveOptions, Variable, VariableKind};
+
+    #[test]
+    fn implied_certificate_bounds_propagate_outward_across_original_rows() {
+        let variable = Variable { name: "v".into(), kind: VariableKind::Continuous, lower: Some(0.0), upper: None };
+        let row = |relation, rhs, terms: &[(usize, f64)]| LinearConstraint {
+            name: "row".into(),
+            relation,
+            rhs,
+            terms: terms.iter().map(|(variable, coefficient)| LinearTerm { variable: *variable, coefficient: *coefficient }).collect(),
+        };
+        let model = OptimizationModel {
+            schema_version: SCHEMA_VERSION,
+            name: "linked bounds".into(),
+            variables: vec![variable; 3],
+            objective: Objective { direction: Direction::Minimize, offset: 0.0, linear: vec![], quadratic: vec![] },
+            constraints: vec![row(Relation::LessEqual, 3.0, &[(0, 1.0), (1, 1.0)]), row(Relation::GreaterEqual, 2.0, &[(1, 1.0), (2, -1.0)])],
+        };
+        let options = SolveOptions::default();
+        let budget = Budget::new(&options, &NoControl);
+        let result = propagate_certificate_box(&model, vec![(Some(0.0), None); 3], &budget);
+        assert!(result.is_ok());
+        let bounds = result.ok().unwrap();
+        assert!((1.0..1.000_001).contains(&bounds[0].1.unwrap()));
+        assert!((1.999_999..=2.0).contains(&bounds[1].0.unwrap()));
+        assert!((1.0..1.000_001).contains(&bounds[2].1.unwrap()));
     }
 }

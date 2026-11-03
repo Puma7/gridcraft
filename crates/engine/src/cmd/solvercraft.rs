@@ -535,7 +535,14 @@ impl<'a> Translator<'a> {
         }
         let result = if let Some(formula) = sh.cell(cell).and_then(|c| c.formula.as_ref()) {
             let expr = formula.expr_arc().ok_or_else(|| bad(SOLVE, "A referenced formula cannot be parsed"))?;
-            self.expr(sheet, &expr, depth + 1)
+            // Bond prices often include face-value scaling around PRICE.
+            // Fold the full cell only after proving it is decision-independent.
+            let text = formula.text.to_ascii_uppercase();
+            if (text.contains("PRICE") || text.contains("DURATION")) && self.static_bond_expression(sheet, &expr, depth + 1)? {
+                self.evaluate_fixed(sheet, &expr)
+            } else {
+                self.expr(sheet, &expr, depth + 1)
+            }
         } else {
             numeric(&sh.value(cell)).map(Expr::constant)
         };
@@ -635,6 +642,43 @@ impl<'a> Translator<'a> {
             _ => Err(bad(SOLVE, "Unsupported formula construct; no cached-value or numerical-linearity substitution was made")),
         }
     }
+    fn evaluate_fixed(&self, base: usize, expression: &FormulaExpr) -> Result<Expr> {
+        let formula = gridcraft_formula::print(expression);
+        numeric(&gridcraft_calc::evaluate_at(self.wb, base, CellRef::default(), &formula, self.frozen_now)).map(Expr::constant)
+    }
+
+    /// Admit a bounded, scalar, deterministic subset. Stored formula values,
+    /// spills and decision-dependent inputs cannot be frozen.
+    fn static_bond_expression(&mut self, base: usize, expr: &FormulaExpr, depth: usize) -> Result<bool> {
+        self.enter(depth)?;
+        Ok(match expr {
+            FormulaExpr::Number(value) => value.is_finite(),
+            FormulaExpr::Paren(inner) | FormulaExpr::Unary(UnOp::Neg | UnOp::Plus | UnOp::Percent, inner) => {
+                self.static_bond_expression(base, inner, depth + 1)?
+            }
+            FormulaExpr::Binary(BinOp::Add | BinOp::Sub | BinOp::Mul | BinOp::Div, left, right) => {
+                self.static_bond_expression(base, left, depth + 1)? && self.static_bond_expression(base, right, depth + 1)?
+            }
+            FormulaExpr::Ref(reference) if reference.range().is_single() => {
+                let sheet = reference_sheet(self.wb, base, reference)?;
+                let cell = reference.range().start;
+                let sh = self.wb.sheet(sheet).ok_or(EngineError::NoDocument)?;
+                !self.bindings.contains_key(&(sheet, cell))
+                    && sh.spill_anchor(cell).is_none()
+                    && sh.cell(cell).is_some_and(|value| value.formula.is_none() && matches!(value.value, Value::Number(n) if n.is_finite()))
+            }
+            FormulaExpr::Call(name, args) if matches!(name.as_str(), "DATE" | "PRICE" | "DURATION") => {
+                for arg in args {
+                    if !self.static_bond_expression(base, arg, depth + 1)? {
+                        return Ok(false);
+                    }
+                }
+                true
+            }
+            _ => false,
+        })
+    }
+
     /// Freeze an NPV only after proving that all its inputs are independent
     /// numeric literals or stored cells. Calc supplies the workbook semantics.
     fn fixed_npv(&mut self, base: usize, args: &[FormulaExpr], depth: usize) -> Result<Expr> {
@@ -663,8 +707,7 @@ impl<'a> Translator<'a> {
                 _ => return Err(bad(SOLVE, "NPV requires fixed numeric inputs in optimization models")),
             }
         }
-        let formula = gridcraft_formula::print(&FormulaExpr::Call("NPV".into(), args.to_vec()));
-        numeric(&gridcraft_calc::evaluate_at(self.wb, base, CellRef::default(), &formula, self.frozen_now)).map(Expr::constant)
+        self.evaluate_fixed(base, &FormulaExpr::Call("NPV".into(), args.to_vec()))
     }
     fn call(&mut self, base: usize, name: &str, args: &[FormulaExpr], depth: usize) -> Result<Expr> {
         self.enter(depth)?;
@@ -675,6 +718,13 @@ impl<'a> Translator<'a> {
             }
             "SC.OUTPUT" if (1..=2).contains(&args.len()) => {
                 self.expr(base, args.first().ok_or_else(|| bad(SOLVE, "SC.OUTPUT requires a value"))?, depth + 1)
+            }
+            "PRICE" | "DURATION" => {
+                let expression = FormulaExpr::Call(name.into(), args.to_vec());
+                if !self.static_bond_expression(base, &expression, depth + 1)? {
+                    return Err(bad(SOLVE, "Bond functions require fixed numeric inputs in optimization models"));
+                }
+                self.evaluate_fixed(base, &expression)
             }
             "NPV" if args.len() >= 2 => self.fixed_npv(base, args, depth + 1),
             "SUM" => {
