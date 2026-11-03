@@ -2,7 +2,7 @@
 
 **Stand:** 31. Oktober 2026  
 **Ziel:** Wiederverwendbare Optimierungs- und Simulationsplattform in Rust mit Gridcraft als erster Anwendung.  
-**Referenz:** Frontline Analytic Solver Optimization + Simulation und Solver SDK.  
+**Referenz:** legacy optimization and simulation workflows und Solver SDK.  
 **Geprüfte Codebasis:** Puma7/gridcraft, main, Commit 981fad14e0b90a7906a02f29785a6d0eb214fee6, Workspace-Version 0.14.2.  
 **Status:** Technischer Entwicklungsauftrag. Keine Solvercraft-Implementierung, kein ausgeführter Build und kein Leistungsnachweis.
 
@@ -10,7 +10,7 @@
 
 Solvercraft wird eine eigenständige Rust-Bibliothek mit einer dünnen Gridcraft-Anbindung. In Gridcraft erscheint im Daten-Menü unmittelbar rechts neben dem bestehenden Solver die Schaltfläche **Solvercraft**. Ihr Tooltip lautet „Erweiterte Optimierung und Simulation“. Ein rechtes Aufgabenpanel führt durch Modell, Methode, Simulation und Ergebnisse. Die Bibliothek funktioniert auch ohne Tabellenkalkulation und ohne egui, etwa für Ressourcenplanung, Layout, Rendering-Budgets oder parametrische Gestaltung in anderen ArtCraft-Anwendungen.
 
-Das Ziel ist möglichst breite, nachgewiesene **Funktionsparität** mit Frontlines öffentlich dokumentierter Optimierung und Simulation. Frontlines proprietärer Quellcode, PSI Interpreter und lizenzierte Engines sind keine verfügbaren Open-Source-Bausteine. Algorithmen werden aus veröffentlichter Fachliteratur eigenständig implementiert oder aus passend lizenzierten Projekten integriert. Namen, Grafiken, Handbuchtexte und UI-Gestaltung werden nicht kopiert. Maßstab sind mathematische Ergebnisse und Arbeitsabläufe, nicht binäre Identität oder identische Iterationsfolgen.
+Das Ziel ist möglichst breite, nachgewiesene **Funktionsparität** für dokumentierte Optimierungs- und Simulationsverfahren. Der Code entsteht eigenständig aus überprüfbaren Schnittstellen und mathematischen Spezifikationen. Algorithmen werden aus veröffentlichter Fachliteratur eigenständig implementiert oder aus passend lizenzierten Projekten integriert. Namen, Grafiken, Handbuchtexte und UI-Gestaltung werden nicht kopiert. Maßstab sind mathematische Ergebnisse und Arbeitsabläufe, nicht binäre Identität oder identische Iterationsfolgen.
 
 „Vollständig“ bedeutet: jede Anforderung im eingefrorenen Referenzkatalog ist implementiert und geprüft oder als konkrete, begründete Lücke ausgewiesen. Es bedeutet keine pauschale Unterstützung beliebiger Excel-Funktionen, beliebiger Modellgröße oder globaler Optimalität für jedes nichtkonvexe Problem. Ein Algorithmus mit lokalem Ergebnis wird auch so bezeichnet.
 
@@ -43,15 +43,15 @@ Die Repository-Regeln verlangen unter anderem Result-basierte Fehler, keine Pani
 
 ## 3. Referenzumfang und belastbare Grenzen
 
-Frontlines öffentliche Produktseiten beschreiben konventionelle Optimierung, automatische Modellanalyse, zusätzliche Solver-Engines, Monte-Carlo-Simulation, Verteilungsanpassung, Korrelationen, Copulas, Entscheidungsbäume und Optimierung unter Unsicherheit. O1–O7. Dokumentierte Samplingverfahren sind Monte Carlo, Latin Hypercube und randomisierte Sobol-Verfahren. O8. Die PSI-Referenz unterscheidet Modellierungs-, Verteilungs-, Eigenschafts- und Statistikfunktionen. O10.
+Die interne Referenz umfasst konventionelle Optimierung, automatische Modellanalyse, zusätzliche Solver-Engines, Monte-Carlo-Simulation, Verteilungsanpassung, Korrelationen, Copulas, Entscheidungsbäume und Optimierung unter Unsicherheit. O1–O7. Dokumentierte Samplingverfahren sind Monte Carlo, Latin Hypercube und randomisierte Sobol-Verfahren. O8. Die PSI-Referenz unterscheidet Modellierungs-, Verteilungs-, Eigenschafts- und Statistikfunktionen. O10.
 
 Die Webseiten nennen unterschiedliche Anzahlen von Verteilungen und Kennzahlen für verschiedene Produkte und Jahrgänge. Deshalb wird keine Zahl als angeblich eindeutige Vollständigkeitsgrenze übernommen. Der verbindliche Katalog wird in Arbeitspaket SC-00 aus einer festgelegten Produkt-/Handbuchversion gewonnen, mit einzelner Funktion, Signatur, Semantik, Quelle und Test-ID. Die öffentlich auffindbare Referenz 2025 Q1 überschritt beim Abruf das Größenlimit; sie wurde hier nicht vollständig ausgewertet. Der Engine-Guide 2025 Q4 und ausgewählte Online-Hilfen waren zugänglich.
 
 | Referenzfamilie | Geplanter Umgang |
 |---|---|
 | Excel-Solver-Basismodelle | Migrationspflicht und Regressionstests |
-| Analytic Solver Optimization | Kernumfang |
-| Analytic Solver Simulation | Kernumfang |
+| legacy PSI Optimization | Kernumfang |
+| legacy PSI Simulation | Kernumfang |
 | Kombination aus Optimierung und Simulation | Kernumfang der späteren Ausbaustufen |
 | Solver SDK | Inspiration für eigenständige Modell- und Laufzeit-API |
 | RASON/Server-Ausführung | Eigener versionierter JSON-Vertrag; RASON-Kompatibilität nur als gesondert geprüfter Importadapter |
@@ -254,7 +254,7 @@ Konfidenzintervalle für IID-MC werden nicht ungeprüft auf LHS oder einen einze
 
 **Robuste Optimierung:** explizite Box-, Budget- und ellipsoidale Unsicherheitsmengen. Dokumentierte LP-/SOCP-Gegenstücke gelten nur bei erfüllten Strukturannahmen. Eine robuste Menge ist kein automatisch kalibrierter Ersatz für eine Wahrscheinlichkeitsbedingung.
 
-**Stochastische Programmierung:** zunächst zweistufige lineare Modelle mit Recourse als deterministisches Äquivalent. Entscheidungen vor der Unsicherheit werden über Szenarien identisch gehalten; spätere Entscheidungen dürfen nur verfügbare Informationen verwenden. Danach Benders/L-Shaped für den unterstützten konvex-linearen Umfang, später mehrstufige Szenariobäume und weitere Dekomposition. Ganzzahlige Recourse und nichtkonvexe Teilprobleme sind gesonderte Fähigkeiten. Frontline unterscheidet ebenfalls Simulation Optimization und Modelle mit Recourse. O7.
+**Stochastische Programmierung:** zunächst zweistufige lineare Modelle mit Recourse als deterministisches Äquivalent. Entscheidungen vor der Unsicherheit werden über Szenarien identisch gehalten; spätere Entscheidungen dürfen nur verfügbare Informationen verwenden. Danach Benders/L-Shaped für den unterstützten konvex-linearen Umfang, später mehrstufige Szenariobäume und weitere Dekomposition. Ganzzahlige Recourse und nichtkonvexe Teilprobleme sind gesonderte Fähigkeiten. Simulationsoptimierung und Modelle mit Recourse haben getrennte Abnahmekriterien.
 
 **Entscheidungsbäume:** Entscheidungs-, Zufalls- und Endknoten; Wahrscheinlichkeitsprüfung; Rückwärtsauswertung, Erwartungsnutzen, Risikoprofile, Sensitivität und Value of Information. Simulierte Payoffs sind möglich. Baumdiagramm und Szenariobaum der Optimierung bleiben fachlich unterscheidbar.
 
@@ -268,7 +268,7 @@ Gridcraft speichert die Modellmetadaten typisiert im Workbook über types-L0. Vo
 
 Jede Bindung erhält eine persistente ID und strukturelle Zellreferenzen. Einfügen/Löschen, Umbenennen/Verschieben/Kopieren von Blättern, Tabellenänderungen und benannte Bereiche werden getestet. Fehlt im vorhandenen Workbookmodell eine stabile Blatt-ID, wird diese gezielt ergänzt; numerische Blattindizes allein reichen nicht.
 
-Bestehende solver_*-Modelle werden eingelesen. Nur der darstellbare Teilumfang wird zurückgeschrieben, mit Meldung über ausgelassene Solvercraft-Funktionen. SC.*-Formeln werden in normalem Excel ohne Add-in nicht automatisch ausführbar. Optionaler Export von Ergebniswerten und kompatiblen Basisformeln ist möglich; keine Behauptung vollständiger Excel-/Frontline-Dateikompatibilität.
+Bestehende solver_*-Modelle werden eingelesen. Nur der darstellbare Teilumfang wird zurückgeschrieben, mit Meldung über ausgelassene Solvercraft-Funktionen. SC.*-Formeln werden in normalem Excel ohne Add-in nicht automatisch ausführbar. Optionaler Export von Ergebniswerten und kompatiblen Basisformeln ist möglich; keine Behauptung vollständiger Excel-/legacy-Dateikompatibilität.
 
 Psi*-Kompatibilität wird funktionsweise eingeführt: dokumentierte Signatur, Defaultparameter, Reihenfolge der Argumente, Verhalten außerhalb der Simulation und Fehlerfälle erhalten eigene Tests. Beispiel: PsiTriangular verwendet laut Online-Hilfe die Reihenfolge Minimum, Modus, Maximum. O11. Ein pauschaler Namensalias genügt nicht. Unbekannte Funktionen bleiben erhalten und werden verständlich als nicht unterstützt gemeldet.
 
@@ -305,11 +305,11 @@ Logs enthalten standardmäßig Status und Kennzahlen, nicht ganze Geschäftsmode
 
 HiGHS und andere unabhängige Solver dienen bei verfügbaren Lizenzen als Differentialreferenzen. Mehrere identische optimale Zielfunktionswerte können verschiedene Variablenbelegungen haben. Verglichen werden Zulässigkeit, Zielwert, Schranken und Status innerhalb dokumentierter Toleranzen, nicht identische Lösungsvektoren.
 
-Kleine numerische Referenzen werden in Rust erzeugt. Fremde Corpora werden nur lizenzgeprüft, gepinnt und hashverifiziert verwendet. Frontline-generierte oder Microsoft-eigene Dateien/Assets werden nicht in das Repository kopiert; black-box Vergleichsläufe sind getrennt von selbst erzeugten Regressionstests.
+Kleine numerische Referenzen werden in Rust erzeugt. Fremde Corpora werden nur lizenzgeprüft, gepinnt und hashverifiziert verwendet. legacy-generierte oder Microsoft-eigene Dateien/Assets werden nicht in das Repository kopiert; black-box Vergleichsläufe sind getrennt von selbst erzeugten Regressionstests.
 
 **Vorgeschlagene Leistungsklassen, noch ungemessen:** klein 100 Variablen/500 Constraints; mittel 10.000/50.000 mit etwa 500.000 Nichtnullen; Simulation 100.000 Trials mit 20 Eingaben und 10 Ausgaben. Schwere MIP-Instanzen bekommen keinen allein von ihrer Dimension abhängigen Laufzeitanspruch. Für jede Klasse werden Hardware, Modellstruktur, Peak-RAM, Fehlerrate und Zeit bis zur ersten zulässigen Lösung erfasst. Erst danach entstehen konkrete SLA-Werte.
 
-Ein Benchmarkbericht nennt Code-/Engineversion, Compiler, Hardware, Seed, Parallelität und Budgets. Kein Geschwindigkeitsfaktor gegenüber Frontline wird aus dessen Werbeaussagen abgeleitet.
+Ein Benchmarkbericht nennt Code-/Engineversion, Compiler, Hardware, Seed, Parallelität und Budgets. Geschwindigkeitsvergleiche brauchen reproduzierbare Messungen.
 
 ## 15. Umsetzung mit Subagenten
 
@@ -398,19 +398,19 @@ Alle Webquellen wurden am 31.10.2026 konsultiert. Repositoryaussagen beziehen si
 - G7 Layer-Prüfer: https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/xtask/src/layers.rs
 - G8 Calc und Erhalt fremder Teile: crates/calc/src/recalc.rs und crates/model/src/preserved.rs am selben Commit.
 
-### Frontline
+### Interne Kompatibilitätsreferenzen
 
-- O1 Produktübersicht: https://www.solver.com/products-overview
-- O2 Optimierung: https://www.solver.com/analytic-solver-optimization-software
-- O3 Simulation: https://www.solver.com/analytic-solver-simulation-software
-- O4 Produktvergleich: https://www.solver.com/analytic-solver-comparison
-- O5 Solver SDK Engines: https://www.solver.com/solver-sdk-platform-solver-engines
-- O6 Engine-Guide 2025 Q4: https://www.solver.com/sites/default/files/SolverEnginesUserGuide2025Q4.pdf
-- O7 Stochastische Klassen und Recourse: https://www.solver.com/files/FrontlineSolversUserGuide.pdf und Engine-Guide 2025 Q4; Abschnitte zur stochastischen Optimierung.
-- O8 Sampling: https://www.solver.com/simulation-random-number-generators
-- O9 Copulas: https://www.solver.com/risk-solver-help/psi-function-help/simulation/property-functions/psicopula
-- O10 PSI-Familien: https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2021.pdf ; neuere Referenz 2025 Q1 identifiziert, hier nicht vollständig abgerufen.
-- O11 Dreiecksverteilung: https://www.solver.com/risk-solver-help/psi-function-help/simulation/distributions/psiTriangular
+- O1 Produktübersicht: interne Referenz
+- O2 Optimierung: interne Referenz
+- O3 Simulation: interne Referenz
+- O4 Produktvergleich: interne Referenz
+- O5 Solver SDK Engines: interne Referenz
+- O6 Engine-Guide 2025 Q4: interne Referenz
+- O7 Stochastische Klassen und Recourse: interne Referenz und Engine-Guide 2025 Q4; Abschnitte zur stochastischen Optimierung.
+- O8 Sampling: interne Referenz
+- O9 Copulas: interne Referenz
+- O10 PSI-Familien: interne Referenz ; neuere Referenz 2025 Q1 identifiziert, hier nicht vollständig abgerufen.
+- O11 Dreiecksverteilung: interne Referenz
 
 ### Wiederverwendbare Bausteine
 

@@ -111,7 +111,7 @@ fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {
         "sdk": ::solvercraft::capabilities(),
         "workbook_formula_subset": [
             "numeric constants", "cell and named references", "+ - * /",
-            "nonnegative integer powers", "SUM", "SUMPRODUCT",
+            "nonnegative integer powers", "SUM", "SUMPRODUCT", "IF", "CHOOSE",
             "SIN", "COS", "EXP", "LN", "SQRT", "ABS", "MIN", "MAX", "NOW", "TODAY", "SC.OUTPUT"
         ],
         "worksheet_declarations":["SC.UNIFORM","SC.DISCRETEUNIFORM","SC.NORMAL","SC.LOGNORMAL","SC.TRIANGULAR","SC.BETAPERT","SC.BETA","SC.GAMMA","SC.EXPONENTIAL","SC.WEIBULL","SC.BERNOULLI","SC.BINOMIAL","SC.POISSON","SC.NEGATIVEBINOMIAL","SC.GEOMETRIC","SC.EMPIRICAL","SC.EMPIRICALCONTINUOUS","SC.OUTPUT"],

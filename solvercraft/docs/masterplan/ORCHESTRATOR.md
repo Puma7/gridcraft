@@ -21,7 +21,7 @@ Jeder Agent erhält seine generierte Aufgabenaufforderung, die relevante Vertrag
 ## Fachliche Regeln
 
 - Rust und WASM bleiben Standard. Native/C++-Backends sind gesonderte optionale Projekte.
-- Keine Frontline- oder Office-Binärdateien lesen, dekompilieren oder kopieren; keine proprietären Quellen/Assets übernehmen. Veröffentlichte Verhaltensbeschreibungen und zulässig lizenzierte Algorithmen verwenden.
+- Keine legacy- oder Office-Binärdateien lesen, dekompilieren oder kopieren; keine proprietären Quellen/Assets übernehmen. Veröffentlichte Verhaltensbeschreibungen und zulässig lizenzierte Algorithmen verwenden.
 - Eine beste gefundene zulässige Lösung ist kein Globaloptimum.
 - Lokale NLP-Ergebnisse sind keine globalen Relaxierungsschranken.
 - Originalmodellprüfung, Budgetierung, Fehlermeldungen, Abbruch und Revisionsschutz gehören zur Funktion.

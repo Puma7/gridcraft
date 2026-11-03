@@ -1,6 +1,6 @@
 # Solvercraft
 
-Solvercraft is a workbook-independent Rust optimization, simulation and risk-analysis SDK with a JSON CLI and Gridcraft integration. It is a development alpha. The immutable [96 requirements](docs/masterplan/requirements.csv), [current acceptance review](docs/qa/acceptance-current.md) and [272-function inventory](docs/implementation/reference-implementation.json) describe its scope and remaining gaps. All 96 original criteria have bounded acceptance; this is not a product-completeness percentage or full Frontline/272-PSI compatibility.
+Solvercraft is a workbook-independent Rust optimization, simulation and risk-analysis SDK with a JSON CLI and Gridcraft integration. It is a development alpha. The immutable [96 requirements](docs/masterplan/requirements.csv), [current acceptance review](docs/qa/acceptance-current.md) and [272-function inventory](docs/implementation/reference-implementation.json) describe its scope and remaining gaps. All 96 original criteria have bounded acceptance; this is not a product-completeness percentage or full legacy PSI/272-PSI compatibility.
 
 ## Implemented capabilities
 
@@ -90,4 +90,4 @@ The [reference freeze](docs/implementation/reference-freeze.md) records official
 
 Sampling records solvercraft-addressed-mix64-v2; randomized Sobol records its own version and licensed direction table. Preserve engine/sampler versions, inputs, seeds and tolerances. Integer domains at absolute values of 2^53 or above are rejected because adjacent integers are not representable in binary 64.
 
-Project license: MIT OR Apache-2.0. Dependency and numerical-data notices accompany the implementation. No proprietary Frontline implementation or vendor artwork is included.
+Project license: MIT OR Apache-2.0. Dependency and numerical-data notices accompany the implementation. No proprietary legacy PSI implementation or vendor artwork is included.

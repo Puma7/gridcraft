@@ -1,7 +1,7 @@
 {
   "schema": "solvercraft.acceptance-current.v1",
   "review_date": "2026-11-01",
-  "assessment_kind": "Final7 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; final6 history retained",
+  "assessment_kind": "Final7 source-bound original-criterion assessment: bounded executed contracts, not full legacy PSI/272-PSI parity; final6 history retained",
   "original_csv": {
     "path": "docs/masterplan/requirements.csv",
     "sha256": "699e87ae50a62ff5605b0d40dee38f4b2f8b7200a4c92f825d2972a57e24de55",
@@ -1721,7 +1721,7 @@
           "HOST"
         ],
         "guarantee": "Owned xl/solvercraft namespace; unsupported workbook semantics remain explicit.",
-        "remaining_work": "No claim of full Excel/Frontline file compatibility.",
+        "remaining_work": "No claim of full Excel/legacy PSI file compatibility.",
         "platforms": [
           "Windows native Rust 1.95: executed host/unit/input suites for cited subset.",
           "Final6 Chrome/Trunk worker/UI: only the linked executed cases are runtime evidence; no untested platform is inferred."
@@ -3377,7 +3377,7 @@
       },
       "assessment": {
         "status": "accepted_bounded",
-        "implementation": "Pinned full 570-page Frontline 2025Q1 scope, source hash and unfiltered 272-function inventory",
+        "implementation": "Pinned full 570-page legacy PSI 2025Q1 scope, source hash and unfiltered 272-function inventory",
         "evidence_keys": [
           "REF"
         ],
@@ -3693,7 +3693,7 @@
           "FINAL"
         ],
         "guarantee": "continuous_lp_100_variables_500_rows: median 194.541 ms, peak 11,681,792 bytes; streaming_mc_100000_trials_20_inputs_10_outputs: median 432.793 ms, peak 6,799,360 bytes. Individual errors, hardware, seeds and versions are retained in the actual linked performance report; no speedup/commercial comparison is inferred.",
-        "remaining_work": "Shared-host/quieter follow-up measurements, not a demonstrated engine speedup or Frontline comparison. Proposed medium 10000-variable/50000-row/500000-nonzero performance and time-to-first-feasible remain unmeasured.",
+        "remaining_work": "Shared-host/quieter follow-up measurements, not a demonstrated engine speedup or legacy PSI comparison. Proposed medium 10000-variable/50000-row/500000-nonzero performance and time-to-first-feasible remain unmeasured.",
         "platforms": [
           "Documentation/source inventories and recorded platform-specific evidence; see linked reports."
         ],
@@ -4110,7 +4110,7 @@
   },
   "checkpoint_history": {
     "final6": {
-      "assessment_kind": "Final6 source-bound original-criterion assessment: bounded executed contracts, not full Frontline/272-PSI parity; all worker attempts retained",
+      "assessment_kind": "Final6 source-bound original-criterion assessment: bounded executed contracts, not full legacy PSI/272-PSI parity; all worker attempts retained",
       "source_state": "Frozen final6: 791 matching code/compilation-input files. Accepted native/SDK source-stable gates and actual Chrome execution are separately recorded; the controlled worker repeat passed after one failed additional timing guard, not an all-attempts-green assertion.",
       "final_verification": {
         "candidate": "final6",
@@ -4215,7 +4215,7 @@
         },
         "performance_repetitions_per_workload": 5,
         "existing_ignored_test": "recalc_with_range_formulas_scales_linearly",
-        "scope": "Executed original criteria within bounded math/API contracts; 96 accepted_bounded does not mean full 272-PSI/Frontline parity or all worker attempts passed.",
+        "scope": "Executed original criteria within bounded math/API contracts; 96 accepted_bounded does not mean full 272-PSI/legacy PSI parity or all worker attempts passed.",
         "public_evidence_format": "Fixed-field public JSON projections and strict line-preserved test/result/summary excerpts",
         "binary_oracle_provenance": {
           "report": "docs/implementation/exact-binary-oracle-final6-report.json",

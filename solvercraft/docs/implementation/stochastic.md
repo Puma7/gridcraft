@@ -1,6 +1,6 @@
 # Stochastic, logical and decision analysis implementation
 
-This records the new SDK implementation beyond the earlier 265-test baseline. It does not make a Frontline parity, full R1/R3/R4 release, workbook UI, WASM runtime or production-readiness claim. Model transformations are independently implemented from their mathematical definitions. The exact SOCP backend uses Clarabel 0.11.1 (Apache-2.0, verified from its cached Cargo manifest), with Rust-only features approved by the workspace owner. No proprietary code is included.
+This records the new SDK implementation beyond the earlier 265-test baseline. It does not make a legacy PSI parity, full R1/R3/R4 release, workbook UI, WASM runtime or production-readiness claim. Model transformations are independently implemented from their mathematical definitions. The exact SOCP backend uses Clarabel 0.11.1 (Apache-2.0, verified from its cached Cargo manifest), with Rust-only features approved by the workspace owner. No proprietary code is included.
 
 | Requirements | Implemented SDK behavior | Scope and acceptance limits |
 |---|---|---|

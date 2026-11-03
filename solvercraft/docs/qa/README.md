@@ -2,7 +2,7 @@
 
 This page preserves the **earlier 265-test checkpoint** and its then-open environment/feature gaps. Its counts and unexecuted-host statements are historical. Current implementations, actual host/browser runs and remaining acceptance work are recorded in [acceptance-current.md](acceptance-current.md), the [SDK README](../../README.md) and [current verification guide](../implementation/verification.md). Later source changes need their own source-bound gates; historical results are not silently reassigned.
 
-The original alpha was not ready for merge approval. Independent source review and executed counterexamples exposed incorrect numerical answers, false optimality claims and permissive input handling. This review corrected those failures and added regression coverage. It does not certify general numerical correctness or Frontline feature parity.
+The original alpha was not ready for merge approval. Independent source review and executed counterexamples exposed incorrect numerical answers, false optimality claims and permissive input handling. This review corrected those failures and added regression coverage. It does not certify general numerical correctness or legacy PSI feature parity.
 
 The reviewed scope is Solvercraft's eight Rust crates, CLI boundary, Gridcraft adapter, UI wiring and layering changes. It is not a review of every pre-existing Gridcraft feature. Review began at PR predecessor `690a098a6c4c9d966d66b6c30c036e0e42534bfd`, on Gridcraft base `981fad14e0b90a7906a02f29785a6d0eb214fee6`. The source inventory and final PR commit bind the results to the reviewed implementation.
 

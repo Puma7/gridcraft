@@ -1,5 +1,5 @@
 //! Read-only review and explicit, revision-bound application of legacy formulas.
-use super::{Json, label};
+use super::{Json, help, label};
 use crate::SheetApp;
 use serde_json::json;
 use std::sync::Arc;
@@ -23,13 +23,17 @@ fn reason(code: &str, de: bool) -> &str {
 }
 
 pub(super) fn show(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut super::State, revision: &str, de: bool) {
-    ui.collapsing(label(de, "Import Frontline simulation", "Frontline-Simulation importieren"), |ui| {
-        ui.label(label(
-            de,
-            "Scan this workbook for Psi formulas without changing cells.",
-            "Arbeitsmappe nach Psi-Formeln durchsuchen. Zellen bleiben bei der Prüfung unverändert.",
-        ));
-        if ui.button(label(de, "Scan workbook", "Arbeitsmappe prüfen")).clicked() {
+    ui.collapsing(label(de, "Import simulation formulas", "Simulationsformeln importieren"), |ui| {
+        let scan = ui.horizontal_wrapped(|ui| {
+            let scan = ui.button(label(de, "Scan workbook", "Arbeitsmappe prüfen")).clicked();
+            help(
+                ui,
+                label(de, "Help with the import scan", "Hilfe zur Importprüfung"),
+                label(de, "Scans the workbook for Psi formulas and previews changes. The scan leaves cells untouched.", "Sucht in der Arbeitsmappe nach Psi-Formeln und zeigt vorgeschlagene Änderungen. Die Zellen bleiben beim Prüfen unverändert."),
+            );
+            scan
+        }).inner;
+        if scan {
             match app.run("solvercraft.worksheet.importPsi", json!({})) {
                 Ok(report) => {
                     state.psi_import = State { report: Some(Arc::new(report)), page: 0 };
@@ -43,16 +47,38 @@ pub(super) fn show(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut super::Sta
         let unsupported = report["unsupported"].as_array().map_or(&[][..], Vec::as_slice);
         let applied = report["applied"].as_bool() == Some(true);
         ui.label(if de {
-            format!("{} {} · {} bleiben unverändert", changes.len(), if applied { "übernommen" } else { "konvertierbar" }, unsupported.len())
+            format!("{} {} · {} unverändert", changes.len(), if applied { "übernommen" } else { "konvertierbar" }, unsupported.len())
         } else {
-            format!("{} {} · {} preserved", changes.len(), if applied { "converted" } else { "convertible" }, unsupported.len())
+            format!("{} {} · {} unchanged", changes.len(), if applied { "converted" } else { "convertible" }, unsupported.len())
         });
-        if !changes.is_empty() {
-            ui.label(label(
-                de,
-                "Converted cells use Solvercraft nominal values outside runs. Frontline display settings are lost.",
-                "Konvertierte Zellen verwenden außerhalb eines Laufs Solvercraft-Nennwerte. Frontline-Anzeigeeinstellungen gehen dabei verloren.",
-            ));
+        let stale = report["snapshot"]["revision"].as_str() != Some(revision);
+        if stale && !applied {
+            ui.label(label(de, "Workbook changed. Scan again before applying.", "Arbeitsmappe geändert. Vor der Übernahme erneut prüfen."));
+        }
+        let convert = !applied && !changes.is_empty() && ui.horizontal_wrapped(|ui| {
+            let convert = ui.add_enabled(!stale, egui::Button::new(label(de, "Convert supported cells", "Unterstützte Zellen konvertieren"))).clicked();
+            help(
+                ui,
+                label(de, "Help with formula conversion", "Hilfe zur Formelkonvertierung"),
+                label(de, "Conversion uses Solvercraft nominal values outside simulations. Source display settings are discarded. Undo restores the original formulas.", "Außerhalb der Simulation gelten Solvercraft-Nennwerte. Anzeigeeinstellungen der Quelle entfallen. Rückgängig stellt die ursprünglichen Formeln wieder her."),
+            );
+            convert
+        }).inner;
+        if convert {
+            match app.run("solvercraft.worksheet.importPsi", json!({"apply":true,"expected_snapshot":report["snapshot"]})) {
+                Ok(result) => {
+                    state.psi_import.report = Some(Arc::new(result));
+                    if state.selected.is_none() {
+                        state.kind = "simulation".into();
+                        state.worksheet_bindings = true;
+                    }
+                    state.error = None;
+                }
+                Err(error) => state.error = Some(error),
+            }
+        }
+        if !applied && !changes.is_empty() {
+            ui.small(label(de, "Conversion uses nominal values.", "Die Konvertierung verwendet Nennwerte."));
         }
         let count = changes.len() + unsupported.len();
         let pages = count.div_ceil(ROWS_PER_PAGE);
@@ -83,30 +109,6 @@ pub(super) fn show(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut super::Sta
                     ui.monospace(formula);
                 }
             });
-        }
-        let stale = report["snapshot"]["revision"].as_str() != Some(revision);
-        if stale && !applied {
-            ui.label(label(de, "Workbook changed. Scan again before applying.", "Arbeitsmappe geändert. Vor der Übernahme erneut prüfen."));
-        }
-        if !applied
-            && ui
-                .add_enabled(
-                    !stale && !changes.is_empty(),
-                    egui::Button::new(label(de, "Convert supported cells", "Unterstützte Zellen konvertieren")),
-                )
-                .clicked()
-        {
-            match app.run("solvercraft.worksheet.importPsi", json!({"apply":true,"expected_snapshot":report["snapshot"]})) {
-                Ok(result) => {
-                    state.psi_import.report = Some(Arc::new(result));
-                    if state.selected.is_none() {
-                        state.kind = "simulation".into();
-                        state.worksheet_bindings = true;
-                    }
-                    state.error = None;
-                }
-                Err(error) => state.error = Some(error),
-            }
         }
     });
 }

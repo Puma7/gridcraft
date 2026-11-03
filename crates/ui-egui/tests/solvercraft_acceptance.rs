@@ -301,7 +301,14 @@ fn pane_reviews_legacy_formulas_before_conversion() {
     h.state_mut().run("cell.set", json!({"cell":"B1","input":"=2*A1+PsiOutput()"})).unwrap();
     h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
     h.run_steps(4);
-    h.get_by_label("Import Frontline simulation").click();
+    h.get_by_label("Import simulation formulas").click();
+    h.run_steps(4);
+    let hint = "Scans the workbook for Psi formulas and previews changes. The scan leaves cells untouched.";
+    assert!(h.query_by_label(hint).is_none());
+    h.get_by_label("Help with the import scan").click();
+    h.run_steps(4);
+    assert!(h.query_by_label(hint).is_some(), "click exposes contextual help");
+    h.key_press(egui::Key::Escape);
     h.run_steps(4);
     h.get_by_label("Scan workbook").click();
     h.run_steps(4);
@@ -313,6 +320,7 @@ fn pane_reviews_legacy_formulas_before_conversion() {
     h.run_steps(4);
     assert_eq!(current_formula(&h), "SC.OUTPUT(2*A1+0)");
     assert!(h.query_by_label("Run simulation").is_some());
+    assert!(h.query_by_label("Solvercraft simulation inputs").is_none(), "worksheet mode hides manual JSON inputs");
     h.state_mut().run("edit.undo", json!({})).unwrap();
     assert_eq!(current_formula(&h), "2*A1+PSIOUTPUT()");
 }

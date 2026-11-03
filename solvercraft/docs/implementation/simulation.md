@@ -1,6 +1,6 @@
 # Simulation and distribution implementation evidence
 
-Updated 2026-10-31. This is an implementation record, not a claim of complete Frontline compatibility. The full frozen PSI function inventory is maintained separately in `reference-catalog.json`; named aliases and specialist fit functions must be assessed individually.
+Updated 2026-10-31. This is an implementation record, not a claim of complete legacy PSI compatibility. The full frozen PSI function inventory is maintained separately in `reference-catalog.json`; named aliases and specialist fit functions must be assessed individually.
 
 ## Public interfaces
 

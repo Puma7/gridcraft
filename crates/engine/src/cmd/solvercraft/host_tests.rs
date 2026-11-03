@@ -720,3 +720,38 @@ fn psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run() 
     assert_eq!(restored["changes"], review["changes"]);
     assert_eq!(restored["unsupported"], review["unsupported"]);
 }
+
+#[test]
+fn psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics() {
+    let mut s = session();
+    set(&mut s, "A1", "=_xll.PsiTriangular(0,2,4,_xll.PsiBaseCase(3))");
+    set(&mut s, "B1", "=_xll.PsiIntUniform(1,3)+_xll.PsiOutput()");
+    set(&mut s, "C1", "=CHOOSE(B1,10,20,30)+A1+_xll.PsiOutput()");
+    set(&mut s, "D1", "=_xll.PsiMean(C1)");
+    set(&mut s, "E1", "=_xll.PsiTriangular(0,2,4,_xll.PsiBaseCase(3,1))");
+    set(&mut s, "F1", "=5*B1");
+    set(&mut s, "G1", "=_xll.PsiMean(F1)");
+    let binding = CellRef::parse("A1").unwrap();
+    let doc = s.doc_mut().unwrap();
+    let wb = Arc::make_mut(&mut doc.wb);
+    let sheet = wb.sheet_mut(0).unwrap();
+    let mut cell = sheet.cell(binding).unwrap().clone();
+    Arc::make_mut(cell.formula.as_mut().unwrap()).array = Some(gridcraft_core::RangeRef::parse("A1:A1").unwrap());
+    sheet.set_cell(binding, cell);
+    let marked = CellRef::parse("B1").unwrap();
+    let mut cell = sheet.cell(marked).unwrap().clone();
+    Arc::make_mut(cell.formula.as_mut().unwrap()).dynamic = true;
+    sheet.set_cell(marked, cell);
+    let report = s.execute("solvercraft.worksheet.importPsi", json!({"apply":true})).unwrap();
+    assert_eq!(report["changes"].as_array().unwrap().len(), 3);
+    assert_eq!(report["unsupported"].as_array().unwrap().len(), 3);
+    assert!(s.doc().unwrap().wb.sheet(0).unwrap().cell(marked).unwrap().formula.as_ref().unwrap().dynamic);
+    let discovered = s.execute("solvercraft.worksheet.discover", json!({})).unwrap();
+    assert_eq!(discovered["outputs"], json!(["Sheet1!B1", "Sheet1!C1", "Sheet1!F1"]));
+    assert_eq!(discovered["inputs"][0]["nominal"].as_f64(), Some(3.0));
+    let result = s.execute("solvercraft.simulate", json!({"options":{"trials":4096,"seed":"840","retain_samples":true}})).unwrap();
+    let mean = result["result"]["summaries"][1]["mean"].as_f64().unwrap();
+    assert!((mean - 22.0).abs() < 0.7, "{mean}");
+    s.execute("edit.undo", json!({})).unwrap();
+    assert!(s.doc().unwrap().wb.sheet(0).unwrap().cell(binding).unwrap().formula.as_ref().unwrap().array.is_some());
+}

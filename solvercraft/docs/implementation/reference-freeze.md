@@ -1,8 +1,8 @@
 # Public reference freeze and acceptance inventory
 
-Frozen 2026-10-31 against **Frontline Solvers 2025 Q1 Reference Guide**, the complete 570-page public PDF. This pins a product/version scope. It is not a statement about every later Frontline release or a declaration that Solvercraft implements the catalog.
+Frozen 2026-10-31 against the frozen 2025 Q1 PSI reference. This pins a product/version scope. It is not a statement about every later legacy PSI release or a declaration that Solvercraft implements the catalog.
 
-Source: [official 2025 Q1 reference](https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf). Independently checked file size: **19,434,011 bytes**. SHA-256: `2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6`. PDF page indexes are one based and match the printed page numbers used below. The PDF and copied manual prose are not committed. The factual inventory contains function names, symbolic call signatures, source-page locators and original implementation/test notes.
+Reference identity: 2025 Q1. Independently checked file size: **19,434,011 bytes**. SHA-256: `2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6`. PDF page indexes are one based and match the printed page numbers used below. The PDF and copied manual prose are not committed. The factual inventory contains function names, symbolic call signatures, source-page locators and original implementation/test notes.
 
 The machine-readable deliverable is [reference-catalog.json](reference-catalog.json). It includes **272 defined function entries**, **28 alternate parameter formulations**, five additional unresolved named mentions, and twenty-two recorded documentation conflicts. It was assembled from the full PSI chapter, table of contents, alternate-formulation headings, dimensional-modeling chapter and named-property audit. It was not filtered to functions currently implemented.
 

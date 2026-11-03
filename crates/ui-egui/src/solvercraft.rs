@@ -90,6 +90,17 @@ impl Default for State {
 fn label(de: bool, en: &'static str, german: &'static str) -> &'static str {
     if de { german } else { en }
 }
+fn help(ui: &mut egui::Ui, name: &str, text: &str) {
+    let button = ui.small_button("?").accessible_name(name);
+    let opened = egui::Popup::from_toggle_button_response(&button).show(|ui| {
+        ui.set_max_width(300.0);
+        ui.label(text);
+    });
+    if opened.is_none() {
+        button.on_hover_text(text);
+    }
+}
+
 fn field(ui: &mut egui::Ui, title: &str, value: &mut String) {
     ui.label(title);
     ui.add(egui::TextEdit::singleline(value).desired_width(f32::INFINITY)).accessible_name(title);
@@ -301,16 +312,16 @@ fn pick_reference(ui: &mut egui::Ui, title: &str, value: &mut String, selection:
 fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) {
     let cell = selected_reference(app, true);
     let range = selected_reference(app, false);
-    ui.horizontal(|ui| {
+    ui.horizontal_wrapped(|ui| {
         ui.selectable_value(&mut state.kind, "optimization".into(), label(de, "Optimization", "Optimierung"));
         ui.selectable_value(&mut state.kind, "simulation".into(), "Simulation");
+        help(
+            ui,
+            label(de, "Help with model types", "Hilfe zu Modelltypen"),
+            label(de, "Optimization finds values that satisfy constraints and improve a goal. Simulation measures how uncertain inputs affect outputs.", "Optimierung sucht Werte, die Nebenbedingungen erfüllen und ein Ziel verbessern. Simulation misst, wie unsichere Eingaben die Ausgaben beeinflussen."),
+        );
     });
     if state.kind == "optimization" {
-        ui.small(label(
-            de,
-            "Select cells on any sheet, then use the selection below.",
-            "Zellen auf einem beliebigen Blatt markieren und unten übernehmen.",
-        ));
         field(ui, label(de, "Objective cell or formula", "Zielzelle oder Formel"), &mut state.objective);
         pick_reference(ui, label(de, "Use selection as objective", "Markierung als Zielzelle"), &mut state.objective, cell.as_deref(), de);
         ui.horizontal(|ui| {
@@ -333,7 +344,14 @@ fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) 
                 de,
             );
         }
-        ui.label(label(de, "Constraints (one per line)", "Nebenbedingungen (eine pro Zeile)"));
+        ui.horizontal_wrapped(|ui| {
+            ui.label(label(de, "Constraints", "Nebenbedingungen"));
+            help(
+                ui,
+                label(de, "Help with constraints", "Hilfe zu Nebenbedingungen"),
+                label(de, "Enter one condition per line, such as A1 <= 10. Use the sheet selection below to build a condition from cells on any sheet.", "Eine Bedingung pro Zeile eingeben, etwa A1 <= 10. Über die Blattauswahl unten lassen sich Zellen aus beliebigen Blättern einsetzen."),
+            );
+        });
         ui.add(egui::TextEdit::multiline(&mut state.constraints).desired_rows(4).desired_width(f32::INFINITY))
             .accessible_name("Solvercraft constraints");
         ui.collapsing(label(de, "Add a constraint from the sheet", "Nebenbedingung aus dem Blatt hinzufügen"), |ui| {
@@ -377,12 +395,19 @@ fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) 
             .response
             .accessible_name(label(de, "Solving method", "Lösungsmethode"));
     } else {
-        ui.checkbox(&mut state.worksheet_bindings, label(de, "Use worksheet SC declarations", "SC-Deklarationen aus dem Blatt verwenden"));
-        ui.label(label(de, "Inputs: cell/distribution JSON array", "Inputs: JSON-Array aus Zelle und Verteilung"));
-        ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
-            .accessible_name("Solvercraft simulation inputs");
-        field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
+        ui.horizontal_wrapped(|ui| {
+            ui.checkbox(&mut state.worksheet_bindings, label(de, "Use worksheet declarations", "Deklarationen aus dem Blatt verwenden"));
+            help(
+                ui,
+                label(de, "Help with worksheet declarations", "Hilfe zu Blattdeklarationen"),
+                label(de, "Solvercraft finds distribution cells and SC.OUTPUT formulas in the workbook. Turn this off to specify cells manually.", "Solvercraft findet Verteilungszellen und SC.OUTPUT-Formeln in der Mappe. Zum manuellen Angeben von Zellen diese Option deaktivieren."),
+            );
+        });
         if !state.worksheet_bindings {
+            ui.label(label(de, "Inputs (JSON)", "Eingaben (JSON)"));
+            ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
+                .accessible_name("Solvercraft simulation inputs");
+            field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
             pick_reference(ui, label(de, "Use selection as outputs", "Markierung als Ausgaben"), &mut state.outputs, range.as_deref(), de);
         }
         ui.horizontal(|ui| {
@@ -390,10 +415,18 @@ fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) 
             ui.add(egui::DragValue::new(&mut state.trials).range(1..=1_000_000)).accessible_name(label(de, "Trials", "Versuche"));
         });
         field(ui, "Seed", &mut state.seed);
-        ui.checkbox(
-            &mut state.compare_parameters,
-            label(de, "Compare parameter grid (one factor at a time)", "Parameter vergleichen (jeweils ein Faktor)"),
-        );
+        ui.horizontal_wrapped(|ui| {
+            ui.checkbox(&mut state.compare_parameters, label(de, "Compare parameters", "Parameter vergleichen"));
+            help(
+                ui,
+                label(de, "Help with parameter comparisons", "Hilfe zum Parametervergleich"),
+                label(
+                    de,
+                    "Each comparison varies one parameter. The other parameters stay at their base values.",
+                    "Pro Vergleich ändert sich ein Parameter. Die übrigen Parameter behalten ihre Basiswerte.",
+                ),
+            );
+        });
         if state.compare_parameters {
             let mut remove = None;
             for (i, p) in state.parameter_grid.iter_mut().enumerate() {

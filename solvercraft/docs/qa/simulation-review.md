@@ -87,7 +87,7 @@ These are distinct from defects fixed above:
 - Binomial nondegenerate trials and Poisson rate have explicit work caps; unsupported sizes do not silently select normal approximations.
 - Streaming mode deliberately omits exact quantiles/CVaR unless samples are retained.
 - Only elementary normal/uniform/exponential unweighted, uncensored MLE fits are implemented. Fitting scores, goodness-of-fit, censoring, weighting and broader families remain product-scope gaps.
-- Correlation/copulas, randomized Sobol, certified RNG statistics and broader Frontline parity are not supplied by this patch.
+- Correlation/copulas, randomized Sobol, certified RNG statistics and broader legacy PSI parity are not supplied by this patch.
 - The public sampler documents that evaluator allocation/computation budgeting is the host's responsibility. Engine-owned input/output/storage work is separately checked.
 - Cancellation is checked during preparation and trials. Exact retained-data sorting/final summary construction is not yet a separately resumable cancellation phase; no one-second end-to-end cancellation guarantee is established here.
 - Full facade simulation-job, GUI and WASM execution remain integrator-level checks; they were not executed by this reviewer.

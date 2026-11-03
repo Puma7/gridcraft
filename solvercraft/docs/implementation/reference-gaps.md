@@ -18,7 +18,7 @@ turn the entire inventory into a mandatory 272-name import contract.
 The historical final6 [scope audit](../qa/original-scope-audit.md) and [current acceptance
 review](../qa/acceptance-current.md) accept R046 and R081 within their original
 bounded contracts. The broader compatibility limitations below remain real;
-criterion acceptance is not full Frontline or 272-PSI parity.
+criterion acceptance is not full legacy PSI or 272-PSI parity.
 
 ## Executable R046 cores
 
@@ -80,7 +80,7 @@ converted into a claim of vendor parity.
   policy and live worksheet watching are not claimed. Explicit-family fitting
   and the broader SDK ranker are separate APIs.
 - PsiCertified: callers can publish and resolve their own versioned analytic,
-  SIP and SLURP records. Frontline's proprietary published service/catalog is
+  SIP and SLURP records. legacy PSI's proprietary published service/catalog is
   not accessed or represented as Solvercraft certification.
 - PsiDistInfo: declared original names/formulas are preserved without guessing
   them from transformed DTOs. Live worksheet-cell discovery/capture is separate.

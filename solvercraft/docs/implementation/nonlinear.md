@@ -1,6 +1,6 @@
 # Nonlinear, restart and interval optimization
 
-Updated 2026-10-31. This document describes implemented Rust SDK behavior. It does not establish full Frontline parity or Gridcraft host/UI execution.
+Updated 2026-10-31. This document describes implemented Rust SDK behavior. It does not establish full legacy PSI parity or Gridcraft host/UI execution.
 
 ## Public interfaces
 
@@ -111,4 +111,4 @@ Targeted execution uses real workspace crates, not stubs. Run `cargo test -p sol
 - T. Csendes and D. Ratz, [Subdivision Direction Selection in Interval Methods for Global Optimization](https://epubs.siam.org/doi/10.1137/S0036142995281528), SIAM Journal on Numerical Analysis, 1997.
 - [Hybridizing two linear relaxation techniques in interval-based solvers](https://link.springer.com/article/10.1007/s10898-024-01449-2), Journal of Global Optimization, 2024, for the interval branch-and-bound framework and treatment of floating-point rounding. This implementation does not implement that paper's linear relaxations.
 
-The code is a clean-room implementation of public mathematical methods. No proprietary Frontline code or undocumented method is represented as copied or equivalent.
+The code is a clean-room implementation of public mathematical methods. No proprietary legacy PSI code or undocumented method is represented as copied or equivalent.

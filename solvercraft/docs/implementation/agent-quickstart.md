@@ -176,6 +176,6 @@ deployment needs its own authenticated gateway; the built-in service is local.
 The [verification](verification.md) and [compatibility gaps](reference-gaps.md)
 record the exercised platforms, supported domains and actual limitations. The
 31 PSI conversions cover selected top-level signatures. Acceptance of the 96
-original criteria is bounded acceptance, not complete Frontline compatibility.
+original criteria is bounded acceptance, not complete legacy PSI compatibility.
 Preserve seeds, versions, effective options and qualification of local/heuristic
 results in any agent-facing answer.

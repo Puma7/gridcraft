@@ -20,9 +20,9 @@ Simulation uses a bounded topological cell IR over immutable sampled inputs, eva
 
 The worksheet adapter supports 17 SC distribution families plus verified numeric Psi shims. Unsupported properties and ambiguous reference domains remain explicit. Parameter comparisons, histogram/step CDF/scatter/box/quantile-band/tornado displays and checked LP answer/basis sensitivity reports use actual results. Every ordinary solve/simulation preview carries a bounded diagnostic manifest with effective options, lossless seed, SDK/host/platform versions, frozen document/revision/time, actual engine/sampler identity and bindings. Effective simulation requests are retained for reruns. Fingerprints and caller labels are not build attestations.
 
-See [host implementation and test evidence](../solvercraft/docs/implementation/gridcraft.md), [browser transport measurements](../solvercraft/docs/implementation/browser-worker-final6-report.json) and [current acceptance review](../solvercraft/docs/qa/acceptance-current.md). Native host regression tests, actual egui input/render tests, WASM compilation and actual generated-worker Chrome tests are distinct evidence. The final rebuilt-worker/UI/full-CI checkpoint is recorded there; compile success alone is never browser execution or complete Excel/Frontline parity.
+See [host implementation and test evidence](../solvercraft/docs/implementation/gridcraft.md), [browser transport measurements](../solvercraft/docs/implementation/browser-worker-final6-report.json) and [current acceptance review](../solvercraft/docs/qa/acceptance-current.md). Native host regression tests, actual egui input/render tests, WASM compilation and actual generated-worker Chrome tests are distinct evidence. The final rebuilt-worker/UI/full-CI checkpoint is recorded there; compile success alone is never browser execution or complete Excel/legacy PSI parity.
 
-The [final7 evidence](../solvercraft/docs/implementation/final7-verification-summary.json) supports bounded acceptance of the original 96 criteria and 31 selected top-level PSI import forms. R046 is the 111-entry mathematical catalog; R081 covers the actually supported signatures and explicit conversion policies. Full 272-PSI/Frontline compatibility remains unclaimed. The [scope audit](../solvercraft/docs/qa/original-scope-audit.md) records the original wording and per-function test evidence.
+The [final7 evidence](../solvercraft/docs/implementation/final7-verification-summary.json) supports bounded acceptance of the original 96 criteria and 31 selected top-level PSI import forms. R046 is the 111-entry mathematical catalog; R081 covers the actually supported signatures and explicit conversion policies. The reference catalog tracks 272 PSI functions and records remaining gaps. The [scope audit](../solvercraft/docs/qa/original-scope-audit.md) records the original wording and per-function test evidence.
 
 Both historical final6 worker attempts remain visible: initial 7/1 at an additional 26 ms heartbeat observation, then one identical repeat 8/0. The cause of the initial timing failure is unproven; R081 passed in both. Final7 records its separate first-attempt worker suite. This is not a 25 ms product timing guarantee. The default PSI outside-value conversion is explicitly lossy and unsupported nested/property forms are preserved rather than applied.
 
@@ -36,17 +36,19 @@ Public final6 evidence is available as [compact fixed-field reports and strict t
 | 2026-11-01 | documentation | Link final6 original-criterion acceptance and both worker attempts; retain explicit selected PSI conversion limits |
 | 2026-11-02 | minor | Add standalone Solvercraft app, reusable host SDK and on-demand independent MCP; link final7 selected import scope and reviewed launcher submission |
 
-### Review and import a Frontline simulation
+### Review and import simulation formulas
 
-In **Data → Solvercraft**, open **Import Frontline simulation** and choose
-**Scan workbook**. Review the original and proposed formulas and the reasons
-for cells that stay intact. **Convert supported cells** commits the changes in
-one undo step. If the workbook changed, scan again. A new simulation draft uses
-the worksheet declarations. Saved models keep their current bindings.
+Open **Data → Solvercraft → Import simulation formulas** and choose
+**Scan workbook**. The preview lists proposed changes and preserved formulas.
+The question-mark controls explain the scan and the conversion policy.
 
-The bounded importer supports the existing numeric PSI distribution signatures
-and an additive zero-argument `PsiOutput()` marker. The conversion preserves the
-arithmetic and uses an `SC.OUTPUT` declaration to discover the output cell.
-Named outputs and properties remain preserved as unsupported. Use
-[the parity audit](../solvercraft/docs/implementation/frontline-parity-audit.md)
-for the evidence and gaps by function family.
+**Convert supported cells** applies the preview in one undo step. Rescan if
+the workbook changed. A new simulation draft can discover worksheet
+declarations, while saved models retain their current bindings.
+
+The importer recognizes supported numeric PSI calls, add-in-prefixed formulas
+and supported scalar legacy-array cells. The bare output marker can accompany
+a numeric formula or a supported distribution. A single numeric base case
+can set the nominal value for a supported distribution. Worksheet statistics
+that require a previous run remain intact. Read statistics from the simulation
+result and select the output cells explicitly when the sheet lacks declarations.

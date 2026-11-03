@@ -22,7 +22,7 @@ fn source() -> PublicationSource {
     }
 }
 fn reference(name: &str, formula: &str) -> Option<ReferenceCall> {
-    Some(ReferenceCall { name: name.into(), formula: formula.into(), source_version: "frontline-2025q1".into(), properties: vec![] })
+    Some(ReferenceCall { name: name.into(), formula: formula.into(), source_version: "legacy-2025q1".into(), properties: vec![] })
 }
 fn record(name: &str, data: PublishedData) -> PublishedInput {
     PublishedInput {

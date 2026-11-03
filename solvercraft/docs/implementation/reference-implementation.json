@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "frontline-2025q1-executable-map-v2-31-core-imports",
+  "version": "legacy-2025q1-executable-map-v3",
   "frozen_source_sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
   "requirements_source": "docs/masterplan/requirements.csv",
   "scope": {
@@ -12,7 +12,9 @@
       "partial_parameterization": 2
     },
     "note": "R046 scopes distribution/Alt/custom/special/time-series chapters; R081 import semantics and R091 matrix cover all272. This is no completion certificate.",
-    "host_core_imports": 31
+    "host_core_imports": 31,
+    "host_bounded_additions": 2,
+    "host_discovery_only": 1
   },
   "functions": [
     {
@@ -25,12 +27,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           261
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=261"
+        "url": "internal:legacy-psi-reference#page=261"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -56,13 +58,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           261,
           442
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=261"
+        "url": "internal:legacy-psi-reference#page=261"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -88,12 +90,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           261
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=261"
+        "url": "internal:legacy-psi-reference#page=261"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -119,12 +121,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           262
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=262"
+        "url": "internal:legacy-psi-reference#page=262"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -150,12 +152,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           262
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=262"
+        "url": "internal:legacy-psi-reference#page=262"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -181,12 +183,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           262
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=262"
+        "url": "internal:legacy-psi-reference#page=262"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -212,12 +214,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           262
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=262"
+        "url": "internal:legacy-psi-reference#page=262"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -243,12 +245,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           263
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=263"
+        "url": "internal:legacy-psi-reference#page=263"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -274,12 +276,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           263
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=263"
+        "url": "internal:legacy-psi-reference#page=263"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -305,12 +307,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           264
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=264"
+        "url": "internal:legacy-psi-reference#page=264"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -336,12 +338,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           264
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=264"
+        "url": "internal:legacy-psi-reference#page=264"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -367,12 +369,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           264
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=264"
+        "url": "internal:legacy-psi-reference#page=264"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -398,13 +400,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           264,
           265
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=264"
+        "url": "internal:legacy-psi-reference#page=264"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -430,12 +432,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           265
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=265"
+        "url": "internal:legacy-psi-reference#page=265"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -461,12 +463,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           265
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=265"
+        "url": "internal:legacy-psi-reference#page=265"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -492,12 +494,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           265
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=265"
+        "url": "internal:legacy-psi-reference#page=265"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -523,12 +525,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           266
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=266"
+        "url": "internal:legacy-psi-reference#page=266"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -554,14 +556,14 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           266,
           421,
           422
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=266"
+        "url": "internal:legacy-psi-reference#page=266"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -587,12 +589,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           266
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=266"
+        "url": "internal:legacy-psi-reference#page=266"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -618,12 +620,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           266
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=266"
+        "url": "internal:legacy-psi-reference#page=266"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -649,12 +651,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           266
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=266"
+        "url": "internal:legacy-psi-reference#page=266"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -680,12 +682,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           267
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=267"
+        "url": "internal:legacy-psi-reference#page=267"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -712,12 +714,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           270
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=270"
+        "url": "internal:legacy-psi-reference#page=270"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -788,12 +790,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           271
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=271"
+        "url": "internal:legacy-psi-reference#page=271"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -842,12 +844,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           271
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=271"
+        "url": "internal:legacy-psi-reference#page=271"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -897,12 +899,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           272
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=272"
+        "url": "internal:legacy-psi-reference#page=272"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -951,12 +953,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           273
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=273"
+        "url": "internal:legacy-psi-reference#page=273"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1028,12 +1030,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           274
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=274"
+        "url": "internal:legacy-psi-reference#page=274"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1083,12 +1085,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           274
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=274"
+        "url": "internal:legacy-psi-reference#page=274"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -1138,12 +1140,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           275
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=275"
+        "url": "internal:legacy-psi-reference#page=275"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1235,12 +1237,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           275
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=275"
+        "url": "internal:legacy-psi-reference#page=275"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -1290,12 +1292,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           276
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=276"
+        "url": "internal:legacy-psi-reference#page=276"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1367,12 +1369,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           277
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=277"
+        "url": "internal:legacy-psi-reference#page=277"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1443,12 +1445,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           278
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=278"
+        "url": "internal:legacy-psi-reference#page=278"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1497,12 +1499,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           278
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=278"
+        "url": "internal:legacy-psi-reference#page=278"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -1552,12 +1554,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           279
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=279"
+        "url": "internal:legacy-psi-reference#page=279"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1649,12 +1651,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           280
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=280"
+        "url": "internal:legacy-psi-reference#page=280"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1724,12 +1726,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           280
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=280"
+        "url": "internal:legacy-psi-reference#page=280"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -1779,12 +1781,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           281
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=281"
+        "url": "internal:legacy-psi-reference#page=281"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -1856,12 +1858,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           281
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=281"
+        "url": "internal:legacy-psi-reference#page=281"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -1911,12 +1913,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           282
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=282"
+        "url": "internal:legacy-psi-reference#page=282"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2008,12 +2010,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           283
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=283"
+        "url": "internal:legacy-psi-reference#page=283"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2085,12 +2087,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           283
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=283"
+        "url": "internal:legacy-psi-reference#page=283"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -2140,12 +2142,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           284
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=284"
+        "url": "internal:legacy-psi-reference#page=284"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2216,12 +2218,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           284
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=284"
+        "url": "internal:legacy-psi-reference#page=284"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -2271,12 +2273,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           285
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=285"
+        "url": "internal:legacy-psi-reference#page=285"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2368,12 +2370,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           285
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=285"
+        "url": "internal:legacy-psi-reference#page=285"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -2423,12 +2425,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           286
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=286"
+        "url": "internal:legacy-psi-reference#page=286"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2478,12 +2480,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           286
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=286"
+        "url": "internal:legacy-psi-reference#page=286"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -2533,12 +2535,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           287
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=287"
+        "url": "internal:legacy-psi-reference#page=287"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2588,12 +2590,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           288
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=288"
+        "url": "internal:legacy-psi-reference#page=288"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2643,12 +2645,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           289
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=289"
+        "url": "internal:legacy-psi-reference#page=289"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2762,12 +2764,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           289
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=289"
+        "url": "internal:legacy-psi-reference#page=289"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2817,12 +2819,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           289
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=289"
+        "url": "internal:legacy-psi-reference#page=289"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -2872,12 +2874,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           290
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=290"
+        "url": "internal:legacy-psi-reference#page=290"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -2969,12 +2971,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           290
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=290"
+        "url": "internal:legacy-psi-reference#page=290"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -3024,12 +3026,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           291
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=291"
+        "url": "internal:legacy-psi-reference#page=291"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3121,12 +3123,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           291
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=291"
+        "url": "internal:legacy-psi-reference#page=291"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -3176,12 +3178,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           292
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=292"
+        "url": "internal:legacy-psi-reference#page=292"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3231,12 +3233,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           292
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=292"
+        "url": "internal:legacy-psi-reference#page=292"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -3286,12 +3288,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           293
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=293"
+        "url": "internal:legacy-psi-reference#page=293"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3361,12 +3363,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           293
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=293"
+        "url": "internal:legacy-psi-reference#page=293"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -3416,12 +3418,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           294
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=294"
+        "url": "internal:legacy-psi-reference#page=294"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3491,12 +3493,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           295
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=295"
+        "url": "internal:legacy-psi-reference#page=295"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3520,7 +3522,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         },
         {
           "path": "crates/solvercraft/tests/catalog_inputs.rs",
@@ -3542,7 +3544,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiMakeInput-signature-defaults",
@@ -3568,12 +3570,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           296
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=296"
+        "url": "internal:legacy-psi-reference#page=296"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3665,12 +3667,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           296
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=296"
+        "url": "internal:legacy-psi-reference#page=296"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -3720,12 +3722,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           297
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=297"
+        "url": "internal:legacy-psi-reference#page=297"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3775,12 +3777,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           298
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=298"
+        "url": "internal:legacy-psi-reference#page=298"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3830,12 +3832,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           299
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=299"
+        "url": "internal:legacy-psi-reference#page=299"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -3885,12 +3887,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           300
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=300"
+        "url": "internal:legacy-psi-reference#page=300"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4003,12 +4005,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           300
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=300"
+        "url": "internal:legacy-psi-reference#page=300"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4058,12 +4060,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           301
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=301"
+        "url": "internal:legacy-psi-reference#page=301"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4135,12 +4137,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           302
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=302"
+        "url": "internal:legacy-psi-reference#page=302"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4190,12 +4192,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           304
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=304"
+        "url": "internal:legacy-psi-reference#page=304"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4244,12 +4246,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           304
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=304"
+        "url": "internal:legacy-psi-reference#page=304"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4299,12 +4301,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           305
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=305"
+        "url": "internal:legacy-psi-reference#page=305"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4354,12 +4356,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           307
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=307"
+        "url": "internal:legacy-psi-reference#page=307"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4409,12 +4411,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           307
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=307"
+        "url": "internal:legacy-psi-reference#page=307"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4464,12 +4466,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           308
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=308"
+        "url": "internal:legacy-psi-reference#page=308"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4519,12 +4521,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           308
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=308"
+        "url": "internal:legacy-psi-reference#page=308"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4574,12 +4576,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           309
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=309"
+        "url": "internal:legacy-psi-reference#page=309"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4629,12 +4631,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           309
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=309"
+        "url": "internal:legacy-psi-reference#page=309"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4684,12 +4686,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           310
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=310"
+        "url": "internal:legacy-psi-reference#page=310"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4739,12 +4741,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           310
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=310"
+        "url": "internal:legacy-psi-reference#page=310"
       },
       "sdk_status": "partial_parameterization",
       "tests": [
@@ -4794,12 +4796,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           311
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=311"
+        "url": "internal:legacy-psi-reference#page=311"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -4870,12 +4872,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           311
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=311"
+        "url": "internal:legacy-psi-reference#page=311"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -4925,12 +4927,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           312
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=312"
+        "url": "internal:legacy-psi-reference#page=312"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5022,12 +5024,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           312
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=312"
+        "url": "internal:legacy-psi-reference#page=312"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -5077,12 +5079,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           313
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=313"
+        "url": "internal:legacy-psi-reference#page=313"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5174,12 +5176,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           314
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=314"
+        "url": "internal:legacy-psi-reference#page=314"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5271,12 +5273,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           314
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=314"
+        "url": "internal:legacy-psi-reference#page=314"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -5326,12 +5328,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           315
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=315"
+        "url": "internal:legacy-psi-reference#page=315"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5381,13 +5383,13 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           317,
           319
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=317"
+        "url": "internal:legacy-psi-reference#page=317"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5436,12 +5438,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           317
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=317"
+        "url": "internal:legacy-psi-reference#page=317"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -5491,12 +5493,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           318
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=318"
+        "url": "internal:legacy-psi-reference#page=318"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5545,12 +5547,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           318
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=318"
+        "url": "internal:legacy-psi-reference#page=318"
       },
       "sdk_status": "core_parameter_subset_tested",
       "tests": [
@@ -5600,12 +5602,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           319
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=319"
+        "url": "internal:legacy-psi-reference#page=319"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5655,12 +5657,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           320
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=320"
+        "url": "internal:legacy-psi-reference#page=320"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5709,12 +5711,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           320
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=320"
+        "url": "internal:legacy-psi-reference#page=320"
       },
       "sdk_status": "partial_parameterization",
       "tests": [
@@ -5764,12 +5766,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           321
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=321"
+        "url": "internal:legacy-psi-reference#page=321"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5818,12 +5820,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           322
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=322"
+        "url": "internal:legacy-psi-reference#page=322"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5872,12 +5874,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           323
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=323"
+        "url": "internal:legacy-psi-reference#page=323"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -5948,12 +5950,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           324
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=324"
+        "url": "internal:legacy-psi-reference#page=324"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6003,12 +6005,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           325
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=325"
+        "url": "internal:legacy-psi-reference#page=325"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6079,12 +6081,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           326
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=326"
+        "url": "internal:legacy-psi-reference#page=326"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6134,12 +6136,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           327
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=327"
+        "url": "internal:legacy-psi-reference#page=327"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6210,12 +6212,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           328
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=328"
+        "url": "internal:legacy-psi-reference#page=328"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6264,13 +6266,13 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           329,
           330
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=329"
+        "url": "internal:legacy-psi-reference#page=329"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6340,12 +6342,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           330
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=330"
+        "url": "internal:legacy-psi-reference#page=330"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6394,12 +6396,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           330
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=330"
+        "url": "internal:legacy-psi-reference#page=330"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6469,12 +6471,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           331
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=331"
+        "url": "internal:legacy-psi-reference#page=331"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6544,12 +6546,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           332
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=332"
+        "url": "internal:legacy-psi-reference#page=332"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6598,12 +6600,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           333
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=333"
+        "url": "internal:legacy-psi-reference#page=333"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6652,12 +6654,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           334
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=334"
+        "url": "internal:legacy-psi-reference#page=334"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6681,7 +6683,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiCertified-signature-defaults",
@@ -6707,12 +6709,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           335
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=335"
+        "url": "internal:legacy-psi-reference#page=335"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6736,7 +6738,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiDistInfo-signature-defaults",
@@ -6762,12 +6764,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           335
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=335"
+        "url": "internal:legacy-psi-reference#page=335"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6791,7 +6793,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         },
         {
           "path": "crates/solvercraft/tests/catalog_inputs.rs",
@@ -6813,7 +6815,7 @@
             "--exact"
           ],
           "working_directory": ".",
-          "source_file_sha256": "d947cc690dbba4c23d98a2fbc3ea16c32ee7cb625518fcdab1b0625b2c76a22d"
+          "source_file_sha256": "352ccd69de2bf24fa9c0ef40517728c68ebf8cacc8e6cd7466ef3b1eb2553f75"
         }
       ],
       "planned_exact_signature_test": "TEST-PSI-PsiFit-signature-defaults",
@@ -6839,12 +6841,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           335
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=335"
+        "url": "internal:legacy-psi-reference#page=335"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6894,12 +6896,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           336
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=336"
+        "url": "internal:legacy-psi-reference#page=336"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -6949,12 +6951,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           337
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=337"
+        "url": "internal:legacy-psi-reference#page=337"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7004,12 +7006,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           337
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=337"
+        "url": "internal:legacy-psi-reference#page=337"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7059,12 +7061,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           338
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=338"
+        "url": "internal:legacy-psi-reference#page=338"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7114,12 +7116,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           338
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=338"
+        "url": "internal:legacy-psi-reference#page=338"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7169,12 +7171,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           338
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=338"
+        "url": "internal:legacy-psi-reference#page=338"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7224,12 +7226,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           340
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=340"
+        "url": "internal:legacy-psi-reference#page=340"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7279,12 +7281,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           341
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=341"
+        "url": "internal:legacy-psi-reference#page=341"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7334,12 +7336,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           341
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=341"
+        "url": "internal:legacy-psi-reference#page=341"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7389,12 +7391,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           341
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=341"
+        "url": "internal:legacy-psi-reference#page=341"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7444,12 +7446,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           342
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=342"
+        "url": "internal:legacy-psi-reference#page=342"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7499,12 +7501,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           342
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=342"
+        "url": "internal:legacy-psi-reference#page=342"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7554,12 +7556,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           343
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=343"
+        "url": "internal:legacy-psi-reference#page=343"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7609,12 +7611,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           343
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=343"
+        "url": "internal:legacy-psi-reference#page=343"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7664,12 +7666,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           344
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=344"
+        "url": "internal:legacy-psi-reference#page=344"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7719,12 +7721,12 @@
       ],
       "r046_in_scope": true,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           344
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=344"
+        "url": "internal:legacy-psi-reference#page=344"
       },
       "sdk_status": "core_subset_tested",
       "tests": [
@@ -7773,26 +7775,48 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           345
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=345"
+        "url": "internal:legacy-psi-reference#page=345"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+          "public_api": "workbook command",
+          "scope": "Scalar legacy-array prefix, numeric base case, output marker and mean output discovery. Run-bound worksheet statistics remain open.",
+          "execution": "native host regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiBaseCase-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "partial_single_numeric_nominal_override",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Supported distribution calls can set an explicit nominal value from one numeric literal. Other signatures and display policies remain open."
     },
     {
       "id": "PSI-PsiCategory",
@@ -7804,12 +7828,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           345
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=345"
+        "url": "internal:legacy-psi-reference#page=345"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7835,12 +7859,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           346
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=346"
+        "url": "internal:legacy-psi-reference#page=346"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7866,12 +7890,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           346
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=346"
+        "url": "internal:legacy-psi-reference#page=346"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7897,12 +7921,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           346
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=346"
+        "url": "internal:legacy-psi-reference#page=346"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7928,12 +7952,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           347
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=347"
+        "url": "internal:legacy-psi-reference#page=347"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7959,12 +7983,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           347
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=347"
+        "url": "internal:legacy-psi-reference#page=347"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -7990,12 +8014,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           349
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=349"
+        "url": "internal:legacy-psi-reference#page=349"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8021,12 +8045,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           352
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=352"
+        "url": "internal:legacy-psi-reference#page=352"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8052,12 +8076,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           353
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=353"
+        "url": "internal:legacy-psi-reference#page=353"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8083,12 +8107,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           354
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=354"
+        "url": "internal:legacy-psi-reference#page=354"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8114,12 +8138,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           355
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=355"
+        "url": "internal:legacy-psi-reference#page=355"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8145,12 +8169,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           355
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=355"
+        "url": "internal:legacy-psi-reference#page=355"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8176,12 +8200,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           355
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=355"
+        "url": "internal:legacy-psi-reference#page=355"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8207,12 +8231,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8238,12 +8262,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8269,12 +8293,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8300,12 +8324,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8331,12 +8355,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8362,12 +8386,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8393,12 +8417,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           356
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=356"
+        "url": "internal:legacy-psi-reference#page=356"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8424,12 +8448,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           357
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=357"
+        "url": "internal:legacy-psi-reference#page=357"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8455,12 +8479,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           357
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=357"
+        "url": "internal:legacy-psi-reference#page=357"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8486,12 +8510,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           357
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=357"
+        "url": "internal:legacy-psi-reference#page=357"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8517,12 +8541,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           357
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=357"
+        "url": "internal:legacy-psi-reference#page=357"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8548,12 +8572,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           360
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=360"
+        "url": "internal:legacy-psi-reference#page=360"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8579,12 +8603,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           361
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=361"
+        "url": "internal:legacy-psi-reference#page=361"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [
@@ -8633,12 +8657,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           361
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=361"
+        "url": "internal:legacy-psi-reference#page=361"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [
@@ -8687,12 +8711,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           361
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=361"
+        "url": "internal:legacy-psi-reference#page=361"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8718,12 +8742,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           362
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=362"
+        "url": "internal:legacy-psi-reference#page=362"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [
@@ -8772,12 +8796,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           362
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=362"
+        "url": "internal:legacy-psi-reference#page=362"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [
@@ -8826,12 +8850,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           363
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=363"
+        "url": "internal:legacy-psi-reference#page=363"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8857,12 +8881,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           363
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=363"
+        "url": "internal:legacy-psi-reference#page=363"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8888,12 +8912,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           364
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=364"
+        "url": "internal:legacy-psi-reference#page=364"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8919,12 +8943,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           364
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=364"
+        "url": "internal:legacy-psi-reference#page=364"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8950,12 +8974,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           364
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=364"
+        "url": "internal:legacy-psi-reference#page=364"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -8981,12 +9005,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           365
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=365"
+        "url": "internal:legacy-psi-reference#page=365"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9012,12 +9036,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           365
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=365"
+        "url": "internal:legacy-psi-reference#page=365"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9043,12 +9067,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           366
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=366"
+        "url": "internal:legacy-psi-reference#page=366"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9074,12 +9098,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           366
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=366"
+        "url": "internal:legacy-psi-reference#page=366"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9105,12 +9129,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           366
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=366"
+        "url": "internal:legacy-psi-reference#page=366"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9136,12 +9160,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           367
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=367"
+        "url": "internal:legacy-psi-reference#page=367"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9167,12 +9191,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           367
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=367"
+        "url": "internal:legacy-psi-reference#page=367"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9198,12 +9222,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           367
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=367"
+        "url": "internal:legacy-psi-reference#page=367"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9229,12 +9253,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           367
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=367"
+        "url": "internal:legacy-psi-reference#page=367"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9260,12 +9284,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           367
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=367"
+        "url": "internal:legacy-psi-reference#page=367"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9291,12 +9315,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           368
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=368"
+        "url": "internal:legacy-psi-reference#page=368"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9322,12 +9346,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           368
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=368"
+        "url": "internal:legacy-psi-reference#page=368"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9353,12 +9377,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           369
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=369"
+        "url": "internal:legacy-psi-reference#page=369"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9384,26 +9408,48 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           369
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=369"
+        "url": "internal:legacy-psi-reference#page=369"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": [],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+          "public_api": "workbook command",
+          "scope": "Scalar legacy-array prefix, numeric base case, output marker and mean output discovery. Run-bound worksheet statistics remain open.",
+          "execution": "native host regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiMean-signature-defaults",
       "platforms": {
         "native": "Windows Rust1.95 evidence only when individual execution says so; pending means not executed.",
         "browser": "No per-function browser execution evidence mapped."
       },
-      "host_import": "unsupported",
+      "host_import": "discovery_only_direct_output_reference",
       "guarantee": {
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Exact PSI host function/default contract is not established by generic optimization/simulation SDK capability."
+      "remaining_gap": "Direct cell reference designates the output. Worksheet statistic and simulation or slice selection remain open. Mean is available from the run result."
     },
     {
       "id": "PSI-PsiMeanCI",
@@ -9415,12 +9461,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           369
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=369"
+        "url": "internal:legacy-psi-reference#page=369"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9446,12 +9492,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           370
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=370"
+        "url": "internal:legacy-psi-reference#page=370"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9477,12 +9523,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           370
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=370"
+        "url": "internal:legacy-psi-reference#page=370"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9508,12 +9554,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           370
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=370"
+        "url": "internal:legacy-psi-reference#page=370"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9539,12 +9585,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           371
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=371"
+        "url": "internal:legacy-psi-reference#page=371"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9570,15 +9616,58 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           371
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=371"
+        "url": "internal:legacy-psi-reference#page=371"
       },
       "sdk_status": "exact_reference_contract_open",
-      "tests": ["psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run", "pane_reviews_legacy_formulas_before_conversion"],
+      "tests": [
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run",
+          "public_api": "workbook command",
+          "scope": "XLSX preview, explicit conversion, numerical execution and undo.",
+          "execution": "native host regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::psi_preview_marks_output_and_requires_fresh_snapshot_before_end_to_end_run",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+        },
+        {
+          "path": "../crates/engine/src/cmd/solvercraft/host_tests.rs",
+          "test": "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+          "public_api": "workbook command",
+          "scope": "Scalar legacy-array prefix, numeric base case, output marker and mean output discovery. Run-bound worksheet statistics remain open.",
+          "execution": "native host regression",
+          "command": [
+            "cargo",
+            "test",
+            "--offline",
+            "--locked",
+            "-p",
+            "gridcraft-engine",
+            "--lib",
+            "cmd::solvercraft::host_tests::psi_import_converts_scalar_xll_cells_and_preserves_unsupported_post_run_statistics",
+            "--",
+            "--exact"
+          ],
+          "working_directory": "..",
+          "source_file_sha256": "ce276101925f5927ca770fb6273ebc019e7e90cf6b3a4c941e4213acffd4441d"
+        }
+      ],
       "planned_exact_signature_test": "TEST-PSI-PsiOutput-signature-defaults",
       "platforms": {
         "native": "Native regression covers XLSX import, review, simulation and undo for the additive zero-argument marker.",
@@ -9589,7 +9678,7 @@
         "core": "Numerical/reference subset only as stated by each test.",
         "full_reference_parity": false
       },
-      "remaining_gap": "Named outputs, cell-argument declarations, instance selection, Six Sigma properties and implicit discovery through statistics functions remain open."
+      "remaining_gap": "Named outputs, cell-argument declarations, instance selection and Six Sigma properties remain open."
     },
     {
       "id": "PSI-PsiPercentile",
@@ -9601,12 +9690,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           372
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=372"
+        "url": "internal:legacy-psi-reference#page=372"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9632,12 +9721,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           372
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=372"
+        "url": "internal:legacy-psi-reference#page=372"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9663,12 +9752,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           373
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=373"
+        "url": "internal:legacy-psi-reference#page=373"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9694,12 +9783,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           373
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=373"
+        "url": "internal:legacy-psi-reference#page=373"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9725,12 +9814,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           373
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=373"
+        "url": "internal:legacy-psi-reference#page=373"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9756,12 +9845,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           373
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=373"
+        "url": "internal:legacy-psi-reference#page=373"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9787,12 +9876,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           374
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=374"
+        "url": "internal:legacy-psi-reference#page=374"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9818,12 +9907,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           374
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=374"
+        "url": "internal:legacy-psi-reference#page=374"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9849,12 +9938,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           374
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=374"
+        "url": "internal:legacy-psi-reference#page=374"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9880,12 +9969,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           374
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=374"
+        "url": "internal:legacy-psi-reference#page=374"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9911,12 +10000,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           375
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=375"
+        "url": "internal:legacy-psi-reference#page=375"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9942,12 +10031,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           375
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=375"
+        "url": "internal:legacy-psi-reference#page=375"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -9973,12 +10062,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           376
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=376"
+        "url": "internal:legacy-psi-reference#page=376"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10004,12 +10093,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           376
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=376"
+        "url": "internal:legacy-psi-reference#page=376"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10035,12 +10124,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           377
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=377"
+        "url": "internal:legacy-psi-reference#page=377"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10066,12 +10155,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           377
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=377"
+        "url": "internal:legacy-psi-reference#page=377"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10097,12 +10186,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           377
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=377"
+        "url": "internal:legacy-psi-reference#page=377"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10128,12 +10217,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           378
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=378"
+        "url": "internal:legacy-psi-reference#page=378"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10159,12 +10248,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           378
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=378"
+        "url": "internal:legacy-psi-reference#page=378"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10190,12 +10279,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           378
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=378"
+        "url": "internal:legacy-psi-reference#page=378"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10221,12 +10310,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           378
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=378"
+        "url": "internal:legacy-psi-reference#page=378"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10252,12 +10341,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10283,12 +10372,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10314,12 +10403,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10345,12 +10434,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10376,12 +10465,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10407,12 +10496,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           379
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=379"
+        "url": "internal:legacy-psi-reference#page=379"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10438,12 +10527,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10469,12 +10558,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10500,12 +10589,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10531,12 +10620,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10562,12 +10651,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10593,12 +10682,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10624,12 +10713,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           380
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=380"
+        "url": "internal:legacy-psi-reference#page=380"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10655,12 +10744,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10686,12 +10775,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10717,12 +10806,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10748,12 +10837,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10779,12 +10868,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10810,12 +10899,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           381
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=381"
+        "url": "internal:legacy-psi-reference#page=381"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10841,12 +10930,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           382
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=382"
+        "url": "internal:legacy-psi-reference#page=382"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10872,12 +10961,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           382
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=382"
+        "url": "internal:legacy-psi-reference#page=382"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10903,12 +10992,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           382
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=382"
+        "url": "internal:legacy-psi-reference#page=382"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10934,12 +11023,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           383
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=383"
+        "url": "internal:legacy-psi-reference#page=383"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10965,12 +11054,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           383
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=383"
+        "url": "internal:legacy-psi-reference#page=383"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -10996,12 +11085,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           383
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=383"
+        "url": "internal:legacy-psi-reference#page=383"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11027,12 +11116,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           384
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=384"
+        "url": "internal:legacy-psi-reference#page=384"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11058,12 +11147,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           384
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=384"
+        "url": "internal:legacy-psi-reference#page=384"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11089,12 +11178,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           384
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=384"
+        "url": "internal:legacy-psi-reference#page=384"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11120,13 +11209,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           384,
           385
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=384"
+        "url": "internal:legacy-psi-reference#page=384"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11152,12 +11241,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           385
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=385"
+        "url": "internal:legacy-psi-reference#page=385"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11183,12 +11272,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           385
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=385"
+        "url": "internal:legacy-psi-reference#page=385"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11214,12 +11303,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           385
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=385"
+        "url": "internal:legacy-psi-reference#page=385"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11245,12 +11334,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           386
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=386"
+        "url": "internal:legacy-psi-reference#page=386"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11276,12 +11365,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           386
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=386"
+        "url": "internal:legacy-psi-reference#page=386"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11307,12 +11396,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           386
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=386"
+        "url": "internal:legacy-psi-reference#page=386"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11338,12 +11427,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           386
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=386"
+        "url": "internal:legacy-psi-reference#page=386"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11369,12 +11458,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           387
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=387"
+        "url": "internal:legacy-psi-reference#page=387"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11400,12 +11489,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           387
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=387"
+        "url": "internal:legacy-psi-reference#page=387"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11431,12 +11520,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           387
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=387"
+        "url": "internal:legacy-psi-reference#page=387"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11462,12 +11551,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           388
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=388"
+        "url": "internal:legacy-psi-reference#page=388"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11493,12 +11582,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           388
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=388"
+        "url": "internal:legacy-psi-reference#page=388"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11524,12 +11613,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           389
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=389"
+        "url": "internal:legacy-psi-reference#page=389"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11555,12 +11644,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           389
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=389"
+        "url": "internal:legacy-psi-reference#page=389"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11586,12 +11675,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           389
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=389"
+        "url": "internal:legacy-psi-reference#page=389"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11617,13 +11706,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           410,
           412
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=410"
+        "url": "internal:legacy-psi-reference#page=410"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11649,12 +11738,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           413
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=413"
+        "url": "internal:legacy-psi-reference#page=413"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11680,13 +11769,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           414,
           415
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=414"
+        "url": "internal:legacy-psi-reference#page=414"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11712,13 +11801,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           416,
           417
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=416"
+        "url": "internal:legacy-psi-reference#page=416"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11744,13 +11833,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           418,
           419
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=418"
+        "url": "internal:legacy-psi-reference#page=418"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11776,14 +11865,14 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           424,
           425,
           427
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=424"
+        "url": "internal:legacy-psi-reference#page=424"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11809,14 +11898,14 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           426,
           430,
           431
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=426"
+        "url": "internal:legacy-psi-reference#page=426"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11842,13 +11931,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           427,
           431
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=427"
+        "url": "internal:legacy-psi-reference#page=427"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11874,13 +11963,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           427,
           428
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=427"
+        "url": "internal:legacy-psi-reference#page=427"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11906,13 +11995,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           428,
           429
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=428"
+        "url": "internal:legacy-psi-reference#page=428"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11938,13 +12027,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           431,
           433
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=431"
+        "url": "internal:legacy-psi-reference#page=431"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -11970,13 +12059,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           434,
           435
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=434"
+        "url": "internal:legacy-psi-reference#page=434"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12002,12 +12091,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           439
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=439"
+        "url": "internal:legacy-psi-reference#page=439"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12033,12 +12122,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           440
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=440"
+        "url": "internal:legacy-psi-reference#page=440"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12064,12 +12153,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           441
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=441"
+        "url": "internal:legacy-psi-reference#page=441"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12095,12 +12184,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           442
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=442"
+        "url": "internal:legacy-psi-reference#page=442"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12126,13 +12215,13 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           443,
           444
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=443"
+        "url": "internal:legacy-psi-reference#page=443"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],
@@ -12158,12 +12247,12 @@
       ],
       "r046_in_scope": false,
       "source": {
-        "id": "frontline-2025q1",
+        "id": "legacy-2025q1",
         "sha256": "2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6",
         "pages": [
           444
         ],
-        "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf#page=444"
+        "url": "internal:legacy-psi-reference#page=444"
       },
       "sdk_status": "exact_reference_contract_open",
       "tests": [],

@@ -6,11 +6,11 @@ Last updated: 2026-10-31. Status: implementation baseline, not a release certifi
 
 ## Product scope
 
-Solvercraft is a workbook-independent Rust optimization and simulation library. Gridcraft is its first planned host. The long-term behavior reference is Frontline Analytic Solver Optimization + Simulation, with the Solver SDK informing the reusable API. This is a clean-room implementation program: public descriptions and mathematical methods can inform behavior; proprietary engines, source, interpreter code, artwork and documentation are not included.
+Solvercraft is a workbook-independent Rust optimization and simulation library. Gridcraft is its first planned host. The long-term behavior reference is legacy optimization and simulation workflows, with the Solver SDK informing the reusable API. This is a clean-room implementation program: public descriptions and mathematical methods can inform behavior; proprietary engines, source, interpreter code, artwork and documentation are not included.
 
 The implementation baseline is Gridcraft revision `981fad14e0b90a7906a02f29785a6d0eb214fee6`, workspace version 0.14.2. The existing nonlinear Gridcraft engine is an augmented-Lagrangian method, despite its GRG label. The initial Solvercraft contract names its separate methods explicitly. Neither an alternative nonlinear method nor a successful smoke test establishes GRG compatibility.
 
-The nested workspace is independently buildable so it can be tested without building the complete Gridcraft application. Its first integrated delivery is **Solvercraft alpha**. A feature is supported only when its implementation and relevant acceptance tests exist. The masterplan's R1, R2 and Frontline-parity labels are broader gates, not synonyms for the alpha.
+The nested workspace is independently buildable so it can be tested without building the complete Gridcraft application. Its first integrated delivery is **Solvercraft alpha**. A feature is supported only when its implementation and relevant acceptance tests exist. The masterplan's R1, R2 and legacy-parity labels are broader gates, not synonyms for the alpha.
 
 ## Release vocabulary
 
@@ -21,7 +21,7 @@ The nested workspace is independently buildable so it can be tested without buil
 | R2 simulation | The frozen distribution list, sampling, dependencies, statistics, fitting, plots and end-to-end host execution |
 | R3 risk optimization | Independent validation scenarios, stated approximation assumptions, risk measures and correct information timing |
 | R4 advanced features | Individually verified discrete/global methods, decision tools and compatibility adapters |
-| Frontline parity | A versioned function-by-function reference inventory with implementation, tests, platform status and explicit remaining differences |
+| legacy PSI parity | A versioned function-by-function reference inventory with implementation, tests, platform status and explicit remaining differences |
 
 The broader masterplan contains 26 tasks and 96 requirements. An implemented subset must retain the remaining requirements as open. No feature count or speed comparison is inferred from a marketing page.
 
@@ -111,9 +111,9 @@ Different documentation observations have reported microlp 0.6.0 and 0.7.0 under
 | Clarabel | Candidate; project identifies Apache-2.0 | Inspect exact version and native/transitive feature implications |
 | HiGHS | Candidate comparison/external engine; project identifies MIT | Keep C++ dependency and optional deployment separate from the Rust core |
 | RNG/distribution candidates | Not part of the adopted baseline | Verify exact Cargo license metadata and all algorithm/table provenance |
-| Frontline material | Behavioral reference only | Link sources; do not bundle proprietary source, assets or copied handbooks |
+| legacy PSI material | Behavioral reference only | Keep third-party comparison materials in the private development archive |
 
-This is a dependency/provenance inventory, not a completed transitive license audit. No commercial engine is bundled, and no proprietary Frontline source is used. New tables, example workbooks and assets need their own provenance checks under Gridcraft's rules.
+This is a dependency/provenance inventory, not a completed transitive license audit. No commercial engine is bundled, and no proprietary legacy PSI source is used. New tables, example workbooks and assets need their own provenance checks under Gridcraft's rules.
 
 ## Open requirements before R1 or parity
 
@@ -121,16 +121,16 @@ The initial components do not establish a complete spreadsheet-expression compil
 
 Full R1 additionally requires actual Gridcraft panel/commands, snapshots with deterministic volatile-function policy, background jobs, bounded cancellation, revision-aware application, undo/redo, XLSX model persistence, structure/reference migration, legacy solver-name import/export, appropriate reports, and the full repository/platform quality gates. UI access, workbook behavior and WASM runtime behavior each need their own executed evidence.
 
-R2 additionally requires the complete selected distribution inventory; correlation/copula semantics; fitting and sampling-aware uncertainty; output charts; stream consistency; and bounded statistics/storage. Retained exact samples, exact quantiles and approximate sketches are distinct capabilities. R3/R4 and full PSI/Frontline compatibility remain separate work.
+R2 additionally requires the complete selected distribution inventory; correlation/copula semantics; fitting and sampling-aware uncertainty; output charts; stream consistency; and bounded statistics/storage. Retained exact samples, exact quantiles and approximate sketches are distinct capabilities. R3/R4 and full legacy PSI compatibility remain separate work.
 
 ## Primary sources
 
 - Gridcraft revision and agent rules: https://github.com/storytold/gridcraft/tree/981fad14e0b90a7906a02f29785a6d0eb214fee6
-- Frontline product overview: https://www.solver.com/products-overview
-- Frontline nonlinear method descriptions: https://www.solver.com/excel-solver-nonlinear-optimization
-- Frontline sampling: https://www.solver.com/simulation-random-number-generators
-- Frontline copulas: https://www.solver.com/risk-solver-help/psi-function-help/simulation/property-functions/psicopula
-- Frontline PSI triangular signature: https://www.solver.com/risk-solver-help/psi-function-help/simulation/distributions/psiTriangular
+- legacy PSI product overview: private compatibility reference
+- legacy PSI nonlinear method descriptions: private compatibility reference
+- legacy PSI sampling: private compatibility reference
+- legacy PSI copulas: private compatibility reference
+- Legacy PSI triangular signature: private compatibility reference
 - Microlp versioned API: https://docs.rs/microlp/0.6.0/microlp/
 - Microlp options: https://docs.rs/microlp/0.6.0/microlp/struct.SolveOptions.html
 - Microlp statistics: https://docs.rs/microlp/0.6.0/microlp/struct.Stats.html
@@ -140,7 +140,7 @@ R2 additionally requires the complete selected distribution inventory; correlati
 - ChaCha RNG: https://docs.rs/rand_chacha/0.10.0/rand_chacha/
 - Statistical functions: https://docs.rs/statrs/0.19.1/statrs/
 
-The masterplan's source registry records which Frontline guides were opened, found only through search, or not fully retrieved. No function-complete Frontline reference inventory has yet been verified.
+The masterplan's source registry records which legacy PSI guides were opened, found only through search, or not fully retrieved. No function-complete legacy PSI reference inventory has yet been verified.
 
 ## Revision history
 

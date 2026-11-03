@@ -66,7 +66,7 @@ sanity threshold for fixed anchors, not a proof of the PRNG or the entire CDF.
 Cauchy, Laplace and HyperGeo remain excluded from this import block because of
 unresolved source-contract conflicts. Unsupported properties and nested calls
 are preserved; explicit solvercraft_nominal conversion does not establish
-Frontline display/PreRun parity.
+legacy PSI display/PreRun parity.
 
 ## Worker responsiveness and visual scope
 

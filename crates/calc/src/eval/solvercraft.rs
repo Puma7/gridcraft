@@ -67,7 +67,7 @@ impl WorksheetNominalBasis {
 /// Sampling is performed once per declared cell/trial by the host. `nominal` is
 /// Solvercraft's explicit ordinary-cell policy: a supplied trailing numeric
 /// override, otherwise the SDK's finite analytic mean/labelled median fallback.
-/// It is neither a stored simulation sample mean nor Frontline ValueToDisplay,
+/// It is neither a stored simulation sample mean nor legacy PSI ValueToDisplay,
 /// PsiStatic, PsiBaseCase or a pre-run random sample.
 pub struct WorksheetDistribution {
     pub distribution: D,

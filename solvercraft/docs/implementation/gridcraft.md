@@ -156,7 +156,7 @@ fallback for undefined/unavailable means in additional families; numeric overflo
 remains an error. SC.LOGNORMALMEAN additionally supports arithmetic mean/std,
 SC.CATEGORICAL explicit values/weights, and SC.CUMUL unambiguous piecewise CDF knots.
 SC.OUTPUT(value[,label]) is an identity expression. This is explicit Solvercraft
-ordinary-cell semantics, not a claim of Frontline ValueToDisplay parity.
+ordinary-cell semantics, not a claim of legacy PSI ValueToDisplay parity.
 
 `worksheet.discover` finds stable top-level declaration/SC.OUTPUT cells. Simulation
 may omit bindings to discover them, or explicitly override them. Distribution
@@ -278,7 +278,7 @@ Raw and canonical-LF hashes for the41 owned/generated source paths are retained
 in `host-checkpoint.json`; these diagnostic hashes are not build attestations.
 
 Unsupported Psi properties and explicitly ambiguous
-reference-domain cases remain listed, never counted as full Frontline parity.
+reference-domain cases remain listed, never counted as full legacy PSI parity.
 
 ## Parallel fixture stability checkpoint
 
@@ -391,3 +391,19 @@ all-target Clippy with `-D warnings` passed in 22.57 seconds under exact Rust
 all-target Clippy. Fresh full-host/WASM/browser gates remain independently
 recorded after this checkpoint; earlier final6 results belong to its older
 nineteen-signature snapshot.
+
+## Import coverage
+
+The [function inventory](reference-implementation.json) tracks 272 entries.
+There are 31 bounded distribution signatures and two bounded conversions for
+output markers and numeric base-case properties. One additional function
+provides discovery of a direct output reference. The worksheet calculation of
+that statistic and the remaining 238 entries have no import conversion.
+The catalog distinguishes SDK mathematical evidence, worksheet import and
+end-to-end model evidence.
+
+Simulation preparation traverses the cell dependency graph iteratively.
+Formula and named-expression depth, work, memory and node bounds still apply.
+Scalar CHOOSE and IF use the spreadsheet evaluator, including an omitted
+false branch for IF. In-cell statistics that require a previous run are
+preserved. The run result exposes the corresponding sample summaries.

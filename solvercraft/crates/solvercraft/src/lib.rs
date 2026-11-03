@@ -50,7 +50,7 @@ pub fn capabilities() -> serde_json::Value {
         "distribution_catalog":math::catalog::distribution_catalog(),
         "risk": ["sample_average_training_and_independent_holdout", "finite_scenario_expected_loss", "finite_scenario_mean_variance", "finite_scenario_cvar", "individual_and_joint_scenario_chance_constraints", "box_budget_ellipsoid_robust_counterparts", "two_stage_linear_recourse", "checked_complete_recourse_benders", "decision_trees_and_information_value", "weighted_lexicographic_epsilon_multiobjective"],
         "runtime":["portable_schema_2_models","validated_schema_1_migration","context_and_configuration_manifests","cooperative_wall_clock_limits","bounded_native_jobs","authenticated_quota_loopback_server","artcraft_parameter_binding_example"],
-        "unavailable": ["grg", "unrestricted_nonconvex_global_proof", "unrestricted_incomplete_or_integer_recourse_benders", "complete_frontline_psi_parity"],
+        "unavailable": ["grg", "unrestricted_nonconvex_global_proof", "unrestricted_incomplete_or_integer_recourse_benders", "complete_legacy_psi_parity"],
         "status": "development alpha; consult per-engine limits and recorded platform evidence"
     })
 }

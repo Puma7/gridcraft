@@ -59,79 +59,79 @@
     },
     {
       "id": "O1",
-      "title": "Frontline Produktübersicht",
-      "url": "https://www.solver.com/products-overview",
+      "title": "legacy PSI Produktübersicht",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentliche Produktseite geöffnet",
       "scope": "Referenzfamilien"
     },
     {
       "id": "O2",
-      "title": "Analytic Solver Optimization",
-      "url": "https://www.solver.com/analytic-solver-optimization-software",
+      "title": "legacy PSI Optimization",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentliche Produktseite geöffnet",
       "scope": "Modellanalyse und Optimierungsfunktionen"
     },
     {
       "id": "O3",
-      "title": "Analytic Solver Simulation",
-      "url": "https://www.solver.com/analytic-solver-simulation-software",
+      "title": "legacy PSI Simulation",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentliche Produktseite geöffnet",
       "scope": "Simulationsfamilien, Fitting und Diagramme"
     },
     {
       "id": "O4",
       "title": "Produktvergleich",
-      "url": "https://www.solver.com/analytic-solver-comparison",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentliche Vergleichsseite geöffnet",
       "scope": "Produkt-/Jahrgangsunterschiede"
     },
     {
       "id": "O5",
       "title": "SDK Engines",
-      "url": "https://www.solver.com/solver-sdk-platform-solver-engines",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentlicher Suchbeleg und Produktbeschreibung",
       "scope": "Problemklassen und Plug-in-Konzept"
     },
     {
       "id": "O6",
       "title": "Engine Guide 2025 Q4",
-      "url": "https://www.solver.com/sites/default/files/SolverEnginesUserGuide2025Q4.pdf",
+      "url": "internal:legacy-psi-reference",
       "evidence": "190-seitiges PDF zugänglich, ausgewählte Abschnitte; nicht Seite für Seite vollständig analysiert",
       "scope": "Enginefamilien und proprietäre Komponenten"
     },
     {
       "id": "O7",
       "title": "Stochastische Konzepte und Recourse",
-      "url": "https://www.solver.com/files/FrontlineSolversUserGuide.pdf",
+      "url": "internal:legacy-psi-reference",
       "evidence": "Suchbelege zu einschlägigen Abschnitten, zusätzlich Engine-Guide-Belege; keine vollständige Handbuchlektüre",
       "scope": "Simulation Optimization, robuste und stochastische Modelle"
     },
     {
       "id": "O8",
       "title": "Random Number Generators",
-      "url": "https://www.solver.com/simulation-random-number-generators",
+      "url": "internal:legacy-psi-reference",
       "evidence": "öffentlicher Suchbeleg",
       "scope": "MC, LHS, randomisierte Sobol-Verfahren, Streams"
     },
     {
       "id": "O9",
       "title": "PsiCopula",
-      "url": "https://www.solver.com/risk-solver-help/psi-function-help/simulation/property-functions/psicopula",
+      "url": "internal:legacy-psi-reference",
       "evidence": "ausführlicher Onlinehilfe-Suchbeleg",
       "scope": "Copulatypen und Parameter"
     },
     {
       "id": "O10",
       "title": "PSI Reference 2021 und identifizierte neuere Version",
-      "url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2021.pdf",
+      "url": "internal:legacy-psi-reference",
       "evidence": "PSI-Familien und Suchbelege; 2025-Q1-PDF beim direkten Abruf über Größenlimit",
       "scope": "Funktionsfamilien; Inventarisierung in SC-00 offen",
-      "newer_url": "https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf"
+      "newer_url": "internal:legacy-psi-reference"
     },
     {
       "id": "O11",
       "title": "PsiTriangular",
-      "url": "https://www.solver.com/risk-solver-help/psi-function-help/simulation/distributions/psiTriangular",
+      "url": "internal:legacy-psi-reference",
       "evidence": "Onlinehilfe-Suchbeleg",
       "scope": "Argumentreihenfolge Minimum, Modus, Maximum"
     },

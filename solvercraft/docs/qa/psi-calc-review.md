@@ -64,14 +64,14 @@ An override does not bypass invalid distribution parameters.
 
 ## Source comparison and genuine unknown contracts
 
-Pinned public source: [2025Q1 reference](https://www.solver.com/sites/default/files/FrontlineSolversReferenceGuide2025Q1_1.pdf),
+Pinned public source: 2025Q1 reference,
 SHA256 `2a166ac37367f2db870808d590c41ee8310c1676aa3a73164193e999d3d333c6`.
 Page130 describes a random pre-run value, and p319 names several such families.
 Page198 distinguishes a selected trial, the mean of normal completed trials,
 and Base Case; absent Base Case falls back to the sample mean. It does not
 establish one universal display-mode default. Page357's Bernoulli pre-run0.7
 example conflicts with the general random statement; the [official PsiStatic
-help](https://www.solver.com/risk-solver-help/psi-function-help/simulation/property-functions/psistatic)
+help](private compatibility reference)
 also retains that example. The exact universal vendor pre-run policy remains
 unestablished.
 

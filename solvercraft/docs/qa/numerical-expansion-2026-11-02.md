@@ -39,7 +39,7 @@ The compiler now refuses inexact coefficient products/divisions instead of emitt
 
 Finite differences cannot prove a derivative from finitely many black-box probes. Local stationarity, heuristic best points and globally certified results remain different statuses. SAA and statistical intervals retain their sampling assumptions; LHS/Sobol points are not IID observations. A structured numerical refusal remains a coverage limit, not a solved problem. Highly conditioned cancellation LPs and the known dense robust refusal remain documented.
 
-This alpha has finite domain/resource limits and finite executed platform evidence. Neither these matrices nor bounded tracking of the original96 criteria establish complete Frontline/272-function parity, all-f64 correctness or commercial certification. The numerical identities are dense-simplex0.3, Clarabel0.11.1-adapter0.2 and catalogv3; the addressed RNG remainsv2.
+This alpha has finite domain/resource limits and finite executed platform evidence. Neither these matrices nor bounded tracking of the original96 criteria establish complete legacy PSI/272-function parity, all-f64 correctness or commercial certification. The numerical identities are dense-simplex0.3, Clarabel0.11.1-adapter0.2 and catalogv3; the addressed RNG remainsv2.
 
 ## Reproducing the external matrices
 

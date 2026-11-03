@@ -16,7 +16,7 @@ The review started from PR predecessor **690a098a6c4c9d966d66b6c30c036e0e42534bf
 - **Untestable in full host** means relevant integration source exists, but this environment has not executed its full-app/UI/workbook behavior.
 - **Broken** is reserved for an unresolved executed counterexample. Findings corrected and retested during this review are recorded separately.
 
-Statuses apply to the masterplan requirement as written, not just the easiest sub-feature. No percentage below is a Frontline-parity or production-readiness score. The complete Gridcraft build, 17 host integration tests (4 existing + 13 new), visual UI validation and actual WASM/browser execution remain unexecuted.
+Statuses apply to the masterplan requirement as written, not just the easiest sub-feature. No percentage below is a legacy-parity or production-readiness score. The complete Gridcraft build, 17 host integration tests (4 existing + 13 new), visual UI validation and actual WASM/browser execution remain unexecuted.
 
 ## Evidence keys
 
@@ -137,7 +137,7 @@ The predecessor verification report recorded 136 passing standalone tests. That 
 | R088 Rust und WASM | Partial | README, verification | Native Rust tests and a Linux compile check are recorded; actual WASM/browser execution is untested. |
 | R089 Ressourcen | Partial | M, R, J, RR, S, CLI | Preallocation/count/input caps cover implemented paths; no whole-app memory/CPU bound or arbitrary evaluator containment. |
 | R090 Keine Panics | Partial | M, C, R, J, RR | Structured finite/domain failures and native panic containment are tested; full dependency/host no-crash guarantee is unverified. |
-| R091 Erfüllungsmatrix | Partial | This matrix, REF | All 96 masterplan rows are classified here, not a complete Frontline function-by-function parity inventory. |
+| R091 Erfüllungsmatrix | Partial | This matrix, REF | All 96 masterplan rows are classified here, not a complete legacy PSI function-by-function parity inventory. |
 | R092 Leistungsnachweis | Absent | verification | No reproducible large-model/hard-MIP/RAM performance benchmark program. |
 | R093 CI Gates | Partial | verification, RR | Standalone native tests/fmt/clippy evidence exists; full Gridcraft cargo xtask ci remains unexecuted. |
 | R094 Dokumentationspflege | Partial | REF, README, validation | Solvercraft scope/validation docs exist; all parent parity/roadmap integration remains an integration review gate. |
@@ -163,7 +163,7 @@ The alpha README correctly discloses dense internal LP storage, restricted separ
 
 The historical 136-test artifact remains a predecessor record; current consolidated evidence is the 265-test QA report. Neither CLI background-independent jobs nor successful native SDK tests justify an asynchronous Gridcraft UI, a verified workbook undo/apply workflow, XLSX model persistence or browser support.
 
-The implementation is an alpha foundation with meaningful working numerical features. It does not meet the full R1/R2/R3 gates or documented Frontline feature parity.
+The implementation is an alpha foundation with meaningful working numerical features. It does not meet the full R1/R2/R3 gates or documented legacy PSI feature parity.
 
 ## Requirement-source identity
 

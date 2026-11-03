@@ -55,6 +55,8 @@ fn solvercraft_ordered_simulation_matches_real_calc_for_every_translated_operati
         "=IF(A1<A2,0.72,1)*IF(A1>=A3,0.6,1)",
         "=IF(A1=A2,1,0)+IF(A1<>A3,1,0)+IF(A3>A1,1,0)+IF(A3<=A1,1,0)",
         "=IF(A2>0,A1,1/0)",
+        "=CHOOSE(IF(A1>A3,1,2),A1+A2,A2-A3,1/0)",
+        "=1+IF(A1>A3,A2)",
         "=SUM(A1:A3,{TRUE,\"4\",5},TRUE,\"6\")",
         "=SUMPRODUCT({1e16,1,-1e16},{1,1,1})",
         "=SUM((A1:A2,A3:A4))",
@@ -215,4 +217,25 @@ fn solvercraft_ordered_simulation_checks_work_before_starting_trials_and_cancels
     assert_eq!(result.completed_trials, 0);
     assert_eq!(result.samples, Some(Vec::new()));
     assert!(result.summaries.is_empty());
+}
+
+#[test]
+fn simulation_prepares_long_acyclic_cash_flow_chains_in_any_output_order() {
+    let mut workbook = Workbook::new();
+    let sheet = workbook.sheet_mut(0).unwrap();
+    let rows = 160;
+    for row in 1..=rows {
+        let formula = if row == 1 { "C1+1".to_owned() } else { format!("(A{}+B{})+1", row - 1, row - 1) };
+        sheet.set_cell(CellRef::new(row - 1, 0), gridcraft_model::Cell::formula(gridcraft_model::Formula::new(&formula)));
+        sheet.set_cell(CellRef::new(row - 1, 1), gridcraft_model::Cell::value(Value::Number(2.0)));
+    }
+    let final_cell = (0, CellRef::new(rows - 1, 0));
+    let first = binding("A1");
+    let input = [binding("C1")];
+    for (outputs, expected) in [([final_cell, first], [482.0, 5.0]), ([first, final_cell], [5.0, 482.0])] {
+        let mut program = Program::compile(&workbook, &input, &outputs, 0.0, 1024 * 1024).unwrap();
+        assert_eq!(program.evaluate(&[4.0], &NoControl).unwrap(), expected);
+    }
+    workbook.sheet_mut(0).unwrap().set_cell(first.1, gridcraft_model::Cell::formula(gridcraft_model::Formula::new("A160")));
+    assert!(Program::compile(&workbook, &input, &[final_cell], 0.0, 1024 * 1024).err().unwrap().to_string().contains("Circular"));
 }

@@ -41,7 +41,7 @@ The completed source-bound entry is [final-verification-summary.json](../impleme
 
 Actual final5 Chrome execution passed **13 SDK tests and 7 production-worker tests**. Native UI passed **6**; the chart module passed **8 numerical contracts plus 1 retained-result lifecycle case**, rather than nine numerical tests. The final worker observed maximum active progress/status/heartbeat gaps of **65/1/22 ms**. Release oracles passed **30 LP, 20 QP, 20 ordinary robust + 4 tiny signed cases, 3 exact binary variants and 1 node-limit control**. Five fresh release processes per performance workload retain hardware, seed, memory, time and numerical-error evidence with shared-host activity disclosed.
 
-The code/compilation-input raw SHA-256 is `fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe`; canonical SHA-256 is `9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb`. The release CLI SHA-256 is `68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1`. These source/binary identities differ in purpose from historical diagnostic fingerprints. At that final5 checkpoint, the original 96-criterion assessment recorded **94 bounded-accepted and 2 partial (R046/R081)**. All original wording remains intact, and full Frontline/PSI parity is not claimed.
+The code/compilation-input raw SHA-256 is `fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe`; canonical SHA-256 is `9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb`. The release CLI SHA-256 is `68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1`. These source/binary identities differ in purpose from historical diagnostic fingerprints. At that final5 checkpoint, the original 96-criterion assessment recorded **94 bounded-accepted and 2 partial (R046/R081)**. All original wording remains intact, and full legacy PSI/PSI parity is not claimed.
 
 ## Subsequent implementation and independent engine review
 
@@ -117,7 +117,7 @@ The examined finite counterexamples now pass. No unresolved executed defect rema
 
 The integrator's final frozen standalone run recorded **265 tests passed, zero failed, zero ignored**, plus formatting, all-targets Clippy with -D warnings, release build/examples and a Linux cross-target compile check. The current evidence is [verification-report.json](verification-report.json). The original 136-test report remains historical and must not be mistaken for the expanded QA run.
 
-The complete Gridcraft build, **17 host integration tests (4 existing + 13 new)**, visual UI validation and actual WASM/browser execution remain unexecuted. Their source was inspected, not behaviorally proven. Full R1/R2/R3 and Frontline parity remain open; see [coverage-matrix.md](coverage-matrix.md).
+The complete Gridcraft build, **17 host integration tests (4 existing + 13 new)**, visual UI validation and actual WASM/browser execution remain unexecuted. Their source was inspected, not behaviorally proven. Full R1/R2/R3 and legacy PSI parity remain open; see [coverage-matrix.md](coverage-matrix.md).
 
 ## Confirmed defect 1: weighted tail mass rounding
 

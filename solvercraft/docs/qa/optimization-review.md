@@ -4,7 +4,7 @@
 
 Reviewed the numerical optimization implementation at PR 1 head **690a098a6c4c9d966d66b6c30c036e0e42534bfd**. The review covered the complete dense simplex, branch-and-bound, separable quadratic engine and their result/budget paths, plus source inspection of the facade projected-gradient and differential-evolution routines. Shared model arithmetic was traced because it validates and reports solver results.
 
-The initial review was performed before the fixes described below. This report distinguishes reproduced baseline defects, executed post-fix regressions and explicit unsupported classes. It is not an exhaustive proof of numerical correctness and does not claim full Frontline parity.
+The initial review was performed before the fixes described below. This report distinguishes reproduced baseline defects, executed post-fix regressions and explicit unsupported classes. It is not an exhaustive proof of numerical correctness and does not claim full legacy PSI parity.
 
 ## Reproduced baseline defects
 

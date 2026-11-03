@@ -25,7 +25,7 @@ The version is `solvercraft-time-series-normal-v1/addressed-mix64-v2`.
 Extending a path preserves its existing prefix. Separate trial/binding addresses
 do not share mutable generator state. Full 64-bit addresses serialize as decimal
 strings. The stream and startup conventions are Solvercraft contracts, not
-claimed reconstructions of Frontline's generator or seed mapping.
+claimed reconstructions of legacy PSI's generator or seed mapping.
 
 Output index 0 is the first generated value after the supplied time-0 state.
 For AR(2), `initial_latest` is Y0 and `initial_previous` is Y-1. MA startup errors

@@ -52,12 +52,18 @@ pub(super) struct Program<'a> {
     reserved_bytes: u64,
     work_units: u64,
 }
+enum Visit {
+    Enter(CellBinding),
+    Finish(CellNode),
+}
+
 struct Builder<'a> {
     workbook: &'a Workbook,
     nodes: Vec<CellNode>,
     indexes: HashMap<CellBinding, usize>,
     inputs: HashMap<CellBinding, usize>,
     visiting: HashSet<CellBinding>,
+    dependencies: Vec<CellBinding>,
     visits: usize,
     bytes: u64,
     limit: u64,
@@ -71,13 +77,14 @@ impl<'a> Program<'a> {
             indexes: HashMap::new(),
             inputs: inputs.iter().copied().enumerate().map(|(i, binding)| (binding, i)).collect(),
             visiting: HashSet::new(),
+            dependencies: Vec::new(),
             visits: 0,
             bytes: 0,
             limit,
             work: 0,
         };
         builder.charge((inputs.len() as u64).saturating_mul(128).saturating_add((outputs.len() as u64).saturating_mul(16)).saturating_add(512))?;
-        let outputs = outputs.iter().map(|binding| builder.cell(*binding, 0)).collect::<Result<Vec<_>>>()?;
+        let outputs = outputs.iter().map(|binding| builder.cell(*binding)).collect::<Result<Vec<_>>>()?;
         let values = vec![Value::Empty; builder.nodes.len()];
         Ok(Self {
             workbook,
@@ -210,11 +217,29 @@ impl Builder<'_> {
         }
         self.charge(64)
     }
-    fn cell(&mut self, binding: CellBinding, depth: usize) -> Result<usize> {
-        self.enter(depth)?;
-        if let Some(index) = self.indexes.get(&binding) {
-            return Ok(*index);
+    fn cell(&mut self, binding: CellBinding) -> Result<usize> {
+        self.enter(0)?;
+        let mut pending = vec![Visit::Enter(binding)];
+        while let Some(visit) = pending.pop() {
+            match visit {
+                Visit::Enter(binding) => {
+                    if self.indexes.contains_key(&binding) {
+                        continue;
+                    }
+                    let operation = self.plan_cell(binding)?;
+                    pending.push(Visit::Finish(CellNode { binding, operation }));
+                    pending.extend(self.dependencies.drain(..).rev().map(Visit::Enter));
+                }
+                Visit::Finish(node) => {
+                    self.visiting.remove(&node.binding);
+                    self.indexes.insert(node.binding, self.nodes.len());
+                    self.nodes.push(node);
+                }
+            }
         }
+        self.indexes.get(&binding).copied().ok_or_else(|| bad(SOLVE, "Missing prepared simulation cell"))
+    }
+    fn plan_cell(&mut self, binding: CellBinding) -> Result<Operation> {
         let sheet = self.workbook.sheet(binding.0).ok_or_else(|| bad(SOLVE, "Unknown simulation sheet"))?;
         if sheet.spill_anchor(binding.1).is_some() || sheet.spill_ranges.contains_key(&binding.1) {
             return Err(bad(SOLVE, "Simulation does not support spill references"));
@@ -233,7 +258,7 @@ impl Builder<'_> {
                 return Err(bad(SOLVE, "Simulation does not support legacy array formula cells"));
             }
             let expression = formula.expr_arc().ok_or_else(|| bad(SOLVE, "A simulation formula cannot be parsed"))?;
-            let shape = self.expression(binding, &expression, depth + 1)?;
+            let shape = self.expression(binding, &expression, 1)?;
             if shape.cells() != 1 {
                 return Err(bad(SOLVE, "Simulation does not support array-producing cell formulas; reduce the array to a scalar"));
             }
@@ -245,11 +270,7 @@ impl Builder<'_> {
             }
             Operation::Constant(value)
         };
-        self.visiting.remove(&binding);
-        let index = self.nodes.len();
-        self.nodes.push(CellNode { binding, operation });
-        self.indexes.insert(binding, index);
-        Ok(index)
+        Ok(operation)
     }
     fn expression(&mut self, at: CellBinding, expression: &Expr, depth: usize) -> Result<Shape> {
         self.enter(depth)?;
@@ -264,7 +285,8 @@ impl Builder<'_> {
                     return Err(bad(SOLVE, "Simulation range exceeds the expansion budget"));
                 }
                 for cell in range.iter() {
-                    self.cell((sheet, cell), depth + 1)?;
+                    self.enter(0)?;
+                    self.dependencies.push((sheet, cell));
                 }
                 Shape { rows: range.height() as usize, cols: range.width() as usize, reference: true }
             }
@@ -341,7 +363,7 @@ impl Builder<'_> {
         if name == "SC.OUTPUT" && (1..=2).contains(&arguments.len()) {
             return self.expression(at, arguments.first().ok_or_else(|| bad(SOLVE, "SC.OUTPUT requires a value"))?, depth + 1);
         }
-        if name == "IF" && arguments.len() == 3 {
+        if (name == "IF" && (2..=3).contains(&arguments.len())) || (name == "CHOOSE" && (2..=255).contains(&arguments.len())) {
             return self.scalar_arguments(at, arguments, depth + 1);
         }
         if matches!(name, "NOW" | "TODAY") && arguments.is_empty() {
