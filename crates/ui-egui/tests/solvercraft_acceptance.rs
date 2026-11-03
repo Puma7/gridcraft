@@ -59,6 +59,79 @@ fn ribbon_opens_the_real_pane_after_solver() {
 }
 
 #[test]
+#[allow(clippy::disallowed_methods, reason = "Native-only UI test; web_time aliases the native monotonic clock.")]
+fn cold_storage_template_opens_and_runs_all_three_models() {
+    fn click(h: &mut common::Harness, label: &str) {
+        h.get_by_label(label).scroll_to_me();
+        h.run_steps(4);
+        h.get_by_label(label).click();
+        h.run_steps(4);
+    }
+
+    fn wait_for(h: &mut common::Harness, label: &str) {
+        let deadline = Instant::now() + Duration::from_secs(20);
+        while h.query_by_label(label).is_none() && Instant::now() < deadline {
+            h.run_steps(4);
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        assert!(
+            h.query_by_label(label).is_some(),
+            "missing completed job control: {label}; jobs: {:?}",
+            h.state_mut().run("solvercraft.job.list", json!({}))
+        );
+    }
+
+    let mut h = harness();
+    h.state_mut().ui.ribbon_tab = "Data".into();
+    h.run_steps(3);
+    click(&mut h, "Solvercraft");
+    click(&mut h, "Open Microgrid");
+    let doc = h.state().session.active().unwrap();
+    let first_copy = doc.uid;
+    assert!(doc.path.is_none());
+    assert_eq!(doc.wb.active().unwrap().name, "Dashboard");
+    assert_eq!(doc.wb.active().unwrap().charts.len(), 3);
+    assert_eq!(h.state().session.documents().len(), 2);
+    assert!(h.query_by_label("1 · Optimize cost plan").is_some());
+
+    for (model, sheet, objective) in
+        [("1 · Optimize cost plan", "CostPlan", 1069.3404838709675), ("2 · Optimize reserve plan", "ReservePlan", 1172.274494623656)]
+    {
+        // Start with a broken energy balance so the test verifies that Apply writes the solution.
+        h.state_mut().run("cell.set", json!({"sheet": sheet, "cell": "E11", "input": "0"})).unwrap();
+        click(&mut h, model);
+        click(&mut h, "Calculate optimization");
+        wait_for(&mut h, "Apply solution (one undo step)");
+        assert!(!h.get_by_label("Apply solution (one undo step)").accesskit_node().is_disabled());
+        click(&mut h, "Apply solution (one undo step)");
+        let wb = &h.state().session.active().unwrap().wb;
+        let plan = wb.sheet(wb.sheet_index(sheet).unwrap()).unwrap();
+        let Value::Number(cost) = plan.value(CellRef::parse("B7").unwrap()) else { panic!("missing objective") };
+        assert!((cost - objective).abs() < 1e-6);
+        assert_eq!(plan.value(CellRef::parse("N7").unwrap()), Value::Number(0.0));
+    }
+
+    click(&mut h, "3 · Simulate both plans");
+    click(&mut h, "Run simulation");
+    wait_for(&mut h, "Create result sheet");
+    click(&mut h, "Create result sheet");
+    assert_eq!(h.state().session.active().unwrap().wb.active().unwrap().name, "Solver Result 1");
+    assert_eq!(value(&h, "C5"), Value::Number(4096.0));
+    // Release retained jobs so this fixture does not consume the process-wide test quota.
+    let jobs = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
+    for job in jobs["jobs"].as_array().unwrap() {
+        h.state_mut().run("solvercraft.job.forget", json!({"id": job["id"]})).unwrap();
+    }
+
+    click(&mut h, "Open Microgrid");
+    let doc = h.state().session.active().unwrap();
+    assert_ne!(doc.uid, first_copy);
+    assert!(doc.path.is_none());
+    assert_eq!(doc.wb.sheets.len(), 6);
+    assert_eq!(h.state().session.documents().len(), 3);
+}
+
+#[test]
 fn pane_preview_requires_apply_and_reverts_in_one_undo_step() {
     let mut h = harness();
     start_preview(&mut h);

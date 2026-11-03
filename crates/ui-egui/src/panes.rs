@@ -38,6 +38,9 @@ pub fn show(app: &mut SheetApp, ui: &mut Ui) {
                     }
                     app.grid.pane = None;
                 }
+                if pane == "solvercraft" {
+                    crate::solvercraft::microgrid_button(app, ui);
+                }
             });
         });
         ui.separator();

@@ -492,6 +492,40 @@ fn poll_job(app: &mut SheetApp, state: &mut State, id: &str, now: f64) {
     }
 }
 
+pub(crate) fn microgrid_button(app: &mut SheetApp, ui: &mut egui::Ui) {
+    let de = app.ui.language == Language::De;
+    if ui
+        .button(label(de, "Open Microgrid", "Kühlcampus öffnen"))
+        .on_hover_text(label(
+            de,
+            "Open a fresh Cold Storage Microgrid example with two optimizations and a shared Monte Carlo simulation.",
+            "Öffnet eine neue Kühlcampus-Mappe mit zwei Optimierungen und einer gemeinsamen Monte-Carlo-Simulation.",
+        ))
+        .clicked()
+        && let Err(error) = open_microgrid(app, ui.ctx())
+    {
+        app.message = Some(("Solvercraft".into(), crate::clean_error(&error)));
+    }
+}
+
+fn open_microgrid(app: &mut SheetApp, ctx: &egui::Context) -> Result<(), String> {
+    app.run("file.new", json!({"sample": "cold-storage-microgrid"}))?;
+    app.run("ui.solvercraft", json!({"on": true}))?;
+    if let Some(doc) = app.session.active() {
+        let key = egui::Id::unique(("solvercraft-pane", doc.uid));
+        let mut template = State::default();
+        refresh(app, &mut template);
+        if let Some(id) = template.models.first().and_then(|model| model["id"].as_str()) {
+            match app.run("solvercraft.model.get", json!({"id": id})) {
+                Ok(model) => load(&mut template, model),
+                Err(error) => template.error = Some(error),
+            }
+        }
+        ctx.data_mut(|memory| memory.insert_temp(key, template));
+    }
+    Ok(())
+}
+
 pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     let Some(doc) = app.session.active() else { return };
     let key = egui::Id::unique(("solvercraft-pane", doc.uid));

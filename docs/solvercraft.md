@@ -1,8 +1,14 @@
 # Solvercraft integration
 
-Last updated: 2026-11-02. Status: development alpha; evidence is scoped to named checks.
+Last updated: 2026-11-03. Status: development alpha; evidence is scoped to named checks.
 
 Solvercraft adds optimization and simulation beside the existing Solver. The ribbon button opens a right task pane; programmatic engine, CLI and MCP calls execute commands without dialogs. The [independent Rust SDK](../solvercraft/README.md) owns mathematics and portable models. The host owns workbook bindings, exact spreadsheet simulation semantics, saved models and transactional application.
+
+Choose **Data → Solvercraft → Open Microgrid** to open a fresh copy
+of the English template. The dashboard compares two daily energy plans for a
+fictional cold storage site. Run and apply the two optimizations, then run the
+paired Monte Carlo model and select **Create result sheet**. The StressTest
+sheet also lets you change a single outage scenario and see the results live.
 
 The [standalone Solvercraft application and on-demand MCP](../solvercraft/docs/implementation/artcraft-integration.md)
 reuse this same core. The application opens a solver-focused workbook with
@@ -35,6 +41,7 @@ Public final6 evidence is available as [compact fixed-field reports and strict t
 | 2026-10-31 | minor | Replace obsolete modal/synchronous scope with async task pane, owned XLSX models, ordered Calc simulation and bounded manifests/evidence |
 | 2026-11-01 | documentation | Link final6 original-criterion acceptance and both worker attempts; retain explicit selected PSI conversion limits |
 | 2026-11-02 | minor | Add standalone Solvercraft app, reusable host SDK and on-demand independent MCP; link final7 selected import scope and reviewed launcher submission |
+| 2026-11-03 | minor | Add the built-in Cold Storage Microgrid template |
 
 ### Review and import simulation formulas
 
