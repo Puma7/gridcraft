@@ -1,0 +1,35 @@
+{
+  "problem": {
+    "name": "Hedged two-scenario loss",
+    "variables": [
+      {
+        "name": "hedge",
+        "lower": 0,
+        "upper": 2,
+        "kind": "continuous"
+      }
+    ],
+    "constraints": [],
+    "scenarios": [
+      {
+        "weight": 1,
+        "offset": 0,
+        "coefficients": [
+          1
+        ]
+      },
+      {
+        "weight": 1,
+        "offset": 4,
+        "coefficients": [
+          -3
+        ]
+      }
+    ],
+    "measure": {
+      "kind": "conditional_value_at_risk",
+      "confidence": 0.5
+    }
+  },
+  "options": {}
+}

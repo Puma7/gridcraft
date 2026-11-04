@@ -1,0 +1,34 @@
+Solvercraft – local app, shared SDK and AI-agent tools
+
+Open solvercraft.exe to model, optimize and simulate with the workbook interface.
+The starter workbook includes optimization and seeded simulation examples.
+Results are previews: apply an accepted optimization result explicitly.
+Save the workbook when you want to retain models, cells and accepted results.
+
+For an external AI agent, register solvercraft-mcp.exe as a local MCP command.
+Use its actual absolute path and no arguments. Your MCP client starts the program
+when needed; no account, hosting, network port or standing service is required.
+The program's standard input/output carry MCP messages. Jobs and results belong
+to that process; retain desired results before the client shuts it down.
+
+For scripts:
+  solvercraft-cli.exe capabilities
+  solvercraft-cli.exe solve examples/lp.json
+  solvercraft-cli.exe simulate examples/simulation.json
+  solvercraft-cli.exe risk examples/risk.json
+
+For another ArtCraft application, use the independent Rust SDK or call the JSON
+CLI/MCP entry points. The SDK does not depend on Gridcraft's worksheet interface.
+Object/property bindings and document revision checks belong to the embedding
+application. There is no remote service running behind this package.
+
+Integration guide and exact numerical limits:
+https://github.com/Puma7/gridcraft/tree/solvercraft/alpha-0.1.0/solvercraft
+
+Development alpha. Retain termination, feasibility and optimality status with
+every numerical result. A local/best-found solution is not a general proof of
+global optimality. See the compatibility documentation.
+
+The official ArtCraft Launcher catalog has a separate maintainer review process.
+An included submission patch does not mean that the official catalog has already
+accepted this application or that GitHub release artifacts have been published.

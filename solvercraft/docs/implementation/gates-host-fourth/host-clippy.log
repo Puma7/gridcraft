@@ -1,0 +1,474 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+ Downloading crates ...
+  Downloaded atomic-waker v1.1.2
+  Downloaded glutin_egl_sys v0.7.1
+  Downloaded x509-tsp v0.1.0
+  Downloaded untrusted v0.7.1
+  Downloaded want v0.3.2
+  Downloaded zeroize_derive v1.5.0
+  Downloaded xml v1.4.0
+  Downloaded x509-cert v0.2.5
+  Downloaded tower v0.5.3
+  Downloaded aws-lc-rs v1.18.2
+  Downloaded tokio-util v0.7.20
+  Downloaded socket2 v0.6.5
+  Downloaded encoding_rs v0.8.42
+  Downloaded winresource v0.1.34
+  Downloaded tar v0.4.46
+  Downloaded toml_edit v0.25.15+spec-1.1.0
+  Downloaded mio v1.2.4
+  Downloaded hyper v1.12.0
+  Downloaded hyper-util v0.1.21
+  Downloaded sigstore-merkle v0.6.6
+  Downloaded h2 v0.4.20
+  Downloaded glutin v0.32.3
+  Downloaded der v0.7.10
+  Downloaded cms v0.2.3
+  Downloaded weezl v0.1.12
+  Downloaded tokio-rustls v0.26.6
+  Downloaded strum v0.28.0
+  Downloaded sigstore-bundle v0.6.6
+  Downloaded quick-error v2.0.1
+  Downloaded pem-rfc7468 v0.7.0
+  Downloaded multiversion_no_op v1.0.0
+  Downloaded tinyvec v1.13.3
+  Downloaded signature v2.2.0
+  Downloaded roxmltree v0.21.2
+  Downloaded lru-slab v0.1.3
+  Downloaded ipnet v2.12.2
+  Downloaded tower-layer v0.3.3
+  Downloaded spki v0.7.3
+  Downloaded ryu-js v1.0.3
+  Downloaded sigstore-verify v0.6.6
+  Downloaded tower-http v0.6.11
+  Downloaded reqwest v0.13.5
+  Downloaded quinn v0.11.12
+  Downloaded quinn-proto v0.11.19
+  Downloaded simdutf8 v0.1.5
+  Downloaded serde_json_canonicalizer v0.3.2
+  Downloaded ryu v1.0.23
+  Downloaded proc-macro-error-attr v1.0.4
+  Downloaded proc-macro-error v1.0.4
+  Downloaded pem v3.0.6
+  Downloaded tls_codec_derive v0.4.2
+  Downloaded tls_codec v0.4.2
+  Downloaded sync_wrapper v1.0.2
+  Downloaded strum_macros v0.28.0
+  Downloaded sigstore-types v0.6.6
+  Downloaded sigstore-tsa v0.6.6
+  Downloaded sigstore-trust-root v0.6.6
+  Downloaded tiff v0.11.3
+  Downloaded quinn-udp v0.5.16
+  Downloaded proc-macro-crate v3.5.0
+  Downloaded hyper-rustls v0.27.10
+  Downloaded http-body-util v0.1.5
+  Downloaded http-body v1.1.0
+  Downloaded error-code v3.4.0
+  Downloaded der_derive v0.7.3
+  Downloaded core_detect v1.0.0
+  Downloaded const-oid v0.9.6
+  Downloaded cmpv2 v0.2.0
+  Downloaded cmake v0.1.58
+  Downloaded try-lock v0.2.5
+  Downloaded tower-service v0.3.3
+  Downloaded sigstore-rekor v0.6.6
+  Downloaded sigstore-crypto v0.6.6
+  Downloaded sha1 v0.10.7
+  Downloaded serde_urlencoded v0.7.1
+  Downloaded rand_pcg v0.10.2
+  Downloaded rand_core v0.10.1
+  Downloaded hex v0.4.3
+  Downloaded glutin-winit v0.5.0
+  Downloaded futures-io v0.3.34
+  Downloaded futures-channel v0.3.34
+  Downloaded fs_extra v1.3.0
+  Downloaded fmt-derive-proc v0.1.2
+  Downloaded fmt-derive v0.1.2
+  Downloaded chacha20 v0.10.2
+  Downloaded base64ct v1.8.3
+  Downloaded arboard v3.7.0
+  Downloaded futures-sink v0.3.34
+  Downloaded flagset v0.4.7
+  Downloaded fax v0.2.7
+  Downloaded crmf v0.2.0
+  Downloaded clipboard-win v5.4.1
+  Downloaded rand v0.10.3
+  Downloaded aws-lc-sys v0.46.0
+    Blocking waiting for file lock on package cache
+   Compiling getrandom v0.4.3
+   Compiling rand_core v0.10.1
+    Checking hashbrown v0.17.1
+   Compiling serde_core v1.0.229
+    Checking libm v0.2.16
+    Checking smallvec v1.16.2
+   Compiling syn v2.0.119
+    Checking scopeguard v1.2.0
+    Checking solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+   Compiling pin-project-lite v0.2.17
+   Compiling zerofrom v0.1.8
+    Checking windows-sys v0.61.2
+   Compiling fs_extra v1.3.0
+    Checking web-time v0.2.4
+   Compiling stable_deref_trait v1.2.1
+   Compiling winnow v1.0.4
+    Checking windows-threading v0.2.1
+   Compiling typenum v1.20.1
+    Checking gridcraft-pdf v0.14.2 ($CHECKOUT_ROOT\crates\pdf)
+    Checking emath v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Checking raw-window-handle v0.6.2
+   Compiling aws-lc-rs v1.18.2
+   Compiling futures-core v0.3.34
+    Checking unicode-width v0.2.2
+    Checking indexmap v2.14.2
+    Checking parking_lot_core v0.9.12
+    Checking lock_api v0.4.14
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-325998na9o5nc\s-hnq7ihpev0-1obquzn-working`
+
+    Checking kurbo v0.13.1
+    Checking num-traits v0.2.19
+    Checking harfrust v0.12.0
+    Checking static_assertions v1.1.0
+   Compiling base64ct v1.8.3
+   Compiling yoke v0.8.4
+warning: `solvercraft-types` (lib) generated 1 warning
+    Checking solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+    Checking solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+   Compiling untrusted v0.7.1
+   Compiling serde v1.0.229
+   Compiling toml_parser v1.1.3+spec-1.1.0
+   Compiling generic-array v0.14.7
+    Checking ecolor v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling futures-sink v0.3.34
+   Compiling const-oid v0.9.6
+   Compiling flagset v0.4.7
+    Checking rustc-hash v1.1.0
+    Checking zip v3.0.0
+    Checking parking_lot v0.12.5
+    Checking libloading v0.8.9
+    Checking chrono v0.4.45
+    Checking moxcms v0.8.1
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-1zd7ialqa26dn\s-hnq7ijxq9c-03ionsj-working`
+
+    Checking amd v0.2.2
+    Checking euclid v0.22.14
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-301shouixktsk\s-hnq7ik10vr-0sdtgi1-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+    Checking solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+    Checking peniko v0.6.1
+warning: `solvercraft-math` (lib) generated 1 warning
+    Checking solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+   Compiling zerovec v0.11.9
+   Compiling mio v1.2.4
+   Compiling socket2 v0.6.5
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling pem-rfc7468 v0.7.0
+    Checking naga-types v30.0.1
+   Compiling tracing-core v0.1.36
+   Compiling writeable v0.6.4
+    Checking bit-vec v0.9.1
+   Compiling litemap v0.8.3
+   Compiling rand_core v0.6.4
+   Compiling zerotrie v0.2.5
+   Compiling jobserver v0.1.35
+    Checking gridcraft-core v0.14.2 ($CHECKOUT_ROOT\crates\core)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-2oheg1n29fo14\s-hnq7ilu5b6-0qmo4a8-working`
+
+    Checking guillotiere v0.7.0
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-2n570k1oecttw\s-hnq7im005r-0fbgxm4-working`
+
+    Checking codespan-reporting v0.13.1
+warning: `solvercraft-compile` (lib) generated 1 warning
+   Compiling http v1.5.0
+warning: `solvercraft-simulation` (lib) generated 1 warning
+    Checking spirv v0.4.0+sdk-1.4.341.0
+   Compiling tinystr v0.8.4
+   Compiling tokio v1.54.1
+   Compiling digest v0.10.7
+    Checking image v0.25.10
+   Compiling potential_utf v0.1.6
+    Checking allocator-api2 v0.2.21
+    Checking unicode-ident v1.0.26
+   Compiling slab v0.4.12
+   Compiling serde_json v1.0.154
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+    Checking bit-set v0.10.0
+   Compiling serde_spanned v1.1.1
+   Compiling signature v2.2.0
+    Checking wgpu-types v30.0.1
+   Compiling cc v1.6.0
+    Checking ash v0.38.0+1.3.281
+    Checking vello_common v0.2.0
+    Checking gridcraft-formula v0.14.2 ($CHECKOUT_ROOT\crates\formula)
+    Checking gridcraft-functions v0.14.2 ($CHECKOUT_ROOT\crates\functions)
+    Checking gridcraft-numfmt v0.14.2 ($CHECKOUT_ROOT\crates\numfmt)
+   Compiling icu_locale_core v2.3.0
+   Compiling sha1 v0.10.7
+   Compiling icu_collections v2.3.0
+    Checking windows-sys v0.59.0
+    Checking libc v0.2.190
+    Checking hashbrown v0.16.1
+   Compiling wgpu-hal v30.0.1
+   Compiling toml v1.1.6+spec-1.1.0
+    Checking presser v0.3.1
+   Compiling http-body v1.1.0
+    Checking glutin_wgl_sys v0.6.1
+    Checking ordered-float v5.5.0
+    Checking fixed_decimal v0.7.3
+   Compiling cmake v0.1.58
+    Checking gridcraft-model v0.14.2 ($CHECKOUT_ROOT\crates\model)
+    Checking vello_cpu v0.2.0
+   Compiling winit v0.30.13 (https://github.com/storytold/winit.git?rev=a517b3846ee8457d84ee4975110bfda6797c44dc#a517b384)
+   Compiling futures-task v0.3.34
+    Checking khronos-egl v6.0.0
+   Compiling icu_provider v2.3.1
+    Checking renderdoc-sys v1.1.0
+   Compiling httparse v1.10.1
+    Checking glow v0.17.0
+   Compiling rustls v0.23.46
+   Compiling futures-io v0.3.34
+    Checking range-alloc v0.1.5
+    Checking tempfile v3.27.0
+   Compiling tokio-util v0.7.20
+    Checking accesskit_consumer v0.39.1
+    Checking windows-sys v0.52.0
+   Compiling wgpu-core v30.0.1
+   Compiling icu_properties v2.3.0
+   Compiling icu_normalizer v2.3.0
+    Checking smol_str v0.2.2
+    Checking cursor-icon v1.2.0
+   Compiling futures-util v0.3.34
+   Compiling try-lock v0.2.5
+   Compiling base64 v0.22.1
+    Checking tracing v0.1.44
+    Checking dpi v0.1.2
+   Compiling atomic-waker v1.1.2
+   Compiling tower-service v0.3.3
+    Checking gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+    Checking gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+    Checking icu_plurals v2.3.0
+    Checking icu_decimal v2.3.0
+   Compiling form_urlencoded v1.2.2
+   Compiling futures-channel v0.3.34
+   Compiling idna_adapter v1.2.2
+   Compiling want v0.3.2
+   Compiling hex v0.4.3
+   Compiling pem v3.0.6
+    Checking winsafe v0.0.29
+    Checking zip v9.1.0
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+   Compiling wgpu v30.0.1
+   Compiling encoding_rs v0.8.42
+    Checking winreg v0.55.0
+   Compiling sha2 v0.10.9
+   Compiling aws-lc-sys v0.46.0
+    Checking gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+   Compiling ring v0.17.14
+    Checking craft-i18n v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+    Checking verifysign v1.0.1
+   Compiling idna v1.1.0
+   Compiling sync_wrapper v1.0.2
+   Compiling tower-layer v0.3.3
+   Compiling ipnet v2.12.2
+    Checking rustc-hash v2.1.3
+   Compiling base64 v0.23.1
+   Compiling sigstore-types v0.6.6
+    Checking crossbeam-utils v0.8.23
+   Compiling multiversion_no_op v1.0.0
+   Compiling core_detect v1.0.0
+   Compiling simdutf8 v0.1.5
+   Compiling ryu v1.0.23
+   Compiling http-body-util v0.1.5
+    Checking pollster v1.0.1
+   Compiling mime v0.3.17
+   Compiling chacha20 v0.10.2
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling tower v0.5.3
+   Compiling url v2.5.8
+   Compiling crc32fast v1.5.2
+    Checking type-map v0.5.1
+    Checking crossbeam-epoch v0.9.21
+    Checking anyhow v1.0.104
+    Checking colored v2.2.0
+    Checking getopts v0.2.24
+   Compiling serde_urlencoded v0.7.1
+   Compiling proc-macro-error v1.0.4
+   Compiling simd-adler32 v0.3.10
+   Compiling rand v0.10.3
+   Compiling ryu-js v1.0.3
+    Checking kittest v0.5.0
+   Compiling toml_edit v0.25.15+spec-1.1.0
+   Compiling filetime v0.2.29
+   Compiling tower-http v0.6.11
+    Checking crossbeam-deque v0.8.8
+    Checking open v5.4.4
+    Checking error-code v3.4.0
+   Compiling heck v0.5.0
+   Compiling winresource v0.1.34
+    Checking xml v1.4.0
+   Compiling rfd v0.17.2
+   Compiling miniz_oxide v0.9.1
+   Compiling serde_json_canonicalizer v0.3.2
+    Checking craft-winprint-gdi v0.1.0 (https://github.com/storytold/winprint.rs?rev=417ac3c4d14d3da5485a99c7d5ce8f05664ec312#417ac3c4)
+   Compiling tar v0.4.46
+    Checking roxmltree v0.21.2
+    Checking rayon-core v1.13.0
+   Compiling proc-macro-crate v3.5.0
+    Checking clipboard-win v5.4.1
+   Compiling zeroize_derive v1.5.0
+   Compiling zerocopy-derive v0.8.61
+   Compiling thiserror-impl v1.0.69
+   Compiling enum_dispatch v0.3.13
+   Compiling windows-implement v0.60.2
+   Compiling windows-interface v0.59.3
+   Compiling der_derive v0.7.3
+   Compiling tracing-attributes v0.1.31
+   Compiling tls_codec_derive v0.4.2
+    Checking rayon v1.12.0
+   Compiling flate2 v1.1.10
+   Compiling strum_macros v0.28.0
+    Checking arboard v3.7.0
+   Compiling gridcraft v0.14.2 ($CHECKOUT_ROOT\apps\gridcraft)
+    Checking rustls-webpki v0.103.16
+   Compiling fmt-derive-proc v0.1.2
+    Checking dify v0.8.0
+   Compiling zeroize v1.9.1
+   Compiling rustls-pki-types v1.15.1
+    Checking windows-core v0.62.2
+    Checking rustls-platform-verifier v0.7.1
+    Checking windows-future v0.3.2
+    Checking thiserror v1.0.69
+    Checking windows-numerics v0.3.1
+    Checking windows-collections v0.3.2
+    Checking ureq v3.5.0
+    Checking clarabel v0.11.1
+   Compiling der v0.7.10
+   Compiling tls_codec v0.4.2
+    Checking windows v0.62.2
+    Checking fmt-derive v0.1.2
+    Checking zerocopy v0.8.61
+   Compiling spki v0.7.3
+    Checking solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+    Checking strum v0.28.0
+   Compiling x509-cert v0.2.5
+   Compiling h2 v0.4.20
+    Checking solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+   Compiling cms v0.2.3
+    Checking ahash v0.8.12
+    Checking half v2.7.1
+   Compiling crmf v0.2.0
+   Compiling hyper v1.12.0
+    Checking epaint v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Checking naga v30.0.1
+    Checking gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+   Compiling cmpv2 v0.2.0
+   Compiling hyper-util v0.1.21
+    Checking egui v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+   Compiling x509-tsp v0.1.0
+    Checking craft-update v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+    Checking craft-ui v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+    Checking craft-window v0.1.0 (https://github.com/storytold/craft-libs?rev=c5a1cbfb5f9049f9270955caffb5bee5997aebf7#c5a1cbfb)
+    Checking wgpu-naga-bridge v30.0.1
+    Checking gridcraft-mcp v0.14.2 ($CHECKOUT_ROOT\crates\mcp)
+    Checking xtask v0.14.2 ($CHECKOUT_ROOT\xtask)
+    Checking gridcraft-cli v0.14.2 ($CHECKOUT_ROOT\apps\gridcraft-cli)
+error: parameter is only used in recursion
+   --> apps\gridcraft-cli\src\check.rs:281:56
+    |
+281 | fn walk(dir: &Path, depth: usize, out: &mut Discovery, seen: &mut std::collections::HashSet<u64>) -> bool {
+    |                                                        ^^^^ help: if this is intentional, prefix it with an underscore: `_seen`
+    |
+note: parameter used here
+   --> apps\gridcraft-cli\src\check.rs:327:42
+    |
+327 |             if !walk(&p, depth + 1, out, seen) {
+    |                                          ^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#only_used_in_recursion
+    = note: `-D clippy::only-used-in-recursion` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::only_used_in_recursion)]`
+
+error: could not compile `gridcraft-cli` (bin "gridcraft-cli") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `gridcraft-cli` (bin "gridcraft-cli" test) due to 1 previous error
+error: the function has a cognitive complexity of (31/30)
+   --> crates\ui-egui\src\solvercraft.rs:195:8
+    |
+195 | pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
+    |        ^^^^
+    |
+    = help: you could split it up into multiple smaller functions
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#cognitive_complexity
+    = note: requested on the command line with `-D clippy::cognitive-complexity`
+
+error: this boolean expression can be simplified
+   --> crates\ui-egui\src\solvercraft.rs:467:29
+    |
+467 |     if kind == "Scatter" && !rows.first().and_then(Json::as_array).is_some_and(|row| row.len() >= 2) {
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `rows.first().and_then(Json::as_array).is_none_or(|row| row.len() < 2)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#nonminimal_bool
+    = note: `-D clippy::nonminimal-bool` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::nonminimal_bool)]`
+
+error: could not compile `gridcraft-ui-egui` (lib) due to 2 previous errors
+error: use of a disallowed method `std::time::Instant::now`
+  --> crates\engine\src\cmd\solvercraft\host_tests.rs:19:17
+   |
+19 |     let limit = std::time::Instant::now() + std::time::Duration::from_secs(10);
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: traps on wasm; read the clock only off wasm
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#disallowed_methods
+   = note: `-D clippy::disallowed-methods` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::disallowed_methods)]`
+
+error: use of a disallowed method `std::time::Instant::now`
+  --> crates\engine\src\cmd\solvercraft\host_tests.rs:26:17
+   |
+26 |         assert!(std::time::Instant::now() < limit, "{state}");
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: traps on wasm; read the clock only off wasm
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#disallowed_methods
+
+error: could not compile `gridcraft-engine` (lib test) due to 2 previous errors
+warning: aws-lc-sys@0.46.0: Emitting configuration: cargo:rustc-cfg=universal
+warning: aws-lc-sys@0.46.0: Building with: CC
+warning: aws-lc-sys@0.46.0: Symbol Prefix: Some("aws_lc_0_46_0")
+warning: aws-lc-sys@0.46.0: Target platform: 'x86_64-pc-windows-msvc'
+warning: aws-lc-sys@0.46.0: Compilation of 'stdalign_check.c' failed - Err(Error { kind: ToolExecError, message: "command did not execute successfully (status code exit code: 2): \"$NATIVE_BUILD_TOOLS\\\\2022\\\\BuildTools\\\\VC\\\\Tools\\\\MSVC\\\\14.40.33807\\\\bin\\\\HostX64\\\\x64\\\\cl.exe\" \"-nologo\" \"-MD\" \"-O2\" \"-Brepro\" \"-WX\" \"-W4\" \"-FoC:\\\\WORKSP~1\\\\SOLVER~3\\\\HOST-V~1\\\\debug\\\\build\\\\AWS-LC~4\\\\out\\\\out-stdalign_check\\\\b56b5710777e5e78-stdalign_check.o\" \"-c\" \"$LOCAL_PATH"" }).
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: cl : Befehlszeile warning D9025 : "/O2" wird durch "/Od" �berschrieben
+warning: aws-lc-sys@0.46.0: NASM command not found or failed to execute.
+warning: aws-lc-sys@0.46.0: NASM command not found or failed to execute.
+error: failed to run custom build command for `aws-lc-sys v0.46.0`
+
+Caused by:
+  process didn't exit successfully: `$BUILD_OUTPUT\host-validation\debug\build\aws-lc-sys-b3d6fb00b83b9d7d\build-script-main` (exit code: 1)
+  --- stderr
+
+
+  error occurred in cc-rs: command did not execute successfully (status code exit code: 1114): "$NATIVE_BUILD_TOOLS\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.40.33807\\bin\\HostX64\\x64\\lib.exe" "-out:$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\libaws_lc_0_46_0_crypto.a" "-nologo" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\libaws_lc_0_46_0_crypto.a" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-dgram.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-errno.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-fd.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-file.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-hexdump.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-md.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-pair.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-printf.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-socket.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\d0b42ca7b9724ec0-socket_helper.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\ab41a32ab60f6ba0-blake2.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\519078444b26caa0-bn_asn1.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\519078444b26caa0-convert.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\ec0259edbf0e75d8-buf.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-asn1_compat.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-ber.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-cbb.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-cbs.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\75dd829c3ed2b1bd-unicode.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\51b5bd6c9ce1a4b8-chacha.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-cipher_extra.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-cts.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-derive_key.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aesctrhmac.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aesgcmsiv.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aes_cbc_hmac_sha1.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_aes_cbc_hmac_sha256.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_chacha20poly1305.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_des.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_null.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_rc2.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_rc4.o" "$BUILD_OUTPUT\\host-validation\\debug\\build\\aws-lc-sys-bcae5f7249f70085\\out\\8ce19d706e5d0a55-e_tls.o"
+
+
+    Checking gpu-allocator v0.28.0
+    Checking accesskit_windows v0.35.1
+    Checking accesskit_winit v0.34.1
+    Checking egui-winit v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Checking wgpu-core-deps-windows-linux-android v30.0.1
+    Checking egui-wgpu v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Checking egui_kittest v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+    Checking eframe v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)
+error: could not compile `gridcraft-ui-egui` (lib test) due to 2 previous errors

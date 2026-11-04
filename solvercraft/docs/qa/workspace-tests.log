@@ -1,0 +1,410 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.47s
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft-d412e8916b514654.exe)
+
+running 30 tests
+test heuristic::tests::input_memory_and_domain_limits_are_checked ... ok
+test heuristic::tests::cancellation_preserves_only_already_validated_points ... ok
+test heuristic::tests::failed_search_and_invalid_domains_are_not_infeasibility_proofs ... ok
+test nonlinear::tests::bounded_large_objective_never_implies_unboundedness ... ok
+test nonlinear::tests::derivative_and_domain_failures_are_not_convergence ... ok
+test nonlinear::tests::finite_bounds_and_finite_starts_are_required ... ok
+test nonlinear::tests::being_close_to_a_bound_does_not_zero_an_inward_gradient ... ok
+test nonlinear::tests::cancellation_is_checked_before_the_next_evaluation ... ok
+test nonlinear::tests::exponential_has_a_smooth_nonpolynomial_stationary_point ... ok
+test runtime_tests::a_tiny_constant_tail_mean_stays_constant ... ok
+test nonlinear::tests::budgets_have_truthful_partial_results ... ok
+test nonlinear::tests::fixed_singleton_does_not_require_a_derivative ... ok
+test nonlinear::tests::start_projection_is_visible_and_feasible ... ok
+test nonlinear::tests::narrow_bounds_do_not_become_a_zero_gradient ... ok
+test nonlinear::tests::line_search_domain_rejections_keep_a_valid_best_point ... ok
+test nonlinear::tests::unsupported_domains_constraints_and_methods_are_rejected ... ok
+test nonlinear::tests::maximization_sign_and_exact_active_bound_are_correct ... ok
+test runtime_tests::manifest_identity_is_stable_and_seed_lossless ... ok
+test runtime_tests::scenario_aggregation_does_not_lose_small_opposing_terms ... ok
+test runtime_tests::manifest_limits_json_expansion_without_an_unbounded_buffer ... ok
+test runtime_tests::invalid_base_constraints_are_rejected_before_clone ... ok
+test runtime_tests::background_solve_is_observable_and_returns_a_real_solution ... ok
+test runtime_tests::background_simulation_can_cancel_after_a_trial_has_started ... ok
+test runtime_tests::cvar_size_limits_precede_counterpart_allocation ... ok
+test heuristic::tests::mixed_binary_values_are_repaired_and_constraints_checked ... ok
+test heuristic::tests::shifted_rugged_objective_is_actually_searched ... ok
+test heuristic::tests::narrow_bounds_and_large_objective_do_not_trigger_old_status_bugs ... ok
+test heuristic::tests::repeatability_and_evaluation_budget_are_explicit ... ok
+test nonlinear::tests::rosenbrock_converges_from_a_nontrivial_start ... ok
+test heuristic::tests::non_smooth_cusp_and_nonlinear_constraints ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\independent.rs ($BUILD_OUTPUT\root\debug\deps\independent-07a08b12107eef05.exe)
+
+running 39 tests
+test autodiff_reports_domain_and_nonsmooth_failures_instead_of_zero_gradient ... ok
+test cancelled_simulation_does_not_execute_trials ... ok
+test bounds_only_quadratic_solves_the_previous_narrow_interval_counterexample ... ok
+test changing_output_arity_is_rejected ... ok
+test constant_simulation_has_zero_variance_without_storing_trials ... ok
+test external_seed_encoding_preserves_u64_max ... ok
+test empty_empirical_sample_is_not_zero_risk ... ok
+test cubic_zero_at_probe_points_is_structurally_nonlinear ... ok
+test compiler_rejects_excessive_depth_before_recursive_arithmetic ... ok
+test expanded_square_has_no_hidden_half_factor_and_correct_gradient ... ok
+test empirical_cvar_fractionally_includes_mass_at_quantile_boundary ... ok
+test alternate_optima_do_not_require_unique_values ... ok
+test expected_loss_and_tail_loss_choose_different_analytic_decisions ... ok
+test cancelled_solve_is_not_optimal ... ok
+test binary_enumeration_reference ... ok
+test contradictory_constraints ... ok
+test online_moments_avoid_large_offset_cancellation ... ok
+test genuine_continuous_unboundedness ... ok
+test latin_hypercube_visits_each_uniform_stratum_once_per_dimension ... ok
+test insufficient_memory_is_a_limit_or_error_never_fake_success ... ok
+test integer_equality_has_no_feasible_integer_point ... ok
+test free_variable_can_be_negative ... ok
+test robust_box_counterpart_handles_negative_variables ... ok
+test continuous_relaxation_reference ... ok
+test single_observation_does_not_claim_unbiased_variance ... ok
+test large_finite_objective_is_not_unbounded ... ok
+test simulation_seed_repeats_exact_input_stream ... ok
+test tiny_positive_blocking_coefficient_is_not_an_unboundedness_certificate ... ok
+test objective_offset_is_preserved ... ok
+test lp_unboundedness_is_not_mip_unboundedness_proof ... ok
+test small_pivot_scaling_challenge ... ok
+test upper_only_negative_variable ... ok
+test weighted_tail_mean_respects_partial_quantile_mass ... ok
+test fixed_and_free_variables ... ok
+test two_equalities_determine_unique_point ... ok
+test zero_objective_finds_a_feasible_point ... ok
+test wyndor_analytic_optimum ... ok
+test fixed_seed_monte_carlo_matches_independent_analytic_moments ... ok
+test small_signed_binary_models_match_complete_enumeration ... ok
+
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\job_runtime_e2e.rs ($BUILD_OUTPUT\root\debug\deps\job_runtime_e2e-d5432bedfd36c5e7.exe)
+
+running 2 tests
+test evaluator_panic_is_observable_failure_and_slot_is_recovered ... ok
+test real_background_job_quota_cancel_shared_results_and_reuse ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\runtime_review.rs ($BUILD_OUTPUT\root\debug\deps\runtime_review-aebea3a879f3ccbd.exe)
+
+running 10 tests
+test confidence_zero_cvar_is_weighted_mean_with_unequal_exact_weights ... ok
+test finite_tail_controls_cover_atoms_tiny_constants_and_zero_weight_outliers ... ok
+test fractional_tail_mass_matches_high_precision_binary_input_reference_and_permutations ... ok
+test finite_weights_are_scale_invariant_at_normal_and_subnormal_extremes ... ok
+test coefficient_box_counterpart_preserves_negative_coordinate_semantics ... ok
+test risk_request_fields_are_strict_and_unreliable_extremes_fail_explicitly ... ok
+test scenario_optimization_normalizes_large_finite_weights_without_changing_decision ... ok
+test small_integer_weight_tail_means_match_exact_rational_mass_accounting ... ok
+test transformed_dimension_and_manifest_escape_limits_are_explicit ... ok
+test native_job_quota_panic_cancel_and_shared_results_have_real_lifecycle ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\main.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_cli-6eb90e0fdf3bdcda.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\end_to_end.rs ($BUILD_OUTPUT\root\debug\deps\end_to_end-2a0679d2009fd303.exe)
+
+running 40 tests
+test capabilities_is_an_actual_process_response ... ok
+test demo_is_actual_optimization_and_simulation ... ok
+test documented_file_input_is_read_by_the_cli ... ok
+test nonfinite_json_number_is_rejected_before_solving ... ok
+test missing_file_is_a_structured_input_error ... ok
+test non_unicode_windows_argument_is_a_structured_error_instead_of_a_panic ... ok
+test heuristic_expression_cli_reports_verified_best_found_only ... ok
+test nonlinear_expression_cli_identifies_stationarity_without_claiming_optimality ... ok
+test invalid_risk_measure_parameter_is_a_structured_error ... ok
+test original_expression_constraints_are_rechecked_before_publishing_feasibility ... ok
+test compile_and_solve_expr_use_the_documented_distinct_envelopes ... ok
+test expected_loss_and_cvar_change_the_real_cli_decision ... ok
+test exactly_maximum_input_size_remains_accepted ... ok
+test original_expression_objective_is_rechecked_before_publishing_compiled_optimum ... ok
+test oversized_input_is_capped_at_the_cli_boundary ... ok
+test explicit_unsupported_quadratic_is_not_routed_to_a_heuristic ... ok
+test misspelled_budget_is_not_silently_defaulted ... ok
+test omitted_input_path_reads_stdin ... ok
+test invalid_variable_reference_is_a_structured_model_error ... ok
+test invalid_simulation_controls_have_no_success_payload ... ok
+test mathematical_infeasibility_and_unboundedness_are_json_results_not_parse_errors ... ok
+test duplicate_budget_fields_are_rejected_without_last_value_wins ... ok
+test simulation_multiple_outputs_and_large_seed_roundtrip ... ok
+test simulation_risk_summaries_use_upper_loss_tail ... ok
+test unknown_command_is_a_structured_failure ... ok
+test unknown_distribution_field_is_rejected ... ok
+test example_can_be_validated_and_solved_through_stdin ... ok
+test unknown_expression_field_is_rejected ... ok
+test unknown_risk_field_is_rejected ... ok
+test iteration_and_node_budgets_remain_visible_at_the_process_boundary ... ok
+test simulation_repeats_in_separate_processes_with_the_same_seed ... ok
+test help_is_json_for_default_and_explicit_help ... ok
+test unknown_method_is_not_silently_replaced ... ok
+test unknown_model_field_is_rejected ... ok
+test unknown_request_field_is_rejected ... ok
+test zero_evaluation_budget_is_successfully_framed_as_interruption ... ok
+test unexpected_cli_flags_are_not_silently_ignored ... ok
+test positional_request_arrays_are_rejected_even_when_all_fields_are_present ... ok
+test malformed_scalar_array_and_trailing_json_are_failures ... ok
+test invalid_seed_encodings_are_rejected_in_the_process ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.97s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_compile-3c833969c8eddcef.exe)
+
+running 17 tests
+test autodiff::tests::quadratic_cross_terms_have_analytic_gradients ... ok
+test autodiff::tests::narrow_interval_example_has_the_nonzero_true_derivative ... ok
+test autodiff::tests::nonlinear_chain_matches_analytic_result_and_independent_differences ... ok
+test autodiff::tests::constants_and_inactive_zero_are_differentiable ... ok
+test autodiff::tests::unavailable_derivatives_are_errors_not_zero ... ok
+test tests::expression_depth_is_bounded ... ok
+test tests::constant_division_and_negative_coefficients_preserve_affine_structure ... ok
+test tests::expanded_quadratic_has_explicit_cross_coefficient ... ok
+test tests::invalid_handles_and_nonfinite_constants_are_rejected_before_classification ... ok
+test tests::variable_denominator_and_nonsmooth_operators_are_not_affine ... ok
+test tests::pointwise_disguised_nonlinearity_is_not_classified_as_linear ... ok
+test tests::polynomial_cancellation_and_constant_folding_are_structural ... ok
+test tests::quadratic_rows_are_rejected_unless_they_cancel ... ok
+test tests::domain_errors_are_not_silently_zero ... ok
+test tests::rhs_expressions_move_to_the_original_row_correctly ... ok
+test tests::compilation_rejects_too_small_memory_budget ... ok
+test tests::tagged_json_roundtrip_evaluates_the_same_expression ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\root\debug\deps\deep_review-323a69f375fdfedf.exe)
+
+running 17 tests
+test compiler_must_not_discard_a_domain_guard_that_evaluation_keeps ... ok
+test compensated_coefficients_survive_scale_division_and_quadratic_products ... ok
+test reciprocal_negative_powers_and_selected_extrema_have_correct_gradients ... ok
+test independent_multivariable_gradient_covers_all_smooth_operators ... ok
+test affine_constraints_and_quadratic_cross_terms_match_independent_arithmetic ... ok
+test coefficient_sum_keeps_a_small_exact_residual ... ok
+test finite_tiny_constant_division_remains_compilable ... ok
+test reverse_gradient_does_not_erase_a_small_repeated_variable_contribution ... ok
+test zero_power_preserves_base_value_domain_errors ... ok
+test zero_power_has_consistent_value_and_zero_gradient_through_abs ... ok
+test invalid_metadata_is_rejected_before_domain_arithmetic_or_output_cloning ... ok
+test zero_power_still_validates_handles_and_finite_constants ... ok
+test min_max_ties_abs_zero_and_sqrt_zero_are_not_silently_differentiated ... ok
+test unknown_fields_are_rejected_at_each_expression_contract_boundary ... ok
+test high_u32_powers_are_bounded_and_do_not_wrap_signed_exponents ... ok
+test seed_contract_roundtrips_all_64_bits_and_rejects_invalid_inputs ... ok
+test depth_boundary_node_budget_and_invalid_inputs_fail_before_arithmetic ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_engines-6aa07aec8650af0b.exe)
+
+running 21 tests
+test tests::alternative_optima_do_not_require_a_specific_vector ... ok
+test tests::duplicate_objective_terms_use_shared_compensated_aggregation ... ok
+test tests::free_negative_fixed_and_equality_variables ... ok
+test tests::greater_equal_rows_and_redundant_equalities ... ok
+test tests::cancel_preserves_a_verified_integer_incumbent_and_valid_bound ... ok
+test tests::binary_problem_honors_domains_instead_of_relaxation ... ok
+test tests::infeasible_constraints_are_distinct_from_limits ... ok
+test tests::iteration_limit_is_not_infeasibility ... ok
+test tests::large_unrelated_cost_does_not_hide_a_meaningful_small_cost ... ok
+test tests::tiny_positive_blocker_is_not_an_unbounded_ray ... ok
+test tests::real_unbounded_lp_has_a_valid_feasible_point ... ok
+test tests::unsupported_nonconvex_quadratic_is_explicit ... ok
+test tests::separable_quadratic_solves_narrow_interval_without_finite_difference_failure ... ok
+test tests::integer_incumbent_survives_a_node_budget ... ok
+test tests::separable_concave_maximization_and_bound_clamping ... ok
+test tests::large_finite_objective_does_not_mean_unbounded ... ok
+test tests::pre_cancelled_jobs_have_no_fabricated_feasibility ... ok
+test tests::unbounded_relaxation_does_not_prove_unbounded_mip ... ok
+test tests::wyndor_glass_objective_and_original_residuals ... ok
+test tests::small_integer_models_match_exhaustive_independent_oracle ... ok
+test tests::signed_integer_models_match_exhaustive_three_variable_oracle ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\root\debug\deps\deep_review-7db10e6b61d34a7d.exe)
+
+running 19 tests
+test a_linear_free_coordinate_gives_a_genuine_unbounded_separable_qp ... ok
+test integer_optimum_outside_exact_f64_integer_range_is_not_falsely_certified ... ok
+test cancellation_does_not_validate_an_actually_infeasible_constraint ... ok
+test compensated_fixed_offset_does_not_change_feasible_region ... ok
+test lost_continuous_translation_residual_does_not_claim_zero_gap ... ok
+test objective_cancellation_keeps_a_meaningful_reduced_cost ... ok
+test permuting_fixed_variables_is_a_legitimate_control ... ok
+test odd_integer_optimum_inside_exact_f64_range_is_a_control ... ok
+test objective_unit_scaling_does_not_change_the_optimal_point ... ok
+test quadratic_limits_and_unsupported_classes_do_not_report_an_optimum ... ok
+test a_large_objective_constant_does_not_change_the_integer_argmax ... ok
+test rhs_and_fixed_offsets_are_aggregated_in_a_single_compensated_sum ... ok
+test requested_mip_gap_keeps_best_found_and_direction_correct ... ok
+test significant_unrepresentable_working_cost_is_a_numerical_failure ... ok
+test separable_qp_matches_independent_sum_of_squares_identities ... ok
+test tiny_reduced_cost_does_not_claim_zero_gap_over_a_wide_interval ... ok
+test node_limited_offset_pairs_keep_identical_incumbents_and_termination ... ok
+test randomized_bounded_lps_match_an_exact_rational_vertex_oracle ... ok
+test mixed_integer_models_and_interrupted_bounds_match_an_exact_interval_oracle ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_math-9ef1f38086df080f.exe)
+
+running 9 tests
+test distributions::tests::degenerate_and_parameter_cases ... ok
+test distributions::tests::normal_quantiles_match_independent_constants ... ok
+test random::tests::addresses_are_repeatable_and_order_independent ... ok
+test risk::tests::cancellation_and_subnormal_tails_keep_small_terms ... ok
+test random::tests::index_domains_are_checked ... ok
+test risk::tests::discrete_boundary_mass_is_fractional ... ok
+test distributions::tests::inverse_cdf_semantics_and_support ... ok
+test risk::tests::empirical_convention_and_domains ... ok
+test distributions::tests::discrete_tables_are_stable_near_endpoints ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\root\debug\deps\deep_review-a81cb5a45c01e3f7.exe)
+
+running 18 tests
+test binomial_small_exact_distribution_and_discrete_inverse_boundary ... ok
+test degenerate_supports_and_boundary_cdfs_are_consistent ... ok
+test discrete_limits_are_explicit_and_degenerate_large_counts_remain_exact ... ok
+test empirical_quantiles_do_not_interpolate_and_cvar_integrates_boundary_mass ... ok
+test lognormal_interior_quantile_does_not_silently_return_zero ... ok
+test normal_cdf_standardization_does_not_overflow_before_division ... ok
+test maximum_seed_and_address_extremes_are_open_interval_and_repeatable ... ok
+test normal_quantile_keeps_finite_answer_after_cancelling_large_terms ... ok
+test normal_tail_quantiles_match_independent_reference_constants ... ok
+test positive_continuous_interior_quantile_underflow_is_explicit ... ok
+test rng_v2_has_explicit_reproducibility_vectors ... ok
+test rng_v2_removes_alpha_v1_coordinate_cancellation_family ... ok
+test triangular_extreme_branch_ratios_remain_finite_and_correct ... ok
+test triangular_scale_invariance_and_conditional_tail_probabilities ... ok
+test weibull_cdf_preserves_finite_log_ratio_when_division_overflows_or_underflows ... ok
+test weibull_quantile_avoids_overflow_before_scale_restores_finite_answer ... ok
+test weibull_extreme_shape_distinguishes_adjacent_values_near_scale ... ok
+test discrete_quantiles_bracket_probabilities_at_large_allowed_parameters ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_model-a927212a9224892f.exe)
+
+running 11 tests
+test tests::binary_defaults_are_real_domain_bounds ... ok
+test tests::candidate_rounding_requires_revalidation ... ok
+test tests::duplicate_and_symmetric_quadratic_coefficients_aggregate ... ok
+test tests::empty_and_integer_empty_domains_are_detected ... ok
+test tests::large_finite_objective_is_valid_arithmetic ... ok
+test tests::negative_free_and_fixed_variables_are_valid ... ok
+test tests::lengths_nonfinite_values_and_overflow_are_structured_errors ... ok
+test tests::numeric_options_are_validated_but_zero_work_budgets_are_allowed ... ok
+test tests::schema_handles_and_nonfinite_input_are_rejected ... ok
+test tests::original_rows_bounds_and_integrality_are_checked_separately ... ok
+test tests::insufficient_memory_and_oversized_names_are_rejected ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\root\debug\deps\deep_review-f2fd95ca66b25d36.exe)
+
+running 12 tests
+test binary_intersections_and_integer_holes_are_not_relaxed ... ok
+test canonicalization_does_not_erase_a_representable_residual_coefficient ... ok
+test independently_computed_cross_objective_and_all_relation_residuals ... ok
+test exact_zero_and_nonzero_tiny_coefficients_survive_the_right_way ... ok
+test shared_compensated_helpers_are_checked_and_preserve_cancellation ... ok
+test invalid_zero_coefficient_handles_are_still_invalid ... ok
+test every_nonfinite_numeric_position_is_rejected ... ok
+test option_domains_and_original_integer_validation_are_strict ... ok
+test original_objective_dot_offset_and_rhs_share_compensation ... ok
+test integer_precision_policy_does_not_restrict_large_continuous_values ... ok
+test variable_and_name_limits_are_checked ... ok
+test excessive_term_count_is_rejected_before_normalization ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_simulation-2d2f021c64d5c703.exe)
+
+running 9 tests
+test tests::elementary_fits_report_mle_parameters_without_gof_claims ... ok
+test tests::constant_and_single_observation_statistics ... ok
+test tests::invalid_trials_outputs_and_shape_are_errors ... ok
+test tests::cancellation_has_no_fake_statistics_and_can_return_partial_data ... ok
+test tests::streaming_large_offset_moments_do_not_use_difference_of_squares ... ok
+test tests::lhs_occupies_each_stratum_once_in_each_dimension ... ok
+test tests::seed_repeatability_and_same_trial_reads ... ok
+test tests::memory_estimates_bound_retention_and_lhs_before_allocating ... ok
+test tests::fixed_seed_moments_match_analytic_references ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\root\debug\deps\deep_review-392f4affa405fdb2.exe)
+
+running 11 tests
+test failed_observation_does_not_corrupt_prior_online_summary ... ok
+test cancelled_setup_does_not_evaluate_or_return_fake_summary ... ok
+test fits_obey_mle_and_degenerate_domains ... ok
+test compensated_online_mean_retains_small_terms_between_cancelling_large_values ... ok
+test fitting_uniform_does_not_require_representable_sample_variance ... ok
+test fitting_exponential_does_not_require_representable_sample_variance ... ok
+test very_wide_streaming_output_is_budgeted_before_the_second_trial ... ok
+test normal_mle_can_return_finite_standard_deviation_when_variance_overflows ... ok
+test variance_is_translation_and_order_invariant_for_representable_two_point_data ... ok
+test lhs_exactly_covers_prime_sized_strata_with_maximum_seed ... ok
+test streaming_mode_handles_large_trial_count_under_small_memory_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\root\debug\deps\solvercraft_types-7f023ea751c731bb.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_compile
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_engines
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_math
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_model
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_simulation
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_types
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

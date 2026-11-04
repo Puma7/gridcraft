@@ -1,0 +1,20 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling serde_core v1.0.228
+   Compiling serde v1.0.228
+   Compiling zmij v1.0.19
+   Compiling serde_json v1.0.149
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling syn v2.0.119
+   Compiling serde_derive v1.0.228
+   Compiling solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+   Compiling solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+   Compiling solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+   Compiling solvercraft-cli v0.1.0 ($SDK_ROOT\crates\cli)
+    Finished `release` profile [optimized] target(s) in 17.30s

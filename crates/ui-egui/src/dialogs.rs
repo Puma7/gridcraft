@@ -679,6 +679,23 @@ impl Dialog {
                 d
             }
             "solverResults" => Dialog::custom("solverResults", "Solver Results", params.clone()),
+            "solvercraft" => {
+                let mut values = json!({
+                    "objective": active, "goal": "max", "value": "0", "variables": "",
+                    "sheet": app.session.active().and_then(|d|d.wb.active()).map(|s|s.name.clone()),
+                    "constraints": [], "nonNegative": true, "method": "auto", "newOp": "<=",
+                    "simulationInput": "", "simulationOutputs": active, "distribution": "uniform",
+                    "parameter1": "0", "parameter2": "1", "parameter3": "2",
+                    "trials": "10000", "seed": "0", "latinHypercube": false
+                });
+                if let (Some(overrides), Some(fields)) = (params.as_object(), values.as_object_mut()) {
+                    fields.extend(overrides.iter().map(|(k, v)| (k.clone(), v.clone())));
+                }
+                let mut d = Dialog::custom("solvercraft", "Solvercraft · Optimization and Simulation", values);
+                d.command = Some("solvercraft.solve");
+                d
+            }
+            "solvercraftResults" => Dialog::custom("solvercraftResults", "Solvercraft Results", params.clone()),
             "subtotal" => Dialog::form(
                 "subtotal",
                 "Subtotal",

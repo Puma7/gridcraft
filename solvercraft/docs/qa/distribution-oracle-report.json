@@ -1,0 +1,2334 @@
+{
+  "python": "3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]",
+  "scipy": "1.18.1",
+  "numpy": "2.5.4",
+  "platform": "Windows-11-x86_64",
+  "license_note": "SciPy and NumPy BSD-3-Clause; isolated test-only environment, not product dependencies.",
+  "sources": [
+    "https://docs.scipy.org/doc/scipy/reference/stats.html",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.invgauss.html",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.burr.html"
+  ],
+  "probabilities": [
+    1e-10,
+    1e-07,
+    0.001,
+    0.1,
+    0.5,
+    0.9,
+    0.999,
+    0.9999999,
+    0.9999999999
+  ],
+  "thresholds": {
+    "quantile_relative": 2e-06,
+    "quantile_zero_absolute": 1e-10,
+    "cdf_absolute": 2e-08,
+    "legacy_normal_lognormal_cdf_absolute": 5e-07,
+    "logdensity_absolute": 2e-06,
+    "logdensity_additional_relative": 1e-10
+  },
+  "parameterizations": [
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 0.1, \"beta\": 0.1, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.1,
+        "beta": 0.1
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        0.1,
+        0.1
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 0.5, \"beta\": 0.5, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.5,
+        "beta": 0.5
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        0.5,
+        0.5
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 1.0, \"beta\": 1.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 1.0,
+        "beta": 1.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        1.0,
+        1.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 2.0, \"beta\": 2.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 2.0,
+        "beta": 2.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        2.0,
+        2.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 10.0, \"beta\": 10.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 10.0,
+        "beta": 10.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        10.0,
+        10.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 100.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 100.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        100.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 100.0, \"beta\": 100.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 100.0,
+        "beta": 100.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        100.0,
+        100.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 100.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 100.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        100.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 1000.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 1000.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        1000.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 1000.0, \"beta\": 1000.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 1000.0,
+        "beta": 1000.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        1000.0,
+        1000.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 1000.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 1000.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        1000.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gamma\", \"scale\": 2.0, \"shape\": 10000.0}",
+      "distribution": {
+        "kind": "gamma",
+        "shape": 10000.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        10000.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 10000.0, \"beta\": 10000.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 10000.0,
+        "beta": 10000.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        10000.0,
+        10000.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gamma\", \"scale\": 2.0, \"shape\": 10000.0}",
+      "distribution": {
+        "kind": "inverse_gamma",
+        "shape": 10000.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invgamma",
+      "scipy_args": [
+        10000.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 0.1, \"beta\": 2.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.1,
+        "beta": 2.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        0.1,
+        2.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 2.0, \"beta\": 0.1, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 2.0,
+        "beta": 0.1
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        2.0,
+        0.1
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 0.5, \"beta\": 5.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 0.5,
+        "beta": 5.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        0.5,
+        5.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 5.0, \"beta\": 0.5, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 5.0,
+        "beta": 0.5
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        5.0,
+        0.5
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 100.0, \"beta\": 1000.0, \"kind\": \"beta\"}",
+      "distribution": {
+        "kind": "beta",
+        "alpha": 100.0,
+        "beta": 1000.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        100.0,
+        1000.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"weibull\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "weibull",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "weibull_min",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"log_logistic\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "log_logistic",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "fisk",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto\", \"minimum\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "pareto",
+        "shape": 0.1,
+        "minimum": 2.0
+      },
+      "scipy_family": "pareto",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto2\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "pareto2",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "lomax",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"frechet\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "frechet",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "invweibull",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"fatigue_life\", \"scale\": 2.0, \"shape\": 0.1}",
+      "distribution": {
+        "kind": "fatigue_life",
+        "shape": 0.1,
+        "scale": 2.0
+      },
+      "scipy_family": "fatiguelife",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"weibull\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "weibull",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "weibull_min",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"log_logistic\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "log_logistic",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "fisk",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto\", \"minimum\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "pareto",
+        "shape": 0.5,
+        "minimum": 2.0
+      },
+      "scipy_family": "pareto",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto2\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "pareto2",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "lomax",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"frechet\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "frechet",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "invweibull",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"fatigue_life\", \"scale\": 2.0, \"shape\": 0.5}",
+      "distribution": {
+        "kind": "fatigue_life",
+        "shape": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "fatiguelife",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"weibull\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "weibull",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "weibull_min",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"log_logistic\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "log_logistic",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fisk",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto\", \"minimum\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "pareto",
+        "shape": 1.0,
+        "minimum": 2.0
+      },
+      "scipy_family": "pareto",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto2\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "pareto2",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lomax",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"frechet\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "frechet",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invweibull",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"fatigue_life\", \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "fatigue_life",
+        "shape": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fatiguelife",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"weibull\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "weibull",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "weibull_min",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"log_logistic\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "log_logistic",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fisk",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto\", \"minimum\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "pareto",
+        "shape": 2.0,
+        "minimum": 2.0
+      },
+      "scipy_family": "pareto",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto2\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "pareto2",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lomax",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"frechet\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "frechet",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invweibull",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"fatigue_life\", \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "fatigue_life",
+        "shape": 2.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fatiguelife",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"weibull\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "weibull",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "weibull_min",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"log_logistic\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "log_logistic",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fisk",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto\", \"minimum\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "pareto",
+        "shape": 10.0,
+        "minimum": 2.0
+      },
+      "scipy_family": "pareto",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"pareto2\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "pareto2",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lomax",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"frechet\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "frechet",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "invweibull",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"fatigue_life\", \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "fatigue_life",
+        "shape": 10.0,
+        "scale": 2.0
+      },
+      "scipy_family": "fatiguelife",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.1, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 0.1,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.1, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 0.1
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        0.1
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 0.1}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 0.1,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        0.1,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.5, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 0.5,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 0.5, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 0.5
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 0.5}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 0.5,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        0.5,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 1.0, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 1.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 1.0, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 1.0
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 1.0}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 1.0,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        1.0,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 2.0, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 2.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 2.0, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 2.0
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 2.0}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 2.0,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 10.0, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 10.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 10.0, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 10.0
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 10.0}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 10.0,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        10.0,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 100.0, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 100.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        100.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 100.0, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 100.0
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        100.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 100.0}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 100.0,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        100.0,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 1000.0, \"kind\": \"student_t\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "student_t",
+        "degrees_of_freedom": 1000.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "t",
+      "scipy_args": [
+        1000.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"degrees_of_freedom\": 1000.0, \"kind\": \"chi_squared\"}",
+      "distribution": {
+        "kind": "chi_squared",
+        "degrees_of_freedom": 1000.0
+      },
+      "scipy_family": "chi2",
+      "scipy_args": [
+        1000.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"denominator_df\": 3.0, \"kind\": \"f\", \"numerator_df\": 1000.0}",
+      "distribution": {
+        "kind": "f",
+        "numerator_df": 1000.0,
+        "denominator_df": 3.0
+      },
+      "scipy_family": "f",
+      "scipy_args": [
+        1000.0,
+        3.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"skew_normal\", \"location\": 0.0, \"scale\": 1.0, \"shape\": -100.0}",
+      "distribution": {
+        "kind": "skew_normal",
+        "location": 0.0,
+        "scale": 1.0,
+        "shape": -100.0
+      },
+      "scipy_family": "skewnorm",
+      "scipy_args": [
+        -100.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"skew_normal\", \"location\": 0.0, \"scale\": 1.0, \"shape\": -5.0}",
+      "distribution": {
+        "kind": "skew_normal",
+        "location": 0.0,
+        "scale": 1.0,
+        "shape": -5.0
+      },
+      "scipy_family": "skewnorm",
+      "scipy_args": [
+        -5.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"skew_normal\", \"location\": 0.0, \"scale\": 1.0, \"shape\": 0.0}",
+      "distribution": {
+        "kind": "skew_normal",
+        "location": 0.0,
+        "scale": 1.0,
+        "shape": 0.0
+      },
+      "scipy_family": "skewnorm",
+      "scipy_args": [
+        0.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"skew_normal\", \"location\": 0.0, \"scale\": 1.0, \"shape\": 5.0}",
+      "distribution": {
+        "kind": "skew_normal",
+        "location": 0.0,
+        "scale": 1.0,
+        "shape": 5.0
+      },
+      "scipy_family": "skewnorm",
+      "scipy_args": [
+        5.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"skew_normal\", \"location\": 0.0, \"scale\": 1.0, \"shape\": 100.0}",
+      "distribution": {
+        "kind": "skew_normal",
+        "location": 0.0,
+        "scale": 1.0,
+        "shape": 100.0
+      },
+      "scipy_family": "skewnorm",
+      "scipy_args": [
+        100.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 2.0, \"shape\": 0.01}",
+      "distribution": {
+        "kind": "inverse_gaussian",
+        "mean": 2.0,
+        "shape": 0.01
+      },
+      "scipy_family": "invgauss",
+      "scipy_args": [
+        200.0
+      ],
+      "scipy_keywords": {
+        "scale": 0.01
+      }
+    },
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "inverse_gaussian",
+        "mean": 2.0,
+        "shape": 1.0
+      },
+      "scipy_family": "invgauss",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "scale": 1.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 2.0, \"shape\": 1000.0}",
+      "distribution": {
+        "kind": "inverse_gaussian",
+        "mean": 2.0,
+        "shape": 1000.0
+      },
+      "scipy_family": "invgauss",
+      "scipy_args": [
+        0.002
+      ],
+      "scipy_keywords": {
+        "scale": 1000.0
+      }
+    },
+    {
+      "case": "{\"delta\": 0.5, \"gamma\": -2.0, \"kind\": \"johnson_su\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_su",
+        "gamma": -2.0,
+        "delta": 0.5,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsu",
+      "scipy_args": [
+        -2.0,
+        0.5
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 0.5, \"gamma\": -2.0, \"kind\": \"johnson_sb\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sb",
+        "gamma": -2.0,
+        "delta": 0.5,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsb",
+      "scipy_args": [
+        -2.0,
+        0.5
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 0.5, \"gamma\": -2.0, \"kind\": \"johnson_sl\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sl",
+        "gamma": -2.0,
+        "delta": 0.5,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lognorm",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 109.19630006628847
+      }
+    },
+    {
+      "case": "{\"delta\": 1.0, \"gamma\": 0.0, \"kind\": \"johnson_su\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_su",
+        "gamma": 0.0,
+        "delta": 1.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsu",
+      "scipy_args": [
+        0.0,
+        1.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 1.0, \"gamma\": 0.0, \"kind\": \"johnson_sb\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sb",
+        "gamma": 0.0,
+        "delta": 1.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsb",
+      "scipy_args": [
+        0.0,
+        1.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 1.0, \"gamma\": 0.0, \"kind\": \"johnson_sl\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sl",
+        "gamma": 0.0,
+        "delta": 1.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lognorm",
+      "scipy_args": [
+        1.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 3.0, \"gamma\": 2.0, \"kind\": \"johnson_su\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_su",
+        "gamma": 2.0,
+        "delta": 3.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsu",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 3.0, \"gamma\": 2.0, \"kind\": \"johnson_sb\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sb",
+        "gamma": 2.0,
+        "delta": 3.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "johnsonsb",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"delta\": 3.0, \"gamma\": 2.0, \"kind\": \"johnson_sl\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "johnson_sl",
+        "gamma": 2.0,
+        "delta": 3.0,
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "lognorm",
+      "scipy_args": [
+        0.3333333333333333
+      ],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 1.026834238065184
+      }
+    },
+    {
+      "case": "{\"kind\": \"burr12\", \"scale\": 2.0, \"shape_c\": 0.2, \"shape_k\": 0.5}",
+      "distribution": {
+        "kind": "burr12",
+        "shape_c": 0.2,
+        "shape_k": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "burr12",
+      "scipy_args": [
+        0.2,
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"dagum\", \"power\": 0.5, \"scale\": 2.0, \"shape\": 0.2}",
+      "distribution": {
+        "kind": "dagum",
+        "shape": 0.2,
+        "power": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "burr",
+      "scipy_args": [
+        0.2,
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 0.2, \"beta\": 0.5, \"kind\": \"beta_prime\", \"scale\": 2.0}",
+      "distribution": {
+        "kind": "beta_prime",
+        "alpha": 0.2,
+        "beta": 0.5,
+        "scale": 2.0
+      },
+      "scipy_family": "betaprime",
+      "scipy_args": [
+        0.2,
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"burr12\", \"scale\": 2.0, \"shape_c\": 1.0, \"shape_k\": 1.0}",
+      "distribution": {
+        "kind": "burr12",
+        "shape_c": 1.0,
+        "shape_k": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "burr12",
+      "scipy_args": [
+        1.0,
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"dagum\", \"power\": 1.0, \"scale\": 2.0, \"shape\": 1.0}",
+      "distribution": {
+        "kind": "dagum",
+        "shape": 1.0,
+        "power": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "burr",
+      "scipy_args": [
+        1.0,
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 1.0, \"beta\": 1.0, \"kind\": \"beta_prime\", \"scale\": 2.0}",
+      "distribution": {
+        "kind": "beta_prime",
+        "alpha": 1.0,
+        "beta": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "betaprime",
+      "scipy_args": [
+        1.0,
+        1.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"burr12\", \"scale\": 2.0, \"shape_c\": 2.0, \"shape_k\": 3.0}",
+      "distribution": {
+        "kind": "burr12",
+        "shape_c": 2.0,
+        "shape_k": 3.0,
+        "scale": 2.0
+      },
+      "scipy_family": "burr12",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"dagum\", \"power\": 3.0, \"scale\": 2.0, \"shape\": 2.0}",
+      "distribution": {
+        "kind": "dagum",
+        "shape": 2.0,
+        "power": 3.0,
+        "scale": 2.0
+      },
+      "scipy_family": "burr",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 2.0, \"beta\": 3.0, \"kind\": \"beta_prime\", \"scale\": 2.0}",
+      "distribution": {
+        "kind": "beta_prime",
+        "alpha": 2.0,
+        "beta": 3.0,
+        "scale": 2.0
+      },
+      "scipy_family": "betaprime",
+      "scipy_args": [
+        2.0,
+        3.0
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"burr12\", \"scale\": 2.0, \"shape_c\": 10.0, \"shape_k\": 0.2}",
+      "distribution": {
+        "kind": "burr12",
+        "shape_c": 10.0,
+        "shape_k": 0.2,
+        "scale": 2.0
+      },
+      "scipy_family": "burr12",
+      "scipy_args": [
+        10.0,
+        0.2
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"dagum\", \"power\": 0.2, \"scale\": 2.0, \"shape\": 10.0}",
+      "distribution": {
+        "kind": "dagum",
+        "shape": 10.0,
+        "power": 0.2,
+        "scale": 2.0
+      },
+      "scipy_family": "burr",
+      "scipy_args": [
+        10.0,
+        0.2
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"alpha\": 10.0, \"beta\": 0.2, \"kind\": \"beta_prime\", \"scale\": 2.0}",
+      "distribution": {
+        "kind": "beta_prime",
+        "alpha": 10.0,
+        "beta": 0.2,
+        "scale": 2.0
+      },
+      "scipy_family": "betaprime",
+      "scipy_args": [
+        10.0,
+        0.2
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"normal\", \"mean\": 1.0, \"std_dev\": 2.0}",
+      "distribution": {
+        "kind": "normal",
+        "mean": 1.0,
+        "std_dev": 2.0
+      },
+      "scipy_family": "norm",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"cauchy\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "cauchy",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "cauchy",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"logistic\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "logistic",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "logistic",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"laplace\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "laplace",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "laplace",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"gumbel\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "gumbel",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gumbel_r",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"min_extreme\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "min_extreme",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "gumbel_l",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"hyperbolic_secant\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "hyperbolic_secant",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "hypsecant",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"lognormal\", \"log_mean\": 1.0, \"log_std_dev\": 0.5}",
+      "distribution": {
+        "kind": "lognormal",
+        "log_mean": 1.0,
+        "log_std_dev": 0.5
+      },
+      "scipy_family": "lognorm",
+      "scipy_args": [
+        0.5
+      ],
+      "scipy_keywords": {
+        "scale": 2.718281828459045
+      }
+    },
+    {
+      "case": "{\"high\": 5.0, \"kind\": \"uniform\", \"low\": -2.0}",
+      "distribution": {
+        "kind": "uniform",
+        "low": -2.0,
+        "high": 5.0
+      },
+      "scipy_family": "uniform",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": -2.0,
+        "scale": 7.0
+      }
+    },
+    {
+      "case": "{\"high\": 5.0, \"kind\": \"triangular\", \"low\": -2.0, \"mode\": 1.0}",
+      "distribution": {
+        "kind": "triangular",
+        "low": -2.0,
+        "mode": 1.0,
+        "high": 5.0
+      },
+      "scipy_family": "triang",
+      "scipy_args": [
+        0.42857142857142855
+      ],
+      "scipy_keywords": {
+        "loc": -2.0,
+        "scale": 7.0
+      }
+    },
+    {
+      "case": "{\"high\": 5.0, \"kind\": \"beta_pert\", \"low\": -2.0, \"mode\": 1.0, \"weight\": 4.0}",
+      "distribution": {
+        "kind": "beta_pert",
+        "low": -2.0,
+        "mode": 1.0,
+        "high": 5.0,
+        "weight": 4.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        2.7142857142857144,
+        3.2857142857142856
+      ],
+      "scipy_keywords": {
+        "loc": -2.0,
+        "scale": 7.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"rayleigh\", \"scale\": 2.0}",
+      "distribution": {
+        "kind": "rayleigh",
+        "scale": 2.0
+      },
+      "scipy_family": "rayleigh",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"levy\", \"location\": 1.0, \"scale\": 2.0}",
+      "distribution": {
+        "kind": "levy",
+        "location": 1.0,
+        "scale": 2.0
+      },
+      "scipy_family": "levy",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "loc": 1.0,
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"high\": 100.0, \"kind\": \"reciprocal\", \"low\": 0.1}",
+      "distribution": {
+        "kind": "reciprocal",
+        "low": 0.1,
+        "high": 100.0
+      },
+      "scipy_family": "reciprocal",
+      "scipy_args": [
+        0.1,
+        100.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"exponential\", \"rate\": 0.5}",
+      "distribution": {
+        "kind": "exponential",
+        "rate": 0.5
+      },
+      "scipy_family": "expon",
+      "scipy_args": [],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"erlang\", \"scale\": 2.0, \"shape\": 7}",
+      "distribution": {
+        "kind": "erlang",
+        "shape": 7,
+        "scale": 2.0
+      },
+      "scipy_family": "gamma",
+      "scipy_args": [
+        7
+      ],
+      "scipy_keywords": {
+        "scale": 2.0
+      }
+    },
+    {
+      "case": "{\"kind\": \"bernoulli\", \"probability\": 0.01}",
+      "distribution": {
+        "kind": "bernoulli",
+        "probability": 0.01
+      },
+      "scipy_family": "bernoulli",
+      "scipy_args": [
+        0.01
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"geometric\", \"probability\": 0.01}",
+      "distribution": {
+        "kind": "geometric",
+        "probability": 0.01
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        1,
+        0.01
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"negative_binomial\", \"probability\": 0.01, \"successes\": 5}",
+      "distribution": {
+        "kind": "negative_binomial",
+        "successes": 5,
+        "probability": 0.01
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        5,
+        0.01
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"binomial\", \"probability\": 0.01, \"trials\": 100}",
+      "distribution": {
+        "kind": "binomial",
+        "trials": 100,
+        "probability": 0.01
+      },
+      "scipy_family": "binom",
+      "scipy_args": [
+        100,
+        0.01
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"logarithmic\", \"probability\": 0.01}",
+      "distribution": {
+        "kind": "logarithmic",
+        "probability": 0.01
+      },
+      "scipy_family": "logser",
+      "scipy_args": [
+        0.01
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"bernoulli\", \"probability\": 0.3}",
+      "distribution": {
+        "kind": "bernoulli",
+        "probability": 0.3
+      },
+      "scipy_family": "bernoulli",
+      "scipy_args": [
+        0.3
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"geometric\", \"probability\": 0.3}",
+      "distribution": {
+        "kind": "geometric",
+        "probability": 0.3
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        1,
+        0.3
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"negative_binomial\", \"probability\": 0.3, \"successes\": 5}",
+      "distribution": {
+        "kind": "negative_binomial",
+        "successes": 5,
+        "probability": 0.3
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        5,
+        0.3
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"binomial\", \"probability\": 0.3, \"trials\": 100}",
+      "distribution": {
+        "kind": "binomial",
+        "trials": 100,
+        "probability": 0.3
+      },
+      "scipy_family": "binom",
+      "scipy_args": [
+        100,
+        0.3
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"logarithmic\", \"probability\": 0.3}",
+      "distribution": {
+        "kind": "logarithmic",
+        "probability": 0.3
+      },
+      "scipy_family": "logser",
+      "scipy_args": [
+        0.3
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"bernoulli\", \"probability\": 0.99}",
+      "distribution": {
+        "kind": "bernoulli",
+        "probability": 0.99
+      },
+      "scipy_family": "bernoulli",
+      "scipy_args": [
+        0.99
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"geometric\", \"probability\": 0.99}",
+      "distribution": {
+        "kind": "geometric",
+        "probability": 0.99
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        1,
+        0.99
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"negative_binomial\", \"probability\": 0.99, \"successes\": 5}",
+      "distribution": {
+        "kind": "negative_binomial",
+        "successes": 5,
+        "probability": 0.99
+      },
+      "scipy_family": "nbinom",
+      "scipy_args": [
+        5,
+        0.99
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"binomial\", \"probability\": 0.99, \"trials\": 100}",
+      "distribution": {
+        "kind": "binomial",
+        "trials": 100,
+        "probability": 0.99
+      },
+      "scipy_family": "binom",
+      "scipy_args": [
+        100,
+        0.99
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"logarithmic\", \"probability\": 0.99}",
+      "distribution": {
+        "kind": "logarithmic",
+        "probability": 0.99
+      },
+      "scipy_family": "logser",
+      "scipy_args": [
+        0.99
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"poisson\", \"rate\": 0.001}",
+      "distribution": {
+        "kind": "poisson",
+        "rate": 0.001
+      },
+      "scipy_family": "poisson",
+      "scipy_args": [
+        0.001
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"poisson\", \"rate\": 10.0}",
+      "distribution": {
+        "kind": "poisson",
+        "rate": 10.0
+      },
+      "scipy_family": "poisson",
+      "scipy_args": [
+        10.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"kind\": \"poisson\", \"rate\": 512.0}",
+      "distribution": {
+        "kind": "poisson",
+        "rate": 512.0
+      },
+      "scipy_family": "poisson",
+      "scipy_args": [
+        512.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"high\": 7, \"kind\": \"discrete_uniform\", \"low\": -3}",
+      "distribution": {
+        "kind": "discrete_uniform",
+        "low": -3,
+        "high": 7
+      },
+      "scipy_family": "randint",
+      "scipy_args": [
+        -3,
+        8
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"draws\": 25, \"kind\": \"hypergeometric\", \"population\": 1000, \"successes\": 300}",
+      "distribution": {
+        "kind": "hypergeometric",
+        "population": 1000,
+        "successes": 300,
+        "draws": 25
+      },
+      "scipy_family": "hypergeom",
+      "scipy_args": [
+        1000,
+        300,
+        25
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "empirical repeated knots",
+      "distribution": {
+        "kind": "empirical",
+        "values": [
+          1.0,
+          2.0,
+          2.0,
+          4.0
+        ]
+      },
+      "scipy_family": "empirical_reference",
+      "scipy_args": [],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "categorical reordered values",
+      "distribution": {
+        "kind": "categorical",
+        "values": [
+          4.0,
+          1.0,
+          2.0
+        ],
+        "weights": [
+          1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "scipy_family": "categorical_reference",
+      "scipy_args": [],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 1.0, \"beta\": 2.0, \"kind\": \"kumaraswamy\"}",
+      "distribution": {
+        "kind": "kumaraswamy",
+        "alpha": 1.0,
+        "beta": 2.0
+      },
+      "scipy_family": "beta",
+      "scipy_args": [
+        1.0,
+        2.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"alpha\": 2.0, \"beta\": 1.0, \"kind\": \"kumaraswamy\"}",
+      "distribution": {
+        "kind": "kumaraswamy",
+        "alpha": 2.0,
+        "beta": 1.0
+      },
+      "scipy_family": "powerlaw",
+      "scipy_args": [
+        2.0
+      ],
+      "scipy_keywords": {}
+    },
+    {
+      "case": "{\"high\": 4.0, \"kind\": \"double_triangular\", \"left_probability\": 0.25, \"low\": 0.0, \"mode\": 1.0}",
+      "distribution": {
+        "kind": "double_triangular",
+        "low": 0.0,
+        "mode": 1.0,
+        "high": 4.0,
+        "left_probability": 0.25
+      },
+      "scipy_family": "triang",
+      "scipy_args": [
+        0.25
+      ],
+      "scipy_keywords": {
+        "loc": 0.0,
+        "scale": 4.0
+      }
+    }
+  ],
+  "oracle_warnings": [
+    {
+      "case": "{\"kind\": \"inverse_gaussian\", \"mean\": 2.0, \"shape\": 0.01}",
+      "p": 0.9999999999,
+      "categories": [
+        "RuntimeWarning"
+      ],
+      "note": "Oracle emitted a convergence/numerical warning; this quantile is excluded rather than treated as authoritative."
+    }
+  ],
+  "counts": {
+    "distributions": 150,
+    "quantiles": 1349,
+    "cdfs": 1361,
+    "logdensities": 1361,
+    "explicit_range_errors": 0,
+    "oracle_endpoint_or_unavailable_quantiles": 1,
+    "transport_float_changes": 0
+  },
+  "max_errors": {
+    "quantile_relative": 3.771408747484251e-08,
+    "quantile_zero_absolute": 0.0,
+    "cdf_absolute": 6.859614753995658e-08,
+    "logdensity_absolute": 1.6198598018490884e-11
+  },
+  "failure_count": 0,
+  "failures": [],
+  "source_stable": true,
+  "source_sha256": {
+    "crates\\math\\src\\catalog.rs": "3ec3ceead7c20f034ccda34bad9e2b64bbb13a54ceb14c692025a605cce6f9aa",
+    "crates\\math\\src\\copula.rs": "e6c5007c7c59c16a3ddc771db3f19a138e539e0d84abad66f956f32049eaae6f",
+    "crates\\math\\src\\density.rs": "f584ea14c75a6396ab5c4bf4b10199675442866f5dc710ccaf6d713b4c8ca2d5",
+    "crates\\math\\src\\distributions.rs": "ce69d57ec079de5e7ffb7dcc74cf7745c57088ee5a826745a036a4f3b703ec7e",
+    "crates\\math\\src\\elicitation.rs": "1246c4da3da5fda5a1042ba60c0dbee4609468532d740646a9181f74e80b8723",
+    "crates\\math\\src\\extended.rs": "e33de1a16358e18c9944ca3eb40939317f0e0e7e0fc36a8503fc0b9189995091",
+    "crates\\math\\src\\johnson_moments.rs": "856dc3907a5eb87a381e31c808e38ef764604962aa1ef642c0c3070cb91a47f2",
+    "crates\\math\\src\\lib.rs": "bdd01d780b4a708cab3504fe41996669bdda3a2fcc183a2ac2063100331ee543",
+    "crates\\math\\src\\metalog.rs": "cef36999f015fda3e687f73ba181d02c8d2dc4ba31b4f12f2fdc4750da7e20d0",
+    "crates\\math\\src\\nominal.rs": "100670b4b90d6267cbdd00888cd1ad4344238299f9190f9eb81997f990f99cba",
+    "crates\\math\\src\\parameterization.rs": "0ced4c2f59e202e3008633bf158e57c9c2700b6295fab99147c62f41390b1c9d",
+    "crates\\math\\src\\psi_aliases.rs": "9d22f7852493e31171e70753641c8f003db8feb0a56ea7a54c5dae77c4af92f2",
+    "crates\\math\\src\\random.rs": "5c36168623289905351fa7b81245aa44c95eca4274f4ae7ec7ca8c1d514d8281",
+    "crates\\math\\src\\reference_families.rs": "66d29a353a3ddfde5fb595a1c71d2f2c427d1657dfb0c9a8b5f1000c0860c3b7",
+    "crates\\math\\src\\risk.rs": "d07498b43dff94f59b46cb6cda78407491ae42a7185c6c613a2ed939c4313ff9",
+    "crates\\math\\src\\sobol.rs": "6edde9f11cc590195dec3ac45e139d80b9038ae0a2f2ead6436c744a0157c41b",
+    "crates\\math\\src\\sobol_directions.rs": "ffb1aff18784253d56038ecd60b03bd18d3e4d9bc932fb1513c80ef8e906fb55",
+    "crates\\math\\src\\special.rs": "4b3d7c44e102b2139c272842c98635d039d6be48d343c4116fc6865ae3224306",
+    "crates\\types\\src\\lib.rs": "05ce67dda722a315bc7e39a1904fa82451e2175d1dc782aee6e76cb22d40ee2d"
+  },
+  "source_after_sha256": {
+    "crates\\math\\src\\catalog.rs": "3ec3ceead7c20f034ccda34bad9e2b64bbb13a54ceb14c692025a605cce6f9aa",
+    "crates\\math\\src\\copula.rs": "e6c5007c7c59c16a3ddc771db3f19a138e539e0d84abad66f956f32049eaae6f",
+    "crates\\math\\src\\density.rs": "f584ea14c75a6396ab5c4bf4b10199675442866f5dc710ccaf6d713b4c8ca2d5",
+    "crates\\math\\src\\distributions.rs": "ce69d57ec079de5e7ffb7dcc74cf7745c57088ee5a826745a036a4f3b703ec7e",
+    "crates\\math\\src\\elicitation.rs": "1246c4da3da5fda5a1042ba60c0dbee4609468532d740646a9181f74e80b8723",
+    "crates\\math\\src\\extended.rs": "e33de1a16358e18c9944ca3eb40939317f0e0e7e0fc36a8503fc0b9189995091",
+    "crates\\math\\src\\johnson_moments.rs": "856dc3907a5eb87a381e31c808e38ef764604962aa1ef642c0c3070cb91a47f2",
+    "crates\\math\\src\\lib.rs": "bdd01d780b4a708cab3504fe41996669bdda3a2fcc183a2ac2063100331ee543",
+    "crates\\math\\src\\metalog.rs": "cef36999f015fda3e687f73ba181d02c8d2dc4ba31b4f12f2fdc4750da7e20d0",
+    "crates\\math\\src\\nominal.rs": "100670b4b90d6267cbdd00888cd1ad4344238299f9190f9eb81997f990f99cba",
+    "crates\\math\\src\\parameterization.rs": "0ced4c2f59e202e3008633bf158e57c9c2700b6295fab99147c62f41390b1c9d",
+    "crates\\math\\src\\psi_aliases.rs": "9d22f7852493e31171e70753641c8f003db8feb0a56ea7a54c5dae77c4af92f2",
+    "crates\\math\\src\\random.rs": "5c36168623289905351fa7b81245aa44c95eca4274f4ae7ec7ca8c1d514d8281",
+    "crates\\math\\src\\reference_families.rs": "66d29a353a3ddfde5fb595a1c71d2f2c427d1657dfb0c9a8b5f1000c0860c3b7",
+    "crates\\math\\src\\risk.rs": "d07498b43dff94f59b46cb6cda78407491ae42a7185c6c613a2ed939c4313ff9",
+    "crates\\math\\src\\sobol.rs": "6edde9f11cc590195dec3ac45e139d80b9038ae0a2f2ead6436c744a0157c41b",
+    "crates\\math\\src\\sobol_directions.rs": "ffb1aff18784253d56038ecd60b03bd18d3e4d9bc932fb1513c80ef8e906fb55",
+    "crates\\math\\src\\special.rs": "4b3d7c44e102b2139c272842c98635d039d6be48d343c4116fc6865ae3224306",
+    "crates\\types\\src\\lib.rs": "05ce67dda722a315bc7e39a1904fa82451e2175d1dc782aee6e76cb22d40ee2d"
+  },
+  "harness_sha256": "da56cb1f2c47320aba4954cd9d2a51439c0c90a267f006bedfb9edb33052b6e2"
+}

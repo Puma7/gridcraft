@@ -1,0 +1,51 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/browser-smoke-final6-report.json",
+  "full_local_report_sha256": "e4747c7f09bef9b2a1055136911252183ff648055683e7019ca3e513b9b987ef",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "actual_browser": true,
+  "exit_code": 0,
+  "elapsed_seconds": 10.13638570002513,
+  "test_wasm_sha256": "04fc8ae082ac1b48e11011d45ccdb19d2e4547a8694f6a5dd426d7aec30c4eab",
+  "results": {
+    "passed": 13,
+    "failed": 0,
+    "ignored": 0,
+    "test_summary_targets": 1,
+    "exit_code": 0
+  },
+  "test_results": [
+    "test browser_solves_wyndor_and_validates_original_constraints ... ok",
+    "test browser_solves_a_coupled_convex_quadratic_with_original_residuals ... ok",
+    "test browser_samples_deterministically_with_loss_tail_statistics ... ok",
+    "test browser_rejects_native_thread_jobs_without_panicking ... ok",
+    "test browser_randomized_sobol_integrates_a_smooth_product ... ok",
+    "test browser_optimizes_finite_scenario_tail_risk ... ok",
+    "test browser_nonlinear_method_reports_stationarity_separately_from_global_optimality ... ok",
+    "test browser_latin_hypercube_preserves_all_strata ... ok",
+    "test browser_honors_binary_domains ... ok",
+    "test browser_handles_large_seed_json_without_javascript_precision_loss ... ok",
+    "test browser_executes_clarabel_socp_with_a_cauchy_schwarz_oracle ... ok",
+    "test browser_constrained_nonlinear_rechecks_the_original_exponential_inequality ... ok",
+    "test browser_autodiff_rejects_a_nondifferentiable_point ... ok"
+  ],
+  "parsed_public_test_result_lines": 13
+}

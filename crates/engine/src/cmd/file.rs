@@ -7,7 +7,7 @@ use crate::DocState;
 
 pub fn specs() -> Vec<CommandSpec> {
     vec![
-        cmd!(noundo "file.new", "New Workbook", ["File"], Some("Cmd+N"), "{sample?: \"budget\"|\"sales\"|\"grades\"}", always, new_workbook),
+        cmd!(noundo "file.new", "New Workbook", ["File"], Some("Cmd+N"), "{sample?: \"budget\"|\"sales\"|\"grades\"|\"cold-storage-microgrid\"}", always, new_workbook),
         cmd!(noundo "file.open", "Open…", ["File"], Some("Cmd+O"), "{path} | {name, base64}, plus {password} for a password-protected workbook and {csvAsText?: bool} to keep every csv/tsv/txt field as text, with no number or date conversion (xlsx, xlsm, xls import, xlsb and ods data import, csv, tsv, txt, json)", always, open),
         cmd!(noundo "file.save", "Save", ["File"], Some("Cmd+S"), "{path?} (xlsx by default; .csv/.tsv/.json/.html/.pdf by extension)", has_doc, save),
         cmd!(noundo "file.saveAs", "Save As…", ["File"], Some("Cmd+Shift+S"), "{path} (.xlsx, .csv, .tsv, .json, .html, or .pdf: a PDF of the active sheet)", has_doc, save_as),
@@ -33,6 +33,10 @@ pub fn specs() -> Vec<CommandSpec> {
 
 fn new_workbook(s: &mut Session, p: &Json) -> Result<Json> {
     let i = match str_param(p, "sample") {
+        Some("cold-storage-microgrid") => {
+            let bytes = include_bytes!("../../../../solvercraft/examples/cold-storage-microgrid.xlsx");
+            return open(s, &json!({"name": "Cold Storage Microgrid.xlsx", "base64": crate::io::base64_encode(bytes)}));
+        }
         Some(name) => {
             let wb = crate::sample::build(name).ok_or_else(|| bad("file.new", format!("unknown sample `{name}`")))?;
             let title = crate::sample::title(name);

@@ -1,6 +1,6 @@
 # Architecture
 
-> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-25 · **Change:** trivial (the hidden names that hold macros; earlier: macro engine on the engine building blocks) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-11-02 · **Change:** minor (Solvercraft local app, shared SDK and on-demand stdio MCP) · **Target:** Microsoft Excel (Microsoft 365)
 
 How GridCraft is built today. Rules for contributors are in [`AGENTS.md`](../AGENTS.md).
 
@@ -25,7 +25,15 @@ including tests, 2026-10-10.
 | L6 | `ui-egui` | ~11.6k | Excel-style UI (title bar, QAT, ribbon, formula bar, virtualised grid, editor, tabs, status bar, dialogs, task panes, chart view) and the control channel |
 | L6 | `mcp` | ~1.4k | MCP server over stdio (hand-written JSON-RPC), headless or bridged to a running app |
 | L7 | `apps/gridcraft`, `apps/gridcraft-cli`, `apps/gridcraft-web` | ~2.2k | Desktop (eframe/wgpu), CLI (`info`, `convert`, `eval`, `cat`, `run`, `commands`, `functions`, `mcp`, `send`), web (WASM via trunk) |
+| L7 | `apps/solvercraft-app` | — | Dedicated Solvercraft workbook workbench over the existing L5 commands/L6 frontend; no listener or Gridcraft updater |
+| L7 | `solvercraft/crates/cli`, `solvercraft/crates/mcp` | — | Independent JSON CLI and on-demand stdio MCP for the L4 Solvercraft SDK; no workbook or hosted service required |
 | — | `xtask` | — | `ci`, `parity`, `assets`, `layers`, `wasm`, `version`, `stats` |
+
+The nested Solvercraft workspace remains independently buildable. Its portable
+models bind arbitrary host object/property IDs, so another ArtCraft application
+can consume the shared SDK without importing this workbook UI. External agents
+can launch `solvercraft-mcp` and own the process lifetime; no central daemon is
+introduced. See the [integration contracts](../solvercraft/docs/implementation/artcraft-integration.md).
 
 ## Data flow
 
@@ -155,10 +163,15 @@ rpm, tarball), FreeBSD, and web (WASM; WebGPU or WebGL2). Release workflows in
 - XLSX reader builds the whole workbook in memory; no streaming (#175).
 - Unmodelled XLSX parts are not carried through a save.
 
+## Solvercraft alpha integration
+
+Solvercraft now has an async right task pane beside the existing Solver, native worker jobs and Rust Web Workers, immutable previews with explicit revision-guarded atomic apply/undo, a bounded multi-model registry in its own XLSX part/relationship, SC/Psi worksheet integration, parameter comparisons and checked LP reports. Simulation runs a bounded topological cell program through Gridcraft's actual value evaluator, preserving spreadsheet operation order and coercion; optimization retains its separate structural mathematical compiler and actual-Calc candidate guards. Native host/UI and generated-worker Chrome evidence are recorded separately in the [implementation report](../solvercraft/docs/implementation/gridcraft.md). This remains alpha scope, with explicit formula/import limits and no claim of complete legacy PSI or Excel parity.
+
 ## Revision history
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-31 | minor | Document Solvercraft native/browser async integration, owned XLSX model persistence, ordered Calc simulation and bounded evidence |
 | 2026-10-25 | trivial | The hidden names that hold macros are `_gc_macro_<n>_<k>` |
 | 2026-10-24 | minor | Macro engine on the building blocks (`macros/`, `cmd/macros.rs`) |
 | 2026-10-24 | minor | Engine building blocks for multi-command actions: undo groups, recording buffer, document trust, chunked hidden-name storage |

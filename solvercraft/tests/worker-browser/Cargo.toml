@@ -1,0 +1,23 @@
+[package]
+name = "solvercraft-worker-browser-tests"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[workspace]
+
+[dependencies]
+gridcraft-engine = { path = "../../../crates/engine" }
+serde_json = "1.0"
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "=0.3.80"
+wasm-bindgen = "=0.2.130"
+wasm-bindgen-futures = "=0.4.80"
+js-sys = "=0.3.107"
+web-sys = { version = "=0.3.107", features = ["Window", "Document", "Element", "HtmlElement", "HtmlIFrameElement", "CssStyleDeclaration"] }
+
+[lints.rust]
+unsafe_code = "forbid"

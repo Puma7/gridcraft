@@ -6,7 +6,24 @@ use std::sync::Arc;
 
 impl<'h> Evaluator<'h> {
     pub(super) fn call(&mut self, name: &str, args: &[Expr]) -> Ev {
+        let statistic = match name.split_once('.') {
+            Some((prefix, function)) if prefix.eq_ignore_ascii_case("_xll") || prefix.eq_ignore_ascii_case("_xludf") => function,
+            _ => name,
+        };
+        if ["PSIMEAN", "PSITARGET", "PSIMIN", "PSIMAX", "PSIRANGE", "PSIVARIANCE", "PSISTDDEV"]
+            .iter()
+            .any(|name| statistic.eq_ignore_ascii_case(name))
+        {
+            let Some((formula, value)) = self.host.workbook().simulation_statistics.get(&(self.sheet, self.at)) else { return err(CellError::NA) };
+            return if *formula == gridcraft_formula::print(&Expr::Call(name.into(), args.to_vec())) {
+                Ev::V(Value::number(*value))
+            } else {
+                err(CellError::NA)
+            };
+        }
         match name {
+            "SC.OUTPUT" | "SC.MEAN" | "SC.QUANTILE" | "SC.CVAR" => self.solvercraft(name, args),
+            name if super::solvercraft::distribution_arity(name).is_some() => self.solvercraft(name, args),
             "IF" => self.if_call(args),
             "IFS" => {
                 if args.len() < 2 || !args.len().is_multiple_of(2) {

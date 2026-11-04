@@ -1,0 +1,16 @@
+{
+  "schema": "solvercraft.public-field-check.v1",
+  "diagnostic_json_files_checked": 25,
+  "forbidden_diagnostic_field_names_present": false,
+  "all_numbers_finite": true,
+  "source_inputs_unchanged": 791,
+  "node_control_model_matches_case_0": true,
+  "binary_v2_minimum_objective": -500,
+  "public_json_bytes": 156332,
+  "hardware_dimensions_identical_to_existing_publication": true,
+  "source_manifest_reconstructs_from_published_baseline_and_five_changes": true,
+  "baseline_commit": "2d6604429e1101cd30f1140263af212a26bbc607",
+  "public_canonical_manifest_json_sha256": "8274a38d3d985cf803be1821e70e9dea3b4bc25f8fd4be019dc7a331d1126fd8",
+  "canonicalization": "Normalize CRLF only for UTF8 text; binary asset bytes unchanged.",
+  "diagnostic_fields_policy": "Fixed projections only; no arbitrary command/environment/driver/session/manifest/stdout/stderr fields."
+}

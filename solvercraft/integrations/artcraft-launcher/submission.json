@@ -1,0 +1,137 @@
+{
+  "schema": "solvercraft.artcraft-launcher-submission.v1",
+  "status": "requires-upstream-maintainer-decision",
+  "upstream_repository": "storytold/craft-launcher",
+  "upstream_revision": "ec205366ebe42635e155b9ab246f036052fef406",
+  "source_repository": "Puma7/gridcraft",
+  "app_id": "solvercraft",
+  "app_name": "Solvercraft",
+  "publisher": "Puma7",
+  "bundle_id": "io.github.puma7.solvercraft",
+  "release_version": "0.14.2",
+  "release_tag": "v0.14.2",
+  "release_availability": "not-asserted",
+  "windows_asset": "solvercraft-0.14.2-windows-x64-portable.zip",
+  "windows_executable": "solvercraft.exe",
+  "linux_asset_contract_only": "solvercraft-0.14.2-linux-x86_64.tar.gz",
+  "linux_executable_contract_only": "bin/solvercraft",
+  "mac_installer_enabled": false,
+  "patch_sha256": "22071f9262bd6ff56be9709dd5bfc3400e3d7a35f9aa246466ff3a8de4de8b96",
+  "icon_sha256": "1c67bc2e3f4b83755a1688e107b2861587782740ea617b01c8489166864e1019",
+  "base_files": [
+    {
+      "path": "ATTRIBUTION.md",
+      "sha": "a28ced82934b010f553ee9a14f138a6b7dee3850"
+    },
+    {
+      "path": "crates/core/src/catalog.rs",
+      "sha": "4eb488c4915d9e7e7097e0e65cb548224de7a506"
+    },
+    {
+      "path": "crates/core/src/details.rs",
+      "sha": "9c6ab9b95213aad44a6e804bc85f0bb537aef53e"
+    },
+    {
+      "path": "crates/native/src/desktop_entry.rs",
+      "sha": "3860dea393af901332d33467bce89a06044affce"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/cs.tsv",
+      "sha": "ea025c76e87a7e23ac7b775defde1dd23ab8e93f"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/de.tsv",
+      "sha": "a85b25d96750fe6883b1c4650af1bb6e0d569c93"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/es.tsv",
+      "sha": "b62963cc118fd2cd43fe9586466c0d0b2a4102c6"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/fr.tsv",
+      "sha": "1e96cdf949e52357cddf4d237f30214ef39b6405"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/hu.tsv",
+      "sha": "a7ffc9543138edb303e97d8a6d0e3e760fc013ef"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/ja.tsv",
+      "sha": "1b23770382facd109df56797469d14349e11a793"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/pl.tsv",
+      "sha": "7ba59890f37969c9b0b283d9bbaf9d2bf66b27da"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/pt-BR.tsv",
+      "sha": "ecf37d566cee3e841e0dfd2f0696da49861369d6"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/ru.tsv",
+      "sha": "948dc3774a582226c72a8cec2e6c58c2fd40b839"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/zh-CN.tsv",
+      "sha": "f117f5f5836c957da92bb2b537b690909fcee322"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "crates/core/src/catalog.rs",
+      "git_blob": "539bd4994ec059ab272ed4f36ccf1a77af47423d"
+    },
+    {
+      "path": "crates/core/src/details.rs",
+      "git_blob": "e57c8373b305d4f024339ae088cc2b07d0744353"
+    },
+    {
+      "path": "crates/native/src/desktop_entry.rs",
+      "git_blob": "fbe5a71bdacb80b4a63f594ccd1044d8fb6c7917"
+    },
+    {
+      "path": "ATTRIBUTION.md",
+      "git_blob": "c8a93287d24a188ed18f5a74ab4f61ea1300b854"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/cs.tsv",
+      "git_blob": "0f0246f70c948e7a3f764baf399764e553469d5f"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/de.tsv",
+      "git_blob": "9b1d7767002f662600fd1dea489d59709fc69493"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/es.tsv",
+      "git_blob": "b979989fb647926f00409ca6f2ce4012902b1a78"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/fr.tsv",
+      "git_blob": "e53b5f8966b843df171fd1e6b6139d0a0ea75b4e"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/hu.tsv",
+      "git_blob": "87ec99360e620bdae83c404b5b695dd4fced90bb"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/ja.tsv",
+      "git_blob": "03141934b637be48a21c140e10c701d9bd0feec8"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/pl.tsv",
+      "git_blob": "32f56dbb5196f7db8486dbf9c5b3d498faf69aea"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/pt-BR.tsv",
+      "git_blob": "568fd3d91a4a925c9b00898f77b49219691a5fa1"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/ru.tsv",
+      "git_blob": "4e74a3eb5b7f4c3f25cff40633600135c471939b"
+    },
+    {
+      "path": "crates/ui-egui/src/i18n/zh-CN.tsv",
+      "git_blob": "94f66524ab95265cbabfb9b49bb7e4b18944d379"
+    }
+  ]
+}

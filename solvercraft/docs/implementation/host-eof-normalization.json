@@ -1,0 +1,71 @@
+{
+  "source_commit": "95f7b46ff94fe833b2f3356db58dc6754916f43c",
+  "normalized_files": [
+    {
+      "path": "crates/core/src/addr.rs",
+      "before_sha256": "cd9f9b96cb1cfebb9f59b96e99b75c2bf11e4ab108eb745637f87d7e52e99953",
+      "after_sha256": "8b30c2502345307f8f3abd117271e2ab9e90bb0900a9fb00639fd653d628b384",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/engine/src/cmd/solver.rs",
+      "before_sha256": "4639a9ec3b40743cdda8ca03142af3feb8a2d8081c5e7fa3f0283cf330faf6a1",
+      "after_sha256": "eea3a759affce28f1fb22228a57f20738a9331be9f2284eb5c04ddc8aecf00c3",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/engine/src/cmd/solver/lp.rs",
+      "before_sha256": "ebe0364bbf1f0980752f547bbcbafd8f61d485b86aaf9bc0d81ec3dc7e332ffe",
+      "after_sha256": "c842ededbb023db3c4370ebabb7088e0803f1427e4a032b491ef7afff18bc025",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/engine/src/cmd/solver/model.rs",
+      "before_sha256": "25a2c287c17adf09b0377d35fbe75479d7f19a3da196d0f9e666916699599570",
+      "after_sha256": "5be423562ca4c81b1e6098eaf18569741eff59a5ef14bea1f9d46822eebac116",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/engine/src/cmd/solver/nlp.rs",
+      "before_sha256": "9355887424c183a3513a7c83747d6bdce11254cd69224aad134dfb1a19caf86c",
+      "after_sha256": "60b3079c843ced4d935b2936e23ab1aaf06d2d25ad0f80fc00d566b3a11b945f",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/engine/src/cmd/solver/problem.rs",
+      "before_sha256": "8cfc4ba2e3a14fa33169ee172836a89e33d0aba6c95bf88db02611974d586375",
+      "after_sha256": "a5d98a4d8fe29824fc6f64cc15ae391a59988eb4e91f8f293b29c9447ce5dea8",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/formula/src/ast.rs",
+      "before_sha256": "ea35ba220164a9289cb2f3e686e505c2c1977fd92f9e9be9863a95a96b372c2d",
+      "after_sha256": "f322eb009ddeec665c6c7ad46683e80ec7d21819935fed24a50e01e4afbdb954",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/formula/src/lib.rs",
+      "before_sha256": "1fe18eb88434286edbc6e73713b4f8e80e86ca78bb299473466036f0ebb89bc2",
+      "after_sha256": "ed2db7cb4809ef5412547f6e251c64ae9b8df0fcc922883117b9f2339590c8a6",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/model/src/cell.rs",
+      "before_sha256": "703dbe0c08b2161d43519d8c7b1db684f7f1f1541d1691da94f531abfee0e998",
+      "after_sha256": "e2b855ad1c17f068562f6a04b3bcb774d1182866bccc60bf16c0482982e0b27d",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/model/src/sheet.rs",
+      "before_sha256": "a0a1cfb2c5f3bf3d13a00eaa5befd7bc6107ec914383bb27fecbcf93e96418b7",
+      "after_sha256": "80e30fe8bbcdff5988ccefabfd3e293a520ea67ce4b37ce3bdd6df8352055ea3",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    },
+    {
+      "path": "crates/model/src/workbook.rs",
+      "before_sha256": "607642a773b32b28a512259e7a363e55816a71161c9f7d95184bee10219a6b20",
+      "after_sha256": "3e06d5fa74873ba2002f35a7477076e253835c65b01e50f2cdd91956d4fffabd",
+      "change": "Only EOF whitespace; restore exact pinned source bytes"
+    }
+  ]
+}

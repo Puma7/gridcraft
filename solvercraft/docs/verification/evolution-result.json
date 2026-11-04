@@ -1,0 +1,40 @@
+{
+  "model": "Nonsmooth bounded search",
+  "options": {
+    "feasibility_tolerance": 1e-07,
+    "integrality_tolerance": 1e-07,
+    "max_evaluations": 20000,
+    "max_iterations": 100000,
+    "max_memory_bytes": 268435456,
+    "max_nodes": 10000,
+    "method": "differential_evolution",
+    "optimality_tolerance": 1e-08,
+    "relative_gap": 0.0,
+    "seed": "42"
+  },
+  "result": {
+    "best_bound": null,
+    "engine": "solvercraft-differential-evolution-v1",
+    "feasibility": "feasible",
+    "max_violation": 0.0,
+    "objective": 3.439470930288735e-12,
+    "optimality": "best_found",
+    "relative_gap": null,
+    "statistics": {
+      "evaluations": 3145,
+      "iterations": 130,
+      "nodes": 0
+    },
+    "termination": "completed",
+    "values": [
+      2.999999999996823,
+      -2.0000000000002625
+    ],
+    "warnings": [
+      "Heuristic search supplies no optimality or infeasibility certificate.",
+      "Search stopped after 50 generations without significant improvement; this is not an optimality test."
+    ]
+  },
+  "schema_version": 1,
+  "version": "0.1.0"
+}

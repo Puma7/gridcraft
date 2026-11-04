@@ -1,0 +1,40 @@
+{
+  "model": {
+    "name": "Smooth exponential optimum",
+    "variables": [
+      {
+        "name": "x",
+        "lower": -2,
+        "upper": 2,
+        "kind": "continuous"
+      }
+    ],
+    "direction": "minimize",
+    "objective": {
+      "op": "power",
+      "base": {
+        "op": "subtract",
+        "left": {
+          "op": "exp",
+          "value": {
+            "op": "variable",
+            "index": 0
+          }
+        },
+        "right": {
+          "op": "constant",
+          "value": 2
+        }
+      },
+      "exponent": 2
+    },
+    "constraints": []
+  },
+  "options": {
+    "method": "projected_gradient",
+    "seed": "42"
+  },
+  "start": [
+    0
+  ]
+}

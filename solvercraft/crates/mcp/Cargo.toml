@@ -1,0 +1,18 @@
+[package]
+name = "solvercraft-mcp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "solvercraft-mcp"
+path = "src/main.rs"
+
+[dependencies]
+solvercraft = { path = "../solvercraft" }
+serde.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

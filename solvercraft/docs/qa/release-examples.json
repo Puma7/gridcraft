@@ -1,0 +1,212 @@
+{
+  "lp": {
+    "manifest": {
+      "schema_version": 1,
+      "solvercraft_version": "0.1.0",
+      "model_fingerprint": "017bc6e3b722663e",
+      "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+      "options": {
+        "method": "auto",
+        "max_evaluations": 100000,
+        "max_iterations": 100000,
+        "max_nodes": 10000,
+        "max_memory_bytes": 268435456,
+        "feasibility_tolerance": 1e-07,
+        "integrality_tolerance": 1e-07,
+        "optimality_tolerance": 1e-08,
+        "relative_gap": 0.0,
+        "seed": "0"
+      },
+      "platform": "x86_64-windows"
+    },
+    "result": {
+      "termination": "completed",
+      "feasibility": "feasible",
+      "optimality": "optimal",
+      "values": [
+        2.0,
+        6.0
+      ],
+      "objective": 36.0,
+      "best_bound": 36.0,
+      "relative_gap": 0.0,
+      "max_violation": 0.0,
+      "statistics": {
+        "evaluations": 1,
+        "iterations": 4,
+        "nodes": 0
+      },
+      "engine": "solvercraft-dense-simplex-0.1",
+      "warnings": [
+        "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+      ]
+    }
+  },
+  "simulation": {
+    "options": {
+      "max_memory_bytes": 33554432,
+      "method": "latin_hypercube",
+      "retain_samples": true,
+      "seed": "42",
+      "trials": 10000
+    },
+    "result": {
+      "completed_trials": 10000,
+      "samples": "10000 retained rows checked; omitted from report",
+      "sampling_version": "solvercraft-addressed-mix64-v2",
+      "summaries": [
+        {
+          "conditional_value_at_risk_95": 99.5654320596756,
+          "count": 10000,
+          "maximum": 116.52688315586578,
+          "mean": 73.33323972182993,
+          "minimum": 22.00731206862458,
+          "quantiles": [
+            [
+              0.05,
+              51.30518797593981
+            ],
+            [
+              0.25,
+              64.52941683139528
+            ],
+            [
+              0.5,
+              73.64318596766566
+            ],
+            [
+              0.75,
+              82.20761942336924
+            ],
+            [
+              0.95,
+              94.89576655078493
+            ]
+          ],
+          "value_at_risk_95": 94.89576655078493,
+          "variance": 173.34832944338478
+        }
+      ],
+      "termination": "completed",
+      "warnings": []
+    },
+    "schema_version": 1,
+    "version": "0.1.0"
+  },
+  "risk": {
+    "solve": {
+      "termination": "completed",
+      "feasibility": "feasible",
+      "optimality": "optimal",
+      "values": [
+        1.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "objective": 1.0,
+      "best_bound": 1.0,
+      "relative_gap": 0.0,
+      "max_violation": 0.0,
+      "statistics": {
+        "evaluations": 1,
+        "iterations": 4,
+        "nodes": 0
+      },
+      "engine": "solvercraft-dense-simplex-0.1",
+      "warnings": [
+        "Floating-point simplex uses documented feasibility and optimality tolerances; this is not an exact rational certificate."
+      ]
+    },
+    "decision_values": [
+      1.0
+    ],
+    "scenario_losses": [
+      1.0,
+      1.0
+    ],
+    "expected_loss": 1.0,
+    "cvar": 1.0,
+    "confidence": 0.5,
+    "validation_note": "Exact finite-scenario formulation; scenario performance is in-sample, not an out-of-sample probability guarantee."
+  },
+  "nonlinear": {
+    "model": "Smooth exponential optimum",
+    "options": {
+      "feasibility_tolerance": 1e-07,
+      "integrality_tolerance": 1e-07,
+      "max_evaluations": 100000,
+      "max_iterations": 100000,
+      "max_memory_bytes": 268435456,
+      "max_nodes": 10000,
+      "method": "projected_gradient",
+      "optimality_tolerance": 1e-08,
+      "relative_gap": 0.0,
+      "seed": "42"
+    },
+    "result": {
+      "best_bound": null,
+      "engine": "solvercraft-projected-gradient-ad",
+      "feasibility": "feasible",
+      "max_violation": 0.0,
+      "objective": 2.7640218831192376e-18,
+      "optimality": "stationary",
+      "relative_gap": null,
+      "statistics": {
+        "evaluations": 12,
+        "iterations": 9,
+        "nodes": 0
+      },
+      "termination": "completed",
+      "values": [
+        0.6931471797286779
+      ],
+      "warnings": [
+        "Original-unit projected-gradient infinity norm: 6.6501391005288965e-9.",
+        "Bound-constrained local search; stationarity is not an optimality guarantee."
+      ]
+    },
+    "schema_version": 1,
+    "version": "0.1.0"
+  },
+  "evolution": {
+    "model": "Nonsmooth bounded search",
+    "options": {
+      "feasibility_tolerance": 1e-07,
+      "integrality_tolerance": 1e-07,
+      "max_evaluations": 20000,
+      "max_iterations": 100000,
+      "max_memory_bytes": 268435456,
+      "max_nodes": 10000,
+      "method": "differential_evolution",
+      "optimality_tolerance": 1e-08,
+      "relative_gap": 0.0,
+      "seed": "42"
+    },
+    "result": {
+      "best_bound": null,
+      "engine": "solvercraft-differential-evolution-v1",
+      "feasibility": "feasible",
+      "max_violation": 0.0,
+      "objective": 5.169198402654729e-13,
+      "optimality": "best_found",
+      "relative_gap": null,
+      "statistics": {
+        "evaluations": 3145,
+        "iterations": 130,
+        "nodes": 0
+      },
+      "termination": "completed",
+      "values": [
+        2.999999999999751,
+        -2.000000000000268
+      ],
+      "warnings": [
+        "Heuristic search supplies no optimality or infeasibility certificate.",
+        "Search stopped after 50 generations without significant improvement; this is not an optimality test."
+      ]
+    },
+    "schema_version": 1,
+    "version": "0.1.0"
+  }
+}

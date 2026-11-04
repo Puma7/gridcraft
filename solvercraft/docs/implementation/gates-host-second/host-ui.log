@@ -1,0 +1,45 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-33yrrw6azndrh\s-hnq77rskbv-0w1zxog-working`
+
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_engines-0t02of9nhg7nl\s-hnq77rv8z1-14kj5v4-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-390x0hpilwrkq\s-hnq77s5fix-0o4kmky-working`
+
+warning: `solvercraft-math` (lib) generated 1 warning
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft-0omgn7gbqn50i\s-hnq77sx0zl-0ksdycv-working`
+
+warning: `solvercraft-engines` (lib) generated 1 warning
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_engine-3qgwqq3viwlzg\s-hnq77um0dh-0phodiw-working`
+
+   Compiling gridcraft-ui-egui v0.14.2 ($CHECKOUT_ROOT\crates\ui-egui)
+warning: `solvercraft` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_ui_egui-06i5xfgm1bag3\s-hnq7804k3j-1adk2n9-working`
+
+warning: `gridcraft-ui-egui` (lib) generated 1 warning
+warning: `gridcraft-engine` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_acceptance-2djsha6exo74r\s-hnq78j42zg-0jqkhmd-working`
+
+warning: `gridcraft-ui-egui` (test "solvercraft_acceptance") generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 50.33s
+     Running tests\solvercraft_acceptance.rs ($BUILD_OUTPUT\host-validation\debug\deps\solvercraft_acceptance-02cff7c4772d03df.exe)
+
+running 3 tests
+test ribbon_opens_the_real_pane_after_solver ... ok
+test pane_command_honors_visibility_and_german_controls ... ok
+test pane_preview_requires_apply_and_reverts_in_one_undo_step ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+

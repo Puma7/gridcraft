@@ -2,7 +2,7 @@
 
 **Stage: alpha** · next: beta, ~25 points of "ready for real work" and ~160–240 h away
 
-> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-25 · **Change:** minor (AutoSum over a selected row puts its total to the right, and fills a selection's empty last row and column; earlier: macro engine and `macro.*` commands; macro interface on the Automate tab) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-11-02 · **Change:** minor (Solvercraft standalone local app, on-demand MCP and reviewed launcher submission; overall alpha estimates unchanged) · **Target:** Microsoft Excel (Microsoft 365)
 
 GridCraft aims at full Microsoft Excel parity, and at being better in places: faster, open (XLSX
 is the native format), fully scriptable by agents (MCP, control channel, CLI), and on the web.
@@ -16,6 +16,13 @@ This page is the summary. The detail is in:
   [file formats](docs/file-format-parity.md) · [UI](docs/ui-parity.md) ·
   [hardware](docs/hardware-parity.md) · [localization](docs/localization-parity.md)
 - [`docs/architecture.md`](docs/architecture.md): how it is built
+
+Solvercraft adds a separate optimization/simulation task pane, native and browser background jobs, and saved workbook models. Its [scope and executed evidence](docs/solvercraft.md) are tracked separately; this does not recalculate the broad Excel parity estimates below.
+
+The [standalone Solvercraft app, shared SDK and on-demand agent tools](solvercraft/docs/implementation/artcraft-integration.md)
+reuse that numerical core. They require no hosted server. An official ArtCraft
+Launcher entry is supplied as a pinned review artifact and remains subject to
+the launcher's third-party publisher approval.
 
 ## Headline numbers
 
@@ -244,6 +251,7 @@ Ranked; estimates in Opus 5.5 agent-hours. Detail and the full beta-gate list in
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-31 | minor | Solvercraft async task pane, immutable preview/apply, owned XLSX model registry and separate native/browser evidence |
 | 2026-10-25 | minor | Progress log: AutoSum over a selected row, and a selection's empty last row and column |
 | 2026-10-24 | minor | Macro interface on the Automate tab; progress log row |
 | 2026-10-24 | minor | Macro engine and `macro.*` commands; catalog 275 / 291 → 276 / 292 (View › Macros › Record Macro); progress log row |

@@ -189,6 +189,20 @@ impl KeptReader {
             if self.strict {
                 cx.warn("unmodelled content of a Strict Open XML workbook (custom XML, links, controls…) is not kept on save");
             }
+            if self.strict {
+                // Owned JSON is independent of SpreadsheetML namespaces. Arbitrary
+                // Strict XML still follows the existing no-pass-through policy.
+                let mut owned = Preserved::default();
+                let mut seen = HashSet::new();
+                for rel in wb_rels.iter().filter(|r| r.rel_type == SOLVERCRAFT_MODELS_REL && !r.external) {
+                    if let Err(why) = self.keep(cx, &mut owned, std::slice::from_ref(rel), &mut seen) {
+                        cx.warn(format!("Solvercraft model part was dropped: {why}"));
+                    }
+                }
+                if !owned.is_empty() {
+                    return Some(Arc::new(owned));
+                }
+            }
             return None;
         }
         let mut p = Preserved::default();
@@ -207,7 +221,7 @@ impl KeptReader {
             }
         }
         let wb_rels = raw_rels(cx, wb_part).unwrap_or_default();
-        for r in wb_rels.iter().filter(|r| is_kind(r, WORKBOOK_ROOTS)) {
+        for r in wb_rels.iter().filter(|r| is_kind(r, WORKBOOK_ROOTS) || r.rel_type == SOLVERCRAFT_MODELS_REL) {
             if let Err(why) = self.keep(cx, &mut p, std::slice::from_ref(r), &mut seen) {
                 cx.warn(format!("{} part {} was dropped: {why}", kind(&r.rel_type), r.target));
             }

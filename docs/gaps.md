@@ -1,6 +1,6 @@
 # Gaps
 
-> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-24 · **Change:** minor (§8: PivotTable Enable show details; earlier: PivotTable Show Details) · **Target:** Microsoft Excel (Microsoft 365)
+> **Last reviewed:** 2026-10-11 · **Last updated:** 2026-10-31 · **Change:** minor (Solvercraft async task pane, workbook persistence and native/browser evidence) · **Target:** Microsoft Excel (Microsoft 365)
 
 Every known shortfall against Excel, one entry each, ranked by user impact (what blocks someone
 using GridCraft for real work first). This is the work list: pick from the top, check the open
@@ -179,10 +179,15 @@ No alpha blockers: every core workflow passes the [alpha gate](roadmap.md#alpha-
 - Font weights beyond regular/bold (#168), system font list (#4), Calibri metrics (#29), macOS
   chrome (#169, #170), Linux title bar (#54), icon consistency across apps (#173). **Estimate:** 7–12 h.
 
+## Solvercraft alpha integration
+
+Solvercraft now has an async right task pane beside the existing Solver, native worker jobs and Rust Web Workers, immutable previews with explicit revision-guarded atomic apply/undo, a bounded multi-model registry in its own XLSX part/relationship, SC/Psi worksheet integration, parameter comparisons and checked LP reports. Simulation runs a bounded topological cell program through Gridcraft's actual value evaluator, preserving spreadsheet operation order and coercion; optimization retains its separate structural mathematical compiler and actual-Calc candidate guards. Native host/UI and generated-worker Chrome evidence are recorded separately in the [implementation report](../solvercraft/docs/implementation/gridcraft.md). This remains alpha scope, with explicit formula/import limits and no claim of complete legacy PSI or Excel parity.
+
 ## Revision history
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-10-31 | minor | Document Solvercraft native/browser async integration, owned XLSX model persistence, ordered Calc simulation and bounded evidence |
 | 2026-10-24 | minor | §8: PivotTable Enable show details: `pivot.options` `enableShowDetails` turns Show Details off for a PivotTable, read and written in XLSX as `enableDrill` |
 | 2026-10-23 | minor | §8: PivotTable Show Details: double-clicking a value cell lists its source records on a new sheet (#2364) |
 | 2026-10-22 | minor | §20: a native window per workbook window, New Window on the same workbook and Arrange All on the desktop; left: Arrange All across monitors, the web's one window, pen pressure (estimate 10–14 h → 5–8 h) |

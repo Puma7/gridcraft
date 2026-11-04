@@ -33,6 +33,7 @@ mod tables;
 #[cfg(any(test, feature = "test-support"))]
 pub mod testing;
 mod theme;
+mod web_extensions;
 mod write;
 mod xls;
 mod xlsb;
@@ -49,6 +50,7 @@ pub use csv::{MAX_CSV_BYTES, read_csv, write_csv, write_csv_limited};
 pub use ods::read_ods;
 pub use package::MAX_PART;
 pub use passthrough::rebase_links;
+pub use web_extensions::visible_web_extension_properties;
 pub use xls::read_xls;
 pub use xlsb::read_xlsb;
 

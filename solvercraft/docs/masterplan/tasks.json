@@ -1,0 +1,1164 @@
+{
+  "schema_version": "1.0",
+  "baseline_commit": "981fad14e0b90a7906a02f29785a6d0eb214fee6",
+  "created_date": "2026-10-31",
+  "tasks": [
+    {
+      "id": "SC-00",
+      "title": "Referenzkatalog und Lizenzinventar",
+      "release": "G0",
+      "depends_on": [],
+      "owns": [
+        "docs/solvercraft/reference/",
+        "docs/solvercraft/licenses/"
+      ],
+      "deliverables": [
+        "Produkt und Handbuchversion festlegen; jede dokumentierte Optimierungs-, PSI-, Simulations- und SDK-Funktion erfassen.",
+        "Gelesen, nur gefunden und nicht zugänglich unterscheiden; Quelle und semantische Unterschiede je Funktion dokumentieren.",
+        "Kandidatenlizenzen einschließlich transitiver Features und Datentabellen prüfen."
+      ],
+      "acceptance": [
+        "Kein Feature als vollständig zählen, das nur in einer Marketingübersicht steht.",
+        "Katalog enthält Signatur, Defaultwerte, Domain, Release, Requirement-ID und Test-ID."
+      ],
+      "source_ids": [
+        "G1",
+        "G2",
+        "O1",
+        "O4",
+        "O6",
+        "O10",
+        "E1",
+        "E2"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-00: Referenzkatalog und Lizenzinventar.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten (keine) durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: docs/solvercraft/reference/, docs/solvercraft/licenses/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Produkt und Handbuchversion festlegen; jede dokumentierte Optimierungs-, PSI-, Simulations- und SDK-Funktion erfassen.\n- Gelesen, nur gefunden und nicht zugänglich unterscheiden; Quelle und semantische Unterschiede je Funktion dokumentieren.\n- Kandidatenlizenzen einschließlich transitiver Features und Datentabellen prüfen.\nAbnahme:\n- Kein Feature als vollständig zählen, das nur in einer Marketingübersicht steht.\n- Katalog enthält Signatur, Defaultwerte, Domain, Release, Requirement-ID und Test-ID.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R085",
+        "R086"
+      ]
+    },
+    {
+      "id": "SC-01",
+      "title": "Crate Architektur und öffentliche Verträge",
+      "release": "G0",
+      "depends_on": [],
+      "owns": [
+        "crates/solvercraft-types/",
+        "crates/solvercraft-model/",
+        "docs/solvercraft/contracts/"
+      ],
+      "deliverables": [
+        "Modell-, Options-, Ergebnis-, Fähigkeiten- und Job-Schemas spezifizieren.",
+        "Workbook-freie Modell-API und Evaluator-Vertrag entwerfen; keine Backendtypen nach außen.",
+        "Layer-DAG, gleiche-Schicht-Reihenfolge und stabile IDs festlegen; Integrator bekommt Cargo-/Layer-Patches."
+      ],
+      "acceptance": [
+        "JSON-Roundtrip ohne NaN/Infinity; Seeds als Strings verlustfrei.",
+        "Feasible, optimality und termination getrennt; fehlende Schranken erzeugen kein Gap.",
+        "Zweiter Dummy-Host kompiliert ohne Workbook und egui, zählt aber noch nicht als Reuse-Abnahme."
+      ],
+      "source_ids": [
+        "G2",
+        "G7"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-01: Crate Architektur und öffentliche Verträge.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten (keine) durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-types/, crates/solvercraft-model/, docs/solvercraft/contracts/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Modell-, Options-, Ergebnis-, Fähigkeiten- und Job-Schemas spezifizieren.\n- Workbook-freie Modell-API und Evaluator-Vertrag entwerfen; keine Backendtypen nach außen.\n- Layer-DAG, gleiche-Schicht-Reihenfolge und stabile IDs festlegen; Integrator bekommt Cargo-/Layer-Patches.\nAbnahme:\n- JSON-Roundtrip ohne NaN/Infinity; Seeds als Strings verlustfrei.\n- Feasible, optimality und termination getrennt; fehlende Schranken erzeugen kein Gap.\n- Zweiter Dummy-Host kompiliert ohne Workbook und egui, zählt aber noch nicht als Reuse-Abnahme.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R001",
+        "R002",
+        "R003",
+        "R028",
+        "R029",
+        "R096"
+      ]
+    },
+    {
+      "id": "SC-02",
+      "title": "Unabhängige numerische Referenzen",
+      "release": "G0",
+      "depends_on": [
+        "SC-01"
+      ],
+      "owns": [
+        "tests/solvercraft-reference/",
+        "docs/solvercraft/validation/"
+      ],
+      "deliverables": [
+        "Analytisch lösbare LP/QP/NLP- und Risiko-Modelle in Rust erzeugen.",
+        "Kleine MILP-Fälle erschöpfend prüfen; Status- und Skalierungsgegenbeispiele ergänzen.",
+        "Differentialharness mit optionalem externem HiGHS und lizenzgeprüften Corpora planen."
+      ],
+      "acceptance": [
+        "Referenzen dürfen nicht vom getesteten Algorithmus selbst erzeugt werden.",
+        "Alternative Optima über Zielwert und Zulässigkeit vergleichen.",
+        "Feste Seeds und dokumentierte statistische Akzeptanz verhindern Zufallsausfälle."
+      ],
+      "source_ids": [
+        "G4",
+        "E3"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-02: Unabhängige numerische Referenzen.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: tests/solvercraft-reference/, docs/solvercraft/validation/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Analytisch lösbare LP/QP/NLP- und Risiko-Modelle in Rust erzeugen.\n- Kleine MILP-Fälle erschöpfend prüfen; Status- und Skalierungsgegenbeispiele ergänzen.\n- Differentialharness mit optionalem externem HiGHS und lizenzgeprüften Corpora planen.\nAbnahme:\n- Referenzen dürfen nicht vom getesteten Algorithmus selbst erzeugt werden.\n- Alternative Optima über Zielwert und Zulässigkeit vergleichen.\n- Feste Seeds und dokumentierte statistische Akzeptanz verhindern Zufallsausfälle.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R087"
+      ]
+    },
+    {
+      "id": "SC-03",
+      "title": "Workbook Snapshot und deterministische Auswertung",
+      "release": "R1",
+      "depends_on": [
+        "SC-01"
+      ],
+      "owns": [
+        "crates/solvercraft-gridcraft/src/evaluator/",
+        "crates/solvercraft-gridcraft/src/bindings/",
+        "crates/calc/src/solver_context.rs"
+      ],
+      "deliverables": [
+        "Snapshot-Evaluator auf Calc/Trial aufbauen; Mehrblattbezüge und Budgetierung hinzufügen.",
+        "Zeit, Zufall, dynamische Referenzen, Arrays und Fehlerpolitik über EvalContext kontrollieren.",
+        "Änderungen in bestehenden calc-Dateien mit Integrator bündeln."
+      ],
+      "acceptance": [
+        "Calc/Trial und neuer Pfad liefern gleiche Werte auf unterstützten Formeln.",
+        "Kein Live-Workbook- oder Historieneingriff; fehlerhafte Formeln werden nicht Null.",
+        "Zirkuläre und nicht unterstützte Modelle werden präzise zurückgewiesen."
+      ],
+      "source_ids": [
+        "G5",
+        "G8"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-03: Workbook Snapshot und deterministische Auswertung.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-gridcraft/src/evaluator/, crates/solvercraft-gridcraft/src/bindings/, crates/calc/src/solver_context.rs. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Snapshot-Evaluator auf Calc/Trial aufbauen; Mehrblattbezüge und Budgetierung hinzufügen.\n- Zeit, Zufall, dynamische Referenzen, Arrays und Fehlerpolitik über EvalContext kontrollieren.\n- Änderungen in bestehenden calc-Dateien mit Integrator bündeln.\nAbnahme:\n- Calc/Trial und neuer Pfad liefern gleiche Werte auf unterstützten Formeln.\n- Kein Live-Workbook- oder Historieneingriff; fehlerhafte Formeln werden nicht Null.\n- Zirkuläre und nicht unterstützte Modelle werden präzise zurückgewiesen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R004",
+        "R041",
+        "R042",
+        "R043",
+        "R044"
+      ]
+    },
+    {
+      "id": "SC-04",
+      "title": "Expression DAG und strukturelle Modellanalyse",
+      "release": "R1",
+      "depends_on": [
+        "SC-01"
+      ],
+      "owns": [
+        "crates/solvercraft-compile/src/analysis/",
+        "crates/solvercraft-compile/src/transforms/",
+        "crates/solvercraft-gridcraft/src/compile/"
+      ],
+      "deliverables": [
+        "Affine und quadratische Extraktion, Herkunft und Sparsity erzeugen.",
+        "Konvexität und Glattheit konservativ propagieren; unbekannt bleibt unbekannt.",
+        "Budgetierte logische und stückweise Transformationen vorbereiten."
+      ],
+      "acceptance": [
+        "Nichtlineare Gegenbeispiele passieren keinen LP-Beweis durch Punktproben.",
+        "Jeder erzeugte Constraint hat Quellzuordnung.",
+        "Transformationen werden vorwärts und rückwärts gegen Originalausdrücke geprüft."
+      ],
+      "source_ids": [
+        "G3",
+        "G4"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-04: Expression DAG und strukturelle Modellanalyse.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-compile/src/analysis/, crates/solvercraft-compile/src/transforms/, crates/solvercraft-gridcraft/src/compile/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Affine und quadratische Extraktion, Herkunft und Sparsity erzeugen.\n- Konvexität und Glattheit konservativ propagieren; unbekannt bleibt unbekannt.\n- Budgetierte logische und stückweise Transformationen vorbereiten.\nAbnahme:\n- Nichtlineare Gegenbeispiele passieren keinen LP-Beweis durch Punktproben.\n- Jeder erzeugte Constraint hat Quellzuordnung.\n- Transformationen werden vorwärts und rückwärts gegen Originalausdrücke geprüft.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R006",
+        "R007",
+        "R008",
+        "R009"
+      ]
+    },
+    {
+      "id": "SC-05",
+      "title": "Automatische Ableitungen",
+      "release": "R1",
+      "depends_on": [
+        "SC-03",
+        "SC-04"
+      ],
+      "owns": [
+        "crates/solvercraft-compile/src/autodiff/"
+      ],
+      "deliverables": [
+        "Vorwärts- und Rückwärtsableitungen für freigegebene Operatoren implementieren.",
+        "Sparse Jacobis und Hessian-Vektor-Produkte stufenweise ergänzen.",
+        "Finite-Difference-Rückfall mit Domains und skalierten Schritten."
+      ],
+      "acceptance": [
+        "Gegen analytische Ableitungen und unabhängige Differenzen prüfen.",
+        "Nichtglatte Stellen werden erkannt oder als unbekannt gekennzeichnet.",
+        "Keine Ableitungswerte aus still übergangenen Formelerrors."
+      ],
+      "source_ids": [
+        "G8"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-05: Automatische Ableitungen.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-03, SC-04 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-compile/src/autodiff/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Vorwärts- und Rückwärtsableitungen für freigegebene Operatoren implementieren.\n- Sparse Jacobis und Hessian-Vektor-Produkte stufenweise ergänzen.\n- Finite-Difference-Rückfall mit Domains und skalierten Schritten.\nAbnahme:\n- Gegen analytische Ableitungen und unabhängige Differenzen prüfen.\n- Nichtglatte Stellen werden erkannt oder als unbekannt gekennzeichnet.\n- Keine Ableitungswerte aus still übergangenen Formelerrors.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R010",
+        "R011"
+      ]
+    },
+    {
+      "id": "SC-06",
+      "title": "Persistenz und Bezugsmigration",
+      "release": "R1",
+      "depends_on": [
+        "SC-01"
+      ],
+      "owns": [
+        "crates/solvercraft-gridcraft/src/persistence/",
+        "crates/model/src/solvercraft.rs",
+        "crates/xlsx/src/solvercraft/"
+      ],
+      "deliverables": [
+        "Versionierte Workbook-Metadaten und JSON-Sidecar implementieren.",
+        "Eigene OPC-Parts über passende Reader-/Writer-Hooks integrieren.",
+        "Blatt-/Zell-ID-Migration bei Strukturänderungen und funktionsfähigen solver_*-Basisimport implementieren; SC-23 erweitert Kompatibilität."
+      ],
+      "acceptance": [
+        "Gridcraft-XLSX-Roundtrip bewahrt alle Modellfelder.",
+        "Einfügen/Löschen/Umbenennen/Verschieben/Kopieren erzeugt korrekte Bezüge oder Fehler.",
+        "Fremdprogramm-Erhalt wird nicht ohne Test behauptet; Paketgrößen begrenzen."
+      ],
+      "source_ids": [
+        "G4",
+        "G8"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-06: Persistenz und Bezugsmigration.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-gridcraft/src/persistence/, crates/model/src/solvercraft.rs, crates/xlsx/src/solvercraft/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Versionierte Workbook-Metadaten und JSON-Sidecar implementieren.\n- Eigene OPC-Parts über passende Reader-/Writer-Hooks integrieren.\n- Blatt-/Zell-ID-Migration bei Strukturänderungen und funktionsfähigen solver_*-Basisimport implementieren; SC-23 erweitert Kompatibilität.\nAbnahme:\n- Gridcraft-XLSX-Roundtrip bewahrt alle Modellfelder.\n- Einfügen/Löschen/Umbenennen/Verschieben/Kopieren erzeugt korrekte Bezüge oder Fehler.\n- Fremdprogramm-Erhalt wird nicht ohne Test behauptet; Paketgrößen begrenzen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R005",
+        "R037",
+        "R038",
+        "R039",
+        "R040"
+      ]
+    },
+    {
+      "id": "SC-07",
+      "title": "Sparse LP und MILP Adapter",
+      "release": "R1",
+      "depends_on": [
+        "SC-01",
+        "SC-02",
+        "SC-04"
+      ],
+      "owns": [
+        "crates/solvercraft-engines/src/lp/"
+      ],
+      "deliverables": [
+        "microlp am gepinnten Stand auf Rust/WASM, Fehler, Budgets und numerische Grenzen evaluieren.",
+        "Austauschbaren Adapter mit Sparse-Matrizen, Bounds, Integern und normiertem Status implementieren.",
+        "Warm Start, Dual-/Basisinformationen und Abbruch nur bei tatsächlich vorhandener Fähigkeit anbieten."
+      ],
+      "acceptance": [
+        "Analytische und erschöpfende Referenzen bestehen; keine falschen Zertifikate.",
+        "Originalmodellprüfung inklusive Rundung und Skalierung.",
+        "Kein nativer HiGHS-Featurepfad im Standardartefakt."
+      ],
+      "source_ids": [
+        "E1",
+        "G3"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-07: Sparse LP und MILP Adapter.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01, SC-02, SC-04 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-engines/src/lp/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- microlp am gepinnten Stand auf Rust/WASM, Fehler, Budgets und numerische Grenzen evaluieren.\n- Austauschbaren Adapter mit Sparse-Matrizen, Bounds, Integern und normiertem Status implementieren.\n- Warm Start, Dual-/Basisinformationen und Abbruch nur bei tatsächlich vorhandener Fähigkeit anbieten.\nAbnahme:\n- Analytische und erschöpfende Referenzen bestehen; keine falschen Zertifikate.\n- Originalmodellprüfung inklusive Rundung und Skalierung.\n- Kein nativer HiGHS-Featurepfad im Standardartefakt.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R012",
+        "R013",
+        "R014"
+      ]
+    },
+    {
+      "id": "SC-08",
+      "title": "Konvexe QP und SOCP",
+      "release": "R1",
+      "depends_on": [
+        "SC-01",
+        "SC-02",
+        "SC-04"
+      ],
+      "owns": [
+        "crates/solvercraft-engines/src/conic/"
+      ],
+      "deliverables": [
+        "Clarabel.rs als Rust-Backend prüfen und anbinden.",
+        "Konvexitätsvorbedingungen, Kegelabbildung und Residuen dokumentieren.",
+        "QP- und SOCP-Modelle aus Compilerrepräsentation übernehmen."
+      ],
+      "acceptance": [
+        "Nichtkonvexe QP, MIQP und MISOCP werden nicht als unterstützt ausgegeben.",
+        "KKT-/Residualtests und bekannte Lösungen bestehen.",
+        "WASM-Lauf mit tatsächlich ausgewählten Features, keine unbeabsichtigte Native-Dependency."
+      ],
+      "source_ids": [
+        "E2"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-08: Konvexe QP und SOCP.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01, SC-02, SC-04 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-engines/src/conic/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Clarabel.rs als Rust-Backend prüfen und anbinden.\n- Konvexitätsvorbedingungen, Kegelabbildung und Residuen dokumentieren.\n- QP- und SOCP-Modelle aus Compilerrepräsentation übernehmen.\nAbnahme:\n- Nichtkonvexe QP, MIQP und MISOCP werden nicht als unterstützt ausgegeben.\n- KKT-/Residualtests und bekannte Lösungen bestehen.\n- WASM-Lauf mit tatsächlich ausgewählten Features, keine unbeabsichtigte Native-Dependency.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R015",
+        "R016"
+      ]
+    },
+    {
+      "id": "SC-09",
+      "title": "Lokale nichtlineare Optimierung",
+      "release": "R1",
+      "depends_on": [
+        "SC-02",
+        "SC-03",
+        "SC-05"
+      ],
+      "owns": [
+        "crates/solvercraft-engines/src/nlp/"
+      ],
+      "deliverables": [
+        "Bestehende Augmented-Lagrangian-Baseline sauber benennen und extrahieren.",
+        "Robuste Line Search/Trust Region und L-BFGS; SQP nach belastbarer QP-Schnittstelle ergänzen.",
+        "Zulässigkeit, Stagnation, KKT-Residual und Domainfehler auseinanderhalten."
+      ],
+      "acceptance": [
+        "Mehrere Startpunkte und schlechte Skalierung prüfen.",
+        "Nur gerechtfertigte lokale/Stationaritätsaussagen ausgeben.",
+        "Nichtkonvexe lokale Relaxierung liefert keine globale MIP-Schranke."
+      ],
+      "source_ids": [
+        "G4",
+        "E4"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-09: Lokale nichtlineare Optimierung.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-02, SC-03, SC-05 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-engines/src/nlp/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Bestehende Augmented-Lagrangian-Baseline sauber benennen und extrahieren.\n- Robuste Line Search/Trust Region und L-BFGS; SQP nach belastbarer QP-Schnittstelle ergänzen.\n- Zulässigkeit, Stagnation, KKT-Residual und Domainfehler auseinanderhalten.\nAbnahme:\n- Mehrere Startpunkte und schlechte Skalierung prüfen.\n- Nur gerechtfertigte lokale/Stationaritätsaussagen ausgeben.\n- Nichtkonvexe lokale Relaxierung liefert keine globale MIP-Schranke.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R017",
+        "R018"
+      ]
+    },
+    {
+      "id": "SC-10",
+      "title": "Nichtglatte und evolutionäre Suche",
+      "release": "R1",
+      "depends_on": [
+        "SC-02",
+        "SC-03"
+      ],
+      "owns": [
+        "crates/solvercraft-engines/src/heuristic/"
+      ],
+      "deliverables": [
+        "Bestehende Suche als Baseline extrahieren; Pattern Search und Differential Evolution ergänzen.",
+        "Bounds, Integer-Reparatur und Feasibility-first-Ranking kontrollieren.",
+        "Deterministische Seeds und evaluierungsbasierte Budgets einhalten."
+      ],
+      "acceptance": [
+        "Beste Lösung im Originalmodell prüfen.",
+        "Heuristik meldet kein nachgewiesenes globales Optimum.",
+        "Abbruch, leere Domains und unendliche Suchboxen sauber behandeln."
+      ],
+      "source_ids": [
+        "G4"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-10: Nichtglatte und evolutionäre Suche.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-02, SC-03 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-engines/src/heuristic/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Bestehende Suche als Baseline extrahieren; Pattern Search und Differential Evolution ergänzen.\n- Bounds, Integer-Reparatur und Feasibility-first-Ranking kontrollieren.\n- Deterministische Seeds und evaluierungsbasierte Budgets einhalten.\nAbnahme:\n- Beste Lösung im Originalmodell prüfen.\n- Heuristik meldet kein nachgewiesenes globales Optimum.\n- Abbruch, leere Domains und unendliche Suchboxen sauber behandeln.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R019",
+        "R020"
+      ]
+    },
+    {
+      "id": "SC-11",
+      "title": "Jobruntime und Engine Befehle",
+      "release": "R1",
+      "depends_on": [
+        "SC-01",
+        "SC-03",
+        "SC-07"
+      ],
+      "owns": [
+        "crates/solvercraft/src/jobs/",
+        "crates/solvercraft/src/validation/",
+        "crates/engine/src/cmd/solvercraft/jobs.rs",
+        "crates/engine/src/cmd/solvercraft/results.rs"
+      ],
+      "deliverables": [
+        "Native Worker und WASM-Poll-/Workerpfad mit Fortschritt und Cancel implementieren.",
+        "Solve/Simulate starten Jobs; Zustand und Ergebnisse über Engine-Daten zugänglich machen.",
+        "Übernahme mit Revisionstest und einem undo-fähigen Commit."
+      ],
+      "acceptance": [
+        "UI und MCP bleiben während Jobs erreichbar.",
+        "Abbruch/Speicher-/Zeit-/Knotenlimit liefern ehrliche Teilresultate.",
+        "Konflikt, Schutz und Spills verhindern unzulässige Übernahme; Fehler verändert Workbook nicht."
+      ],
+      "source_ids": [
+        "G2",
+        "G5"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-11: Jobruntime und Engine Befehle.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01, SC-03, SC-07 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/jobs/, crates/solvercraft/src/validation/, crates/engine/src/cmd/solvercraft/jobs.rs, crates/engine/src/cmd/solvercraft/results.rs. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Native Worker und WASM-Poll-/Workerpfad mit Fortschritt und Cancel implementieren.\n- Solve/Simulate starten Jobs; Zustand und Ergebnisse über Engine-Daten zugänglich machen.\n- Übernahme mit Revisionstest und einem undo-fähigen Commit.\nAbnahme:\n- UI und MCP bleiben während Jobs erreichbar.\n- Abbruch/Speicher-/Zeit-/Knotenlimit liefern ehrliche Teilresultate.\n- Konflikt, Schutz und Spills verhindern unzulässige Übernahme; Fehler verändert Workbook nicht.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R021",
+        "R022",
+        "R023",
+        "R024",
+        "R025",
+        "R026",
+        "R027",
+        "R033",
+        "R095"
+      ]
+    },
+    {
+      "id": "SC-12",
+      "title": "Solvercraft Panel und Modelleingabe",
+      "release": "R1",
+      "depends_on": [
+        "SC-01"
+      ],
+      "owns": [
+        "crates/ui-egui/src/solvercraft/panel.rs",
+        "crates/ui-egui/src/solvercraft/model_editor.rs"
+      ],
+      "deliverables": [
+        "Rechtes Aufgabenpanel mit Ziel, Variablen, Constraints und Methoden bauen.",
+        "Ribbon-Einstieg direkt rechts neben bestehendem Solver über Integrator ergänzen.",
+        "Modellprüfung, Fähigkeiten, Fortschritt und Lösungsvorschau integrieren."
+      ],
+      "acceptance": [
+        "UI löst nur Befehle aus; keine Solverlogik.",
+        "Tastaturbedienung, Fokus, Themes und deutsche/englische Labels prüfen.",
+        "Screenshots visuell prüfen; mit echter Engine vor R1 abnehmen."
+      ],
+      "source_ids": [
+        "G2",
+        "G6"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-12: Solvercraft Panel und Modelleingabe.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-01 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/ui-egui/src/solvercraft/panel.rs, crates/ui-egui/src/solvercraft/model_editor.rs. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Rechtes Aufgabenpanel mit Ziel, Variablen, Constraints und Methoden bauen.\n- Ribbon-Einstieg direkt rechts neben bestehendem Solver über Integrator ergänzen.\n- Modellprüfung, Fähigkeiten, Fortschritt und Lösungsvorschau integrieren.\nAbnahme:\n- UI löst nur Befehle aus; keine Solverlogik.\n- Tastaturbedienung, Fokus, Themes und deutsche/englische Labels prüfen.\n- Screenshots visuell prüfen; mit echter Engine vor R1 abnehmen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R030",
+        "R031",
+        "R032"
+      ]
+    },
+    {
+      "id": "SC-13",
+      "title": "Berichte Diagnose und R1 Durchstich",
+      "release": "R1",
+      "depends_on": [
+        "SC-06",
+        "SC-07",
+        "SC-08",
+        "SC-09",
+        "SC-10",
+        "SC-11",
+        "SC-12"
+      ],
+      "owns": [
+        "crates/solvercraft/src/reports/",
+        "crates/engine/src/cmd/solvercraft/reports.rs",
+        "tests/solvercraft-r1/"
+      ],
+      "deliverables": [
+        "Antwort-, Constraint-, Limits- und fähigkeitsabhängige Dual-/Sensitivitätsberichte implementieren.",
+        "Vollständigen UI/CLI/MCP-Durchstich einschließlich Übernahme und Undo prüfen.",
+        "Nicht vorhandene Basis-/Dualinformationen verständlich ausweisen."
+      ],
+      "acceptance": [
+        "LP-Schattenpreise nicht pauschal auf MILP/NLP übertragen.",
+        "Numerische Parametervariation nicht als exakte Basissensitivität ausgeben.",
+        "Vorhandene Solverberichte und gespeicherte Modelle bleiben nutzbar."
+      ],
+      "source_ids": [
+        "G4"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-13: Berichte Diagnose und R1 Durchstich.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-06, SC-07, SC-08, SC-09, SC-10, SC-11, SC-12 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/reports/, crates/engine/src/cmd/solvercraft/reports.rs, tests/solvercraft-r1/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Antwort-, Constraint-, Limits- und fähigkeitsabhängige Dual-/Sensitivitätsberichte implementieren.\n- Vollständigen UI/CLI/MCP-Durchstich einschließlich Übernahme und Undo prüfen.\n- Nicht vorhandene Basis-/Dualinformationen verständlich ausweisen.\nAbnahme:\n- LP-Schattenpreise nicht pauschal auf MILP/NLP übertragen.\n- Numerische Parametervariation nicht als exakte Basissensitivität ausgeben.\n- Vorhandene Solverberichte und gespeicherte Modelle bleiben nutzbar.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R034",
+        "R035",
+        "R036"
+      ]
+    },
+    {
+      "id": "SC-14",
+      "title": "RNG und Verteilungsbasis",
+      "release": "R2",
+      "depends_on": [
+        "SC-00",
+        "SC-01",
+        "SC-02"
+      ],
+      "owns": [
+        "crates/solvercraft-math/src/random/",
+        "crates/solvercraft-math/src/distributions/"
+      ],
+      "deliverables": [
+        "Versionierte counter-basierte Streams und R2-Verteilungen implementieren.",
+        "CDF/Quantile/Momente/Sampling, Trunkierung und Parametersemantik festlegen.",
+        "Quelldaten und Tabellenlizenzen prüfen."
+      ],
+      "acceptance": [
+        "Samples unabhängig von Workerzahl und Auswertungsreihenfolge.",
+        "Tail-, Domain-, Degenerations- und undefinierte-Momente-Tests.",
+        "RNG ist Simulationsbaustein, kein unbegründetes kryptografisches Versprechen."
+      ],
+      "source_ids": [
+        "O8",
+        "O11"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-14: RNG und Verteilungsbasis.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-00, SC-01, SC-02 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-math/src/random/, crates/solvercraft-math/src/distributions/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Versionierte counter-basierte Streams und R2-Verteilungen implementieren.\n- CDF/Quantile/Momente/Sampling, Trunkierung und Parametersemantik festlegen.\n- Quelldaten und Tabellenlizenzen prüfen.\nAbnahme:\n- Samples unabhängig von Workerzahl und Auswertungsreihenfolge.\n- Tail-, Domain-, Degenerations- und undefinierte-Momente-Tests.\n- RNG ist Simulationsbaustein, kein unbegründetes kryptografisches Versprechen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R045",
+        "R046",
+        "R047",
+        "R048",
+        "R049"
+      ]
+    },
+    {
+      "id": "SC-15",
+      "title": "Sampling Korrelation und Copulas",
+      "release": "R2",
+      "depends_on": [
+        "SC-14"
+      ],
+      "owns": [
+        "crates/solvercraft-simulation/src/sampling/",
+        "crates/solvercraft-simulation/src/dependence/"
+      ],
+      "deliverables": [
+        "MC/LHS und Gaussian Copula/Rangkorrelation umsetzen.",
+        "Stabile Dimensionen und RNG-Bindungen speichern.",
+        "R4: randomisierte Sobol-Replikate und weitere Copulas aus Referenzkatalog ergänzen."
+      ],
+      "acceptance": [
+        "PSD- und Parameterprüfung; Matrixreparatur nie still.",
+        "Gleiche Zufallszelle bleibt innerhalb Trial konsistent.",
+        "Samplingabhängige Unsicherheitsrechnung korrekt kennzeichnen."
+      ],
+      "source_ids": [
+        "O8",
+        "O9"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-15: Sampling Korrelation und Copulas.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-14 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-simulation/src/sampling/, crates/solvercraft-simulation/src/dependence/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- MC/LHS und Gaussian Copula/Rangkorrelation umsetzen.\n- Stabile Dimensionen und RNG-Bindungen speichern.\n- R4: randomisierte Sobol-Replikate und weitere Copulas aus Referenzkatalog ergänzen.\nAbnahme:\n- PSD- und Parameterprüfung; Matrixreparatur nie still.\n- Gleiche Zufallszelle bleibt innerhalb Trial konsistent.\n- Samplingabhängige Unsicherheitsrechnung korrekt kennzeichnen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R050",
+        "R051",
+        "R052",
+        "R053",
+        "R054",
+        "R055"
+      ]
+    },
+    {
+      "id": "SC-16",
+      "title": "Statistik Verteilungsanpassung und Streaming",
+      "release": "R2",
+      "depends_on": [
+        "SC-14",
+        "SC-15"
+      ],
+      "owns": [
+        "crates/solvercraft-simulation/src/statistics/",
+        "crates/solvercraft-simulation/src/fitting/",
+        "crates/solvercraft-simulation/src/storage/"
+      ],
+      "deliverables": [
+        "Online-Momente, Quantile, CDF, VaR/CVaR und Überschreitungen implementieren.",
+        "Fitting mit MLE, AIC/BIC, Q-Q und geeigneten Bootstrap-Güteprüfungen.",
+        "Begrenzte Chunks und markierte Quantilapproximationen statt Vollmatrixzwang."
+      ],
+      "acceptance": [
+        "Diskrete CVaR-Quantilsmasse und Verlustvorzeichen prüfen.",
+        "Fehlertrials und fehlende Daten transparent zählen.",
+        "Feste statistische Ensembles, kein flaky Einzeltest."
+      ],
+      "source_ids": [
+        "O3",
+        "O10"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-16: Statistik Verteilungsanpassung und Streaming.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-14, SC-15 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-simulation/src/statistics/, crates/solvercraft-simulation/src/fitting/, crates/solvercraft-simulation/src/storage/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Online-Momente, Quantile, CDF, VaR/CVaR und Überschreitungen implementieren.\n- Fitting mit MLE, AIC/BIC, Q-Q und geeigneten Bootstrap-Güteprüfungen.\n- Begrenzte Chunks und markierte Quantilapproximationen statt Vollmatrixzwang.\nAbnahme:\n- Diskrete CVaR-Quantilsmasse und Verlustvorzeichen prüfen.\n- Fehlertrials und fehlende Daten transparent zählen.\n- Feste statistische Ensembles, kein flaky Einzeltest.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R056",
+        "R057",
+        "R058",
+        "R059",
+        "R060"
+      ]
+    },
+    {
+      "id": "SC-17",
+      "title": "Simulation Formeln und Ergebnisoberfläche",
+      "release": "R2",
+      "depends_on": [
+        "SC-03",
+        "SC-11",
+        "SC-12",
+        "SC-15",
+        "SC-16"
+      ],
+      "owns": [
+        "crates/ui-egui/src/solvercraft/simulation.rs",
+        "crates/ui-egui/src/solvercraft/charts.rs",
+        "crates/solvercraft-gridcraft/src/simulation/"
+      ],
+      "deliverables": [
+        "Unsichere Eingaben, Outputs und Parameterläufe mit SC.*-Formeln anbinden.",
+        "Histogramme, CDF, Tornado, Scatter und Quantilbänder darstellen.",
+        "Calc-Registrierung über SC-03/Integrator vornehmen, keine L1-L3-Zyklen."
+      ],
+      "acceptance": [
+        "End-to-end-Simulation in Desktop und Browser.",
+        "Formelsemantik außerhalb Simulation sowie Input-/Output-ID klar.",
+        "Keine Kausalitätsbehauptung aus Sensitivitätsdiagramm."
+      ],
+      "source_ids": [
+        "O3",
+        "G8"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-17: Simulation Formeln und Ergebnisoberfläche.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-03, SC-11, SC-12, SC-15, SC-16 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/ui-egui/src/solvercraft/simulation.rs, crates/ui-egui/src/solvercraft/charts.rs, crates/solvercraft-gridcraft/src/simulation/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Unsichere Eingaben, Outputs und Parameterläufe mit SC.*-Formeln anbinden.\n- Histogramme, CDF, Tornado, Scatter und Quantilbänder darstellen.\n- Calc-Registrierung über SC-03/Integrator vornehmen, keine L1-L3-Zyklen.\nAbnahme:\n- End-to-end-Simulation in Desktop und Browser.\n- Formelsemantik außerhalb Simulation sowie Input-/Output-ID klar.\n- Keine Kausalitätsbehauptung aus Sensitivitätsdiagramm.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R061",
+        "R062",
+        "R063",
+        "R064"
+      ]
+    },
+    {
+      "id": "SC-18",
+      "title": "Simulation Optimization und CVaR",
+      "release": "R3",
+      "depends_on": [
+        "SC-07",
+        "SC-10",
+        "SC-11",
+        "SC-16"
+      ],
+      "owns": [
+        "crates/solvercraft/src/risk/simulation_optimization/"
+      ],
+      "deliverables": [
+        "SAA und Common Random Numbers für Kandidatenvergleich.",
+        "Erwartungswert-/Varianz-/CVaR-Ziele und Budgetsteuerung implementieren.",
+        "Unabhängige Validierung mit separaten Seed-/Szenariosätzen."
+      ],
+      "acceptance": [
+        "Trainings- und Validierungsresultate getrennt.",
+        "Schätzunsicherheit und Optimierungsstatus nicht vermischen.",
+        "Kleine analytische Risiko-Modelle und Seed-Leakage-Tests."
+      ],
+      "source_ids": [
+        "O7"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-18: Simulation Optimization und CVaR.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-07, SC-10, SC-11, SC-16 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/risk/simulation_optimization/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- SAA und Common Random Numbers für Kandidatenvergleich.\n- Erwartungswert-/Varianz-/CVaR-Ziele und Budgetsteuerung implementieren.\n- Unabhängige Validierung mit separaten Seed-/Szenariosätzen.\nAbnahme:\n- Trainings- und Validierungsresultate getrennt.\n- Schätzunsicherheit und Optimierungsstatus nicht vermischen.\n- Kleine analytische Risiko-Modelle und Seed-Leakage-Tests.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R065",
+        "R066",
+        "R067"
+      ]
+    },
+    {
+      "id": "SC-19",
+      "title": "Chance Constraints und robuste Modelle",
+      "release": "R3",
+      "depends_on": [
+        "SC-04",
+        "SC-07",
+        "SC-08",
+        "SC-16",
+        "SC-18"
+      ],
+      "owns": [
+        "crates/solvercraft/src/risk/chance/",
+        "crates/solvercraft/src/risk/robust/"
+      ],
+      "deliverables": [
+        "Einzelne/gemeinsame Chance Constraints und Szenarioapproximationen implementieren.",
+        "Box/Budget/Ellipsoid-Gegenstücke mit dokumentierten Vorbedingungen.",
+        "Big-M nur aus Bounds; unabhängige Verletzungsdiagnose mit einseitigem Intervall."
+      ],
+      "acceptance": [
+        "Empirische Wahrscheinlichkeit nicht als Verteilungsgarantie ausgeben.",
+        "Unbekannte Struktur oder fehlende Bounds blockiert Transformation.",
+        "Konservativität robuster Mengen sichtbar machen."
+      ],
+      "source_ids": [
+        "O7"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-19: Chance Constraints und robuste Modelle.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-04, SC-07, SC-08, SC-16, SC-18 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/risk/chance/, crates/solvercraft/src/risk/robust/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Einzelne/gemeinsame Chance Constraints und Szenarioapproximationen implementieren.\n- Box/Budget/Ellipsoid-Gegenstücke mit dokumentierten Vorbedingungen.\n- Big-M nur aus Bounds; unabhängige Verletzungsdiagnose mit einseitigem Intervall.\nAbnahme:\n- Empirische Wahrscheinlichkeit nicht als Verteilungsgarantie ausgeben.\n- Unbekannte Struktur oder fehlende Bounds blockiert Transformation.\n- Konservativität robuster Mengen sichtbar machen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R068",
+        "R069",
+        "R070"
+      ]
+    },
+    {
+      "id": "SC-20",
+      "title": "Zweistufige Modelle und Dekomposition",
+      "release": "R3",
+      "depends_on": [
+        "SC-04",
+        "SC-07",
+        "SC-11",
+        "SC-15"
+      ],
+      "owns": [
+        "crates/solvercraft/src/risk/stochastic/"
+      ],
+      "deliverables": [
+        "Deterministisches Äquivalent zweistufiger linearer Recourse-Modelle.",
+        "Nichtantizipativität und Szenariogewichte modellieren.",
+        "R4: L-Shaped/Benders nur bei erfüllten Teilproblemannahmen."
+      ],
+      "acceptance": [
+        "Kleine Szenariomodelle erschöpfend vergleichen.",
+        "Keine zukünftige Information in ersten Entscheidungen.",
+        "Integer-/nichtkonvexe Recourse gesondert ablehnen oder kennzeichnen."
+      ],
+      "source_ids": [
+        "O7"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-20: Zweistufige Modelle und Dekomposition.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-04, SC-07, SC-11, SC-15 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/risk/stochastic/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Deterministisches Äquivalent zweistufiger linearer Recourse-Modelle.\n- Nichtantizipativität und Szenariogewichte modellieren.\n- R4: L-Shaped/Benders nur bei erfüllten Teilproblemannahmen.\nAbnahme:\n- Kleine Szenariomodelle erschöpfend vergleichen.\n- Keine zukünftige Information in ersten Entscheidungen.\n- Integer-/nichtkonvexe Recourse gesondert ablehnen oder kennzeichnen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R071",
+        "R072",
+        "R073"
+      ]
+    },
+    {
+      "id": "SC-21",
+      "title": "Entscheidungsbäume und Mehrziel",
+      "release": "R4",
+      "depends_on": [
+        "SC-11",
+        "SC-16",
+        "SC-18"
+      ],
+      "owns": [
+        "crates/solvercraft/src/decision/",
+        "crates/solvercraft/src/multiobjective/",
+        "crates/ui-egui/src/solvercraft/decision_tree.rs"
+      ],
+      "deliverables": [
+        "Entscheidungs-/Zufalls-/Endknoten, Rückwärtsauswertung, Nutzen und Value of Information.",
+        "Simulation über Payoffs und Sensitivität ergänzen.",
+        "Gewichtete, lexikografische und epsilon-Constraint-Ziele."
+      ],
+      "acceptance": [
+        "Wahrscheinlichkeiten, Zyklen und Nodebudgets validieren.",
+        "Analytische Baumreferenzen bestehen.",
+        "Keine Vollständigkeitsbehauptung der Paretofront ohne Voraussetzung."
+      ],
+      "source_ids": [
+        "O3"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-21: Entscheidungsbäume und Mehrziel.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-11, SC-16, SC-18 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft/src/decision/, crates/solvercraft/src/multiobjective/, crates/ui-egui/src/solvercraft/decision_tree.rs. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Entscheidungs-/Zufalls-/Endknoten, Rückwärtsauswertung, Nutzen und Value of Information.\n- Simulation über Payoffs und Sensitivität ergänzen.\n- Gewichtete, lexikografische und epsilon-Constraint-Ziele.\nAbnahme:\n- Wahrscheinlichkeiten, Zyklen und Nodebudgets validieren.\n- Analytische Baumreferenzen bestehen.\n- Keine Vollständigkeitsbehauptung der Paretofront ohne Voraussetzung.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R074",
+        "R075",
+        "R076"
+      ]
+    },
+    {
+      "id": "SC-22",
+      "title": "Fortgeschrittene globale und diskrete Verfahren",
+      "release": "R4",
+      "depends_on": [
+        "SC-04",
+        "SC-07",
+        "SC-08",
+        "SC-09",
+        "SC-10"
+      ],
+      "owns": [
+        "crates/solvercraft-engines/src/global/",
+        "crates/solvercraft-engines/src/discrete/"
+      ],
+      "deliverables": [
+        "SOS/Indikatoren/piecewise und begrenzte finite Domains ergänzen.",
+        "Intervall- und konvexe Relaxierungen für spezifizierte Klassen untersuchen.",
+        "MIQP/MISOCP/MINLP-Fähigkeiten nur mit gültigen Relaxierungen freigeben."
+      ],
+      "acceptance": [
+        "Lokale NLP-Lösungen nie als globale Schranken verwenden.",
+        "Erschöpfende kleine Referenzen und Zertifikatsprüfung.",
+        "Nicht implementierte globale Fähigkeiten bleiben offen, keine Scheinengine."
+      ],
+      "source_ids": [
+        "O5",
+        "O6"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-22: Fortgeschrittene globale und diskrete Verfahren.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-04, SC-07, SC-08, SC-09, SC-10 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-engines/src/global/, crates/solvercraft-engines/src/discrete/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- SOS/Indikatoren/piecewise und begrenzte finite Domains ergänzen.\n- Intervall- und konvexe Relaxierungen für spezifizierte Klassen untersuchen.\n- MIQP/MISOCP/MINLP-Fähigkeiten nur mit gültigen Relaxierungen freigeben.\nAbnahme:\n- Lokale NLP-Lösungen nie als globale Schranken verwenden.\n- Erschöpfende kleine Referenzen und Zertifikatsprüfung.\n- Nicht implementierte globale Fähigkeiten bleiben offen, keine Scheinengine.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R077",
+        "R078",
+        "R079",
+        "R080"
+      ]
+    },
+    {
+      "id": "SC-23",
+      "title": "Legacy PSI Kompatibilität und optionaler Server",
+      "release": "R4",
+      "depends_on": [
+        "SC-00",
+        "SC-06",
+        "SC-11",
+        "SC-17"
+      ],
+      "owns": [
+        "crates/solvercraft-gridcraft/src/compat/",
+        "apps/solvercraft-cli/",
+        "apps/solvercraft-server/"
+      ],
+      "deliverables": [
+        "solver_*-Import und eingeschränkten Export abschließen.",
+        "Ausgewählte Psi*-Signaturen mit echten Semantiktests implementieren.",
+        "Headless CLI und optionalen JSON-Jobserver; keine behauptete RASON-/VBA-Binärkompatibilität."
+      ],
+      "acceptance": [
+        "Nicht darstellbare Funktionen beim Export melden.",
+        "Dokumentierte PSI-Parameterreihenfolge und Fehlersemantik prüfen.",
+        "Server separat freigeben: Authentisierung, Quoten, Cancel und kein frei ausführbarer Fremdcode."
+      ],
+      "source_ids": [
+        "G4",
+        "O10",
+        "O11"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-23: Legacy PSI Kompatibilität und optionaler Server.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-00, SC-06, SC-11, SC-17 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: crates/solvercraft-gridcraft/src/compat/, apps/solvercraft-cli/, apps/solvercraft-server/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- solver_*-Import und eingeschränkten Export abschließen.\n- Ausgewählte Psi*-Signaturen mit echten Semantiktests implementieren.\n- Headless CLI und optionalen JSON-Jobserver; keine behauptete RASON-/VBA-Binärkompatibilität.\nAbnahme:\n- Nicht darstellbare Funktionen beim Export melden.\n- Dokumentierte PSI-Parameterreihenfolge und Fehlersemantik prüfen.\n- Server separat freigeben: Authentisierung, Quoten, Cancel und kein frei ausführbarer Fremdcode.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R081",
+        "R082"
+      ]
+    },
+    {
+      "id": "SC-24",
+      "title": "Eigenständiges SDK und zweiter ArtCraft Host",
+      "release": "R4",
+      "depends_on": [
+        "SC-11",
+        "SC-16"
+      ],
+      "owns": [
+        "examples/solvercraft-host/",
+        "docs/solvercraft/sdk/"
+      ],
+      "deliverables": [
+        "Rust-SDK mit modellunabhängigem Beispielhost und vollständigem Runmanifest.",
+        "Zweites ArtCraft-Szenario als minimalen Integrationsnachweis vorbereiten; vorhandene fremde Repositories nur nach tatsächlichem Zugriff ändern.",
+        "Versionierungs- und Migrationsrichtlinien dokumentieren."
+      ],
+      "acceptance": [
+        "Eigenständige ausführbare Anwendung ohne Gridcraft-/egui-Dependency.",
+        "Gleiches Modell über SDK und Gridcraft-Adapter numerisch gleich.",
+        "Ein Beispielhost ist klar als Beispiel bezeichnet, keine behauptete Produktintegration."
+      ],
+      "source_ids": [
+        "G1"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-24: Eigenständiges SDK und zweiter ArtCraft Host.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-11, SC-16 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: examples/solvercraft-host/, docs/solvercraft/sdk/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Rust-SDK mit modellunabhängigem Beispielhost und vollständigem Runmanifest.\n- Zweites ArtCraft-Szenario als minimalen Integrationsnachweis vorbereiten; vorhandene fremde Repositories nur nach tatsächlichem Zugriff ändern.\n- Versionierungs- und Migrationsrichtlinien dokumentieren.\nAbnahme:\n- Eigenständige ausführbare Anwendung ohne Gridcraft-/egui-Dependency.\n- Gleiches Modell über SDK und Gridcraft-Adapter numerisch gleich.\n- Ein Beispielhost ist klar als Beispiel bezeichnet, keine behauptete Produktintegration.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R083",
+        "R084"
+      ]
+    },
+    {
+      "id": "SC-25",
+      "title": "Integration Qualität und Freigaben",
+      "release": "R5",
+      "depends_on": [
+        "SC-00",
+        "SC-01",
+        "SC-02"
+      ],
+      "owns": [
+        "Cargo.toml",
+        "Cargo.lock",
+        "xtask/src/layers.rs",
+        "crates/engine/src/catalog.rs",
+        "crates/engine/src/cmd/solvercraft/mod.rs",
+        "crates/ui-egui/src/solvercraft/mod.rs",
+        "docs/solvercraft/releases/"
+      ],
+      "deliverables": [
+        "Zentrale Registrierungen und Integrationen besitzen; nur grüne überprüfte Paketstände übernehmen.",
+        "Je Release math-, UI-, WASM-, Persistenz-, Ressourcen- und Migrationsgates ausführen.",
+        "Erfüllungsmatrix pflegen; vorhandene Gridcraft-Dokumente und Notices aktualisieren."
+      ],
+      "acceptance": [
+        "cargo xtask ci und sinnvolle paketspezifische Tests protokollieren.",
+        "Keine neuen Feature-CI-Workflows gegen Repositoryregeln.",
+        "R1/R2/R3/R4 jeweils nur nach vollständigen Gates; R5 braucht Nachweise aller Zielanforderungen."
+      ],
+      "source_ids": [
+        "G2",
+        "G7"
+      ],
+      "status": "planned",
+      "shared_edits": "Cargo.toml, Cargo.lock, Layer-Tabelle, bestehende Root-Module, Befehls-/Funktionsregistrierung und i18n nur über SC-25; Typvertragsänderungen über SC-01.",
+      "handoff_required": [
+        "Änderungsliste",
+        "Ausgeführte Tests und tatsächliche Ergebnisse",
+        "Numerische Garantie und Geltungsbereich",
+        "Quellen und Lizenzen",
+        "Offene Lücken",
+        "Reviewbarer Commit oder PR; keine Veröffentlichung ohne Auftrag"
+      ],
+      "prompt": "Du bearbeitest SC-25: Integration Qualität und Freigaben.\nLies MASTERPLAN.md, tasks.json, requirements.csv und die aktuellen AGENTS.md-Regeln. Prüfe den aktuellen Commit gegen 981fad14e0b90a7906a02f29785a6d0eb214fee6; Unterschiede zuerst dokumentieren. Die Ausgangsreferenz wurde statisch untersucht, nicht gebaut.\nArbeite erst nach Freigabe der Abhängigkeiten SC-00, SC-01, SC-02 durch den Integrator. Nutze eigenes Worktree und eigenes CARGO_TARGET_DIR. Eigene Pfade: Cargo.toml, Cargo.lock, xtask/src/layers.rs, crates/engine/src/catalog.rs, crates/engine/src/cmd/solvercraft/mod.rs, crates/ui-egui/src/solvercraft/mod.rs, docs/solvercraft/releases/. Gemeinsame Registrierungen und Verträge nicht eigenmächtig ändern.\nLieferumfang:\n- Zentrale Registrierungen und Integrationen besitzen; nur grüne überprüfte Paketstände übernehmen.\n- Je Release math-, UI-, WASM-, Persistenz-, Ressourcen- und Migrationsgates ausführen.\n- Erfüllungsmatrix pflegen; vorhandene Gridcraft-Dokumente und Notices aktualisieren.\nAbnahme:\n- cargo xtask ci und sinnvolle paketspezifische Tests protokollieren.\n- Keine neuen Feature-CI-Workflows gegen Repositoryregeln.\n- R1/R2/R3/R4 jeweils nur nach vollständigen Gates; R5 braucht Nachweise aller Zielanforderungen.\nKeine erfundenen Testergebnisse oder Stubs als fertige Algorithmen. Feasible, Abbruchgrund und Optimalität auseinanderhalten. Rust/WASM und Ressourcen-/Abbruchgrenzen prüfen. Ergebnis mit Handoff-Feldern aus tasks.json zurückgeben. Diese Aufgabe autorisiert keine Nachrichten, Issues oder Veröffentlichung.",
+      "requirement_ids": [
+        "R088",
+        "R089",
+        "R090",
+        "R091",
+        "R092",
+        "R093",
+        "R094"
+      ]
+    }
+  ]
+}

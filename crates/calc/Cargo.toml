@@ -9,6 +9,8 @@ description = "GridCraft calculation engine: dependency graph, recalculation, ev
 workspace = true
 
 [dependencies]
+solvercraft-types.workspace = true
+solvercraft-math.workspace = true
 gridcraft-core = { workspace = true }
 gridcraft-formula = { workspace = true }
 gridcraft-functions = { workspace = true }

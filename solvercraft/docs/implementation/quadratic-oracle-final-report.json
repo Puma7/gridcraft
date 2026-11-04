@@ -1,0 +1,3649 @@
+{
+  "schema": "solvercraft.numpy-kkt-oracle.v1",
+  "date_utc": "2026-10-31T18:58:01.010246+00:00",
+  "seed": 20261031,
+  "python": "3.12.6",
+  "numpy": "2.2.0",
+  "platform": "Windows-11-x86_64",
+  "executable_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "cases": [
+    {
+      "case": 0,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-0",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -2.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 8.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -5.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -8.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -4.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.30000000000000004
+                }
+              ],
+              "relation": "equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 1,
+                  "coefficient": -20.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 40.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.03973509933774842,
+        0.01324503311258265
+      ],
+      "oracle_objective": 0.013245033112581586,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "6021422ffaac0c21",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "6021422ffaac0c21"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.039735099337777954,
+            0.01324503311253719
+          ],
+          "objective": 0.01324503311216296,
+          "best_bound": 0.013245033112776352,
+          "relative_gap": 6.133930169349711e-13,
+          "max_violation": 1.663823259631346e-14,
+          "statistics": {
+            "evaluations": 90,
+            "iterations": 90,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 4.1862520394619906e-13,
+      "original_max_violation": 1.6638600219831545e-14,
+      "value_error": 4.5460163411448207e-14,
+      "passed": true
+    },
+    {
+      "case": 1,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-1",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 0.25,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 2.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 2,
+                "coefficient": 9.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 9.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 9.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": 3.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 4.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -6.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 7.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -2.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -3.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 20.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 20.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 1,
+                  "coefficient": -1.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 3.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.11180030257186087,
+        -0.028668683812405536,
+        -0.37919818456883514
+      ],
+      "oracle_objective": -2.027099092284418,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "4c63aced1cc05fbe",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "4c63aced1cc05fbe"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.11180030254680004,
+            -0.028668683755009697,
+            -0.37919818452966686
+          ],
+          "objective": -2.0270990919642684,
+          "best_bound": -2.0270990922917353,
+          "relative_gap": 1.438088239373746e-10,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 3.201496845406382e-10,
+      "original_max_violation": 0.0,
+      "value_error": 5.739583808228588e-11,
+      "passed": true
+    },
+    {
+      "case": 2,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-2",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 0.5,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -2.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -5.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 1.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 5.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 6.75
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.30000000000000004
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.2
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 1,
+                  "coefficient": 0.30000000000000004
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.4
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.2
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.1
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.22857142857142865,
+        0.2857142857142857
+      ],
+      "oracle_objective": -0.44285714285714284,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "35071eb2f4047d7e",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "35071eb2f4047d7e"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.2285714266440475,
+            0.28571428647623603
+          ],
+          "objective": -0.44285714285714284,
+          "best_bound": -0.4428571428592869,
+          "relative_gap": 2.1440627051561023e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 70,
+            "iterations": 70,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 5.551115123125783e-17,
+      "original_max_violation": 0.0,
+      "value_error": 1.9273811435738253e-09,
+      "passed": true
+    },
+    {
+      "case": 3,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-3",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 0.75,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 8.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 10.0
+              },
+              {
+                "variable": 2,
+                "coefficient": 3.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -13.75
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 3.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -12.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -4.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": 10.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": -7.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 3.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -1.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 4.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -2.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 4.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -2.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 3.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.43670264965652567,
+        2.4999999999999987,
+        2.2924435721295375
+      ],
+      "oracle_objective": 24.772264474975454,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "112042ed957c8648",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "112042ed957c8648"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.43670264942844694,
+            2.499999998533193,
+            2.2924435711319875
+          ],
+          "objective": 24.772264463440013,
+          "best_bound": 24.772264475126534,
+          "relative_gap": 4.864870340641179e-10,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 130,
+            "iterations": 130,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.1535448152244498e-08,
+      "original_max_violation": 0.0,
+      "value_error": 1.4668057879418939e-09,
+      "passed": true
+    },
+    {
+      "case": 4,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-4",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 1.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 6.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 8.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 2.75
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 2.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 4.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.2
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.30000000000000004
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.09999999999999978,
+        -0.3
+      ],
+      "oracle_objective": -0.4500000000000013,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "b0bb0691e5c3032a",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "b0bb0691e5c3032a"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.0999999999998031,
+            -0.300000000000398
+          ],
+          "objective": -0.45000000000342033,
+          "best_bound": -0.45000000000453877,
+          "relative_gap": 7.713370172440564e-13,
+          "max_violation": 9.97105176203661e-13,
+          "statistics": {
+            "evaluations": 150,
+            "iterations": 150,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 3.419042826635632e-12,
+      "original_max_violation": 9.972023207183156e-13,
+      "value_error": 3.980149543281186e-13,
+      "passed": true
+    },
+    {
+      "case": 5,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-5",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 1.25,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 6.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 2,
+                "coefficient": -1.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 3.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 3.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -6.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 8.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -16.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 8.75
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -20.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -10.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -20.0
+                }
+              ],
+              "relation": "equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.30000000000000004
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.2
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.5240017945266936,
+        0.38582323912068195,
+        0.3310901749663526
+      ],
+      "oracle_objective": -0.2946388515029166,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "4cea86001cc510c6",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "4cea86001cc510c6"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.5240017945267323,
+            0.3858232391207793,
+            0.3310901749664154
+          ],
+          "objective": -0.29463885150278774,
+          "best_bound": -0.2946388515118097,
+          "relative_gap": 5.8407791140814574e-12,
+          "max_violation": 1.454392162258955e-12,
+          "statistics": {
+            "evaluations": 80,
+            "iterations": 80,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.287303597052869e-13,
+      "original_max_violation": 1.453948073049105e-12,
+      "value_error": 9.736655925962623e-14,
+      "passed": true
+    },
+    {
+      "case": 6,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-6",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 1.5,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -5.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -7.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -5.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -6.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.1
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.4
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.14141414141414138,
+        -0.585858585858586
+      ],
+      "oracle_objective": 3.9040404040404044,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "5a5dc50bf3225272",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "5a5dc50bf3225272"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.1414141417325033,
+            -0.5858585861769477
+          ],
+          "objective": 3.904040404040404,
+          "best_bound": 3.904040404045871,
+          "relative_gap": 2.2741640503475507e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 20,
+            "iterations": 20,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 4.440892098500626e-16,
+      "original_max_violation": 0.0,
+      "value_error": 3.183619201596599e-10,
+      "passed": true
+    },
+    {
+      "case": 7,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-7",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 1.75,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 8.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 9.0
+              },
+              {
+                "variable": 2,
+                "coefficient": -2.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 6.75
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 9.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -9.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 5.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -10.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -30.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 40.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 3.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 3.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 3.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.5925925925925926,
+        -1.5,
+        -1.5
+      ],
+      "oracle_objective": -8.87037037037037,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "a2a49669da57934f",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "a2a49669da57934f"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.5925925926933198,
+            -1.499999999921194,
+            -1.5000000000667444
+          ],
+          "objective": -8.870370370431152,
+          "best_bound": -8.870370370438645,
+          "relative_gap": 7.055001744050092e-13,
+          "max_violation": 6.674438779441516e-11,
+          "statistics": {
+            "evaluations": 110,
+            "iterations": 110,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 6.077982561691897e-11,
+      "original_max_violation": 6.674438779441516e-11,
+      "value_error": 1.0072720435516658e-10,
+      "passed": true
+    },
+    {
+      "case": 8,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-8",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 2.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -1.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 3.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 5.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -10.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.2
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -20.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -1.3333333333333333,
+        -1.5
+      ],
+      "oracle_objective": -0.020833333333332593,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "3c1d79e292d7746f",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "3c1d79e292d7746f"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.3333333333534416,
+            -1.5000000000092688
+          ],
+          "objective": -0.02083333333874014,
+          "best_bound": -0.020833333357331174,
+          "relative_gap": 9.199623880444898e-12,
+          "max_violation": 9.268807943385582e-12,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 5.404787728480187e-12,
+      "original_max_violation": 9.268807943385582e-12,
+      "value_error": 2.0108359422010835e-11,
+      "passed": true
+    },
+    {
+      "case": 9,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-9",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 2.25,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 10.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -1.0
+              },
+              {
+                "variable": 2,
+                "coefficient": -6.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -7.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 1.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -2.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -7.25
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -2.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": -5.75
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 4.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.2
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.1
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -20.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.34414853713428356,
+        0.22805701425356337,
+        -0.14122280570142534
+      ],
+      "oracle_objective": 5.200440735183796,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "493d1c1aac07444c",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "493d1c1aac07444c"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.3441485371345,
+            0.2280570142534978,
+            -0.14122280570168988
+          ],
+          "objective": 5.200440735186692,
+          "best_bound": 5.200440735193669,
+          "relative_gap": 2.3644594227298427e-12,
+          "max_violation": 1.5740186931623157e-11,
+          "statistics": {
+            "evaluations": 90,
+            "iterations": 90,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 2.8963498266421084e-12,
+      "original_max_violation": 1.574029795392562e-11,
+      "value_error": 2.6453839119255917e-13,
+      "passed": true
+    },
+    {
+      "case": 10,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-10",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 2.5,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 8.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -10.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 4.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 2.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 6.75
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 20.0
+                }
+              ],
+              "relation": "equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 2.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 20.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -20.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.0,
+        0.7407407407407407
+      ],
+      "oracle_objective": -1.2037037037037033,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "924b95a2407fe830",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "924b95a2407fe830"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.227086331367757e-13,
+            0.7407407407407596
+          ],
+          "objective": -1.2037037037048672,
+          "best_bound": -1.2037037037121254,
+          "relative_gap": 1.959712392358688e-12,
+          "max_violation": 2.4541726627355144e-12,
+          "statistics": {
+            "evaluations": 150,
+            "iterations": 150,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.1639578190170141e-12,
+      "original_max_violation": 2.4541726627355144e-12,
+      "value_error": 1.227086331367757e-13,
+      "passed": true
+    },
+    {
+      "case": 11,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-11",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 2.75,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 7.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -3.0
+              },
+              {
+                "variable": 2,
+                "coefficient": -2.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 3.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -1.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -5.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 1.25
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -2.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 1,
+                  "coefficient": -1.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 3.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 10.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 30.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -10.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -10.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -1.2639225181598066,
+        0.4309927360774815,
+        -0.3292978208232448
+      ],
+      "oracle_objective": -1.9909200968523013,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "cf05ebc73a41c9e7",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "cf05ebc73a41c9e7"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.2639225179504725,
+            0.4309927364130852,
+            -0.3292978206466455
+          ],
+          "objective": -1.9909200968523002,
+          "best_bound": -1.9909200968688907,
+          "relative_gap": 3.4993807873993873e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.3322676295501878e-15,
+      "original_max_violation": 0.0,
+      "value_error": 3.356037114876642e-10,
+      "passed": true
+    },
+    {
+      "case": 12,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-12",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 3.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -4.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -4.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -6.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -2.75
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.2
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.30000000000000004
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.30000000000000004
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.8888888888888891,
+        -1.2222222222222223
+      ],
+      "oracle_objective": 7.830246913580247,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "2e698cff6fd07629",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "2e698cff6fd07629"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.8888888888878627,
+            -1.2222222222240493
+          ],
+          "objective": 7.83024691358422,
+          "best_bound": 7.830246913598358,
+          "relative_gap": 2.9269775101940453e-12,
+          "max_violation": 8.55993054216242e-11,
+          "statistics": {
+            "evaluations": 100,
+            "iterations": 100,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 3.97282207131866e-12,
+      "original_max_violation": 8.560263609069807e-11,
+      "value_error": 1.8269830093231576e-12,
+      "passed": true
+    },
+    {
+      "case": 13,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-13",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 3.25,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -1.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 4.75
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": -4.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": 5.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 2.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -1.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -10.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -10.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 20.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 20.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -0.1
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.2
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.4
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.20740063956144358,
+        0.13522156235724075,
+        -0.0858839652809502
+      ],
+      "oracle_objective": 3.146299680219278,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "187575cfc8ce7d09",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "187575cfc8ce7d09"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.20740063987666102,
+            0.13522156248161132,
+            -0.08588396473883142
+          ],
+          "objective": 3.146299680219278,
+          "best_bound": 3.146299680218754,
+          "relative_gap": 5.236228117766473e-13,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 20,
+            "iterations": 20,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 0.0,
+      "original_max_violation": 0.0,
+      "value_error": 5.421187804222072e-10,
+      "passed": true
+    },
+    {
+      "case": 14,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-14",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 3.5,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -10.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -9.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 2.75
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 4.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 2.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 10.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 40.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.30000000000000004
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 10.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 40.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        1.0285714285714287,
+        1.0857142857142854
+      ],
+      "oracle_objective": -6.5285714285714285,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "520e907df29fce1f",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "520e907df29fce1f"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            1.0285714291451715,
+            1.0857142850310009
+          ],
+          "objective": -6.5285714285714285,
+          "best_bound": -6.528571428594235,
+          "relative_gap": 2.274166926311334e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 0.0,
+      "original_max_violation": 0.0,
+      "value_error": 6.832845400595033e-10,
+      "passed": true
+    },
+    {
+      "case": 15,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-15",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 3.75,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 5.0
+              },
+              {
+                "variable": 2,
+                "coefficient": 9.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -1.75
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -4.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -7.25
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": -9.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": -7.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 0.1
+                }
+              ],
+              "relation": "equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -10.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 30.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 20.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 40.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -3.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.06060606060606044,
+        0.3030303030303029,
+        0.3030303030303031
+      ],
+      "oracle_objective": 5.840909090909091,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "c8b0391aa4deb3ba",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "c8b0391aa4deb3ba"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.06060606060605418,
+            0.30303030303030287,
+            0.30303030303031114
+          ],
+          "objective": 5.840909090909109,
+          "best_bound": 5.840909090915918,
+          "relative_gap": 3.2565834087259374e-12,
+          "max_violation": 8.271161533457416e-16,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.7763568394002505e-14,
+      "original_max_violation": 8.257283745649602e-16,
+      "value_error": 8.049116928532385e-15,
+      "passed": true
+    },
+    {
+      "case": 16,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-16",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 4.0,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -7.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 9.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 1.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 4.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -10.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 30.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 1.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        2.5,
+        -1.5000000000000002
+      ],
+      "oracle_objective": -22.375,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "232b55a315a55fa4",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "232b55a315a55fa4"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            2.4999999999686495,
+            -1.5000000000769538
+          ],
+          "objective": -22.375000000038483,
+          "best_bound": -22.37500000007362,
+          "relative_gap": 1.3321834420185357e-12,
+          "max_violation": 7.695377668426318e-11,
+          "statistics": {
+            "evaluations": 140,
+            "iterations": 140,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 3.8482994568767026e-11,
+      "original_max_violation": 7.695377668426318e-11,
+      "value_error": 7.695355463965825e-11,
+      "passed": true
+    },
+    {
+      "case": 17,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-17",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 4.25,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -5.0
+              },
+              {
+                "variable": 2,
+                "coefficient": 9.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 3.25
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": -2.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 4.25
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": 4.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 4.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 20.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 20.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -30.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 20.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.1
+                },
+                {
+                  "variable": 1,
+                  "coefficient": 0.1
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.4
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -1.0470219435736676,
+        0.7210031347962382,
+        -0.884012539184953
+      ],
+      "oracle_objective": -3.665360501567398,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "bb75f12c02360a4d",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "bb75f12c02360a4d"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.0470219435831714,
+            0.7210031348330592,
+            -0.8840125391803099
+          ],
+          "objective": -3.6653605015876605,
+          "best_bound": -3.6653605016003734,
+          "relative_gap": 1.6060541675388765e-12,
+          "max_violation": 4.07053279971592e-10,
+          "statistics": {
+            "evaluations": 190,
+            "iterations": 190,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 2.0262014288618957e-11,
+      "original_max_violation": 4.070521697485674e-10,
+      "value_error": 3.6820990700903167e-11,
+      "passed": true
+    },
+    {
+      "case": 18,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-18",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "maximize",
+            "offset": 4.5,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": -8.0
+              },
+              {
+                "variable": 1,
+                "coefficient": 8.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": -9.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 6.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": -1.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 2.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 2.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -2.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 1.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -3.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        0.3783783783783784,
+        2.5
+      ],
+      "oracle_objective": 18.011824324324323,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "6eb25542d5ef6e74",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "6eb25542d5ef6e74"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.378378378377301,
+            2.4999999999960636
+          ],
+          "objective": 18.0118243243085,
+          "best_bound": 18.011824324362966,
+          "relative_gap": 4.0309047649950785e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 50,
+            "iterations": 50,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.582378672537743e-11,
+      "original_max_violation": 0.0,
+      "value_error": 3.936406756110955e-12,
+      "passed": true
+    },
+    {
+      "case": 19,
+      "request": {
+        "model": {
+          "schema_version": 1,
+          "name": "numpy-kkt-19",
+          "variables": [
+            {
+              "name": "x0",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x1",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            },
+            {
+              "name": "x2",
+              "kind": "continuous",
+              "lower": -1.5,
+              "upper": 2.5
+            }
+          ],
+          "objective": {
+            "direction": "minimize",
+            "offset": 4.75,
+            "linear": [
+              {
+                "variable": 0,
+                "coefficient": 1.0
+              },
+              {
+                "variable": 1,
+                "coefficient": -9.0
+              },
+              {
+                "variable": 2,
+                "coefficient": 10.0
+              }
+            ],
+            "quadratic": [
+              {
+                "left": 0,
+                "right": 0,
+                "coefficient": 7.25
+              },
+              {
+                "left": 0,
+                "right": 1,
+                "coefficient": 1.0
+              },
+              {
+                "left": 0,
+                "right": 2,
+                "coefficient": 7.0
+              },
+              {
+                "left": 1,
+                "right": 1,
+                "coefficient": 8.75
+              },
+              {
+                "left": 1,
+                "right": 2,
+                "coefficient": 9.0
+              },
+              {
+                "left": 2,
+                "right": 2,
+                "coefficient": 5.25
+              }
+            ]
+          },
+          "constraints": [
+            {
+              "name": "row0",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": 0.30000000000000004
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.2
+                },
+                {
+                  "variable": 2,
+                  "coefficient": -0.30000000000000004
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.0
+            },
+            {
+              "name": "row1",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -30.0
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -20.0
+                },
+                {
+                  "variable": 2,
+                  "coefficient": 10.0
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 10.0
+            },
+            {
+              "name": "row2",
+              "terms": [
+                {
+                  "variable": 0,
+                  "coefficient": -0.2
+                },
+                {
+                  "variable": 1,
+                  "coefficient": -0.2
+                }
+              ],
+              "relation": "less_equal",
+              "rhs": 0.1
+            }
+          ]
+        },
+        "options": {
+          "seed": "42",
+          "max_iterations": 100000,
+          "max_evaluations": 100000,
+          "feasibility_tolerance": 1e-07,
+          "optimality_tolerance": 1e-08
+        }
+      },
+      "oracle_values": [
+        -0.21772259065895286,
+        1.5052913785805,
+        -1.2212501763792867
+      ],
+      "oracle_objective": -8.238923380838157,
+      "actual": {
+        "manifest": {
+          "schema_version": 1,
+          "solvercraft_version": "0.1.0",
+          "model_fingerprint": "7f12ec696975fe01",
+          "fingerprint_algorithm": "fnv1a64-diagnostic-v1",
+          "options": {
+            "method": "auto",
+            "max_evaluations": 100000,
+            "max_iterations": 100000,
+            "max_nodes": 10000,
+            "max_memory_bytes": 268435456,
+            "feasibility_tolerance": 1e-07,
+            "integrality_tolerance": 1e-07,
+            "optimality_tolerance": 1e-08,
+            "relative_gap": 0.0,
+            "seed": "42"
+          },
+          "platform": "x86_64-windows",
+          "entrypoint": "solve",
+          "snapshot": {
+            "kind": "diagnostic_request_fingerprint",
+            "value": "7f12ec696975fe01"
+          },
+          "actual_engine": "solvercraft-proximal-admm-qp-0.2",
+          "result_location": "SolveRun.result"
+        },
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.2177225906589431,
+            1.5052913785805073,
+            -1.2212501763793022
+          ],
+          "objective": -8.238923380838347,
+          "best_bound": -8.238923380907028,
+          "relative_gap": 5.287663867470995e-12,
+          "max_violation": 6.303389132481529e-15,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2",
+          "warnings": [
+            "Convex QP uses checked sufficient curvature conditions and floating-point primal/dual certificates; no exact rational certificate is claimed."
+          ]
+        }
+      },
+      "objective_error": 1.900701818158268e-13,
+      "original_max_violation": 6.304790031225385e-15,
+      "value_error": 1.554312234475219e-14,
+      "passed": true
+    }
+  ],
+  "passed": 20,
+  "failed": 0
+}

@@ -570,6 +570,7 @@ impl Session {
     pub fn close_document(&mut self, i: usize) {
         if i < self.docs.len() {
             let d = self.docs.remove(i);
+            cmd::solvercraft::document_closed(d.uid);
             self.groups.retain(|g| g.doc != d.uid);
             // A macro being debugged in this workbook ends with it; its group just went.
             if self.macro_debug.as_ref().is_some_and(|m| m.doc == d.uid) {

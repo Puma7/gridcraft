@@ -151,6 +151,31 @@ fn sumproduct(a: &[Arg], _c: &mut dyn Ctx) -> R<Value> {
     num_val(total)
 }
 
+fn quadproduct(args: &[Arg], _ctx: &mut dyn Ctx) -> R<Value> {
+    let [variables, linear, quadratic] = args else { return Err(CellError::Value) };
+    let variables = as_array(&variables.value);
+    let linear = as_array(&linear.value);
+    let quadratic = as_array(&quadratic.value);
+    let n = variables.data.len();
+    if n == 0 || linear.data.len() != n || n.checked_mul(n) != Some(quadratic.data.len()) {
+        return Err(CellError::Value);
+    }
+    let read = |value: &Value| match value {
+        Value::Number(n) => Ok(*n),
+        Value::Error(error) => Err(*error),
+        _ => Err(CellError::Value),
+    };
+    let variables = variables.data.iter().map(read).collect::<R<Vec<_>>>()?;
+    let mut total = 0.0;
+    for ((x, a), row) in variables.iter().zip(linear.data.iter()).zip(quadratic.data.chunks_exact(n)) {
+        total += x * read(a)?;
+        for (y, coefficient) in variables.iter().zip(row) {
+            total += (x * y) * read(coefficient)?;
+        }
+    }
+    num_val(total)
+}
+
 fn pair_sum(a: &[Arg], f: fn(f64, f64) -> f64) -> R<Value> {
     let x = as_array(&crate::util::arg(a, 0)?.value);
     let y = as_array(&crate::util::arg(a, 1)?.value);
@@ -686,6 +711,7 @@ pub(crate) fn specs() -> Vec<FnSpec> {
             sumproduct
         ),
         f!("SUMX2MY2", 2, 2, MathTrig, A, "SUMX2MY2(array_x, array_y)", "Sums the differences of squares of matching elements.", sumx2my2),
+        f!("QUADPRODUCT", 3, 3, MathTrig, A, "QUADPRODUCT(variables, linear, quadratic)", "Evaluates a linear plus quadratic form.", quadproduct),
         f!("SUMX2PY2", 2, 2, MathTrig, A, "SUMX2PY2(array_x, array_y)", "Sums the sums of squares of matching elements.", sumx2py2),
         f!("SUMXMY2", 2, 2, MathTrig, A, "SUMXMY2(array_x, array_y)", "Sums the squared differences of matching elements.", sumxmy2),
         f!("PRODUCT", 1, VAR, MathTrig, A, "PRODUCT(number1, [number2], ...)", "Multiplies all the numbers in the arguments.", product),

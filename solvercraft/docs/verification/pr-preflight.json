@@ -1,0 +1,32 @@
+{
+  "base_commit": "981fad14e0b90a7906a02f29785a6d0eb214fee6",
+  "status": "draft integration",
+  "standalone_core": {
+    "tests_passed": 136,
+    "tests_failed": 0,
+    "tests_ignored": 0,
+    "format": "passed",
+    "clippy": "passed",
+    "release_cli": "passed",
+    "linux_target_compile": "passed; no Linux execution"
+  },
+  "layer_checker": {
+    "tests_passed": 12,
+    "tests_failed": 0,
+    "scope": "Actual xtask/src/layers.rs compiled and tested through an isolated harness"
+  },
+  "nested_workspace": {
+    "result": "Parent exclusion required and verified in an isolated Cargo metadata reproduction"
+  },
+  "parent_lockfile": {
+    "local_packages_added": 7,
+    "registry_versions": "unchanged from parent lockfile",
+    "generation": "new local package entries wired structurally; full parent Cargo resolution remains pending"
+  },
+  "not_executed": [
+    "full Gridcraft cargo xtask ci",
+    "four engine integration tests",
+    "visual UI validation",
+    "actual WASM execution"
+  ]
+}

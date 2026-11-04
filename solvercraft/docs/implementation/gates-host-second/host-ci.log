@@ -1,0 +1,3080 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3g2z6s1kh3fub\s-hnq72o2emc-1poqhsp-working`
+
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-030rjxmg1y0tz\s-hnq72p3nf8-0q3hrvr-working`
+
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zqc9ppt422l1\s-hnq72pgsnl-1yqrrre-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-350bmaa4ca6hf\s-hnq72ogzwd-1cteczx-working`
+
+warning: `gridcraft-calc` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-0pyqyjmst38wn\s-hnq72pc9gc-0cskahe-working`
+
+warning: `gridcraft-chart` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-2a3azcatsrut5\s-hnq78lkzf1-09v0v5n-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_engines-2id6yqnez11z5\s-hnq78lnpfq-0ybjg84-working`
+
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-1z1cxc31uj7au\s-hnq78m1jci-1fclgid-working`
+
+warning: `solvercraft-math` (lib) generated 1 warning
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft-2x7o8ppkpoa51\s-hnq78n7lyo-1ft2hp9-working`
+
+warning: `solvercraft-engines` (lib) generated 1 warning
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+warning: `solvercraft` (lib) generated 1 warning
+   Compiling xtask v0.14.2 ($CHECKOUT_ROOT\xtask)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 58.26s
+     Running `$BUILD_OUTPUT\host-validation\debug\xtask.exe ci`
+
+=== ci: i18n-report ===
+i18n-report: 1169 interface strings across 18 catalogs; a string a catalog lacks shows in English
+  cs: 621 missing
+      " (password)"
+      " (password, unlocked)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      "Add-in and Automation"
+      "Agent Control"
+      … and 571 more
+  de: 714 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 664 more
+  el: 193 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Account"
+      "All Borders"
+      "All sheets"
+      "Apply"
+      "Arrow"
+      "AutoSave: save after every change (workbooks saved to a file)"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculation"
+      "Check Cell"
+      … and 143 more
+  es: 696 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 646 more
+  fr: 726 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 676 more
+  it: 193 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Account"
+      "All Borders"
+      "All sheets"
+      "Apply"
+      "Arrow"
+      "AutoSave: save after every change (workbooks saved to a file)"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculation"
+      "Check Cell"
+      … and 143 more
+  ja: 51 missing
+      "Calculated Field…"
+      "Choose fields to add to report:"
+      "Compact"
+      "Copies"
+      "End date:"
+      "Filters"
+      "Finding printers…"
+      "Forecast start (a date or number in the history; blank: after the last point):"
+      "Grayscale"
+      "Group by Months"
+      "Group by Quarters"
+      "Group by Years"
+      "Header (&L left, &C center, &R right; &P page, &N pages, &D date, &A sheet):"
+      "Move to Column Labels"
+      "Move to Report Filter"
+      "Move to Row Labels"
+      "Move to Values"
+      "No printers found. Configure a system printer or export a PDF."
+      "One-sided"
+      "Options|Editing"
+      "PivotTable Fields"
+      "Print failed: the printing worker stopped."
+      "Print failed: {error}"
+      "Print job submitted."
+      "Print job submitted: {receipt}"
+      "Printer"
+      "Printer default"
+      "Printer discovery failed."
+      "Protect workbook for: Structure (sheets can't be added, moved, renamed, hidden or deleted)."
+      "Refresh"
+      "Refresh printers"
+      "Remove Field"
+      "Report Layout"
+      "Select a printer"
+      "Show as % of Grand Total"
+      "Show as No Calculation"
+      "Show as Rank"
+      "Show as Running Total"
+      "Source:"
+      "Submitting print job…"
+      "Summarize by Average"
+      "Summarize by Count"
+      "Summarize by Max"
+      "Summarize by Min"
+      "Summarize by Sum"
+      "Tabular"
+      "Two-sided printing"
+      "Two-sided: long edge"
+      "Two-sided: short edge"
+      "Use a field's menu to move it between areas:"
+      … and 1 more
+  ko: 726 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 676 more
+  nl: 644 missing
+      " (password)"
+      " (password, unlocked)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "About GridCraft"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Account"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 594 more
+  pl: 193 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Account"
+      "All Borders"
+      "All sheets"
+      "Apply"
+      "Arrow"
+      "AutoSave: save after every change (workbooks saved to a file)"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculation"
+      "Check Cell"
+      … and 143 more
+  pt: 195 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "All Borders"
+      "Apply"
+      "Arrow"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculated Field…"
+      "Calculation"
+      "Check Cell"
+      "Choose fields to add to report:"
+      "Clear Rules"
+      … and 145 more
+  ro: 148 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "All Borders"
+      "Apply"
+      "Arrow"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculation"
+      "Check Cell"
+      "Clear Rules"
+      "Column"
+      "Comma [0]"
+      … and 98 more
+  ru: 726 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 676 more
+  sr: 726 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 676 more
+  tr: 755 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "About GridCraft"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Account"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      … and 705 more
+  uk: 193 missing
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Account"
+      "All Borders"
+      "All sheets"
+      "Apply"
+      "Arrow"
+      "AutoSave: save after every change (workbooks saved to a file)"
+      "AutoSum (⌘⇧T)"
+      "Bad"
+      "Bar"
+      "Between…"
+      "Blue"
+      "Blue - White - Red"
+      "Bold (⌘B)"
+      "Bottom Border"
+      "Bottom Double Border"
+      "Box & Whisker"
+      "Bubble"
+      "Calculation"
+      "Check Cell"
+      … and 143 more
+  vi: 755 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "About GridCraft"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Account"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      … and 705 more
+  zh: 726 missing
+      " (password)"
+      " (password, unlocked)"
+      "$ English (United States)"
+      "'{file}' is protected."
+      "(No suggestions)"
+      "(unnamed)"
+      "+ Add Level"
+      "100% Stacked Area"
+      "100% Stacked Bar"
+      "100% Stacked Column"
+      "20% - Accent1"
+      "20% - Accent2"
+      "20% - Accent3"
+      "20% - Accent4"
+      "20% - Accent5"
+      "20% - Accent6"
+      "3 Arrows"
+      "3 Symbols"
+      "3 Traffic Lights"
+      "4 Ratings"
+      "40% - Accent1"
+      "40% - Accent2"
+      "40% - Accent3"
+      "40% - Accent4"
+      "40% - Accent5"
+      "40% - Accent6"
+      "5 Arrows"
+      "5 Quarters"
+      "60% - Accent1"
+      "60% - Accent2"
+      "60% - Accent3"
+      "60% - Accent4"
+      "60% - Accent5"
+      "60% - Accent6"
+      "A Date Occurring…"
+      "A to Z"
+      "About"
+      "Accent1"
+      "Accent2"
+      "Accent3"
+      "Accent4"
+      "Accent5"
+      "Accent6"
+      "Accessibility"
+      "Action"
+      "Action Journal"
+      "Add"
+      "Add Chart Element"
+      "Add subtotal to (columns, e.g. C,D):"
+      "Add to Dictionary"
+      … and 676 more
+  es function help: 22 rows, 0 keyed by English the function catalog no longer has
+
+=== ci: fmt ===
+$ cargo fmt --all -- --check
+Diff in \\?\$CHECKOUT_ROOT\crates\core\src\addr.rs:477:
+         Ok(())
+     }
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\cmd\solver\lp.rs:489:
+     }
+     Ok(((cf, f_const), rows))
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\cmd\solver\model.rs:460:
+     }
+     out
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\cmd\solver\nlp.rs:195:
+     }
+     Outcome::Solved(x, phi, (converged || viol <= PRECISION * scale) && !out_of_budget)
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\cmd\solver\problem.rs:142:
+     }
+     Problem { lo, hi, integer, rows }
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\cmd\solver.rs:304:
+ 
+ #[cfg(test)]
+ mod tests;
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\engine\src\lib.rs:1111:
+ 
+ #[cfg(test)]
+ mod tests;
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\formula\src\ast.rs:353:
+ pub(crate) fn clamp_anchor(row: i64, col: i64) -> Option<(u32, u32)> {
+     if (0..MAX_ROWS as i64).contains(&row) && (0..MAX_COLS as i64).contains(&col) { Some((row as u32, col as u32)) } else { None }
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\formula\src\lib.rs:41:
+ 
+ #[cfg(test)]
+ mod tests;
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\model\src\cell.rs:100:
+         }
+     }
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\model\src\sheet.rs:642:
+         Ok(Vec::<(CellRef, Arc<CellPicture>)>::deserialize(deserializer)?.into_iter().collect())
+     }
+ }
+-
+ 
+Diff in \\?\$CHECKOUT_ROOT\crates\model\src\workbook.rs:484:
+         assert!(wb.check_sheet_name("Budget 2026", None).is_ok());
+     }
+ }
+-
+ 
+Diff in \\?\$SDK_ROOT\crates\cli\src\main.rs:182:
+             {
+                 let config: solvercraft::server::ServerConfig = read(args.get(2))?;
+                 let server = solvercraft::server::Server::bind(config)?;
+-                write(&serde_json::json!({"schema_version":1,"service":"solvercraft_json_lines","address":server.address()?.to_string(),"authentication":"required"}))?;
++                write(
++                    &serde_json::json!({"schema_version":1,"service":"solvercraft_json_lines","address":server.address()?.to_string(),"authentication":"required"}),
++                )?;
+                 server.run(&std::sync::atomic::AtomicBool::new(false))
+             }
+             #[cfg(target_arch = "wasm32")]
+Diff in \\?\$SDK_ROOT\crates\cli\src\main.rs:189:
+-            { Err(fail("unsupported_host", "The TCP service requires a native host")) }
++            {
++                Err(fail("unsupported_host", "The TCP service requires a native host"))
++            }
+         }
+         Some("solve") => {
+             let request: SolveRequest = read(args.get(2))?;
+Diff in \\?\$SDK_ROOT\crates\math\src\copula.rs:1:
+ //! Explicit copula semantics: Gaussian matrices are latent Pearson correlations.
+-use crate::{
+-    distributions::inverse_normal,
+-    extended::student_cdf,
+-    special,
+-};
++use crate::{distributions::inverse_normal, extended::student_cdf, special};
+ use serde::{Deserialize, Serialize};
+ use solvercraft_types::{Distribution, Result, SolverError};
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
+Diff in \\?\$SDK_ROOT\crates\math\src\copula.rs:143:
+                     *value = open(if let DependenceSpec::StudentT { degrees_of_freedom, .. } = self.spec {
+                         student_cdf(z, degrees_of_freedom)?
+                     } else {
+-                            special::normal_cdf(z)?
++                        special::normal_cdf(z)?
+                     });
+                 }
+             }
+Diff in \\?\$SDK_ROOT\crates\math\src\special.rs:82:
+     Err(err())
+ }
+ /// Upper regularized gamma, evaluated directly in the upper tail to avoid 1-P cancellation.
+-pub fn gamma_q(a:f64,x:f64)->Result<f64>{
+-    if !a.is_finite()||a<=0.0||x.is_nan()||x<0.0{return Err(err());}
+-    if x==f64::INFINITY{return Ok(0.0);}if x<a+1.0{return Ok(1.0-gamma_p(a,x)?);}
+-    let factor=(-x+a*x.ln()-log_gamma(a)?).exp();const TINY:f64=1e-300;
+-    let mut b=x+1.0-a;let mut c=1.0/TINY;let mut d=1.0/b;let mut h=d;
+-    for n in 1..=20_000{let nf=n as f64;let an=-nf*(nf-a);b+=2.0;d=an*d+b;if d.abs()<TINY{d=TINY.copysign(d);}c=b+an/c;if c.abs()<TINY{c=TINY.copysign(c);}d=1.0/d;let delta=d*c;h*=delta;if (delta-1.0).abs()<EPS{return Ok((factor*h).clamp(0.0,1.0));}}Err(err())
++pub fn gamma_q(a: f64, x: f64) -> Result<f64> {
++    if !a.is_finite() || a <= 0.0 || x.is_nan() || x < 0.0 {
++        return Err(err());
++    }
++    if x == f64::INFINITY {
++        return Ok(0.0);
++    }
++    if x < a + 1.0 {
++        return Ok(1.0 - gamma_p(a, x)?);
++    }
++    let factor = (-x + a * x.ln() - log_gamma(a)?).exp();
++    const TINY: f64 = 1e-300;
++    let mut b = x + 1.0 - a;
++    let mut c = 1.0 / TINY;
++    let mut d = 1.0 / b;
++    let mut h = d;
++    for n in 1..=20_000 {
++        let nf = n as f64;
++        let an = -nf * (nf - a);
++        b += 2.0;
++        d = an * d + b;
++        if d.abs() < TINY {
++            d = TINY.copysign(d);
++        }
++        c = b + an / c;
++        if c.abs() < TINY {
++            c = TINY.copysign(c);
++        }
++        d = 1.0 / d;
++        let delta = d * c;
++        h *= delta;
++        if (delta - 1.0).abs() < EPS {
++            return Ok((factor * h).clamp(0.0, 1.0));
++        }
++    }
++    Err(err())
+ }
+ /// CDF for new samplers; the legacy normal family keeps its frozen approximation/streams.
+-pub fn normal_cdf(x:f64)->Result<f64>{
+-    if x.is_nan(){return Err(err());}if x==0.0{return Ok(0.5);}let tail=0.5*gamma_q(0.5,0.5*x*x)?;Ok(if x>0.0{1.0-tail}else{tail})
++pub fn normal_cdf(x: f64) -> Result<f64> {
++    if x.is_nan() {
++        return Err(err());
++    }
++    if x == 0.0 {
++        return Ok(0.5);
++    }
++    let tail = 0.5 * gamma_q(0.5, 0.5 * x * x)?;
++    Ok(if x > 0.0 { 1.0 - tail } else { tail })
+ }
+ fn beta_fraction(a: f64, b: f64, x: f64) -> Result<f64> {
+     const TINY: f64 = 1e-300;
+Diff in \\?\$SDK_ROOT\crates\simulation\tests\advanced.rs:1:
+-#![allow(clippy::unwrap_used,clippy::panic)]
++#![allow(clippy::unwrap_used, clippy::panic)]
+ use solvercraft_simulation::{
+     advanced::{AdvancedSimulationOptions, DependenceSpec, InvalidTrialPolicy, Reflection, SamplerSpec, StoppingRule, simulate_advanced},
+     simulate,
+Diff in \\?\$SDK_ROOT\crates\simulation\tests\fitting.rs:1:
+-#![allow(clippy::unwrap_used,clippy::panic)]
++#![allow(clippy::unwrap_used, clippy::panic)]
+ use solvercraft_math::quantile;
+ use solvercraft_simulation::fitting::*;
+ use solvercraft_types::{Distribution as D, NoControl, RunControl};
+Diff in \\?\$SDK_ROOT\crates\simulation\tests\fitting.rs:19:
+     close(r.aic, 4.0 - 2.0 * ll, 1e-13);
+     close(r.bic, 2.0 * 3.0_f64.ln() - 2.0 * ll, 1e-13);
+     let r = fit_distribution(&[1.0, 0.0, 1.0, 1.0], &FitFamily::Bernoulli, &opts(), &NoControl).unwrap();
+-    assert!(matches!(r.distribution,D::Bernoulli { probability: 0.75 }));
++    assert!(matches!(r.distribution, D::Bernoulli { probability: 0.75 }));
+     close(r.log_likelihood, 3.0 * 0.75_f64.ln() + 0.25_f64.ln(), 1e-13);
+     let r = fit_distribution(&[1.0, 2.0, 3.0], &FitFamily::InverseGaussian, &opts(), &NoControl).unwrap();
+     let D::InverseGaussian { mean, shape } = r.distribution else { panic!() };
+Diff in \\?\$SDK_ROOT\crates\simulation\tests\parameter_grid.rs:1:
+-#![allow(clippy::unwrap_used,clippy::panic)]
++#![allow(clippy::unwrap_used, clippy::panic)]
+ use solvercraft_simulation::grid::*;
+ use solvercraft_types::*;
+-fn axes()->Vec<ParameterAxis>{vec![ParameterAxis{name:"price".into(),values:vec![2.0,5.0]},ParameterAxis{name:"quantity".into(),values:vec![3.0,7.0]}]}
++fn axes() -> Vec<ParameterAxis> {
++    vec![ParameterAxis { name: "price".into(), values: vec![2.0, 5.0] }, ParameterAxis { name: "quantity".into(), values: vec![3.0, 7.0] }]
++}
+ #[test]
+-fn cartesian_parameter_values_are_constant_and_result_coordinates_are_unique(){
+-    let options=GridOptions{simulation:SimulationOptions{trials:17,retain_samples:true,..Default::default()},..Default::default()};
+-    let result=simulate_grid(&axes(),&[],&options,&NoControl,|p,_|Ok(vec![p[0]*p[1]])).unwrap();
+-    assert_eq!(result.requested_runs,4);assert_eq!(result.runs.len(),4);
+-    for (run,expected) in result.runs.iter().zip([6.0,14.0,15.0,35.0]){assert_eq!(run.result.summaries[0].mean,expected);assert_eq!(run.result.summaries[0].variance,Some(0.0));assert!(run.result.samples.as_ref().unwrap().iter().all(|row|row[0]==expected));}
+-    assert_eq!(result.runs[0].coordinates,vec![0,0]);assert_eq!(result.runs[3].coordinates,vec![1,1]);
++fn cartesian_parameter_values_are_constant_and_result_coordinates_are_unique() {
++    let options = GridOptions { simulation: SimulationOptions { trials: 17, retain_samples: true, ..Default::default() }, ..Default::default() };
++    let result = simulate_grid(&axes(), &[], &options, &NoControl, |p, _| Ok(vec![p[0] * p[1]])).unwrap();
++    assert_eq!(result.requested_runs, 4);
++    assert_eq!(result.runs.len(), 4);
++    for (run, expected) in result.runs.iter().zip([6.0, 14.0, 15.0, 35.0]) {
++        assert_eq!(run.result.summaries[0].mean, expected);
++        assert_eq!(run.result.summaries[0].variance, Some(0.0));
++        assert!(run.result.samples.as_ref().unwrap().iter().all(|row| row[0] == expected));
++    }
++    assert_eq!(result.runs[0].coordinates, vec![0, 0]);
++    assert_eq!(result.runs[3].coordinates, vec![1, 1]);
+ }
+ #[test]
+-fn common_random_numbers_and_distinct_seeds_have_explicit_repeatable_semantics(){
+-    let distributions=[Distribution::Uniform{low:0.0,high:1.0}];let options=GridOptions{simulation:SimulationOptions{trials:32,retain_samples:true,seed:u64::MAX,..Default::default()},..Default::default()};
+-    let common=simulate_grid(&axes(),&distributions,&options,&NoControl,|_,x|Ok(x.to_vec())).unwrap();for run in &common.runs{assert_eq!(run.effective_seed,u64::MAX);assert_eq!(run.result.samples,common.runs[0].result.samples);}
+-    let distinct_options=GridOptions{streams:GridStreams::DistinctSeeds,..options};
+-    let distinct=simulate_grid(&axes(),&distributions,&distinct_options,&NoControl,|_,x|Ok(x.to_vec())).unwrap();let repeated=simulate_grid(&axes(),&distributions,&distinct_options,&NoControl,|_,x|Ok(x.to_vec())).unwrap();
+-    assert_ne!(distinct.runs[0].effective_seed,distinct.runs[1].effective_seed);assert_ne!(distinct.runs[0].result.samples,distinct.runs[1].result.samples);assert_eq!(distinct.runs[1].result.samples,repeated.runs[1].result.samples);
++fn common_random_numbers_and_distinct_seeds_have_explicit_repeatable_semantics() {
++    let distributions = [Distribution::Uniform { low: 0.0, high: 1.0 }];
++    let options = GridOptions {
++        simulation: SimulationOptions { trials: 32, retain_samples: true, seed: u64::MAX, ..Default::default() },
++        ..Default::default()
++    };
++    let common = simulate_grid(&axes(), &distributions, &options, &NoControl, |_, x| Ok(x.to_vec())).unwrap();
++    for run in &common.runs {
++        assert_eq!(run.effective_seed, u64::MAX);
++        assert_eq!(run.result.samples, common.runs[0].result.samples);
++    }
++    let distinct_options = GridOptions { streams: GridStreams::DistinctSeeds, ..options };
++    let distinct = simulate_grid(&axes(), &distributions, &distinct_options, &NoControl, |_, x| Ok(x.to_vec())).unwrap();
++    let repeated = simulate_grid(&axes(), &distributions, &distinct_options, &NoControl, |_, x| Ok(x.to_vec())).unwrap();
++    assert_ne!(distinct.runs[0].effective_seed, distinct.runs[1].effective_seed);
++    assert_ne!(distinct.runs[0].result.samples, distinct.runs[1].result.samples);
++    assert_eq!(distinct.runs[1].result.samples, repeated.runs[1].result.samples);
+ }
+ #[test]
+-fn grid_limits_and_cancellation_precede_evaluator_work(){
+-    let options=GridOptions{max_runs:3,..Default::default()};let mut called=false;assert!(simulate_grid(&axes(),&[],&options,&NoControl,|_,_|{called=true;Ok(vec![1.0])}).is_err());assert!(!called);
+-    struct Cancel;impl RunControl for Cancel{fn is_cancelled(&self)->bool{true}}
+-    let result=simulate_grid(&axes(),&[],&GridOptions::default(),&Cancel,|_,_|{called=true;Ok(vec![1.0])}).unwrap();assert_eq!(result.termination,Termination::Cancelled);assert!(result.runs.is_empty());assert!(!called);
+-    let options=GridOptions{max_total_trials:3,simulation:SimulationOptions{trials:1,..Default::default()},..Default::default()};assert!(simulate_grid(&axes(),&[],&options,&NoControl,|_,_|Ok(vec![1.0])).is_err());
++fn grid_limits_and_cancellation_precede_evaluator_work() {
++    let options = GridOptions { max_runs: 3, ..Default::default() };
++    let mut called = false;
++    assert!(
++        simulate_grid(&axes(), &[], &options, &NoControl, |_, _| {
++            called = true;
++            Ok(vec![1.0])
++        })
++        .is_err()
++    );
++    assert!(!called);
++    struct Cancel;
++    impl RunControl for Cancel {
++        fn is_cancelled(&self) -> bool {
++            true
++        }
++    }
++    let result = simulate_grid(&axes(), &[], &GridOptions::default(), &Cancel, |_, _| {
++        called = true;
++        Ok(vec![1.0])
++    })
++    .unwrap();
++    assert_eq!(result.termination, Termination::Cancelled);
++    assert!(result.runs.is_empty());
++    assert!(!called);
++    let options = GridOptions { max_total_trials: 3, simulation: SimulationOptions { trials: 1, ..Default::default() }, ..Default::default() };
++    assert!(simulate_grid(&axes(), &[], &options, &NoControl, |_, _| Ok(vec![1.0])).is_err());
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\examples\artcraft_layout.rs:1:
+ //! A second, executable host example using object parameters, without a workbook.
+ //! This is a reuse example, not a claim of a shipped Designcraft integration.
+-use solvercraft::{project::{ModelDefinition,ModelLibrary,ParameterBinding,PortableModel,export,import},types::*};
+-fn run()->Result<()> {
+-    let model=OptimizationModel{schema_version:SCHEMA_VERSION,name:"Two text-frame widths".into(),
+-        variables:vec![Variable{name:"headline width".into(),lower:Some(20.0),upper:Some(80.0),kind:VariableKind::Continuous},Variable{name:"body width".into(),lower:Some(40.0),upper:Some(100.0),kind:VariableKind::Continuous}],
+-        objective:Objective{direction:Direction::Minimize,offset:0.0,linear:vec![LinearTerm{variable:0,coefficient:2.0},LinearTerm{variable:1,coefficient:1.0}],quadratic:vec![]},
+-        constraints:vec![LinearConstraint{name:"available line width".into(),terms:vec![LinearTerm{variable:0,coefficient:1.0},LinearTerm{variable:1,coefficient:1.0}],relation:Relation::GreaterEqual,rhs:120.0}]};
+-    let mut library=ModelLibrary::default();library.insert(PortableModel{schema_version:2,id:"layout:1".into(),revision:"0".into(),name:model.name.clone(),definition:ModelDefinition::Algebraic(model),options:SolveOptions::default(),bindings:vec![ParameterBinding{parameter:0,object_id:"headline".into(),property:"width".into()},ParameterBinding{parameter:1,object_id:"body".into(),property:"width".into()}],metadata:Default::default()})?;
+-    let restored=import(&export(&library)?)?;
+-    let saved=restored.models.first().ok_or_else(||SolverError::new("example","Missing imported model"))?;
+-    let ModelDefinition::Algebraic(model)=&saved.definition else{return Err(SolverError::new("example","Unexpected model kind"));};
+-    let result=solvercraft::solve(model,&saved.options,&NoControl)?;
+-    if result.objective!=Some(140.0){return Err(SolverError::new("example","Independent layout optimum is 140 at widths (20,100)"));}
+-    println!("{}",serde_json::json!({"host":"ArtCraft parameter-binding reuse example","bindings":saved.bindings,"result":result}));Ok(())
++use solvercraft::{
++    project::{ModelDefinition, ModelLibrary, ParameterBinding, PortableModel, export, import},
++    types::*,
++};
++fn run() -> Result<()> {
++    let model = OptimizationModel {
++        schema_version: SCHEMA_VERSION,
++        name: "Two text-frame widths".into(),
++        variables: vec![
++            Variable { name: "headline width".into(), lower: Some(20.0), upper: Some(80.0), kind: VariableKind::Continuous },
++            Variable { name: "body width".into(), lower: Some(40.0), upper: Some(100.0), kind: VariableKind::Continuous },
++        ],
++        objective: Objective {
++            direction: Direction::Minimize,
++            offset: 0.0,
++            linear: vec![LinearTerm { variable: 0, coefficient: 2.0 }, LinearTerm { variable: 1, coefficient: 1.0 }],
++            quadratic: vec![],
++        },
++        constraints: vec![LinearConstraint {
++            name: "available line width".into(),
++            terms: vec![LinearTerm { variable: 0, coefficient: 1.0 }, LinearTerm { variable: 1, coefficient: 1.0 }],
++            relation: Relation::GreaterEqual,
++            rhs: 120.0,
++        }],
++    };
++    let mut library = ModelLibrary::default();
++    library.insert(PortableModel {
++        schema_version: 2,
++        id: "layout:1".into(),
++        revision: "0".into(),
++        name: model.name.clone(),
++        definition: ModelDefinition::Algebraic(model),
++        options: SolveOptions::default(),
++        bindings: vec![
++            ParameterBinding { parameter: 0, object_id: "headline".into(), property: "width".into() },
++            ParameterBinding { parameter: 1, object_id: "body".into(), property: "width".into() },
++        ],
++        metadata: Default::default(),
++    })?;
++    let restored = import(&export(&library)?)?;
++    let saved = restored.models.first().ok_or_else(|| SolverError::new("example", "Missing imported model"))?;
++    let ModelDefinition::Algebraic(model) = &saved.definition else {
++        return Err(SolverError::new("example", "Unexpected model kind"));
++    };
++    let result = solvercraft::solve(model, &saved.options, &NoControl)?;
++    if result.objective != Some(140.0) {
++        return Err(SolverError::new("example", "Independent layout optimum is 140 at widths (20,100)"));
++    }
++    println!("{}", serde_json::json!({"host":"ArtCraft parameter-binding reuse example","bindings":saved.bindings,"result":result}));
++    Ok(())
+ }
+-fn main(){if let Err(error)=run(){eprintln!("{error}");std::process::exit(1);}}
++fn main() {
++    if let Err(error) = run() {
++        eprintln!("{error}");
++        std::process::exit(1);
++    }
++}
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\jobs.rs:146:
+     }
+ }
+ /// Ownership-preserving callback entry point for engines that retain callbacks.
+-pub fn start_shared_job<T,F>(operation:F)->Result<JobHandle<T>>
+-where T:Clone+Send+Sync+'static,F:FnOnce(Arc<dyn RunControl>)->Result<T>+Send+'static {
+-    #[cfg(not(target_arch="wasm32"))]
+-    {spawn(operation)}
+-    #[cfg(target_arch="wasm32")]
+-    {let _=operation;Err(SolverError::new("unsupported_host","Use a WASM worker with an owned RunControl"))}
++pub fn start_shared_job<T, F>(operation: F) -> Result<JobHandle<T>>
++where
++    T: Clone + Send + Sync + 'static,
++    F: FnOnce(Arc<dyn RunControl>) -> Result<T> + Send + 'static,
++{
++    #[cfg(not(target_arch = "wasm32"))]
++    {
++        spawn(operation)
++    }
++    #[cfg(target_arch = "wasm32")]
++    {
++        let _ = operation;
++        Err(SolverError::new("unsupported_host", "Use a WASM worker with an owned RunControl"))
++    }
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\lib.rs:8:
+ pub use solvercraft_simulation as simulation;
+ pub use solvercraft_types as types;
+ 
++pub mod benders;
++pub mod chance;
++pub mod constrained;
++pub mod decision;
++pub mod ellipsoid;
++pub mod finite;
++pub mod global;
+ pub mod heuristic;
+ pub mod jobs;
++pub mod multiobjective;
++pub mod multistart;
+ pub mod nonlinear;
++pub mod project;
+ pub mod provenance;
+-pub mod risk;
+ pub mod registry;
++pub mod risk;
+ pub mod runtime;
+-pub mod stochastic;
+-pub mod finite;
+-pub mod project;
+-pub mod decision;
+-pub mod multiobjective;
+-pub mod chance;
+ pub mod saa;
+-pub mod constrained;
+-pub mod global;
+-pub mod benders;
+-pub mod multistart;
+-pub mod ellipsoid;
+-pub mod workflow;
+ #[cfg(not(target_arch = "wasm32"))]
+ pub mod server;
++pub mod stochastic;
++pub mod workflow;
+ 
+ #[cfg(test)]
+ mod runtime_tests;
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:1:
+ //! Versioned, host-independent model exchange. Host objects are opaque stable IDs.
+-use crate::{compile::{self, ExpressionModel}, types::*};
++use crate::{
++    compile::{self, ExpressionModel},
++    types::*,
++};
+ use serde::{Deserialize, Serialize};
+ use std::collections::{BTreeMap, BTreeSet};
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:45:
+     pub models: Vec<PortableModel>,
+ }
+ impl Default for ModelLibrary {
+-    fn default() -> Self { Self { schema_version: PORTABLE_SCHEMA_VERSION, models: vec![] } }
++    fn default() -> Self {
++        Self { schema_version: PORTABLE_SCHEMA_VERSION, models: vec![] }
++    }
+ }
+-fn bad(message: impl Into<String>) -> SolverError { SolverError::new("invalid_project", message) }
+-fn short(value: &str, limit: usize) -> bool { !value.is_empty() && value.len() <= limit && !value.chars().any(char::is_control) }
++fn bad(message: impl Into<String>) -> SolverError {
++    SolverError::new("invalid_project", message)
++}
++fn short(value: &str, limit: usize) -> bool {
++    !value.is_empty() && value.len() <= limit && !value.chars().any(char::is_control)
++}
+ fn revision(value: &str) -> Result<u64> {
+     let number = value.parse::<u64>().map_err(|_| bad("Revision must be a canonical decimal u64 string"))?;
+-    if number.to_string() != value { return Err(bad("Revision must be a canonical decimal u64 string")); }
++    if number.to_string() != value {
++        return Err(bad("Revision must be a canonical decimal u64 string"));
++    }
+     Ok(number)
+ }
+ impl PortableModel {
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:58:
+     pub fn validate(&self) -> Result<()> {
+-        if self.schema_version != PORTABLE_SCHEMA_VERSION { return Err(bad("Unsupported portable model schema")); }
+-        if !short(&self.id, 128) || !short(&self.name, 256) { return Err(bad("Model ID/name is empty, oversized or contains control characters")); }
++        if self.schema_version != PORTABLE_SCHEMA_VERSION {
++            return Err(bad("Unsupported portable model schema"));
++        }
++        if !short(&self.id, 128) || !short(&self.name, 256) {
++            return Err(bad("Model ID/name is empty, oversized or contains control characters"));
++        }
+         revision(&self.revision)?;
+-        if self.bindings.len() > 4096 || self.metadata.len() > 128 { return Err(bad("Too many bindings or metadata entries")); }
++        if self.bindings.len() > 4096 || self.metadata.len() > 128 {
++            return Err(bad("Too many bindings or metadata entries"));
++        }
+         let count = match &self.definition {
+-            ModelDefinition::Algebraic(model) => { crate::model::validate(model, &self.options)?; model.variables.len() },
++            ModelDefinition::Algebraic(model) => {
++                crate::model::validate(model, &self.options)?;
++                model.variables.len()
++            }
+             ModelDefinition::Expression(model) => {
+                 // Classification traverses all expressions and validates domains/handles
+                 // without executing an optimizer or assuming they are polynomials.
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:68:
+                 compile::validate_expression_model(model, &self.options)?;
+                 model.variables.len()
+-            },
++            }
+         };
+         let mut bound = BTreeSet::new();
+         for binding in &self.bindings {
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:75:
+                 return Err(bad("Invalid or duplicate parameter binding"));
+             }
+         }
+-        if self.metadata.iter().any(|(k,v)| !short(k,128) || v.len() > 4096) { return Err(bad("Invalid metadata size")); }
++        if self.metadata.iter().any(|(k, v)| !short(k, 128) || v.len() > 4096) {
++            return Err(bad("Invalid metadata size"));
++        }
+         Ok(())
+     }
+ }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:82:
+ impl ModelLibrary {
+     pub fn validate(&self) -> Result<()> {
+-        if self.schema_version != PORTABLE_SCHEMA_VERSION || self.models.len() > MAX_MODELS { return Err(bad("Invalid library schema or model count")); }
+-        let mut ids=BTreeSet::new(); let mut names=BTreeSet::new();
++        if self.schema_version != PORTABLE_SCHEMA_VERSION || self.models.len() > MAX_MODELS {
++            return Err(bad("Invalid library schema or model count"));
++        }
++        let mut ids = BTreeSet::new();
++        let mut names = BTreeSet::new();
+         for model in &self.models {
+             model.validate()?;
+-            if !ids.insert(model.id.as_str()) || !names.insert(model.name.to_lowercase()) { return Err(bad("Duplicate model ID or name")); }
++            if !ids.insert(model.id.as_str()) || !names.insert(model.name.to_lowercase()) {
++                return Err(bad("Duplicate model ID or name"));
++            }
+         }
+         Ok(())
+     }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:92:
+     pub fn insert(&mut self, model: PortableModel) -> Result<()> {
+-        self.validate()?; model.validate()?;
++        self.validate()?;
++        model.validate()?;
+         if self.models.len() >= MAX_MODELS || self.models.iter().any(|m| m.id == model.id || m.name.to_lowercase() == model.name.to_lowercase()) {
+             return Err(bad("Model quota, duplicate ID or duplicate name"));
+         }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:97:
+         self.models.try_reserve(1).map_err(|_| SolverError::new("memory_limit", "Cannot reserve model registry entry"))?;
+-        self.models.push(model); Ok(())
++        self.models.push(model);
++        Ok(())
+     }
+     pub fn replace(&mut self, id: &str, expected_revision: &str, mut model: PortableModel) -> Result<()> {
+-        self.validate()?; model.validate()?;
+-        let index=self.models.iter().position(|m| m.id == id).ok_or_else(|| bad("Unknown model ID"))?;
+-        let prior=self.models.get(index).ok_or_else(|| bad("Missing model"))?;
+-        if prior.revision != expected_revision { return Err(SolverError::new("revision_conflict", "The saved model changed")); }
+-        if model.id != id || self.models.iter().enumerate().any(|(i,m)| i!=index && m.name.to_lowercase()==model.name.to_lowercase()) { return Err(bad("Model ID changed or name collides")); }
+-        model.revision=revision(expected_revision)?.checked_add(1).ok_or_else(|| bad("Revision exhausted"))?.to_string();
+-        let slot=self.models.get_mut(index).ok_or_else(|| bad("Missing model"))?;
+-        *slot=model; Ok(())
++        self.validate()?;
++        model.validate()?;
++        let index = self.models.iter().position(|m| m.id == id).ok_or_else(|| bad("Unknown model ID"))?;
++        let prior = self.models.get(index).ok_or_else(|| bad("Missing model"))?;
++        if prior.revision != expected_revision {
++            return Err(SolverError::new("revision_conflict", "The saved model changed"));
++        }
++        if model.id != id || self.models.iter().enumerate().any(|(i, m)| i != index && m.name.to_lowercase() == model.name.to_lowercase()) {
++            return Err(bad("Model ID changed or name collides"));
++        }
++        model.revision = revision(expected_revision)?.checked_add(1).ok_or_else(|| bad("Revision exhausted"))?.to_string();
++        let slot = self.models.get_mut(index).ok_or_else(|| bad("Missing model"))?;
++        *slot = model;
++        Ok(())
+     }
+     pub fn remove(&mut self, id: &str, expected_revision: &str) -> Result<PortableModel> {
+         self.validate()?;
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:112:
+-        let index=self.models.iter().position(|m| m.id==id).ok_or_else(|| bad("Unknown model ID"))?;
+-        if self.models.get(index).is_none_or(|m| m.revision!=expected_revision) { return Err(SolverError::new("revision_conflict", "The saved model changed")); }
++        let index = self.models.iter().position(|m| m.id == id).ok_or_else(|| bad("Unknown model ID"))?;
++        if self.models.get(index).is_none_or(|m| m.revision != expected_revision) {
++            return Err(SolverError::new("revision_conflict", "The saved model changed"));
++        }
+         Ok(self.models.remove(index))
+     }
+ }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:117:
+-struct BoundedWriter { bytes: Vec<u8>, limit: usize }
++struct BoundedWriter {
++    bytes: Vec<u8>,
++    limit: usize,
++}
+ impl std::io::Write for BoundedWriter {
+     fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+-        if self.bytes.len().checked_add(bytes.len()).is_none_or(|n|n>self.limit) { return Err(std::io::Error::other("Project byte limit exceeded")); }
++        if self.bytes.len().checked_add(bytes.len()).is_none_or(|n| n > self.limit) {
++            return Err(std::io::Error::other("Project byte limit exceeded"));
++        }
+         self.bytes.try_reserve(bytes.len()).map_err(std::io::Error::other)?;
+-        self.bytes.extend_from_slice(bytes); Ok(bytes.len())
++        self.bytes.extend_from_slice(bytes);
++        Ok(bytes.len())
+     }
+-    fn flush(&mut self) -> std::io::Result<()> { Ok(()) }
++    fn flush(&mut self) -> std::io::Result<()> {
++        Ok(())
++    }
+ }
+ pub fn export(library: &ModelLibrary) -> Result<Vec<u8>> {
+     library.validate()?;
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:128:
+-    let mut output=BoundedWriter{bytes:vec![],limit:MAX_PROJECT_BYTES};
++    let mut output = BoundedWriter { bytes: vec![], limit: MAX_PROJECT_BYTES };
+     serde_json::to_writer_pretty(&mut output, library).map_err(|e| SolverError::new("project_export", e.to_string()))?;
+     Ok(output.bytes)
+ }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:132:
+ pub fn import(bytes: &[u8]) -> Result<ModelLibrary> {
+-    if bytes.len()>MAX_PROJECT_BYTES || bytes.iter().copied().find(|b|!b.is_ascii_whitespace())!=Some(b'{') { return Err(bad("Expected a bounded JSON object")); }
+-    let library:ModelLibrary=serde_json::from_slice(bytes).map_err(|e|bad(e.to_string()))?;
+-    library.validate()?; Ok(library)
++    if bytes.len() > MAX_PROJECT_BYTES || bytes.iter().copied().find(|b| !b.is_ascii_whitespace()) != Some(b'{') {
++        return Err(bad("Expected a bounded JSON object"));
++    }
++    let library: ModelLibrary = serde_json::from_slice(bytes).map_err(|e| bad(e.to_string()))?;
++    library.validate()?;
++    Ok(library)
+ }
+ /// Explicit migration from the published schema-1 algebraic model contract.
+ /// No invented workbook bindings, IDs, seeds or optimizer results are inferred.
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\project.rs:139:
+ pub fn migrate_v1_algebraic(bytes: &[u8], id: String, options: SolveOptions) -> Result<PortableModel> {
+-    if bytes.len()>MAX_PROJECT_BYTES || bytes.iter().copied().find(|b|!b.is_ascii_whitespace())!=Some(b'{') { return Err(bad("Expected a bounded schema-1 model object")); }
+-    let model:OptimizationModel=serde_json::from_slice(bytes).map_err(|e|bad(e.to_string()))?;
+-    crate::model::validate(&model,&options)?;
+-    let portable=PortableModel{schema_version:PORTABLE_SCHEMA_VERSION,id,revision:"0".into(),name:model.name.clone(),definition:ModelDefinition::Algebraic(model),options,bindings:vec![],metadata:BTreeMap::new()};
+-    portable.validate()?; Ok(portable)
++    if bytes.len() > MAX_PROJECT_BYTES || bytes.iter().copied().find(|b| !b.is_ascii_whitespace()) != Some(b'{') {
++        return Err(bad("Expected a bounded schema-1 model object"));
++    }
++    let model: OptimizationModel = serde_json::from_slice(bytes).map_err(|e| bad(e.to_string()))?;
++    crate::model::validate(&model, &options)?;
++    let portable = PortableModel {
++        schema_version: PORTABLE_SCHEMA_VERSION,
++        id,
++        revision: "0".into(),
++        name: model.name.clone(),
++        definition: ModelDefinition::Algebraic(model),
++        options,
++        bindings: vec![],
++        metadata: BTreeMap::new(),
++    };
++    portable.validate()?;
++    Ok(portable)
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\registry.rs:1:
+ //! Algorithm-specific capability contracts. False means unavailable, not emulated.
+-use serde::{Deserialize, Serialize};
+ use crate::types::*;
++use serde::{Deserialize, Serialize};
+ 
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+-#[serde(rename_all="snake_case")]
+-pub enum ProblemClass { Linear, MixedIntegerLinear, SeparableQuadraticBounds, SmoothBounds, NonsmoothFiniteBounds }
++#[serde(rename_all = "snake_case")]
++pub enum ProblemClass {
++    Linear,
++    MixedIntegerLinear,
++    SeparableQuadraticBounds,
++    SmoothBounds,
++    NonsmoothFiniteBounds,
++}
+ 
+ #[derive(Debug, Clone, Serialize, Deserialize)]
+ #[serde(deny_unknown_fields)]
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\registry.rs:28:
+ 
+ pub fn engines() -> Vec<EngineCapabilities> {
+     [
+-        ("dense_two_phase_simplex", vec![ProblemClass::Linear], false, "Floating-point optimum or unboundedness only after original-model checks; numerical stops remain unknown"),
+-        ("branch_and_bound", vec![ProblemClass::MixedIntegerLinear], true, "Valid relaxation bounds and checked incumbents; reported gap uses original objective units"),
++        (
++            "dense_two_phase_simplex",
++            vec![ProblemClass::Linear],
++            false,
++            "Floating-point optimum or unboundedness only after original-model checks; numerical stops remain unknown",
++        ),
++        (
++            "branch_and_bound",
++            vec![ProblemClass::MixedIntegerLinear],
++            true,
++            "Valid relaxation bounds and checked incumbents; reported gap uses original objective units",
++        ),
+         ("analytic_separable_qp", vec![ProblemClass::SeparableQuadraticBounds], false, "Analytic separable convex bound-QP only"),
+-        ("projected_gradient_ad", vec![ProblemClass::SmoothBounds], false, "Stationarity in supported smooth finite-bound domains, no global optimum certificate"),
+-        ("differential_evolution", vec![ProblemClass::NonsmoothFiniteBounds], true, "Best original-model feasible point found; no optimality or infeasibility proof"),
+-    ].into_iter().map(|(id, classes, integer, guarantee)| EngineCapabilities {
+-        id: id.into(), version: env!("CARGO_PKG_VERSION").into(), classes, integer,
+-        warm_start: false, dual_values: false, basis: false, sensitivity_intervals: false,
+-        conflict_certificate: false, progress: true, cancellation: true, deterministic: true,
+-        wasm_compatible_source: true, wasm_execution_verified: false, guarantee: guarantee.into(),
+-    }).collect()
++        (
++            "projected_gradient_ad",
++            vec![ProblemClass::SmoothBounds],
++            false,
++            "Stationarity in supported smooth finite-bound domains, no global optimum certificate",
++        ),
++        (
++            "differential_evolution",
++            vec![ProblemClass::NonsmoothFiniteBounds],
++            true,
++            "Best original-model feasible point found; no optimality or infeasibility proof",
++        ),
++    ]
++    .into_iter()
++    .map(|(id, classes, integer, guarantee)| EngineCapabilities {
++        id: id.into(),
++        version: env!("CARGO_PKG_VERSION").into(),
++        classes,
++        integer,
++        warm_start: false,
++        dual_values: false,
++        basis: false,
++        sensitivity_intervals: false,
++        conflict_certificate: false,
++        progress: true,
++        cancellation: true,
++        deterministic: true,
++        wasm_compatible_source: true,
++        wasm_execution_verified: false,
++        guarantee: guarantee.into(),
++    })
++    .collect()
+ }
+ 
+ pub fn select(class: ProblemClass, preferred: Option<&str>) -> Result<EngineCapabilities> {
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\registry.rs:45:
+-    engines().into_iter().find(|engine| preferred.is_none_or(|id| engine.id == id) && engine.classes.contains(&class))
++    engines()
++        .into_iter()
++        .find(|engine| preferred.is_none_or(|id| engine.id == id) && engine.classes.contains(&class))
+         .ok_or_else(|| SolverError::new("unsupported_engine", "No registered engine supports the requested problem class and selection"))
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\runtime.rs:4:
+ // web-time uses browser Performance on WASM. On native it aliases std's clock,
+ // so Clippy's DefId-based restriction needs this one portable-clock exception.
+ #[allow(clippy::disallowed_methods)]
+-pub fn monotonic_now() -> web_time::Instant { web_time::Instant::now() }
++pub fn monotonic_now() -> web_time::Instant {
++    web_time::Instant::now()
++}
+ 
+ #[derive(Debug, Clone, Copy, Default, Serialize, Deserialize)]
+ #[serde(default, deny_unknown_fields)]
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\runtime.rs:21:
+ 
+ impl<'a> DeadlineControl<'a> {
+     pub fn new(parent: &'a dyn RunControl, limits: RuntimeLimits) -> Result<Self> {
+-        let deadline = limits.max_time_millis.map(|millis| {
+-            monotonic_now().checked_add(std::time::Duration::from_millis(millis))
+-                .ok_or_else(|| SolverError::new("invalid_time_limit", "Wall-clock deadline exceeds the platform range"))
+-        }).transpose()?;
++        let deadline = limits
++            .max_time_millis
++            .map(|millis| {
++                monotonic_now()
++                    .checked_add(std::time::Duration::from_millis(millis))
++                    .ok_or_else(|| SolverError::new("invalid_time_limit", "Wall-clock deadline exceeds the platform range"))
++            })
++            .transpose()?;
+         Ok(Self { parent, deadline, expired: std::sync::atomic::AtomicBool::new(false) })
+     }
+     pub fn timed_out(&self) -> bool {
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\runtime.rs:43:
+ }
+ impl RunControl for DeadlineControl<'_> {
+     fn is_cancelled(&self) -> bool {
+-        if self.parent.is_cancelled() { return true; }
++        if self.parent.is_cancelled() {
++            return true;
++        }
+         if self.deadline.is_some_and(|deadline| monotonic_now() >= deadline) {
+             self.expired.store(true, std::sync::atomic::Ordering::Release);
+             return true;
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\runtime.rs:50:
+         }
+         false
+     }
+-    fn progress(&self, event: &ProgressEvent) { self.parent.progress(event); }
++    fn progress(&self, event: &ProgressEvent) {
++        self.parent.progress(event);
++    }
+ }
+ 
+ pub fn solve_with_limits(model: &OptimizationModel, options: &SolveOptions, limits: RuntimeLimits, control: &dyn RunControl) -> Result<SolveResult> {
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\server.rs:1:
+ //! Optional loopback JSON-lines service. Authentication is required per connection.
+ //! No listener starts until the host explicitly calls `Server::bind` and `run`.
+-use crate::{compile::Expr, jobs::{self, JobHandle}, runtime::{self, RuntimeLimits}, types::*};
++use crate::{
++    compile::Expr,
++    jobs::{self, JobHandle},
++    runtime::{self, RuntimeLimits},
++    types::*,
++};
+ use serde::{Deserialize, Serialize};
+ use serde_json::{Value, json};
+-use std::{collections::BTreeMap, io::{BufRead, BufReader, Read, Write}, net::{SocketAddr, TcpListener, TcpStream}, sync::{Arc, Mutex, atomic::{AtomicBool, AtomicUsize, Ordering}}, time::Duration};
++use std::{
++    collections::BTreeMap,
++    io::{BufRead, BufReader, Read, Write},
++    net::{SocketAddr, TcpListener, TcpStream},
++    sync::{
++        Arc, Mutex,
++        atomic::{AtomicBool, AtomicUsize, Ordering},
++    },
++    time::Duration,
++};
+ 
+ #[derive(Clone, Deserialize)]
+ #[serde(deny_unknown_fields)]
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\server.rs:21:
+ }
+ impl ServerConfig {
+     pub fn local(token: String) -> Self {
+-        Self { listen:"127.0.0.1:0".into(),token,max_jobs:16,max_connections:8,max_request_bytes:2*1024*1024,max_response_bytes:4*1024*1024,
+-            max_job_memory_bytes:256*1024*1024,read_timeout_millis:2000,max_job_time_millis:60_000 }
++        Self {
++            listen: "127.0.0.1:0".into(),
++            token,
++            max_jobs: 16,
++            max_connections: 8,
++            max_request_bytes: 2 * 1024 * 1024,
++            max_response_bytes: 4 * 1024 * 1024,
++            max_job_memory_bytes: 256 * 1024 * 1024,
++            read_timeout_millis: 2000,
++            max_job_time_millis: 60_000,
++        }
+     }
+     fn validate(&self) -> Result<SocketAddr> {
+-        let address=self.listen.parse::<SocketAddr>().map_err(|_| error("invalid_server_config","Expected an IP socket address"))?;
+-        if !address.ip().is_loopback() { return Err(error("invalid_server_config","The built-in service binds only loopback; use an authenticated TLS gateway for remote access")); }
+-        if !(32..=1024).contains(&self.token.len()) || self.token.chars().any(char::is_control)
+-            || !(1..=64).contains(&self.max_jobs) || !(1..=32).contains(&self.max_connections)
+-            || !(1024..=16*1024*1024).contains(&self.max_request_bytes)
+-            || !(1024..=16*1024*1024).contains(&self.max_response_bytes)
+-            || !(1024..=1024*1024*1024).contains(&self.max_job_memory_bytes)
++        let address = self.listen.parse::<SocketAddr>().map_err(|_| error("invalid_server_config", "Expected an IP socket address"))?;
++        if !address.ip().is_loopback() {
++            return Err(error(
++                "invalid_server_config",
++                "The built-in service binds only loopback; use an authenticated TLS gateway for remote access",
++            ));
++        }
++        if !(32..=1024).contains(&self.token.len())
++            || self.token.chars().any(char::is_control)
++            || !(1..=64).contains(&self.max_jobs)
++            || !(1..=32).contains(&self.max_connections)
++            || !(1024..=16 * 1024 * 1024).contains(&self.max_request_bytes)
++            || !(1024..=16 * 1024 * 1024).contains(&self.max_response_bytes)
++            || !(1024..=1024 * 1024 * 1024).contains(&self.max_job_memory_bytes)
+             || !(10..=30_000).contains(&self.read_timeout_millis)
+-            || !(1..=3_600_000).contains(&self.max_job_time_millis) {
+-            return Err(error("invalid_server_config","Server token, quotas or time limits are outside supported ranges"));
++            || !(1..=3_600_000).contains(&self.max_job_time_millis)
++        {
++            return Err(error("invalid_server_config", "Server token, quotas or time limits are outside supported ranges"));
+         }
+         Ok(address)
+     }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\server.rs:41:
+ }
+ #[derive(Deserialize)]
+ #[serde(deny_unknown_fields)]
+-pub struct ServiceRequest { pub schema_version:u32, pub id:String, pub command:ServiceCommand }
++pub struct ServiceRequest {
++    pub schema_version: u32,
++    pub id: String,
++    pub command: ServiceCommand,
++}
+ #[derive(Deserialize)]
+-#[serde(tag="method",content="params",rename_all="snake_case",deny_unknown_fields)]
++#[serde(tag = "method", content = "params", rename_all = "snake_case", deny_unknown_fields)]
+ pub enum ServiceCommand {
+-    Authenticate { token:String },
++    Authenticate {
++        token: String,
++    },
+     Capabilities {},
+-    Solve { model:OptimizationModel, #[serde(default)] options:SolveOptions, #[serde(default)] limits:RuntimeLimits },
+-    Simulate { inputs:Vec<Distribution>, #[serde(default)] outputs:Vec<Expr>, #[serde(default)] options:SimulationOptions, #[serde(default)] limits:RuntimeLimits },
+-    Get { job_id:String },
+-    Cancel { job_id:String },
+-    Forget { job_id:String },
++    Solve {
++        model: OptimizationModel,
++        #[serde(default)]
++        options: SolveOptions,
++        #[serde(default)]
++        limits: RuntimeLimits,
++    },
++    Simulate {
++        inputs: Vec<Distribution>,
++        #[serde(default)]
++        outputs: Vec<Expr>,
++        #[serde(default)]
++        options: SimulationOptions,
++        #[serde(default)]
++        limits: RuntimeLimits,
++    },
++    Get {
++        job_id: String,
++    },
++    Cancel {
++        job_id: String,
++    },
++    Forget {
++        job_id: String,
++    },
+ }
+-enum ServiceJob { Solve(JobHandle<SolveResult>), Simulation(JobHandle<SimulationResult>) }
++enum ServiceJob {
++    Solve(JobHandle<SolveResult>),
++    Simulation(JobHandle<SimulationResult>),
++}
+ impl ServiceJob {
+-    fn id(&self)->u64 { match self { Self::Solve(h)=>h.id(),Self::Simulation(h)=>h.id() } }
+-    fn cancel(&self) { match self { Self::Solve(h)=>h.cancel(),Self::Simulation(h)=>h.cancel() } }
+-    fn done(&self)->Result<bool> { match self { Self::Solve(h)=>Ok(h.snapshot()?.result.is_some()),Self::Simulation(h)=>Ok(h.snapshot()?.result.is_some()) } }
+-    fn json(&self)->Result<Value> { match self { Self::Solve(h)=>job_json(h),Self::Simulation(h)=>job_json(h) } }
++    fn id(&self) -> u64 {
++        match self {
++            Self::Solve(h) => h.id(),
++            Self::Simulation(h) => h.id(),
++        }
++    }
++    fn cancel(&self) {
++        match self {
++            Self::Solve(h) => h.cancel(),
++            Self::Simulation(h) => h.cancel(),
++        }
++    }
++    fn done(&self) -> Result<bool> {
++        match self {
++            Self::Solve(h) => Ok(h.snapshot()?.result.is_some()),
++            Self::Simulation(h) => Ok(h.snapshot()?.result.is_some()),
++        }
++    }
++    fn json(&self) -> Result<Value> {
++        match self {
++            Self::Solve(h) => job_json(h),
++            Self::Simulation(h) => job_json(h),
++        }
++    }
+ }
+-fn job_json<T:Clone+Serialize>(handle:&JobHandle<T>)->Result<Value> {
+-    let s=handle.snapshot()?;
+-    let result=match s.result { None=>Value::Null,Some(Ok(value))=>json!({"ok":true,"value":value.as_ref()}),Some(Err(e))=>json!({"ok":false,"error":e}) };
++fn job_json<T: Clone + Serialize>(handle: &JobHandle<T>) -> Result<Value> {
++    let s = handle.snapshot()?;
++    let result = match s.result {
++        None => Value::Null,
++        Some(Ok(value)) => json!({"ok":true,"value":value.as_ref()}),
++        Some(Err(e)) => json!({"ok":false,"error":e}),
++    };
+     Ok(json!({"job_id":s.id.to_string(),"status":format!("{:?}",s.status).to_lowercase(),"progress":s.progress,"result":result}))
+ }
+-fn error(code:&str,message:impl Into<String>)->SolverError { SolverError::new(code,message) }
+-struct Shared { config:ServerConfig,jobs:Mutex<BTreeMap<String,ServiceJob>>,connections:AtomicUsize,stopping:AtomicBool }
+-pub struct Server { listener:TcpListener,shared:Arc<Shared> }
++fn error(code: &str, message: impl Into<String>) -> SolverError {
++    SolverError::new(code, message)
++}
++struct Shared {
++    config: ServerConfig,
++    jobs: Mutex<BTreeMap<String, ServiceJob>>,
++    connections: AtomicUsize,
++    stopping: AtomicBool,
++}
++pub struct Server {
++    listener: TcpListener,
++    shared: Arc<Shared>,
++}
+ impl Server {
+-    pub fn bind(config:ServerConfig)->Result<Self> {
+-        let address=config.validate()?;
+-        let listener=TcpListener::bind(address).map_err(|e|error("server_bind",e.to_string()))?;
+-        listener.set_nonblocking(true).map_err(|e|error("server_bind",e.to_string()))?;
+-        Ok(Self {listener,shared:Arc::new(Shared{config,jobs:Mutex::new(BTreeMap::new()),connections:AtomicUsize::new(0),stopping:AtomicBool::new(false)})})
++    pub fn bind(config: ServerConfig) -> Result<Self> {
++        let address = config.validate()?;
++        let listener = TcpListener::bind(address).map_err(|e| error("server_bind", e.to_string()))?;
++        listener.set_nonblocking(true).map_err(|e| error("server_bind", e.to_string()))?;
++        Ok(Self {
++            listener,
++            shared: Arc::new(Shared {
++                config,
++                jobs: Mutex::new(BTreeMap::new()),
++                connections: AtomicUsize::new(0),
++                stopping: AtomicBool::new(false),
++            }),
++        })
+     }
+-    pub fn address(&self)->Result<SocketAddr> { self.listener.local_addr().map_err(|e|error("server_address",e.to_string())) }
++    pub fn address(&self) -> Result<SocketAddr> {
++        self.listener.local_addr().map_err(|e| error("server_address", e.to_string()))
++    }
+     /// The stop flag belongs to the embedding host. Shutdown cancels retained jobs.
+-    pub fn run(&self,stop:&AtomicBool)->Result<()> {
++    pub fn run(&self, stop: &AtomicBool) -> Result<()> {
+         while !stop.load(Ordering::Acquire) {
+             match self.listener.accept() {
+-                Ok((stream,_))=>{
+-                    if self.shared.connections.fetch_update(Ordering::AcqRel,Ordering::Acquire,|n|if n<self.shared.config.max_connections {Some(n+1)} else {None}).is_err() { drop(stream);continue; }
+-                    let shared=Arc::clone(&self.shared);
+-                    if let Err(e)=std::thread::Builder::new().name("solvercraft-client".into()).spawn(move||{
++                Ok((stream, _)) => {
++                    if self
++                        .shared
++                        .connections
++                        .fetch_update(
++                            Ordering::AcqRel,
++                            Ordering::Acquire,
++                            |n| if n < self.shared.config.max_connections { Some(n + 1) } else { None },
++                        )
++                        .is_err()
++                    {
++                        drop(stream);
++                        continue;
++                    }
++                    let shared = Arc::clone(&self.shared);
++                    if let Err(e) = std::thread::Builder::new().name("solvercraft-client".into()).spawn(move || {
+                         struct Connection(Arc<Shared>);
+-                        impl Drop for Connection { fn drop(&mut self){self.0.connections.fetch_sub(1,Ordering::AcqRel);} }
+-                        let _slot=Connection(Arc::clone(&shared));
+-                        let _result=serve_client(stream,&shared);
+-                    }) {self.shared.connections.fetch_sub(1,Ordering::AcqRel);return Err(error("server_thread",e.to_string()));}
+-                },
+-                Err(e) if e.kind()==std::io::ErrorKind::WouldBlock=>std::thread::sleep(Duration::from_millis(2)),
+-                Err(e)=>return Err(error("server_accept",e.to_string())),
++                        impl Drop for Connection {
++                            fn drop(&mut self) {
++                                self.0.connections.fetch_sub(1, Ordering::AcqRel);
++                            }
++                        }
++                        let _slot = Connection(Arc::clone(&shared));
++                        let _result = serve_client(stream, &shared);
++                    }) {
++                        self.shared.connections.fetch_sub(1, Ordering::AcqRel);
++                        return Err(error("server_thread", e.to_string()));
++                    }
++                }
++                Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => std::thread::sleep(Duration::from_millis(2)),
++                Err(e) => return Err(error("server_accept", e.to_string())),
+             }
+         }
+-        self.shared.stopping.store(true,Ordering::Release);
+-        let jobs=self.shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-        for job in jobs.values(){job.cancel();}
++        self.shared.stopping.store(true, Ordering::Release);
++        let jobs = self.shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++        for job in jobs.values() {
++            job.cancel();
++        }
+         Ok(())
+     }
+ }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\server.rs:103:
+-fn same_secret(left:&str,right:&str)->bool {
+-    if left.len()!=right.len(){return false;}
+-    left.bytes().zip(right.bytes()).fold(0u8,|difference,(a,b)|difference|(a^b))==0
++fn same_secret(left: &str, right: &str) -> bool {
++    if left.len() != right.len() {
++        return false;
++    }
++    left.bytes().zip(right.bytes()).fold(0u8, |difference, (a, b)| difference | (a ^ b)) == 0
+ }
+-fn dispatch(shared:&Arc<Shared>,authenticated:&mut bool,command:ServiceCommand)->Result<Value> {
+-    if let ServiceCommand::Authenticate{token}=command {
+-        *authenticated=same_secret(&token,&shared.config.token);
+-        return if *authenticated {Ok(json!({"authenticated":true}))} else {Err(error("authentication","Authentication failed"))};
++fn dispatch(shared: &Arc<Shared>, authenticated: &mut bool, command: ServiceCommand) -> Result<Value> {
++    if let ServiceCommand::Authenticate { token } = command {
++        *authenticated = same_secret(&token, &shared.config.token);
++        return if *authenticated { Ok(json!({"authenticated":true})) } else { Err(error("authentication", "Authentication failed")) };
+     }
+-    if !*authenticated{return Err(error("authentication","Authenticate this connection first"));}
++    if !*authenticated {
++        return Err(error("authentication", "Authenticate this connection first"));
++    }
+     match command {
+-        ServiceCommand::Authenticate{..}=>Err(error("authentication","Invalid authentication state")),
+-        ServiceCommand::Capabilities{}=>Ok(crate::capabilities()),
+-        ServiceCommand::Solve{model,options,mut limits}=>{
+-            if options.max_memory_bytes>shared.config.max_job_memory_bytes {return Err(error("quota","Requested memory exceeds per-job quota"));}
+-            limits.max_time_millis=Some(limits.max_time_millis.unwrap_or(shared.config.max_job_time_millis).min(shared.config.max_job_time_millis));
+-            crate::model::validate(&model,&options)?;
+-            let mut store=shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-            if store.len()>=shared.config.max_jobs{return Err(error("quota","Retained job quota reached; forget a completed job"));}
+-            let handle=jobs::start_job(move|c|runtime::solve_with_limits(&model,&options,limits,c))?;
+-            let job=ServiceJob::Solve(handle);let id=job.id().to_string();store.insert(id.clone(),job);
++        ServiceCommand::Authenticate { .. } => Err(error("authentication", "Invalid authentication state")),
++        ServiceCommand::Capabilities {} => Ok(crate::capabilities()),
++        ServiceCommand::Solve { model, options, mut limits } => {
++            if options.max_memory_bytes > shared.config.max_job_memory_bytes {
++                return Err(error("quota", "Requested memory exceeds per-job quota"));
++            }
++            limits.max_time_millis = Some(limits.max_time_millis.unwrap_or(shared.config.max_job_time_millis).min(shared.config.max_job_time_millis));
++            crate::model::validate(&model, &options)?;
++            let mut store = shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++            if store.len() >= shared.config.max_jobs {
++                return Err(error("quota", "Retained job quota reached; forget a completed job"));
++            }
++            let handle = jobs::start_job(move |c| runtime::solve_with_limits(&model, &options, limits, c))?;
++            let job = ServiceJob::Solve(handle);
++            let id = job.id().to_string();
++            store.insert(id.clone(), job);
+             Ok(json!({"job_id":id}))
+-        },
+-        ServiceCommand::Simulate{inputs,outputs,options,mut limits}=>{
+-            if options.max_memory_bytes>shared.config.max_job_memory_bytes || inputs.len()>4096 || outputs.len()>4096 {return Err(error("quota","Simulation exceeds memory or dimension quota"));}
+-            let dimensions=if outputs.is_empty(){inputs.len()}else{outputs.len()};
+-            if options.retain_samples && options.trials.checked_mul(dimensions as u64).and_then(|n|n.checked_mul(32)).and_then(|n|n.checked_add(65536)).is_none_or(|n|n>shared.config.max_response_bytes as u64) {
+-                return Err(error("quota","Retained simulation would exceed the response quota; use streaming summaries or fewer samples"));
++        }
++        ServiceCommand::Simulate { inputs, outputs, options, mut limits } => {
++            if options.max_memory_bytes > shared.config.max_job_memory_bytes || inputs.len() > 4096 || outputs.len() > 4096 {
++                return Err(error("quota", "Simulation exceeds memory or dimension quota"));
+             }
+-            for input in &inputs {crate::math::validate_distribution(input)?;}
+-            for output in &outputs {crate::compile::classify(output,inputs.len())?;}
+-            limits.max_time_millis=Some(limits.max_time_millis.unwrap_or(shared.config.max_job_time_millis).min(shared.config.max_job_time_millis));
+-            let mut store=shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-            if store.len()>=shared.config.max_jobs{return Err(error("quota","Retained job quota reached; forget a completed job"));}
+-            let handle=jobs::start_job(move|c|{
+-                let deadline=runtime::DeadlineControl::new(c,limits)?;
+-                let mut result=crate::simulation::simulate(&inputs,&options,&deadline,|values|{
+-                    if outputs.is_empty(){return Ok(values.to_vec());}
+-                    outputs.iter().map(|e|crate::compile::evaluate(e,values)).collect()
++            let dimensions = if outputs.is_empty() { inputs.len() } else { outputs.len() };
++            if options.retain_samples
++                && options
++                    .trials
++                    .checked_mul(dimensions as u64)
++                    .and_then(|n| n.checked_mul(32))
++                    .and_then(|n| n.checked_add(65536))
++                    .is_none_or(|n| n > shared.config.max_response_bytes as u64)
++            {
++                return Err(error("quota", "Retained simulation would exceed the response quota; use streaming summaries or fewer samples"));
++            }
++            for input in &inputs {
++                crate::math::validate_distribution(input)?;
++            }
++            for output in &outputs {
++                crate::compile::classify(output, inputs.len())?;
++            }
++            limits.max_time_millis = Some(limits.max_time_millis.unwrap_or(shared.config.max_job_time_millis).min(shared.config.max_job_time_millis));
++            let mut store = shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++            if store.len() >= shared.config.max_jobs {
++                return Err(error("quota", "Retained job quota reached; forget a completed job"));
++            }
++            let handle = jobs::start_job(move |c| {
++                let deadline = runtime::DeadlineControl::new(c, limits)?;
++                let mut result = crate::simulation::simulate(&inputs, &options, &deadline, |values| {
++                    if outputs.is_empty() {
++                        return Ok(values.to_vec());
++                    }
++                    outputs.iter().map(|e| crate::compile::evaluate(e, values)).collect()
+                 })?;
+-                deadline.apply_simulation_termination(&mut result);Ok(result)
++                deadline.apply_simulation_termination(&mut result);
++                Ok(result)
+             })?;
+-            let job=ServiceJob::Simulation(handle);let id=job.id().to_string();store.insert(id.clone(),job);
++            let job = ServiceJob::Simulation(handle);
++            let id = job.id().to_string();
++            store.insert(id.clone(), job);
+             Ok(json!({"job_id":id}))
+-        },
+-        ServiceCommand::Get{job_id}=>{
+-            let store=shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-            store.get(&job_id).ok_or_else(||error("unknown_job","Unknown job ID"))?.json()
+-        },
+-        ServiceCommand::Cancel{job_id}=>{
+-            let store=shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-            store.get(&job_id).ok_or_else(||error("unknown_job","Unknown job ID"))?.cancel();Ok(json!({"cancel_requested":true}))
+-        },
+-        ServiceCommand::Forget{job_id}=>{
+-            let mut store=shared.jobs.lock().map_err(|_|error("server_state","Job registry lock poisoned"))?;
+-            if !store.get(&job_id).ok_or_else(||error("unknown_job","Unknown job ID"))?.done()? {return Err(error("job_running","Cancel and wait before forgetting a running job"));}
+-            store.remove(&job_id);Ok(json!({"forgotten":true}))
+-        },
++        }
++        ServiceCommand::Get { job_id } => {
++            let store = shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++            store.get(&job_id).ok_or_else(|| error("unknown_job", "Unknown job ID"))?.json()
++        }
++        ServiceCommand::Cancel { job_id } => {
++            let store = shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++            store.get(&job_id).ok_or_else(|| error("unknown_job", "Unknown job ID"))?.cancel();
++            Ok(json!({"cancel_requested":true}))
++        }
++        ServiceCommand::Forget { job_id } => {
++            let mut store = shared.jobs.lock().map_err(|_| error("server_state", "Job registry lock poisoned"))?;
++            if !store.get(&job_id).ok_or_else(|| error("unknown_job", "Unknown job ID"))?.done()? {
++                return Err(error("job_running", "Cancel and wait before forgetting a running job"));
++            }
++            store.remove(&job_id);
++            Ok(json!({"forgotten":true}))
++        }
+     }
+ }
+-fn serve_client(mut stream:TcpStream,shared:&Arc<Shared>)->Result<()> {
++fn serve_client(mut stream: TcpStream, shared: &Arc<Shared>) -> Result<()> {
+     // Windows accepts inherit the listener's nonblocking mode; each bounded
+     // connection worker deliberately uses blocking reads with a timeout.
+-    stream.set_nonblocking(false).map_err(|e|error("server_io",e.to_string()))?;
+-    let timeout=Some(Duration::from_millis(shared.config.read_timeout_millis));
+-    stream.set_read_timeout(timeout).map_err(|e|error("server_io",e.to_string()))?;
+-    stream.set_write_timeout(timeout).map_err(|e|error("server_io",e.to_string()))?;
+-    let mut reader=BufReader::new(stream.try_clone().map_err(|e|error("server_io",e.to_string()))?);
+-    let mut authenticated=false;
++    stream.set_nonblocking(false).map_err(|e| error("server_io", e.to_string()))?;
++    let timeout = Some(Duration::from_millis(shared.config.read_timeout_millis));
++    stream.set_read_timeout(timeout).map_err(|e| error("server_io", e.to_string()))?;
++    stream.set_write_timeout(timeout).map_err(|e| error("server_io", e.to_string()))?;
++    let mut reader = BufReader::new(stream.try_clone().map_err(|e| error("server_io", e.to_string()))?);
++    let mut authenticated = false;
+     while !shared.stopping.load(Ordering::Acquire) {
+-        let mut bytes=vec![];
+-        let count=(&mut reader).take((shared.config.max_request_bytes+1) as u64).read_until(b'\n',&mut bytes).map_err(|e|error("server_io",e.to_string()))?;
+-        if count==0{return Ok(());}
+-        if bytes.len()>shared.config.max_request_bytes{return Err(error("input_limit","Request exceeds server byte quota"));}
+-        let (id,result)=match serde_json::from_slice::<ServiceRequest>(&bytes) {
+-            Ok(request) if request.schema_version==1 && !request.id.is_empty() && request.id.len()<=128=>(request.id,dispatch(shared,&mut authenticated,request.command)),
+-            Ok(_)=>(String::new(),Err(error("invalid_request","Unsupported schema or request ID"))),
+-            Err(e)=>(String::new(),Err(error("invalid_json",e.to_string()))),
++        let mut bytes = vec![];
++        let count = (&mut reader)
++            .take((shared.config.max_request_bytes + 1) as u64)
++            .read_until(b'\n', &mut bytes)
++            .map_err(|e| error("server_io", e.to_string()))?;
++        if count == 0 {
++            return Ok(());
++        }
++        if bytes.len() > shared.config.max_request_bytes {
++            return Err(error("input_limit", "Request exceeds server byte quota"));
++        }
++        let (id, result) = match serde_json::from_slice::<ServiceRequest>(&bytes) {
++            Ok(request) if request.schema_version == 1 && !request.id.is_empty() && request.id.len() <= 128 => {
++                (request.id, dispatch(shared, &mut authenticated, request.command))
++            }
++            Ok(_) => (String::new(), Err(error("invalid_request", "Unsupported schema or request ID"))),
++            Err(e) => (String::new(), Err(error("invalid_json", e.to_string()))),
+         };
+-        let response=match result {Ok(value)=>json!({"schema_version":1,"id":id,"ok":true,"value":value}),Err(mut e)=>{e.message=e.message.chars().take(1024).collect();json!({"schema_version":1,"id":id,"ok":false,"error":e})}};
+-        let bytes=bounded_json(&response,shared.config.max_response_bytes).or_else(|_|bounded_json(&json!({"schema_version":1,"id":id,"ok":false,"error":{"code":"output_limit","message":"Response exceeds server byte quota"}}),shared.config.max_response_bytes))?;
+-        stream.write_all(&bytes).map_err(|e|error("server_output",e.to_string()))?;
+-        stream.write_all(b"\n").map_err(|e|error("server_output",e.to_string()))?;
++        let response = match result {
++            Ok(value) => json!({"schema_version":1,"id":id,"ok":true,"value":value}),
++            Err(mut e) => {
++                e.message = e.message.chars().take(1024).collect();
++                json!({"schema_version":1,"id":id,"ok":false,"error":e})
++            }
++        };
++        let bytes = bounded_json(&response, shared.config.max_response_bytes).or_else(|_| {
++            bounded_json(
++                &json!({"schema_version":1,"id":id,"ok":false,"error":{"code":"output_limit","message":"Response exceeds server byte quota"}}),
++                shared.config.max_response_bytes,
++            )
++        })?;
++        stream.write_all(&bytes).map_err(|e| error("server_output", e.to_string()))?;
++        stream.write_all(b"\n").map_err(|e| error("server_output", e.to_string()))?;
+     }
+     Ok(())
+ }
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\server.rs:189:
+-fn bounded_json(value:&Value,limit:usize)->Result<Vec<u8>> {
+-    struct Output{bytes:Vec<u8>,limit:usize}
++fn bounded_json(value: &Value, limit: usize) -> Result<Vec<u8>> {
++    struct Output {
++        bytes: Vec<u8>,
++        limit: usize,
++    }
+     impl Write for Output {
+-        fn write(&mut self,bytes:&[u8])->std::io::Result<usize>{
+-            if self.bytes.len().checked_add(bytes.len()).is_none_or(|n|n>self.limit){return Err(std::io::Error::other("Response quota"));}
+-            self.bytes.try_reserve(bytes.len()).map_err(std::io::Error::other)?;self.bytes.extend_from_slice(bytes);Ok(bytes.len())
++        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
++            if self.bytes.len().checked_add(bytes.len()).is_none_or(|n| n > self.limit) {
++                return Err(std::io::Error::other("Response quota"));
++            }
++            self.bytes.try_reserve(bytes.len()).map_err(std::io::Error::other)?;
++            self.bytes.extend_from_slice(bytes);
++            Ok(bytes.len())
+         }
+-        fn flush(&mut self)->std::io::Result<()>{Ok(())}
++        fn flush(&mut self) -> std::io::Result<()> {
++            Ok(())
++        }
+     }
+-    let mut output=Output{bytes:vec![],limit};
+-    serde_json::to_writer(&mut output,value).map_err(|e|error("output_limit",e.to_string()))?;Ok(output.bytes)
++    let mut output = Output { bytes: vec![], limit };
++    serde_json::to_writer(&mut output, value).map_err(|e| error("output_limit", e.to_string()))?;
++    Ok(output.bytes)
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\src\workflow.rs:1:
+ //! One explicit SDK execution contract shared by non-workbook hosts and the CLI.
+-use crate::{compile::{self,Expr,ExpressionConstraint,ExpressionModel},nonlinear::NlpOptions,project::{ModelDefinition,PortableModel},runtime::{DeadlineControl,RuntimeLimits},types::*};
+-use serde::{Deserialize,Serialize};
++use crate::{
++    compile::{self, Expr, ExpressionConstraint, ExpressionModel},
++    nonlinear::NlpOptions,
++    project::{ModelDefinition, PortableModel},
++    runtime::{DeadlineControl, RuntimeLimits},
++    types::*,
++};
++use serde::{Deserialize, Serialize};
+ 
+-#[derive(Debug,Clone,Serialize,Deserialize)]
+-#[serde(tag="kind",rename_all="snake_case",deny_unknown_fields)]
+-pub enum Goal {Minimize{},Maximize{},Target{value:f64}}
+-#[derive(Debug,Clone,Serialize,Deserialize)]
++#[derive(Debug, Clone, Serialize, Deserialize)]
++#[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
++pub enum Goal {
++    Minimize {},
++    Maximize {},
++    Target { value: f64 },
++}
++#[derive(Debug, Clone, Serialize, Deserialize)]
+ #[serde(deny_unknown_fields)]
+ pub struct ExecutionContext {
+-    pub run_id:String,
+-    pub snapshot_id:String,
+-    pub snapshot_revision:Option<String>,
+-    pub host:String,
++    pub run_id: String,
++    pub snapshot_id: String,
++    pub snapshot_revision: Option<String>,
++    pub host: String,
+     /// Optional caller-supplied source identity; not a verified build attestation.
+-    pub source_revision:Option<String>,
++    pub source_revision: Option<String>,
+ }
+-#[derive(Debug,Clone,Serialize,Deserialize)]
++#[derive(Debug, Clone, Serialize, Deserialize)]
+ #[serde(deny_unknown_fields)]
+ pub struct ExecutionRequest {
+-    pub schema_version:u32,
+-    pub model:PortableModel,
+-    pub context:ExecutionContext,
+-    #[serde(default)]pub goal:Option<Goal>,
+-    #[serde(default)]pub limits:RuntimeLimits,
+-    #[serde(default)]pub nonlinear:NlpOptions,
++    pub schema_version: u32,
++    pub model: PortableModel,
++    pub context: ExecutionContext,
++    #[serde(default)]
++    pub goal: Option<Goal>,
++    #[serde(default)]
++    pub limits: RuntimeLimits,
++    #[serde(default)]
++    pub nonlinear: NlpOptions,
+ }
+-#[derive(Debug,Clone,Serialize,Deserialize)]
++#[derive(Debug, Clone, Serialize, Deserialize)]
+ pub struct ExecutionManifest {
+-    pub schema_version:u32,
+-    pub model_id:String,
+-    pub model_revision:String,
+-    pub context:ExecutionContext,
+-    pub input_fingerprint:String,
+-    pub fingerprint_algorithm:String,
+-    pub solvercraft_version:String,
+-    pub engine:String,
+-    pub options:SolveOptions,
+-    pub runtime_limits:RuntimeLimits,
+-    pub platform:String,
+-    pub sampling_version:String,
+-    pub elapsed_millis:u64,
++    pub schema_version: u32,
++    pub model_id: String,
++    pub model_revision: String,
++    pub context: ExecutionContext,
++    pub input_fingerprint: String,
++    pub fingerprint_algorithm: String,
++    pub solvercraft_version: String,
++    pub engine: String,
++    pub options: SolveOptions,
++    pub runtime_limits: RuntimeLimits,
++    pub platform: String,
++    pub sampling_version: String,
++    pub elapsed_millis: u64,
+ }
+-#[derive(Debug,Clone,Serialize,Deserialize)]
+-pub struct ExecutionRun {pub manifest:ExecutionManifest,pub result:SolveResult,pub original_objective:Option<f64>,pub target_reached:Option<bool>}
+-fn error(code:&str,message:&str)->SolverError{SolverError::new(code,message)}
+-fn sum(mut values:Vec<Expr>)->Expr {
+-    while values.len()>1{let mut next=Vec::with_capacity(values.len().div_ceil(2));let mut iter=values.into_iter();while let Some(left)=iter.next(){next.push(if let Some(right)=iter.next(){Expr::Add{left:Box::new(left),right:Box::new(right)}}else{left});}values=next;}
+-    values.pop().unwrap_or_else(||Expr::constant(0.0))
++#[derive(Debug, Clone, Serialize, Deserialize)]
++pub struct ExecutionRun {
++    pub manifest: ExecutionManifest,
++    pub result: SolveResult,
++    pub original_objective: Option<f64>,
++    pub target_reached: Option<bool>,
+ }
+-fn row_terms(terms:&[LinearTerm])->Expr{sum(terms.iter().map(|t|Expr::Multiply{left:Box::new(Expr::constant(t.coefficient)),right:Box::new(Expr::variable(t.variable))}).collect())}
+-pub fn expression_from_algebraic(model:&OptimizationModel,options:&SolveOptions)->Result<ExpressionModel>{
+-    crate::model::validate(model,options)?;
+-    let terms=model.constraints.iter().try_fold(model.objective.linear.len(),|n,r|n.checked_add(r.terms.len()).ok_or_else(||error("expression_limit","Expression conversion size overflow")))?;
+-    let estimate=terms.checked_mul(4).and_then(|n|n.checked_add(model.objective.quadratic.len().checked_mul(6)?)).and_then(|n|n.checked_add(model.constraints.len().checked_mul(3)?)).and_then(|n|n.checked_add(2)).ok_or_else(||error("expression_limit","Expression conversion size overflow"))?;
+-    if estimate>compile::MAX_EXPRESSION_NODES || (estimate as u64).checked_mul(256).is_none_or(|n|n>options.max_memory_bytes){return Err(error("memory_limit","Algebraic-to-expression conversion exceeds its node/memory budget"));}
+-    let mut objective=vec![Expr::constant(model.objective.offset),row_terms(&model.objective.linear)];
+-    for term in &model.objective.quadratic{objective.push(Expr::Multiply{left:Box::new(Expr::constant(term.coefficient)),right:Box::new(Expr::Multiply{left:Box::new(Expr::variable(term.left)),right:Box::new(Expr::variable(term.right))})});}
+-    let converted=ExpressionModel{name:model.name.clone(),variables:model.variables.clone(),direction:model.objective.direction,objective:sum(objective),constraints:model.constraints.iter().map(|r|ExpressionConstraint{name:r.name.clone(),left:row_terms(&r.terms),relation:r.relation,right:Expr::constant(r.rhs)}).collect()};
+-    compile::validate_expression_model(&converted,options)?;Ok(converted)
++fn error(code: &str, message: &str) -> SolverError {
++    SolverError::new(code, message)
+ }
+-pub fn validate_original_expression(model:&ExpressionModel,options:&SolveOptions,result:&mut SolveResult)->Result<()> {
+-    let Some(values)=result.values.as_deref()else{return Ok(());};
+-    compile::validate_expression_model(model,options)?;
+-    let bound_model=OptimizationModel{schema_version:SCHEMA_VERSION,name:model.name.clone(),variables:model.variables.clone(),objective:Objective{direction:Direction::Minimize,offset:0.0,linear:vec![],quadratic:vec![]},constraints:vec![]};
+-    let checked=crate::model::validate_solution(&bound_model,values,options)?;
+-    if !checked.feasible{return Err(error("numerical_failure","Candidate violates original variable bounds or integrality"));}
+-    let objective=compile::evaluate(&model.objective,values)?;
+-    let reported=result.objective.ok_or_else(||error("numerical_failure","Candidate has no reported objective"))?;
+-    let scale=objective.abs().max(reported.abs()).max(1.0);
+-    if !reported.is_finite()||(objective/scale-reported/scale).abs()>options.optimality_tolerance{return Err(error("numerical_failure","Compiled and original expression objectives disagree"));}
+-    let mut violation=checked.max_violation;
+-    for row in &model.constraints{
+-        let residual=compile::evaluate(&row.left,values)?-compile::evaluate(&row.right,values)?;
+-        if !residual.is_finite(){return Err(error("numerical_failure","Original constraint residual overflowed"));}
+-        let v=match row.relation{Relation::LessEqual=>residual.max(0.0),Relation::Equal=>residual.abs(),Relation::GreaterEqual=>(-residual).max(0.0)};
+-        if v>options.feasibility_tolerance{return Err(error("numerical_failure","Candidate violates an original expression constraint"));}violation=violation.max(v);
++fn sum(mut values: Vec<Expr>) -> Expr {
++    while values.len() > 1 {
++        let mut next = Vec::with_capacity(values.len().div_ceil(2));
++        let mut iter = values.into_iter();
++        while let Some(left) = iter.next() {
++            next.push(if let Some(right) = iter.next() { Expr::Add { left: Box::new(left), right: Box::new(right) } } else { left });
++        }
++        values = next;
+     }
+-    result.objective=Some(objective);result.max_violation=Some(violation);Ok(())
++    values.pop().unwrap_or_else(|| Expr::constant(0.0))
+ }
+-pub fn solve_expression(model:&ExpressionModel,options:&SolveOptions,nlp:&NlpOptions,control:&dyn RunControl)->Result<SolveResult>{
+-    compile::validate_expression_model(model,options)?;
+-    let mut result=match options.method{
+-        SolveMethod::DifferentialEvolution=>crate::heuristic::solve(model,options,control)?,
+-        SolveMethod::ProjectedGradient=>if model.constraints.is_empty(){crate::nonlinear::solve(model,options,control)?}else{crate::constrained::solve(model,options,nlp,control)?},
+-        SolveMethod::Simplex|SolveMethod::BranchAndBound=>crate::solve(&compile::compile(model,options)?,options,control)?,
+-        SolveMethod::Auto=>{
+-            let objective=compile::classify(&model.objective,model.variables.len())?;
+-            let mut affine_rows=true;
+-            for row in &model.constraints{for expression in [&row.left,&row.right]{if !matches!(compile::classify(expression,model.variables.len())?,compile::ExpressionClass::Affine|compile::ExpressionClass::Constant){affine_rows=false;}}}
+-            if objective!=compile::ExpressionClass::Nonlinear&&affine_rows{crate::solve(&compile::compile(model,options)?,options,control)?}
+-            else if model.variables.iter().any(|v|v.kind!=VariableKind::Continuous){crate::heuristic::solve(model,options,control)?}
+-            else if model.constraints.is_empty(){crate::nonlinear::solve(model,options,control)?}
+-            else{crate::constrained::solve(model,options,nlp,control)?}
+-        },
++fn row_terms(terms: &[LinearTerm]) -> Expr {
++    sum(terms.iter().map(|t| Expr::Multiply { left: Box::new(Expr::constant(t.coefficient)), right: Box::new(Expr::variable(t.variable)) }).collect())
++}
++pub fn expression_from_algebraic(model: &OptimizationModel, options: &SolveOptions) -> Result<ExpressionModel> {
++    crate::model::validate(model, options)?;
++    let terms = model.constraints.iter().try_fold(model.objective.linear.len(), |n, r| {
++        n.checked_add(r.terms.len()).ok_or_else(|| error("expression_limit", "Expression conversion size overflow"))
++    })?;
++    let estimate = terms
++        .checked_mul(4)
++        .and_then(|n| n.checked_add(model.objective.quadratic.len().checked_mul(6)?))
++        .and_then(|n| n.checked_add(model.constraints.len().checked_mul(3)?))
++        .and_then(|n| n.checked_add(2))
++        .ok_or_else(|| error("expression_limit", "Expression conversion size overflow"))?;
++    if estimate > compile::MAX_EXPRESSION_NODES || (estimate as u64).checked_mul(256).is_none_or(|n| n > options.max_memory_bytes) {
++        return Err(error("memory_limit", "Algebraic-to-expression conversion exceeds its node/memory budget"));
++    }
++    let mut objective = vec![Expr::constant(model.objective.offset), row_terms(&model.objective.linear)];
++    for term in &model.objective.quadratic {
++        objective.push(Expr::Multiply {
++            left: Box::new(Expr::constant(term.coefficient)),
++            right: Box::new(Expr::Multiply { left: Box::new(Expr::variable(term.left)), right: Box::new(Expr::variable(term.right)) }),
++        });
++    }
++    let converted = ExpressionModel {
++        name: model.name.clone(),
++        variables: model.variables.clone(),
++        direction: model.objective.direction,
++        objective: sum(objective),
++        constraints: model
++            .constraints
++            .iter()
++            .map(|r| ExpressionConstraint { name: r.name.clone(), left: row_terms(&r.terms), relation: r.relation, right: Expr::constant(r.rhs) })
++            .collect(),
+     };
+-    validate_original_expression(model,options,&mut result)?;Ok(result)
++    compile::validate_expression_model(&converted, options)?;
++    Ok(converted)
+ }
+-fn fingerprint<T:Serialize>(value:&T,limit:u64)->Result<String>{
+-    struct Hash{value:u64,bytes:u64,limit:u64}
+-    impl std::io::Write for Hash{
+-        fn write(&mut self,bytes:&[u8])->std::io::Result<usize>{self.bytes=self.bytes.checked_add(bytes.len() as u64).filter(|n|*n<=self.limit).ok_or_else(||std::io::Error::other("Manifest byte budget"))?;for b in bytes{self.value^=u64::from(*b);self.value=self.value.wrapping_mul(0x100000001b3);}Ok(bytes.len())}
+-        fn flush(&mut self)->std::io::Result<()>{Ok(())}
++pub fn validate_original_expression(model: &ExpressionModel, options: &SolveOptions, result: &mut SolveResult) -> Result<()> {
++    let Some(values) = result.values.as_deref() else {
++        return Ok(());
++    };
++    compile::validate_expression_model(model, options)?;
++    let bound_model = OptimizationModel {
++        schema_version: SCHEMA_VERSION,
++        name: model.name.clone(),
++        variables: model.variables.clone(),
++        objective: Objective { direction: Direction::Minimize, offset: 0.0, linear: vec![], quadratic: vec![] },
++        constraints: vec![],
++    };
++    let checked = crate::model::validate_solution(&bound_model, values, options)?;
++    if !checked.feasible {
++        return Err(error("numerical_failure", "Candidate violates original variable bounds or integrality"));
+     }
+-    let mut hash=Hash{value:0xcbf29ce484222325,bytes:0,limit};serde_json::to_writer(&mut hash,value).map_err(|e|SolverError::new("manifest_limit",e.to_string()))?;Ok(format!("{:016x}",hash.value))
++    let objective = compile::evaluate(&model.objective, values)?;
++    let reported = result.objective.ok_or_else(|| error("numerical_failure", "Candidate has no reported objective"))?;
++    let scale = objective.abs().max(reported.abs()).max(1.0);
++    if !reported.is_finite() || (objective / scale - reported / scale).abs() > options.optimality_tolerance {
++        return Err(error("numerical_failure", "Compiled and original expression objectives disagree"));
++    }
++    let mut violation = checked.max_violation;
++    for row in &model.constraints {
++        let residual = compile::evaluate(&row.left, values)? - compile::evaluate(&row.right, values)?;
++        if !residual.is_finite() {
++            return Err(error("numerical_failure", "Original constraint residual overflowed"));
++        }
++        let v = match row.relation {
++            Relation::LessEqual => residual.max(0.0),
++            Relation::Equal => residual.abs(),
++            Relation::GreaterEqual => (-residual).max(0.0),
++        };
++        if v > options.feasibility_tolerance {
++            return Err(error("numerical_failure", "Candidate violates an original expression constraint"));
++        }
++        violation = violation.max(v);
++    }
++    result.objective = Some(objective);
++    result.max_violation = Some(violation);
++    Ok(())
+ }
+-pub fn execute(request:&ExecutionRequest,control:&dyn RunControl)->Result<ExecutionRun>{
+-    request.model.validate()?;request.nonlinear.validate()?;
+-    if request.schema_version!=2||[&request.context.run_id,&request.context.snapshot_id,&request.context.host].iter().any(|s|s.is_empty()||s.len()>256||s.chars().any(char::is_control))||request.context.snapshot_revision.as_ref().is_some_and(|s|s.is_empty()||s.len()>256)||request.context.source_revision.as_ref().is_some_and(|s|s.len()>128||s.is_empty()){
+-        return Err(error("invalid_context","Expected schema 2 and bounded lossless run/snapshot/host identities"));
++pub fn solve_expression(model: &ExpressionModel, options: &SolveOptions, nlp: &NlpOptions, control: &dyn RunControl) -> Result<SolveResult> {
++    compile::validate_expression_model(model, options)?;
++    let mut result = match options.method {
++        SolveMethod::DifferentialEvolution => crate::heuristic::solve(model, options, control)?,
++        SolveMethod::ProjectedGradient => {
++            if model.constraints.is_empty() {
++                crate::nonlinear::solve(model, options, control)?
++            } else {
++                crate::constrained::solve(model, options, nlp, control)?
++            }
++        }
++        SolveMethod::Simplex | SolveMethod::BranchAndBound => crate::solve(&compile::compile(model, options)?, options, control)?,
++        SolveMethod::Auto => {
++            let objective = compile::classify(&model.objective, model.variables.len())?;
++            let mut affine_rows = true;
++            for row in &model.constraints {
++                for expression in [&row.left, &row.right] {
++                    if !matches!(
++                        compile::classify(expression, model.variables.len())?,
++                        compile::ExpressionClass::Affine | compile::ExpressionClass::Constant
++                    ) {
++                        affine_rows = false;
++                    }
++                }
++            }
++            if objective != compile::ExpressionClass::Nonlinear && affine_rows {
++                crate::solve(&compile::compile(model, options)?, options, control)?
++            } else if model.variables.iter().any(|v| v.kind != VariableKind::Continuous) {
++                crate::heuristic::solve(model, options, control)?
++            } else if model.constraints.is_empty() {
++                crate::nonlinear::solve(model, options, control)?
++            } else {
++                crate::constrained::solve(model, options, nlp, control)?
++            }
++        }
++    };
++    validate_original_expression(model, options, &mut result)?;
++    Ok(result)
++}
++fn fingerprint<T: Serialize>(value: &T, limit: u64) -> Result<String> {
++    struct Hash {
++        value: u64,
++        bytes: u64,
++        limit: u64,
+     }
+-    let fingerprint=fingerprint(request,request.model.options.max_memory_bytes)?;
+-    let started=crate::runtime::monotonic_now();let deadline=DeadlineControl::new(control,request.limits)?;
+-    let mut expression=match &request.model.definition{ModelDefinition::Expression(m)=>m.clone(),ModelDefinition::Algebraic(m)=>expression_from_algebraic(m,&request.model.options)?};
+-    let original=expression.objective.clone();
+-    match &request.goal{Some(Goal::Minimize{})=>expression.direction=Direction::Minimize,Some(Goal::Maximize{})=>expression.direction=Direction::Maximize,Some(Goal::Target{value})=>expression=compile::with_target(&expression,*value)?,None=>{}}
+-    let mut result=solve_expression(&expression,&request.model.options,&request.nonlinear,&deadline)?;deadline.apply_termination(&mut result);
+-    let mut original_objective=result.values.as_deref().map(|values|compile::evaluate(&original,values)).transpose()?;
+-    if let (ModelDefinition::Algebraic(source),Some(values))=(&request.model.definition,result.values.as_deref()) {
+-        let checked=crate::model::validate_solution(source,values,&request.model.options)?;
+-        if !checked.feasible{return Err(error("numerical_failure","Candidate violates the original algebraic model"));}
+-        let actual=crate::model::evaluate_objective(source,values)?;
+-        if !matches!(request.goal,Some(Goal::Target{..})) {
+-            let reported=result.objective.ok_or_else(||error("numerical_failure","Candidate has no objective"))?;
+-            let scale=actual.abs().max(reported.abs()).max(1.0);
+-            if (actual/scale-reported/scale).abs()>request.model.options.optimality_tolerance{return Err(error("numerical_failure","Expression conversion changed the original algebraic objective"));}
++    impl std::io::Write for Hash {
++        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
++            self.bytes = self
++                .bytes
++                .checked_add(bytes.len() as u64)
++                .filter(|n| *n <= self.limit)
++                .ok_or_else(|| std::io::Error::other("Manifest byte budget"))?;
++            for b in bytes {
++                self.value ^= u64::from(*b);
++                self.value = self.value.wrapping_mul(0x100000001b3);
++            }
++            Ok(bytes.len())
+         }
+-        original_objective=Some(actual);
++        fn flush(&mut self) -> std::io::Result<()> {
++            Ok(())
++        }
+     }
+-    let target_reached=match (&request.goal,original_objective){(Some(Goal::Target{value}),Some(objective))=>Some((objective-value).abs()<=request.model.options.feasibility_tolerance),(Some(Goal::Target{..}),None)=>Some(false),_=>None};
+-    let manifest=ExecutionManifest{schema_version:2,model_id:request.model.id.clone(),model_revision:request.model.revision.clone(),context:request.context.clone(),input_fingerprint:fingerprint,fingerprint_algorithm:"fnv1a64-diagnostic-v1-not-authentication".into(),solvercraft_version:env!("CARGO_PKG_VERSION").into(),engine:result.engine.clone(),options:request.model.options.clone(),runtime_limits:request.limits,platform:format!("{}-{}",std::env::consts::ARCH,std::env::consts::OS),sampling_version:crate::math::SAMPLING_VERSION.into(),elapsed_millis:u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX)};
+-    Ok(ExecutionRun{manifest,result,original_objective,target_reached})
++    let mut hash = Hash { value: 0xcbf29ce484222325, bytes: 0, limit };
++    serde_json::to_writer(&mut hash, value).map_err(|e| SolverError::new("manifest_limit", e.to_string()))?;
++    Ok(format!("{:016x}", hash.value))
++}
++pub fn execute(request: &ExecutionRequest, control: &dyn RunControl) -> Result<ExecutionRun> {
++    request.model.validate()?;
++    request.nonlinear.validate()?;
++    if request.schema_version != 2
++        || [&request.context.run_id, &request.context.snapshot_id, &request.context.host]
++            .iter()
++            .any(|s| s.is_empty() || s.len() > 256 || s.chars().any(char::is_control))
++        || request.context.snapshot_revision.as_ref().is_some_and(|s| s.is_empty() || s.len() > 256)
++        || request.context.source_revision.as_ref().is_some_and(|s| s.len() > 128 || s.is_empty())
++    {
++        return Err(error("invalid_context", "Expected schema 2 and bounded lossless run/snapshot/host identities"));
++    }
++    let fingerprint = fingerprint(request, request.model.options.max_memory_bytes)?;
++    let started = crate::runtime::monotonic_now();
++    let deadline = DeadlineControl::new(control, request.limits)?;
++    let mut expression = match &request.model.definition {
++        ModelDefinition::Expression(m) => m.clone(),
++        ModelDefinition::Algebraic(m) => expression_from_algebraic(m, &request.model.options)?,
++    };
++    let original = expression.objective.clone();
++    match &request.goal {
++        Some(Goal::Minimize {}) => expression.direction = Direction::Minimize,
++        Some(Goal::Maximize {}) => expression.direction = Direction::Maximize,
++        Some(Goal::Target { value }) => expression = compile::with_target(&expression, *value)?,
++        None => {}
++    }
++    let mut result = solve_expression(&expression, &request.model.options, &request.nonlinear, &deadline)?;
++    deadline.apply_termination(&mut result);
++    let mut original_objective = result.values.as_deref().map(|values| compile::evaluate(&original, values)).transpose()?;
++    if let (ModelDefinition::Algebraic(source), Some(values)) = (&request.model.definition, result.values.as_deref()) {
++        let checked = crate::model::validate_solution(source, values, &request.model.options)?;
++        if !checked.feasible {
++            return Err(error("numerical_failure", "Candidate violates the original algebraic model"));
++        }
++        let actual = crate::model::evaluate_objective(source, values)?;
++        if !matches!(request.goal, Some(Goal::Target { .. })) {
++            let reported = result.objective.ok_or_else(|| error("numerical_failure", "Candidate has no objective"))?;
++            let scale = actual.abs().max(reported.abs()).max(1.0);
++            if (actual / scale - reported / scale).abs() > request.model.options.optimality_tolerance {
++                return Err(error("numerical_failure", "Expression conversion changed the original algebraic objective"));
++            }
++        }
++        original_objective = Some(actual);
++    }
++    let target_reached = match (&request.goal, original_objective) {
++        (Some(Goal::Target { value }), Some(objective)) => Some((objective - value).abs() <= request.model.options.feasibility_tolerance),
++        (Some(Goal::Target { .. }), None) => Some(false),
++        _ => None,
++    };
++    let manifest = ExecutionManifest {
++        schema_version: 2,
++        model_id: request.model.id.clone(),
++        model_revision: request.model.revision.clone(),
++        context: request.context.clone(),
++        input_fingerprint: fingerprint,
++        fingerprint_algorithm: "fnv1a64-diagnostic-v1-not-authentication".into(),
++        solvercraft_version: env!("CARGO_PKG_VERSION").into(),
++        engine: result.engine.clone(),
++        options: request.model.options.clone(),
++        runtime_limits: request.limits,
++        platform: format!("{}-{}", std::env::consts::ARCH, std::env::consts::OS),
++        sampling_version: crate::math::SAMPLING_VERSION.into(),
++        elapsed_millis: u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX),
++    };
++    Ok(ExecutionRun { manifest, result, original_objective, target_reached })
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\tests\contracts_e2e.rs:1:
+-#![allow(clippy::unwrap_used,clippy::expect_used,clippy::panic)]
+-use solvercraft::{project::*,registry::{self,ProblemClass},runtime::{self,RuntimeLimits},types::*};
++#![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
++use solvercraft::{
++    project::*,
++    registry::{self, ProblemClass},
++    runtime::{self, RuntimeLimits},
++    types::*,
++};
+ use std::collections::BTreeMap;
+-fn model()->OptimizationModel{OptimizationModel{schema_version:1,name:"planning".into(),variables:vec![Variable{name:"width".into(),lower:Some(0.0),upper:Some(10.0),kind:VariableKind::Continuous}],objective:Objective{direction:Direction::Maximize,offset:0.0,linear:vec![LinearTerm{variable:0,coefficient:1.0}],quadratic:vec![]},constraints:vec![]}}
+-fn portable()->PortableModel {PortableModel{schema_version:2,id:"18446744073709551615".into(),revision:"9007199254740993".into(),name:"ArtCraft layout".into(),definition:ModelDefinition::Algebraic(model()),options:SolveOptions{seed:u64::MAX,..Default::default()},bindings:vec![ParameterBinding{parameter:0,object_id:"frame:18446744073709551615".into(),property:"width".into()}],metadata:BTreeMap::new()}}
++fn model() -> OptimizationModel {
++    OptimizationModel {
++        schema_version: 1,
++        name: "planning".into(),
++        variables: vec![Variable { name: "width".into(), lower: Some(0.0), upper: Some(10.0), kind: VariableKind::Continuous }],
++        objective: Objective {
++            direction: Direction::Maximize,
++            offset: 0.0,
++            linear: vec![LinearTerm { variable: 0, coefficient: 1.0 }],
++            quadratic: vec![],
++        },
++        constraints: vec![],
++    }
++}
++fn portable() -> PortableModel {
++    PortableModel {
++        schema_version: 2,
++        id: "18446744073709551615".into(),
++        revision: "9007199254740993".into(),
++        name: "ArtCraft layout".into(),
++        definition: ModelDefinition::Algebraic(model()),
++        options: SolveOptions { seed: u64::MAX, ..Default::default() },
++        bindings: vec![ParameterBinding { parameter: 0, object_id: "frame:18446744073709551615".into(), property: "width".into() }],
++        metadata: BTreeMap::new(),
++    }
++}
+ #[test]
+-fn portable_json_preserves_large_string_ids_revisions_and_maximum_seed(){
+-    let mut library=ModelLibrary::default();library.insert(portable()).unwrap();
+-    let bytes=export(&library).unwrap();let restored=import(&bytes).unwrap();
+-    assert_eq!(restored.models[0].id,"18446744073709551615");assert_eq!(restored.models[0].revision,"9007199254740993");assert_eq!(restored.models[0].options.seed,u64::MAX);assert_eq!(restored.models[0].bindings,library.models[0].bindings);
+-    let restored_model=match &restored.models[0].definition{ModelDefinition::Algebraic(m)=>m,_=>panic!("wrong variant")};
+-    let result=solvercraft::solve(restored_model,&restored.models[0].options,&NoControl).unwrap();assert_eq!(result.objective,Some(10.0));
++fn portable_json_preserves_large_string_ids_revisions_and_maximum_seed() {
++    let mut library = ModelLibrary::default();
++    library.insert(portable()).unwrap();
++    let bytes = export(&library).unwrap();
++    let restored = import(&bytes).unwrap();
++    assert_eq!(restored.models[0].id, "18446744073709551615");
++    assert_eq!(restored.models[0].revision, "9007199254740993");
++    assert_eq!(restored.models[0].options.seed, u64::MAX);
++    assert_eq!(restored.models[0].bindings, library.models[0].bindings);
++    let restored_model = match &restored.models[0].definition {
++        ModelDefinition::Algebraic(m) => m,
++        _ => panic!("wrong variant"),
++    };
++    let result = solvercraft::solve(restored_model, &restored.models[0].options, &NoControl).unwrap();
++    assert_eq!(result.objective, Some(10.0));
+ }
+ #[test]
+-fn saved_model_updates_are_atomic_revision_checked_and_collision_safe(){
+-    let mut library=ModelLibrary::default();let original=portable();library.insert(original.clone()).unwrap();
++fn saved_model_updates_are_atomic_revision_checked_and_collision_safe() {
++    let mut library = ModelLibrary::default();
++    let original = portable();
++    library.insert(original.clone()).unwrap();
+     assert!(library.insert(original.clone()).is_err());
+-    let mut collision=original.clone();collision.id="second".into();collision.name="ARTCRAFT LAYOUT".into();assert!(library.insert(collision).is_err());
+-    let before=export(&library).unwrap();assert!(library.replace(&original.id,"0",original.clone()).is_err());assert_eq!(export(&library).unwrap(),before);
+-    library.replace(&original.id,&original.revision,original.clone()).unwrap();assert_eq!(library.models[0].revision,"9007199254740994");
+-    assert!(library.remove(&original.id,&original.revision).is_err());library.remove(&original.id,"9007199254740994").unwrap();assert!(library.models.is_empty());
++    let mut collision = original.clone();
++    collision.id = "second".into();
++    collision.name = "ARTCRAFT LAYOUT".into();
++    assert!(library.insert(collision).is_err());
++    let before = export(&library).unwrap();
++    assert!(library.replace(&original.id, "0", original.clone()).is_err());
++    assert_eq!(export(&library).unwrap(), before);
++    library.replace(&original.id, &original.revision, original.clone()).unwrap();
++    assert_eq!(library.models[0].revision, "9007199254740994");
++    assert!(library.remove(&original.id, &original.revision).is_err());
++    library.remove(&original.id, "9007199254740994").unwrap();
++    assert!(library.models.is_empty());
+ }
+ #[test]
+-fn project_schema_and_binding_failures_are_not_silently_migrated(){
+-    for bytes in [br#"[]"#.as_slice(),br#"{"schema_version":999,"models":[]}"#,br#"{"schema_version":2,"models":[],"typo":1}"#,br#"{"schema_version":2,"schema_version":2,"models":[]}"#]{assert!(import(bytes).is_err());}
+-    let mut p=portable();p.bindings[0].parameter=1;assert!(p.validate().is_err());p.bindings[0].parameter=0;p.bindings.push(p.bindings[0].clone());assert!(p.validate().is_err());
+-    let original=model();let migrated=migrate_v1_algebraic(&serde_json::to_vec(&original).unwrap(),"old-model".into(),SolveOptions{seed:u64::MAX,..Default::default()}).unwrap();
+-    assert_eq!(migrated.schema_version,2);assert_eq!(migrated.revision,"0");assert_eq!(migrated.options.seed,u64::MAX);assert!(migrated.bindings.is_empty());
+-    let mut invalid=original;invalid.schema_version=0;assert!(migrate_v1_algebraic(&serde_json::to_vec(&invalid).unwrap(),"id".into(),SolveOptions::default()).is_err());
++fn project_schema_and_binding_failures_are_not_silently_migrated() {
++    for bytes in [
++        br#"[]"#.as_slice(),
++        br#"{"schema_version":999,"models":[]}"#,
++        br#"{"schema_version":2,"models":[],"typo":1}"#,
++        br#"{"schema_version":2,"schema_version":2,"models":[]}"#,
++    ] {
++        assert!(import(bytes).is_err());
++    }
++    let mut p = portable();
++    p.bindings[0].parameter = 1;
++    assert!(p.validate().is_err());
++    p.bindings[0].parameter = 0;
++    p.bindings.push(p.bindings[0].clone());
++    assert!(p.validate().is_err());
++    let original = model();
++    let migrated =
++        migrate_v1_algebraic(&serde_json::to_vec(&original).unwrap(), "old-model".into(), SolveOptions { seed: u64::MAX, ..Default::default() })
++            .unwrap();
++    assert_eq!(migrated.schema_version, 2);
++    assert_eq!(migrated.revision, "0");
++    assert_eq!(migrated.options.seed, u64::MAX);
++    assert!(migrated.bindings.is_empty());
++    let mut invalid = original;
++    invalid.schema_version = 0;
++    assert!(migrate_v1_algebraic(&serde_json::to_vec(&invalid).unwrap(), "id".into(), SolveOptions::default()).is_err());
+ }
+ #[test]
+-fn backend_registry_rejects_unavailable_method_substitution(){
+-    let simplex=registry::select(ProblemClass::Linear,None).unwrap();assert_eq!(simplex.id,"dense_two_phase_simplex");assert!(!simplex.basis);assert!(!simplex.dual_values);
+-    assert!(registry::select(ProblemClass::Linear,Some("projected_gradient_ad")).is_err());assert!(registry::select(ProblemClass::Linear,Some("grg")).is_err());
+-    for engine in registry::engines(){assert!(engine.progress&&engine.cancellation);assert!(!engine.guarantee.is_empty());}
++fn backend_registry_rejects_unavailable_method_substitution() {
++    let simplex = registry::select(ProblemClass::Linear, None).unwrap();
++    assert_eq!(simplex.id, "dense_two_phase_simplex");
++    assert!(!simplex.basis);
++    assert!(!simplex.dual_values);
++    assert!(registry::select(ProblemClass::Linear, Some("projected_gradient_ad")).is_err());
++    assert!(registry::select(ProblemClass::Linear, Some("grg")).is_err());
++    for engine in registry::engines() {
++        assert!(engine.progress && engine.cancellation);
++        assert!(!engine.guarantee.is_empty());
++    }
+ }
+-#[cfg(not(target_arch="wasm32"))]
++#[cfg(not(target_arch = "wasm32"))]
+ #[test]
+-fn expired_wall_clock_is_time_limit_and_user_cancel_remains_distinct(){
+-    let result=runtime::solve_with_limits(&model(),&SolveOptions::default(),RuntimeLimits{max_time_millis:Some(0)},&NoControl).unwrap();assert_eq!(result.termination,Termination::TimeLimit);assert_ne!(result.optimality,Optimality::Optimal);
+-    struct Cancel;impl RunControl for Cancel{fn is_cancelled(&self)->bool{true}}
+-    let result=runtime::solve_with_limits(&model(),&SolveOptions::default(),RuntimeLimits{max_time_millis:Some(0)},&Cancel).unwrap();assert_eq!(result.termination,Termination::Cancelled);
+-    let result=runtime::solve_with_limits(&model(),&SolveOptions::default(),RuntimeLimits::default(),&NoControl).unwrap();assert_eq!(result.termination,Termination::Completed);assert_eq!(result.objective,Some(10.0));
++fn expired_wall_clock_is_time_limit_and_user_cancel_remains_distinct() {
++    let result = runtime::solve_with_limits(&model(), &SolveOptions::default(), RuntimeLimits { max_time_millis: Some(0) }, &NoControl).unwrap();
++    assert_eq!(result.termination, Termination::TimeLimit);
++    assert_ne!(result.optimality, Optimality::Optimal);
++    struct Cancel;
++    impl RunControl for Cancel {
++        fn is_cancelled(&self) -> bool {
++            true
++        }
++    }
++    let result = runtime::solve_with_limits(&model(), &SolveOptions::default(), RuntimeLimits { max_time_millis: Some(0) }, &Cancel).unwrap();
++    assert_eq!(result.termination, Termination::Cancelled);
++    let result = runtime::solve_with_limits(&model(), &SolveOptions::default(), RuntimeLimits::default(), &NoControl).unwrap();
++    assert_eq!(result.termination, Termination::Completed);
++    assert_eq!(result.objective, Some(10.0));
+ }
+ 
+Diff in \\?\$SDK_ROOT\crates\solvercraft\tests\server_e2e.rs:1:
+-#![cfg(not(target_arch="wasm32"))]
+-#![allow(clippy::unwrap_used,clippy::expect_used,clippy::panic)]
+-use solvercraft::{server::{Server,ServerConfig},types::*};
+-use serde_json::{Value,json};
+-use std::{io::{BufRead,BufReader,Write},net::{SocketAddr,TcpStream},sync::{Arc,Mutex,atomic::{AtomicBool,Ordering}},time::Duration};
+-static SERIAL:Mutex<()>=Mutex::new(());
+-const TOKEN:&str="synthetic-test-token-only-0123456789abcdef";
+-struct Running{stop:Arc<AtomicBool>,join:Option<std::thread::JoinHandle<Result<()>>>,address:SocketAddr}
+-impl Drop for Running{fn drop(&mut self){self.stop.store(true,Ordering::Release);if let Some(j)=self.join.take(){let _=j.join();}}}
+-fn start(config:ServerConfig)->Running {
+-    let server=Server::bind(config).unwrap();let address=server.address().unwrap();let stop=Arc::new(AtomicBool::new(false));let flag=Arc::clone(&stop);
+-    let join=std::thread::spawn(move||server.run(&flag));Running{stop,join:Some(join),address}
++#![cfg(not(target_arch = "wasm32"))]
++#![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
++use serde_json::{Value, json};
++use solvercraft::{
++    server::{Server, ServerConfig},
++    types::*,
++};
++use std::{
++    io::{BufRead, BufReader, Write},
++    net::{SocketAddr, TcpStream},
++    sync::{
++        Arc, Mutex,
++        atomic::{AtomicBool, Ordering},
++    },
++    time::Duration,
++};
++static SERIAL: Mutex<()> = Mutex::new(());
++const TOKEN: &str = "synthetic-test-token-only-0123456789abcdef";
++struct Running {
++    stop: Arc<AtomicBool>,
++    join: Option<std::thread::JoinHandle<Result<()>>>,
++    address: SocketAddr,
+ }
+-fn connect(server:&Running)->BufReader<TcpStream>{let stream=TcpStream::connect_timeout(&server.address,Duration::from_secs(2)).unwrap();stream.set_read_timeout(Some(Duration::from_secs(3))).unwrap();BufReader::new(stream)}
+-fn call(client:&mut BufReader<TcpStream>,command:Value)->Value {
+-    serde_json::to_writer(client.get_mut(),&json!({"schema_version":1,"id":"9007199254740993","command":command})).unwrap();client.get_mut().write_all(b"\n").unwrap();
+-    let mut line=String::new();client.read_line(&mut line).unwrap();let value:Value=serde_json::from_str(&line).unwrap();assert_eq!(value["id"],"9007199254740993");value
++impl Drop for Running {
++    fn drop(&mut self) {
++        self.stop.store(true, Ordering::Release);
++        if let Some(j) = self.join.take() {
++            let _ = j.join();
++        }
++    }
+ }
+-fn auth(client:&mut BufReader<TcpStream>){assert_eq!(call(client,json!({"method":"authenticate","params":{"token":TOKEN}}))["ok"],true);}
+-fn model()->OptimizationModel{OptimizationModel{schema_version:1,name:"server LP".into(),variables:vec![Variable{name:"x".into(),lower:Some(0.0),upper:Some(10.0),kind:VariableKind::Continuous}],objective:Objective{direction:Direction::Maximize,offset:0.0,linear:vec![LinearTerm{variable:0,coefficient:1.0}],quadratic:vec![]},constraints:vec![]}}
+-fn completed(client:&mut BufReader<TcpStream>,id:&str)->Value {
+-    let start=solvercraft::runtime::monotonic_now();loop{let response=call(client,json!({"method":"get","params":{"job_id":id}}));assert_eq!(response["ok"],true,"{response}");if !response["value"]["result"].is_null(){return response["value"].clone();}assert!(start.elapsed()<Duration::from_secs(3));std::thread::sleep(Duration::from_millis(2));}
++fn start(config: ServerConfig) -> Running {
++    let server = Server::bind(config).unwrap();
++    let address = server.address().unwrap();
++    let stop = Arc::new(AtomicBool::new(false));
++    let flag = Arc::clone(&stop);
++    let join = std::thread::spawn(move || server.run(&flag));
++    Running { stop, join: Some(join), address }
+ }
++fn connect(server: &Running) -> BufReader<TcpStream> {
++    let stream = TcpStream::connect_timeout(&server.address, Duration::from_secs(2)).unwrap();
++    stream.set_read_timeout(Some(Duration::from_secs(3))).unwrap();
++    BufReader::new(stream)
++}
++fn call(client: &mut BufReader<TcpStream>, command: Value) -> Value {
++    serde_json::to_writer(client.get_mut(), &json!({"schema_version":1,"id":"9007199254740993","command":command})).unwrap();
++    client.get_mut().write_all(b"\n").unwrap();
++    let mut line = String::new();
++    client.read_line(&mut line).unwrap();
++    let value: Value = serde_json::from_str(&line).unwrap();
++    assert_eq!(value["id"], "9007199254740993");
++    value
++}
++fn auth(client: &mut BufReader<TcpStream>) {
++    assert_eq!(call(client, json!({"method":"authenticate","params":{"token":TOKEN}}))["ok"], true);
++}
++fn model() -> OptimizationModel {
++    OptimizationModel {
++        schema_version: 1,
++        name: "server LP".into(),
++        variables: vec![Variable { name: "x".into(), lower: Some(0.0), upper: Some(10.0), kind: VariableKind::Continuous }],
++        objective: Objective {
++            direction: Direction::Maximize,
++            offset: 0.0,
++            linear: vec![LinearTerm { variable: 0, coefficient: 1.0 }],
++            quadratic: vec![],
++        },
++        constraints: vec![],
++    }
++}
++fn completed(client: &mut BufReader<TcpStream>, id: &str) -> Value {
++    let start = solvercraft::runtime::monotonic_now();
++    loop {
++        let response = call(client, json!({"method":"get","params":{"job_id":id}}));
++        assert_eq!(response["ok"], true, "{response}");
++        if !response["value"]["result"].is_null() {
++            return response["value"].clone();
++        }
++        assert!(start.elapsed() < Duration::from_secs(3));
++        std::thread::sleep(Duration::from_millis(2));
++    }
++}
+ #[test]
+-fn real_tcp_authentication_is_per_connection_and_request_fields_are_strict(){
+-    let _serial=SERIAL.lock().unwrap();let server=start(ServerConfig::local(TOKEN.into()));let mut first=connect(&server);
+-    assert_eq!(call(&mut first,json!({"method":"capabilities","params":{}}))["error"]["code"],"authentication");
+-    assert_eq!(call(&mut first,json!({"method":"authenticate","params":{"token":"wrong"}}))["ok"],false);auth(&mut first);
+-    assert_eq!(call(&mut first,json!({"method":"capabilities","params":{}}))["ok"],true);
+-    let mut second=connect(&server);assert_eq!(call(&mut second,json!({"method":"get","params":{"job_id":"1"}}))["error"]["code"],"authentication");
++fn real_tcp_authentication_is_per_connection_and_request_fields_are_strict() {
++    let _serial = SERIAL.lock().unwrap();
++    let server = start(ServerConfig::local(TOKEN.into()));
++    let mut first = connect(&server);
++    assert_eq!(call(&mut first, json!({"method":"capabilities","params":{}}))["error"]["code"], "authentication");
++    assert_eq!(call(&mut first, json!({"method":"authenticate","params":{"token":"wrong"}}))["ok"], false);
++    auth(&mut first);
++    assert_eq!(call(&mut first, json!({"method":"capabilities","params":{}}))["ok"], true);
++    let mut second = connect(&server);
++    assert_eq!(call(&mut second, json!({"method":"get","params":{"job_id":"1"}}))["error"]["code"], "authentication");
+     // Duplicate and unknown fields are parsed directly into typed DTOs.
+-    for request in [r#"{"schema_version":1,"id":"1","command":{"method":"authenticate","params":{"token":"x","typo":1}}}"#,r#"{"schema_version":1,"schema_version":1,"id":"1","command":{"method":"capabilities","params":{}}}"#]{
+-        first.get_mut().write_all(request.as_bytes()).unwrap();first.get_mut().write_all(b"\n").unwrap();let mut line=String::new();first.read_line(&mut line).unwrap();let response:Value=serde_json::from_str(&line).unwrap();assert_eq!(response["error"]["code"],"invalid_json");
++    for request in [
++        r#"{"schema_version":1,"id":"1","command":{"method":"authenticate","params":{"token":"x","typo":1}}}"#,
++        r#"{"schema_version":1,"schema_version":1,"id":"1","command":{"method":"capabilities","params":{}}}"#,
++    ] {
++        first.get_mut().write_all(request.as_bytes()).unwrap();
++        first.get_mut().write_all(b"\n").unwrap();
++        let mut line = String::new();
++        first.read_line(&mut line).unwrap();
++        let response: Value = serde_json::from_str(&line).unwrap();
++        assert_eq!(response["error"]["code"], "invalid_json");
+     }
+ }
+ #[test]
+Diff in \\?\$SDK_ROOT\crates\solvercraft\tests\server_e2e.rs:37:
+-fn real_server_jobs_solve_poll_quota_forget_and_reuse(){
+-    let _serial=SERIAL.lock().unwrap();let mut config=ServerConfig::local(TOKEN.into());config.max_jobs=1;let server=start(config);let mut client=connect(&server);auth(&mut client);
+-    let response=call(&mut client,json!({"method":"solve","params":{"model":model()}}));assert_eq!(response["ok"],true,"{response}");let id=response["value"]["job_id"].as_str().unwrap();
+-    let done=completed(&mut client,id);assert_eq!(done["result"]["value"]["objective"],10.0);assert_eq!(done["result"]["value"]["optimality"],"optimal");
+-    assert_eq!(call(&mut client,json!({"method":"solve","params":{"model":model()}}))["error"]["code"],"quota");
+-    assert_eq!(call(&mut client,json!({"method":"forget","params":{"job_id":id}}))["ok"],true);
+-    assert_eq!(call(&mut client,json!({"method":"get","params":{"job_id":id}}))["error"]["code"],"unknown_job");
+-    assert_eq!(call(&mut client,json!({"method":"solve","params":{"model":model(),"limits":{"max_time_millis":0}}}))["ok"],true);
++fn real_server_jobs_solve_poll_quota_forget_and_reuse() {
++    let _serial = SERIAL.lock().unwrap();
++    let mut config = ServerConfig::local(TOKEN.into());
++    config.max_jobs = 1;
++    let server = start(config);
++    let mut client = connect(&server);
++    auth(&mut client);
++    let response = call(&mut client, json!({"method":"solve","params":{"model":model()}}));
++    assert_eq!(response["ok"], true, "{response}");
++    let id = response["value"]["job_id"].as_str().unwrap();
++    let done = completed(&mut client, id);
++    assert_eq!(done["result"]["value"]["objective"], 10.0);
++    assert_eq!(done["result"]["value"]["optimality"], "optimal");
++    assert_eq!(call(&mut client, json!({"method":"solve","params":{"model":model()}}))["error"]["code"], "quota");
++    assert_eq!(call(&mut client, json!({"method":"forget","params":{"job_id":id}}))["ok"], true);
++    assert_eq!(call(&mut client, json!({"method":"get","params":{"job_id":id}}))["error"]["code"], "unknown_job");
++    assert_eq!(call(&mut client, json!({"method":"solve","params":{"model":model(),"limits":{"max_time_millis":0}}}))["ok"], true);
+ }
+ #[test]
+-fn real_simulation_job_can_cancel_and_cannot_exceed_response_quota(){
+-    let _serial=SERIAL.lock().unwrap();let server=start(ServerConfig::local(TOKEN.into()));let mut client=connect(&server);auth(&mut client);
+-    let response=call(&mut client,json!({"method":"simulate","params":{"inputs":[{"kind":"uniform","low":0,"high":1}],"options":{"trials":10000000,"retain_samples":false}}}));
+-    assert_eq!(response["ok"],true,"{response}");let id=response["value"]["job_id"].as_str().unwrap();
+-    assert_eq!(call(&mut client,json!({"method":"cancel","params":{"job_id":id}}))["ok"],true);
+-    let done=completed(&mut client,id);assert_eq!(done["result"]["value"]["termination"],"cancelled");assert!(done["result"]["value"]["completed_trials"].as_u64().unwrap()<10000000);
+-    assert_eq!(call(&mut client,json!({"method":"simulate","params":{"inputs":[{"kind":"normal","mean":0,"std_dev":1}],"options":{"trials":1000000,"retain_samples":true}}}))["error"]["code"],"quota");
++fn real_simulation_job_can_cancel_and_cannot_exceed_response_quota() {
++    let _serial = SERIAL.lock().unwrap();
++    let server = start(ServerConfig::local(TOKEN.into()));
++    let mut client = connect(&server);
++    auth(&mut client);
++    let response = call(
++        &mut client,
++        json!({"method":"simulate","params":{"inputs":[{"kind":"uniform","low":0,"high":1}],"options":{"trials":10000000,"retain_samples":false}}}),
++    );
++    assert_eq!(response["ok"], true, "{response}");
++    let id = response["value"]["job_id"].as_str().unwrap();
++    assert_eq!(call(&mut client, json!({"method":"cancel","params":{"job_id":id}}))["ok"], true);
++    let done = completed(&mut client, id);
++    assert_eq!(done["result"]["value"]["termination"], "cancelled");
++    assert!(done["result"]["value"]["completed_trials"].as_u64().unwrap() < 10000000);
++    assert_eq!(
++        call(
++            &mut client,
++            json!({"method":"simulate","params":{"inputs":[{"kind":"normal","mean":0,"std_dev":1}],"options":{"trials":1000000,"retain_samples":true}}})
++        )["error"]["code"],
++        "quota"
++    );
+ }
+ #[test]
+-fn service_rejects_invalid_configuration_and_closes_oversized_input(){
+-    let _serial=SERIAL.lock().unwrap();let mut config=ServerConfig::local(TOKEN.into());config.listen="0.0.0.0:0".into();assert!(Server::bind(config).is_err());
+-    let config=ServerConfig::local("short".into());assert!(Server::bind(config).is_err());
+-    let mut config=ServerConfig::local(TOKEN.into());config.max_request_bytes=1024;let server=start(config);let mut client=connect(&server);
+-    client.get_mut().write_all(&vec![b'x';1025]).unwrap();let mut line=String::new();assert!(client.read_line(&mut line).is_err()||line.is_empty());
++fn service_rejects_invalid_configuration_and_closes_oversized_input() {
++    let _serial = SERIAL.lock().unwrap();
++    let mut config = ServerConfig::local(TOKEN.into());
++    config.listen = "0.0.0.0:0".into();
++    assert!(Server::bind(config).is_err());
++    let config = ServerConfig::local("short".into());
++    assert!(Server::bind(config).is_err());
++    let mut config = ServerConfig::local(TOKEN.into());
++    config.max_request_bytes = 1024;
++    let server = start(config);
++    let mut client = connect(&server);
++    client.get_mut().write_all(&vec![b'x'; 1025]).unwrap();
++    let mut line = String::new();
++    assert!(client.read_line(&mut line).is_err() || line.is_empty());
+ }
+ 
+
+CI summary:
+  ok    i18n-report
+  FAIL  fmt: cargo fmt --all -- --check: exited with exit code: 1
+  skip  clippy
+  skip  test
+  skip  doctest
+  skip  assets
+  skip  layers
+  skip  wasm
+  skip  parity
+  skip  keytips
+error: ci failed at `fmt`
+error: process didn't exit successfully: `$BUILD_OUTPUT\host-validation\debug\xtask.exe ci` (exit code: 1)

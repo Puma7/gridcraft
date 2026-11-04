@@ -1,0 +1,1303 @@
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_types-0tefpb4vvfc7q\s-hnqcnexyru-0foy6h4-working`
+
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_math-08m2vdptao88a\s-hnqcngbhp0-1a3b50l-working`
+
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_model-2wqqrl31px6wf\s-hnqcngzeta-0rpkadp-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_simulation-11ymeyx6ffa6a\s-hnqcni66lq-0z4tt1l-working`
+
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_compile-1y2bevj4ab7ow\s-hnqcnjpms3-1djrp9y-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_catalog-0b54odejvjbba\s-hnqcnla4k8-04fmteg-working`
+
+warning: `solvercraft-compile` (test "reference_catalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_engines-28dduzm3bz26t\s-hnqe15lhou-0ctcthx-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_engines-3lylkhtmubtwu\s-hnqe15h99p-0sn9e7w-working`
+
+warning: `solvercraft-engines` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\multi_output_validation-04y3vg2mt2mb4\s-hnqcoc6iai-1ib3ywb-working`
+
+warning: `solvercraft-compile` (test "multi_output_validation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-1zh6y87u0w828\s-hnqcnmg771-1gfou72-working`
+
+warning: `solvercraft-compile` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced-04w8oy4hqzg4w\s-hnqcok6g85-1hgij8b-working`
+
+warning: `solvercraft-simulation` (test "advanced") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\resampling-2xfhnnlw9fefn\s-hnqcojawpx-1pnbw9n-working`
+
+warning: `solvercraft-simulation` (test "resampling") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\intervals-3gybgd44lhgc0\s-hnqcohhegg-08bbydq-working`
+
+warning: `solvercraft-simulation` (test "intervals") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\parameter_grid-1v6gw4c8gu6ph\s-hnqcokeyhl-1tirvht-working`
+
+warning: `solvercraft-simulation` (test "parameter_grid") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\numerical_review-2mkpz3t6c2e1c\s-hnqcoioz57-07thwt8-working`
+
+warning: `solvercraft-simulation` (test "numerical_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\fitting-38zoacbxxni0g\s-hnqcohxhz7-13n84lm-working`
+
+warning: `solvercraft-simulation` (test "fitting") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-1upbfzchjzb1w\s-hnqcoigao0-0i4dbsf-working`
+
+warning: `solvercraft-simulation` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\evaluator_cancellation-3g6661493qhxt\s-hnqcogrz38-0qmwtg9-working`
+
+warning: `solvercraft-simulation` (test "evaluator_cancellation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-2lbv494ed8fp8\s-hnqcospjix-02q8uon-working`
+
+warning: `solvercraft-model` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_compile-1jo9seud8d1k0\s-hnqcotd9d9-12ez6is-working`
+
+warning: `solvercraft-compile` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\exact_products-2kz2o9wu9l9py\s-hnqcouw838-104li0u-working`
+
+warning: `solvercraft-model` (test "exact_products") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\nominal-1do0hubm13if2\s-hnqcon7gch-0bu7v25-working`
+
+warning: `solvercraft-math` (test "nominal") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\numerical_review-25q06ny4r1t4z\s-hnqcosm210-1le8wdl-working`
+
+warning: `solvercraft-math` (test "numerical_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\density-2rdmpins3xml8\s-hnqcop9zpg-0b0c6mi-working`
+
+warning: `solvercraft-math` (test "density") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\extreme_density-36lxv4jbt87ta\s-hnqcol2acm-0lk2io0-working`
+
+warning: `solvercraft-math` (test "extreme_density") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_functions-2d4oya0dcch2m\s-hnqconwesj-0bausfr-working`
+
+warning: `solvercraft-math` (test "reference_functions") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\time_series-05t2nvzmda2ah\s-hnqcons2l0-1rcwdf9-working`
+
+warning: `solvercraft-math` (test "time_series") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\elicitation-2rt4gcaugkjg1\s-hnqcolnxcv-1je38t4-working`
+
+warning: `solvercraft-math` (test "elicitation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_math-33sqva2ehi8er\s-hnqcov09ui-1oqcf1x-working`
+
+warning: `solvercraft-math` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\catalog-0mi6bjyl5h3ol\s-hnqcoq45it-0a0m6zf-working`
+
+warning: `solvercraft-math` (test "catalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\multivariate-07ok97k6jckse\s-hnqcolx4mq-0zj3qmv-working`
+
+warning: `solvercraft-math` (test "multivariate") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_simulation-31z24gql437s8\s-hnqcoq15jz-0ekomh1-working`
+
+warning: `solvercraft-simulation` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\metalog-31x5ku5zb2i8q\s-hnqcom7bx9-1y7f3jd-working`
+
+warning: `solvercraft-math` (test "metalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_families-1d1q48icwtgg2\s-hnqcolbi2a-0kwl5ad-working`
+
+warning: `solvercraft-math` (test "reference_families") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\johnson_moments-24udqt6f3j8uv\s-hnqcopd64n-07khnzx-working`
+
+warning: `solvercraft-math` (test "johnson_moments") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-08vqa7ccseb1z\s-hnqcomzm6h-0aoqg27-working`
+
+warning: `solvercraft-math` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\json_contract-2xnddrpzz4gea\s-hnqcoqvx16-1x7216n-working`
+
+warning: `solvercraft-math` (test "json_contract") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_model-0j2ve63syvvhk\s-hnqcovv9ma-187oihm-working`
+
+warning: `solvercraft-model` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_types-05iy63niwxie7\s-hnqcnf2gar-1xtsb7m-working`
+
+warning: `solvercraft-types` (lib test) generated 1 warning
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft-1374p2r5tff5n\s-hnqe18utxb-0czb8gk-working`
+
+warning: `solvercraft-engines` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\exact_bridge-26scpbhv2o7mo\s-hnqe1g0cln-1malenv-working`
+
+warning: `solvercraft-engines` (test "exact_bridge") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\admission-0bbw6h5e4a0y9\s-hnqe1gyenx-0h19avt-working`
+
+warning: `solvercraft-engines` (test "admission") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\conic-163ktca7nr7ld\s-hnqe1hv9mr-0f16fcp-working`
+
+warning: `solvercraft-engines` (test "conic") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\discrete-0z7dvs7g8zqvl\s-hnqe1iwl6s-02quukx-working`
+
+warning: `solvercraft-engines` (test "discrete") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-06220f033ua5y\s-hnqe1jszis-1v6f7g9-working`
+
+warning: `solvercraft-engines` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\basis-29b2mkdes09xb\s-hnqe1kuaoj-19e9hoa-working`
+
+warning: `solvercraft-engines` (test "basis") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\mixed_conic-165cwie74ahmb\s-hnqe1lpei5-0nscehz-working`
+
+warning: `solvercraft-engines` (test "mixed_conic") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft-2ujwu3dah4pqb\s-hnqe1mpytf-1n4esnk-working`
+
+warning: `solvercraft` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\certificate_review-00d3mlb13dmg6\s-hnqe1t6k90-1ly55au-working`
+
+warning: `solvercraft-engines` (test "certificate_review") generated 1 warning
+warning: `solvercraft` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\convex_qp-2o7fr4r7gahbi\s-hnqe1uefhv-0plqi8w-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\runtime_review-0rx6i6bxo0xz2\s-hnqe1ui8dr-1koobil-working`
+
+warning: `solvercraft-engines` (test "convex_qp") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\ellipsoid-391qo9iazndyb\s-hnqe1vbfmv-1o63gho-working`
+
+warning: `solvercraft` (test "runtime_review") generated 1 warning
+warning: `solvercraft` (test "ellipsoid") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\ellipsoid_precision-2bfz49hlboohr\s-hnqe1wi1an-005yc9r-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\catalog_inputs-1o01vdsd1f5na\s-hnqe1wlo2w-15k0zr4-working`
+
+warning: `solvercraft` (test "ellipsoid_precision") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\api_review-1a6a5vf9s3we3\s-hnqe1xtvcd-0zaioev-working`
+
+warning: `solvercraft` (test "catalog_inputs") generated 1 warning
+   Compiling solvercraft-cli v0.1.0 ($SDK_ROOT\crates\cli)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\manifests-3gmdg3tgtqcnv\s-hnqe1yc4xn-1iwmvvy-working`
+
+warning: `solvercraft` (test "api_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\artcraft_layout-1mcohsktbbdy2\s-hnqe1zm6yw-0be5gp9-working`
+
+warning: `solvercraft-cli` (test "manifests") generated 1 warning
+warning: `solvercraft` (example "artcraft_layout") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\nonlinear_workflows-1bzudgypzao27\s-hnqe20qffr-0nsi0x3-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\johnson_independent-3t52zpo91yg97\s-hnqe20ziyd-1o9qoa2-working`
+
+warning: `solvercraft` (test "johnson_independent") generated 1 warning
+warning: `solvercraft` (test "nonlinear_workflows") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\stochastic-18m07lkaxhfkd\s-hnqe224fhi-0d102k9-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\workflow_review-0xqfx1891hcm1\s-hnqe22c0fu-0u5upyo-working`
+
+warning: `solvercraft` (test "stochastic") generated 1 warning
+warning: `solvercraft` (test "workflow_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\api_review-0uaiy87cp7p8w\s-hnqe23s88n-11bmjkn-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced_models-04vszep7blbhe\s-hnqe23xbzc-06o66yr-working`
+
+warning: `solvercraft-cli` (test "api_review") generated 1 warning
+warning: `solvercraft` (test "advanced_models") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\global_review-2xxh8uucrdgyz\s-hnqe25qxk2-0jw1gsz-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\run_manifest-1x44a5fcijbey\s-hnqe25x1xv-1liaixw-working`
+
+warning: `solvercraft` (test "global_review") generated 1 warning
+warning: `solvercraft` (test "run_manifest") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\saa_risk-0kgjcmx97afwl\s-hnqe27agjq-13uvhbo-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\end_to_end-194wddk1lkrrr\s-hnqe27mb4j-1al6hcb-working`
+
+warning: `solvercraft` (test "saa_risk") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\owned_control-0qt2nr5eoh2r3\s-hnqe296wxl-07mfnf5-working`
+
+warning: `solvercraft` (test "owned_control") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced_process-0ukcx394s9zxl\s-hnqe2ca0hx-06c37x6-working`
+
+warning: `solvercraft-cli` (test "end_to_end") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\independent-3rey601tkttx5\s-hnqe2eki9k-0pra9r2-working`
+
+warning: `solvercraft-cli` (test "advanced_process") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_cli-3eq80zh03jfw6\s-hnqe2gvg1g-1gs7e8q-working`
+
+warning: `solvercraft` (test "independent") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\job_runtime_e2e-20zfynd8ytu6d\s-hnqe2hmjh4-113otr4-working`
+
+warning: `solvercraft-cli` (bin "solvercraft-cli" test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\contracts_e2e-2rx99ohbczlnw\s-hnqe2iike3-089dc8v-working`
+
+warning: `solvercraft` (test "job_runtime_e2e") generated 1 warning
+warning: `solvercraft` (test "contracts_e2e") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_cli-3k6goqgeud2jc\s-hnqe2k5u7i-0u6u42e-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\server_e2e-0jmp93v1ht80w\s-hnqe2kisw8-0i8qolz-working`
+
+warning: `solvercraft` (test "server_e2e") generated 1 warning
+warning: `solvercraft-cli` (bin "solvercraft-cli") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 44s
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft-28a0b4bcd5870ae2.exe)
+
+running 52 tests
+test constrained::tests::invalid_options_domain_and_integer_are_errors ... ok
+test constrained::tests::impossible_constraint_does_not_manufacture_infeasibility_proof ... ok
+test constrained::tests::interrupted_constraint_search_retains_a_previously_verified_feasible_point ... ok
+test constrained::tests::evaluation_budget_is_shared_by_inner_and_original_validation ... ok
+test global::tests::interval_enclosure_contains_dense_independent_grid ... ok
+test constrained::tests::target_goal_preserves_original_objective_value ... ok
+test global::tests::maximize_sign_and_original_bound_are_consistent ... ok
+test global::tests::quartic_multiple_minima_gets_an_outward_global_gap ... ok
+test global::tests::independent_replay_rejects_tampered_certificates ... ok
+test global::tests::unsupported_and_overflow_are_explicit ... ok
+test heuristic::tests::cancellation_preserves_only_already_validated_points ... ok
+test constrained::tests::explicit_finite_differences_solve_a_smooth_constrained_case ... ok
+test constrained::tests::nonlinear_inequality_is_not_silently_linearized ... ok
+test heuristic::tests::input_memory_and_domain_limits_are_checked ... ok
+test constrained::tests::equality_constrained_quadratic_checks_original_kkt ... ok
+test constrained::tests::default_tolerances_remain_original_unit_kkt_thresholds ... ok
+test global::tests::every_interruption_retains_a_bound_on_unsearched_space ... ok
+test heuristic::tests::failed_search_and_invalid_domains_are_not_infeasibility_proofs ... ok
+test multistart::tests::full_u64_seed_is_string_serialized ... ok
+test constrained::tests::active_and_inactive_inequalities ... ok
+test multistart::tests::restart_budget_is_not_reset_per_run ... ok
+test multistart::tests::unsupported_bounds_and_invalid_start_are_explicit ... ok
+test nonlinear::tests::being_close_to_a_bound_does_not_zero_an_inward_gradient ... ok
+test nonlinear::tests::bounded_large_objective_never_implies_unboundedness ... ok
+test nonlinear::tests::cancellation_is_checked_before_the_next_evaluation ... ok
+test nonlinear::tests::budgets_have_truthful_partial_results ... ok
+test nonlinear::tests::finite_bounds_and_finite_starts_are_required ... ok
+test nonlinear::tests::exponential_has_a_smooth_nonpolynomial_stationary_point ... ok
+test nonlinear::tests::derivative_and_domain_failures_are_not_convergence ... ok
+test nonlinear::tests::fixed_singleton_does_not_require_a_derivative ... ok
+test nonlinear::tests::maximization_sign_and_exact_active_bound_are_correct ... ok
+test nonlinear::tests::narrow_bounds_do_not_become_a_zero_gradient ... ok
+test nonlinear::tests::line_search_domain_rejections_keep_a_valid_best_point ... ok
+test nonlinear::tests::finite_difference_mode_counts_all_probes_and_respects_tiny_bounds ... ok
+test multistart::tests::seeded_restarts_escape_a_worse_local_basin_and_repeat ... ok
+test nonlinear::tests::unsupported_domains_constraints_and_methods_are_rejected ... ok
+test nonlinear::tests::start_projection_is_visible_and_feasible ... ok
+test runtime_tests::a_tiny_constant_tail_mean_stays_constant ... ok
+test heuristic::tests::mixed_binary_values_are_repaired_and_constraints_checked ... ok
+test heuristic::tests::shifted_rugged_objective_is_actually_searched ... ok
+test runtime_tests::invalid_base_constraints_are_rejected_before_clone ... ok
+test runtime_tests::background_solve_is_observable_and_returns_a_real_solution ... ok
+test runtime_tests::background_simulation_can_cancel_after_a_trial_has_started ... ok
+test heuristic::tests::narrow_bounds_and_large_objective_do_not_trigger_old_status_bugs ... ok
+test runtime_tests::manifest_identity_is_stable_and_seed_lossless ... ok
+test heuristic::tests::repeatability_and_evaluation_budget_are_explicit ... ok
+test runtime_tests::cvar_size_limits_precede_counterpart_allocation ... ok
+test runtime_tests::manifest_limits_json_expansion_without_an_unbounded_buffer ... ok
+test runtime_tests::scenario_aggregation_does_not_lose_small_opposing_terms ... ok
+test server::resource_tests::oversized_job_stops_serializing_before_materializing_the_result ... ok
+test heuristic::tests::non_smooth_cusp_and_nonlinear_constraints ... ok
+test nonlinear::tests::rosenbrock_converges_from_a_nontrivial_start ... ok
+
+test result: ok. 52 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\advanced_models.rs ($BUILD_OUTPUT\validation\debug\deps\advanced_models-b9f7d9db7a848daa.exe)
+
+running 13 tests
+test decision_backward_evaluation_utility_and_cycle_guard ... ok
+test uninformative_free_signal_has_zero_value_even_with_accepted_prior_roundoff ... ok
+test information_is_observed_before_action_and_cost_is_paid_once ... ok
+test finite_domain_precision_and_saa_cancellation_are_explicit ... ok
+test indicator_exact_slack_gate_preserves_tiny_active_rhs_beside_huge_m ... ok
+test normalized_signal_law_respects_information_bounds ... ok
+test information_value_rejects_unrepresentable_finite_payoff_spread ... ok
+test indicators_derive_bounds_and_reject_open_domains ... ok
+test reification_observes_explicit_separated_complement ... ok
+test finite_domains_all_different_match_exhaustive_assignment ... ok
+test weighted_lexicographic_and_epsilon_methods_are_traceable ... ok
+test sos2_prohibits_nonadjacent_nonzero_values ... ok
+test joint_and_individual_chance_constraints_have_different_semantics ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\api_review.rs ($BUILD_OUTPUT\validation\debug\deps\api_review-229beb8f3e72a135.exe)
+
+running 12 tests
+test analytic_quadratic_progress_does_not_claim_simplex_execution ... ok
+test engine_registry_is_unique_and_does_not_emulate_requested_methods ... ok
+test portable_nested_json_is_strict_and_binary64_revisions_roundtrip ... ok
+test owned_runtime_routes_integer_quadratics_and_preserves_stop_reason ... ok
+test tcp::server_does_not_start_a_job_after_shutdown_has_returned ... ok
+test failed_registry_mutations_are_atomic_including_exhaustion_and_collisions ... ok
+test tcp::bounded_responses_preserve_connection_and_structured_request_identity ... ok
+test tcp::connection_quota_is_enforced_and_released_after_disconnect ... ok
+test tcp::retained_simulation_response_admission_counts_per_output_summaries ... ok
+test tcp::running_jobs_require_cancel_before_forget_and_time_caps_are_enforced ... ok
+test tcp::authentication_is_per_connection_and_failed_reauthentication_revokes_access ... ok
+test tcp::simulation_outputs_share_one_global_expression_budget ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 24.68s
+
+     Running tests\catalog_inputs.rs ($BUILD_OUTPUT\validation\debug\deps\catalog_inputs-84b1d6619f844ca6.exe)
+
+running 10 tests
+test psifit_snapshot_valid_invalid_and_updated_data_are_explicit ... ok
+test psimakeinput_addresses_replay_and_repeat_reads_stably_but_resample_each_occurrence ... ok
+test psimakeinput_compounds_the_whole_expression_and_preserves_event_reads ... ok
+test psicertified_resolves_only_caller_publications_and_named_sequential_sips ... ok
+test psidistinfo_preserves_arithmetic_and_log_parameter_names_formulas_and_metadata ... ok
+test event_inputs_honor_pre_cancel_zero_budgets_strict_schema_and_full_width_addresses ... ok
+test psimakeinput_frequency_defaults_domains_and_explicit_limit_order ... ok
+test psimakeinput_work_cancel_domain_and_overflow_keep_honest_partial_state ... ok
+test published_inputs_reject_unbounded_ambiguous_invalid_and_unknown_schema_records ... ok
+test psifit_automatic_bic_policy_selects_candidates_and_invalidates_exact_snapshot_cache ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\contracts_e2e.rs ($BUILD_OUTPUT\validation\debug\deps\contracts_e2e-6c463147e9104544.exe)
+
+running 5 tests
+test backend_registry_rejects_unavailable_method_substitution ... ok
+test expired_wall_clock_is_time_limit_and_user_cancel_remains_distinct ... ok
+test project_schema_and_binding_failures_are_not_silently_migrated ... ok
+test saved_model_updates_are_atomic_revision_checked_and_collision_safe ... ok
+test portable_json_preserves_large_string_ids_revisions_and_maximum_seed ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\ellipsoid.rs ($BUILD_OUTPUT\validation\debug\deps\ellipsoid-57e6225da9876dad.exe)
+
+running 3 tests
+test ellipsoid_rejects_bad_shape_radius_bounds_and_memory ... ok
+test ellipsoid_counterpart_is_a_true_norm_constraint_and_matches_circle_oracle ... ok
+test ellipsoid_correlated_factor_matches_analytic_support ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\ellipsoid_precision.rs ($BUILD_OUTPUT\validation\debug\deps\ellipsoid_precision-d42cdaf146e88541.exe)
+
+running 3 tests
+test ellipsoid_coefficient_formation_never_accepts_a_material_original_violation ... ok
+test ordinary_decimal_ellipsoid_products_keep_an_outward_relaxation_and_checked_solution ... ok
+test checked_ellipsoid_solution_keeps_two_component_support_and_original_validation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\global_review.rs ($BUILD_OUTPUT\validation\debug\deps\global_review-ae1334a5fb31945a.exe)
+
+running 1 test
+test fixed_subnormal_box_incumbent_stays_inside_its_certified_domain ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\independent.rs ($BUILD_OUTPUT\validation\debug\deps\independent-8cea4c8b94c2a1e6.exe)
+
+running 39 tests
+test autodiff_reports_domain_and_nonsmooth_failures_instead_of_zero_gradient ... ok
+test compiler_rejects_excessive_depth_before_recursive_arithmetic ... ok
+test cancelled_simulation_does_not_execute_trials ... ok
+test changing_output_arity_is_rejected ... ok
+test constant_simulation_has_zero_variance_without_storing_trials ... ok
+test empirical_cvar_fractionally_includes_mass_at_quantile_boundary ... ok
+test empty_empirical_sample_is_not_zero_risk ... ok
+test cubic_zero_at_probe_points_is_structurally_nonlinear ... ok
+test bounds_only_quadratic_solves_the_previous_narrow_interval_counterexample ... ok
+test expanded_square_has_no_hidden_half_factor_and_correct_gradient ... ok
+test external_seed_encoding_preserves_u64_max ... ok
+test expected_loss_and_tail_loss_choose_different_analytic_decisions ... ok
+test online_moments_avoid_large_offset_cancellation ... ok
+test latin_hypercube_visits_each_uniform_stratum_once_per_dimension ... ok
+test single_observation_does_not_claim_unbiased_variance ... ok
+test alternate_optima_do_not_require_unique_values ... ok
+test fixed_and_free_variables ... ok
+test robust_box_counterpart_handles_negative_variables ... ok
+test continuous_relaxation_reference ... ok
+test cancelled_solve_is_not_optimal ... ok
+test genuine_continuous_unboundedness ... ok
+test large_finite_objective_is_not_unbounded ... ok
+test simulation_seed_repeats_exact_input_stream ... ok
+test tiny_positive_blocking_coefficient_is_not_an_unboundedness_certificate ... ok
+test contradictory_constraints ... ok
+test lp_unboundedness_is_not_mip_unboundedness_proof ... ok
+test weighted_tail_mean_respects_partial_quantile_mass ... ok
+test insufficient_memory_is_a_limit_or_error_never_fake_success ... ok
+test integer_equality_has_no_feasible_integer_point ... ok
+test binary_enumeration_reference ... ok
+test free_variable_can_be_negative ... ok
+test objective_offset_is_preserved ... ok
+test small_pivot_scaling_challenge ... ok
+test upper_only_negative_variable ... ok
+test two_equalities_determine_unique_point ... ok
+test zero_objective_finds_a_feasible_point ... ok
+test wyndor_analytic_optimum ... ok
+test fixed_seed_monte_carlo_matches_independent_analytic_moments ... ok
+test small_signed_binary_models_match_complete_enumeration ... ok
+
+test result: ok. 39 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\job_runtime_e2e.rs ($BUILD_OUTPUT\validation\debug\deps\job_runtime_e2e-8c362481bb94c7e1.exe)
+
+running 2 tests
+test evaluator_panic_is_observable_failure_and_slot_is_recovered ... ok
+test real_background_job_quota_cancel_shared_results_and_reuse ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\johnson_independent.rs ($BUILD_OUTPUT\validation\debug\deps\johnson_independent-3b515a4ea5552b33.exe)
+
+running 2 tests
+test johnson_population_matches_independent_quadrature_including_near_normal_shapes ... ok
+test johnson_inverse_preserves_independent_quantiles_after_actual_parameter_rounding ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.35s
+
+     Running tests\nonlinear_workflows.rs ($BUILD_OUTPUT\validation\debug\deps\nonlinear_workflows-a6ce36914f927bb3.exe)
+
+running 3 tests
+test serialized_global_proof_replays_and_detects_edited_incumbents ... ok
+test numerical_derivative_restart_configuration_is_seed_lossless_and_budgeted ... ok
+test persisted_nonlinear_maximum_target_is_solved_and_checked_in_original_units ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\owned_control.rs ($BUILD_OUTPUT\validation\debug\deps\owned_control-f20f68f5a9348713.exe)
+
+running 8 tests
+test zero_time_and_parent_cancel_keep_distinct_termination_causes ... ok
+test owned_constrained_route_honors_configured_zero_outer_iterations ... ok
+test owned_nonlinear_path_preserves_fd_configuration_and_direction ... ok
+test owned_target_execution_reports_the_original_objective_and_reach_status ... ok
+test owned_runtime_auto_honors_integer_quadratic_and_forwards_actual_progress ... ok
+test owned_execution_preserves_context_goal_and_original_algebraic_checks ... ok
+test owned_provenance_and_compiled_expression_reach_the_same_miqp ... ok
+test native_owned_jobs_keep_arc_callbacks_quota_and_default_miqp_route ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\run_manifest.rs ($BUILD_OUTPUT\validation\debug\deps\run_manifest-6a9c1ea4e79c5f19.exe)
+
+running 3 tests
+test streaming_fingerprint_is_bounded_before_a_generated_input_is_materialized ... ok
+test explicit_caller_identity_is_labelled_and_metadata_text_is_bounded ... ok
+test typed_borrowed_configuration_and_top_level_result_survive_without_clone_bounds ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\runtime_review.rs ($BUILD_OUTPUT\validation\debug\deps\runtime_review-9e891eacc8b6088d.exe)
+
+running 13 tests
+test confidence_zero_cvar_is_weighted_mean_with_unequal_exact_weights ... ok
+test finite_tail_controls_cover_atoms_tiny_constants_and_zero_weight_outliers ... ok
+test budget_support_orders_exact_products_and_retains_collective_underflow ... ok
+test risk_request_fields_are_strict_and_unreliable_extremes_fail_explicitly ... ok
+test coefficient_box_counterpart_preserves_negative_coordinate_semantics ... ok
+test fractional_tail_mass_matches_high_precision_binary_input_reference_and_permutations ... ok
+test coefficient_box_feasibility_does_not_amplify_auxiliary_tolerance ... ok
+test small_integer_weight_tail_means_match_exact_rational_mass_accounting ... ok
+test scenario_optimization_normalizes_large_finite_weights_without_changing_decision ... ok
+test finite_weights_are_scale_invariant_at_normal_and_subnormal_extremes ... ok
+test checked_robust_wrappers_validate_original_summed_support ... ok
+test transformed_dimension_and_manifest_escape_limits_are_explicit ... ok
+test native_job_quota_panic_cancel_and_shared_results_have_real_lifecycle ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\saa_risk.rs ($BUILD_OUTPUT\validation\debug\deps\saa_risk-10e6bc199fa1cacd.exe)
+
+running 5 tests
+test mean_variance_objective_matches_analytic_quadratic_and_original_losses ... ok
+test mean_variance_keeps_ordinary_well_conditioned_decimal_models_solvable ... ok
+test budget_robust_support_matches_independent_fractional_knapsack_oracle ... ok
+test independent_holdout_uses_separate_seed_and_uncertainty ... ok
+test saa_training_is_fixed_across_candidates_and_order ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\server_e2e.rs ($BUILD_OUTPUT\validation\debug\deps\server_e2e-8cb45f09092eb1c9.exe)
+
+running 5 tests
+test failed_execution_keeps_its_run_identity_without_fabricating_an_engine ... ok
+test real_server_jobs_solve_poll_quota_forget_and_reuse ... ok
+test real_simulation_job_can_cancel_and_cannot_exceed_response_quota ... ok
+test service_rejects_invalid_configuration_and_closes_oversized_input ... ok
+test real_tcp_authentication_is_per_connection_and_request_fields_are_strict ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.44s
+
+     Running tests\stochastic.rs ($BUILD_OUTPUT\validation\debug\deps\stochastic-02de4d81c28bb42a.exe)
+
+running 9 tests
+test benders_rejects_integer_or_unproven_complete_recourse_and_honors_cancel ... ok
+test recourse_dimension_handles_precision_and_memory_are_rejected ... ok
+test recourse_matches_independent_piecewise_newsvendor_oracle ... ok
+test first_stage_is_shared_and_cannot_use_future_demand ... ok
+test recourse_strict_inputs_and_integer_first_stage_are_supported ... ok
+test recourse_weights_support_maximum_and_subnormal_equal_mass ... ok
+test benders_multicut_matches_deterministic_equivalent_and_breakpoint_oracle ... ok
+test benders_moves_scenario_constants_outside_epigraph_to_preserve_cancellation ... ok
+test benders_two_decisions_and_integer_stage_match_independent_oracles ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\workflow_review.rs ($BUILD_OUTPUT\validation\debug\deps\workflow_review-c01ac38c8dabfc99.exe)
+
+running 3 tests
+test binary64_json_roundtrip_preserves_values_near_a_density_support_boundary ... ok
+test execution_manifest_preserves_goal_derivative_configuration_and_lossless_context ... ok
+test workflow_honors_requested_finite_differences_for_bound_only_nonlinear_models ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\main.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_cli-f8265d4a09e75ceb.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\advanced_process.rs ($BUILD_OUTPUT\validation\debug\deps\advanced_process-886ce2fc3705bf04.exe)
+
+running 8 tests
+test execute_target_preserves_manifest_context_and_original_goal_units ... ok
+test conic_and_finite_integer_quadratic_paths_use_real_supported_engines ... ok
+test quadratic_warm_start_is_a_real_revalidated_public_contract ... ok
+test recourse_and_decomposition_agree_with_independent_inventory_breakpoint_oracle ... ok
+test advanced_simulation_parameter_grid_and_fit_are_real_process_workflows ... ok
+test nonlinear_multistart_and_replayable_global_commands_are_executable ... ok
+test sparse_and_reusable_basis_paths_have_correct_objectives_and_true_warm_state ... ok
+test all_advanced_commands_are_real_typed_boundaries_and_reject_empty_requests ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.06s
+
+     Running tests\api_review.rs ($BUILD_OUTPUT\validation\debug\deps\api_review-4e225cfe02d8fd64.exe)
+
+running 4 tests
+test information_value_roundoff_regression_is_fixed_at_the_process_boundary ... ok
+test numerical_failure_after_valid_admission_retains_diagnostic_run_identity ... ok
+test simulation_expression_memory_is_checked_before_first_evaluation ... ok
+test advanced_simulation_rejects_aggregate_expression_excess ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.80s
+
+     Running tests\end_to_end.rs ($BUILD_OUTPUT\validation\debug\deps\end_to_end-7499ba2762a62e78.exe)
+
+running 41 tests
+test capabilities_is_an_actual_process_response ... ok
+test demo_is_actual_optimization_and_simulation ... ok
+test documented_file_input_is_read_by_the_cli ... ok
+test heuristic_expression_cli_reports_verified_best_found_only ... ok
+test invalid_risk_measure_parameter_is_a_structured_error ... ok
+test nonlinear_expression_cli_identifies_stationarity_without_claiming_optimality ... ok
+test nonfinite_json_number_is_rejected_before_solving ... ok
+test non_unicode_windows_argument_is_a_structured_error_instead_of_a_panic ... ok
+test missing_file_is_a_structured_input_error ... ok
+test original_expression_constraints_are_rechecked_before_publishing_feasibility ... ok
+test compile_and_solve_expr_use_the_documented_distinct_envelopes ... ok
+test original_expression_objective_is_rechecked_before_publishing_compiled_optimum ... ok
+test duplicate_budget_fields_are_rejected_without_last_value_wins ... ok
+test exactly_maximum_input_size_remains_accepted ... ok
+test expected_loss_and_cvar_change_the_real_cli_decision ... ok
+test oversized_input_is_capped_at_the_cli_boundary ... ok
+test mathematical_infeasibility_and_unboundedness_are_json_results_not_parse_errors ... ok
+test invalid_variable_reference_is_a_structured_model_error ... ok
+test simulation_multiple_outputs_and_large_seed_roundtrip ... ok
+test misspelled_budget_is_not_silently_defaulted ... ok
+test nonconvex_quadratic_is_explicitly_rejected_without_heuristic_substitution ... ok
+test simulation_risk_summaries_use_upper_loss_tail ... ok
+test invalid_simulation_controls_have_no_success_payload ... ok
+test omitted_input_path_reads_stdin ... ok
+test unknown_command_is_a_structured_failure ... ok
+test unknown_distribution_field_is_rejected ... ok
+test unknown_expression_field_is_rejected ... ok
+test example_can_be_validated_and_solved_through_stdin ... ok
+test unknown_risk_field_is_rejected ... ok
+test iteration_and_node_budgets_remain_visible_at_the_process_boundary ... ok
+test near_integer_relaxation_does_not_close_a_node_before_the_exact_binary_gap ... ok
+test simulation_repeats_in_separate_processes_with_the_same_seed ... ok
+test unknown_method_is_not_silently_replaced ... ok
+test unknown_model_field_is_rejected ... ok
+test unknown_request_field_is_rejected ... ok
+test help_is_json_for_default_and_explicit_help ... ok
+test zero_evaluation_budget_is_successfully_framed_as_interruption ... ok
+test unexpected_cli_flags_are_not_silently_ignored ... ok
+test positional_request_arrays_are_rejected_even_when_all_fields_are_present ... ok
+test malformed_scalar_array_and_trailing_json_are_failures ... ok
+test invalid_seed_encodings_are_rejected_in_the_process ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.96s
+
+     Running tests\manifests.rs ($BUILD_OUTPUT\validation\debug\deps\manifests-0e3f5ef8467e391d.exe)
+
+running 13 tests
+test conic_manifest_reports_backend_instead_of_requested_auto_method ... ok
+test legacy_solve_preserves_old_manifest_fields_and_adds_actual_engine_snapshot ... ok
+test advanced_sampler_copula_and_invalid_trial_policy_are_recorded_completely ... ok
+test demo_preserves_both_real_results_and_records_its_fixed_synthetic_run ... ok
+test fit_and_grid_keep_all_configuration_and_existing_result_keys ... ok
+test nonlinear_multistart_and_expression_paths_preserve_extra_effective_settings ... ok
+test risk_and_saa_report_risk_measure_and_separate_training_validation_seeds ... ok
+test ellipsoid_process_rejects_material_formation_loss_and_keeps_valid_controls ... ok
+test legacy_simulation_high_seed_defaults_and_input_identity_are_exact ... ok
+test mixed_integer_process_keeps_small_binary_branches_and_offset_invariance ... ok
+test robust_process_paths_recheck_original_support_at_large_scales ... ok
+test remaining_discrete_decision_multiobjective_and_robust_commands_are_manifested ... ok
+test admitted_failures_keep_one_error_trace_and_strict_decode_errors_stay_unchanged ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.79s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_compile-0a94eee3d97e0df4.exe)
+
+running 32 tests
+test autodiff::tests::narrow_interval_example_has_the_nonzero_true_derivative ... ok
+test autodiff::tests::quadratic_cross_terms_have_analytic_gradients ... ok
+test autodiff::tests::constants_and_inactive_zero_are_differentiable ... ok
+test autodiff::tests::nonlinear_chain_matches_analytic_result_and_independent_differences ... ok
+test autodiff::tests::squared_positive_part_is_smooth_at_zero_but_raw_maximum_is_not ... ok
+test finite_difference::tests::invalid_bounds_and_nonfinite_evaluations_fail ... ok
+test finite_difference::tests::narrow_box_has_a_nonzero_feasible_derivative ... ok
+test finite_difference::tests::unequal_central_steps_differentiate_quadratic ... ok
+test curvature::tests::ambiguous_products_and_sampling_disguises_stay_unknown ... ok
+test curvature::tests::bad_handles_are_not_hidden_by_curvature_rules ... ok
+test target::tests::target_expansion_honors_caller_memory_before_cloning ... ok
+test finite_difference::tests::domain_failure_uses_valid_side_and_two_failures_are_errors ... ok
+test target::tests::target_preserves_objective_and_enforces_original_units ... ok
+test target::tests::borrowed_target_preflight_accounts_for_the_actual_host_row_name ... ok
+test tests::compilation_rejects_too_small_memory_budget ... ok
+test tests::domain_errors_are_not_silently_zero ... ok
+test tests::constant_division_and_negative_coefficients_preserve_affine_structure ... ok
+test tests::expanded_quadratic_has_explicit_cross_coefficient ... ok
+test tests::expression_depth_is_bounded ... ok
+test tests::generic_model_validation_needs_no_polynomial_or_valid_evaluation_point ... ok
+test autodiff::tests::unavailable_derivatives_are_errors_not_zero ... ok
+test curvature::tests::smooth_compositions_have_sufficient_proofs ... ok
+test finite_difference::tests::fixed_variable_and_cancellation_are_distinct ... ok
+test tests::polynomial_cancellation_and_constant_folding_are_structural ... ok
+test tests::invalid_handles_and_nonfinite_constants_are_rejected_before_classification ... ok
+test tests::quadratic_rows_are_rejected_unless_they_cancel ... ok
+test tests::pointwise_disguised_nonlinearity_is_not_classified_as_linear ... ok
+test tests::rhs_expressions_move_to_the_original_row_correctly ... ok
+test tests::variable_denominator_and_nonsmooth_operators_are_not_affine ... ok
+test tests::tagged_json_roundtrip_evaluates_the_same_expression ... ok
+test target::tests::target_expansion_shares_one_total_node_limit_before_cloning ... ok
+test tests::generic_model_validation_shares_nodes_across_all_constraint_expressions ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\validation\debug\deps\deep_review-ceb5b6b208411050.exe)
+
+running 17 tests
+test coefficient_sum_keeps_a_small_exact_residual ... ok
+test compiler_must_not_discard_a_domain_guard_that_evaluation_keeps ... ok
+test compensated_coefficients_survive_scale_division_and_quadratic_products ... ok
+test finite_tiny_constant_division_remains_compilable ... ok
+test zero_power_has_consistent_value_and_zero_gradient_through_abs ... ok
+test min_max_ties_abs_zero_and_sqrt_zero_are_not_silently_differentiated ... ok
+test affine_constraints_and_quadratic_cross_terms_match_independent_arithmetic ... ok
+test zero_power_preserves_base_value_domain_errors ... ok
+test invalid_metadata_is_rejected_before_domain_arithmetic_or_output_cloning ... ok
+test zero_power_still_validates_handles_and_finite_constants ... ok
+test unknown_fields_are_rejected_at_each_expression_contract_boundary ... ok
+test seed_contract_roundtrips_all_64_bits_and_rejects_invalid_inputs ... ok
+test independent_multivariable_gradient_covers_all_smooth_operators ... ok
+test reciprocal_negative_powers_and_selected_extrema_have_correct_gradients ... ok
+test reverse_gradient_does_not_erase_a_small_repeated_variable_contribution ... ok
+test high_u32_powers_are_bounded_and_do_not_wrap_signed_exponents ... ok
+test depth_boundary_node_budget_and_invalid_inputs_fail_before_arithmetic ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\multi_output_validation.rs ($BUILD_OUTPUT\validation\debug\deps\multi_output_validation-f948571b4316062d.exe)
+
+running 3 tests
+test caller_memory_budget_applies_to_all_nodes_and_variables ... ok
+test structural_preflight_does_not_require_a_polynomial_or_a_valid_point ... ok
+test shared_node_limit_rejects_many_individually_small_outputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\reference_catalog.rs ($BUILD_OUTPUT\validation\debug\deps\reference_catalog-d9dd2f15f2a6f6bb.exe)
+
+running 4 tests
+test unsupported_families_and_modeling_functions_are_not_deleted_to_improve_coverage ... ok
+test literal_source_conflicts_and_distribution_parameter_differences_stay_visible ... ok
+test frozen_inventory_identifies_the_exact_source_and_retains_all_defined_entries ... ok
+test executable_matrix_has_each_frozen_function_and_keeps_missing_evidence_explicit ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_engines-23e5ae7e44156673.exe)
+
+running 22 tests
+test conic::arithmetic_proof_tests::underflowed_positive_blocker_is_not_an_exact_recession_zero ... ok
+test tests::alternative_optima_do_not_require_a_specific_vector ... ok
+test tests::duplicate_objective_terms_use_shared_compensated_aggregation ... ok
+test tests::greater_equal_rows_and_redundant_equalities ... ok
+test tests::free_negative_fixed_and_equality_variables ... ok
+test tests::separable_quadratic_solves_narrow_interval_without_finite_difference_failure ... ok
+test tests::cancel_preserves_a_verified_integer_incumbent_and_valid_bound ... ok
+test tests::infeasible_constraints_are_distinct_from_limits ... ok
+test tests::iteration_limit_is_not_infeasibility ... ok
+test tests::large_finite_objective_does_not_mean_unbounded ... ok
+test tests::large_unrelated_cost_does_not_hide_a_meaningful_small_cost ... ok
+test tests::pre_cancelled_jobs_have_no_fabricated_feasibility ... ok
+test tests::real_unbounded_lp_has_a_valid_feasible_point ... ok
+test tests::separable_concave_maximization_and_bound_clamping ... ok
+test tests::unsupported_nonconvex_quadratic_is_explicit ... ok
+test tests::tiny_positive_blocker_is_not_an_unbounded_ray ... ok
+test tests::wyndor_glass_objective_and_original_residuals ... ok
+test tests::integer_incumbent_survives_a_node_budget ... ok
+test tests::unbounded_relaxation_does_not_prove_unbounded_mip ... ok
+test tests::binary_problem_honors_domains_instead_of_relaxation ... ok
+test tests::small_integer_models_match_exhaustive_independent_oracle ... ok
+test tests::signed_integer_models_match_exhaustive_three_variable_oracle ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests\admission.rs ($BUILD_OUTPUT\validation\debug\deps\admission-93501918d7c87815.exe)
+
+running 2 tests
+test owned_integer_quadratic_rejects_invalid_options_and_preserves_infeasible_domain_status ... ok
+test mixed_conic_admits_all_cone_dimensions_and_indices_before_search ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\basis.rs ($BUILD_OUTPUT\validation\debug\deps\basis-4d5a35a602bf36f2.exe)
+
+running 4 tests
+test shadow_prices_and_allowable_ranges_match_hand_derived_vertex ... ok
+test forged_or_different_structure_basis_is_rejected ... ok
+test cost_change_outside_basis_range_runs_a_real_new_solve ... ok
+test rhs_change_reuses_the_actual_basis_and_matches_independent_solution ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\certificate_review.rs ($BUILD_OUTPUT\validation\debug\deps\certificate_review-7d1bac4d1c148bf8.exe)
+
+running 9 tests
+test big_m_compilation_never_cuts_off_an_original_feasible_active_point ... ok
+test warm_lp_basis_does_not_bypass_explicit_method_validation ... ok
+test cone_validator_enforces_allocation_budget_before_component_scratch ... ok
+test finite_tiny_blocker_prevents_unbounded_ray_and_cancel_never_claims_optimal ... ok
+test fixed_basis_cancellation_certificate_accounts_for_product_rounding ... ok
+test exact_products_independent_carries_subnormal_ties_and_huge_cancellations ... ok
+test lp_basis_rhs_perturbations_match_piecewise_oracle_and_forgery_is_rejected ... ok
+test conic_certified_bound_encloses_analytic_circle_optimum_in_both_directions ... ok
+test mixed_conic_bounds_never_cross_exhaustive_binary_optima_even_when_interrupted ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests\conic.rs ($BUILD_OUTPUT\validation\debug\deps\conic-17c5e5146795f761.exe)
+
+running 9 tests
+test memory_and_iteration_budgets_are_explicit ... ok
+test original_scale_cone_violation_is_rejected ... ok
+test owned_callback_cancels_during_actual_backend_iterations ... ok
+test affine_upper_and_constant_components_match_three_four_five_triangle ... ok
+test contradictory_constant_cone_has_independently_checked_infeasibility_ray ... ok
+test genuine_sparse_unbounded_ray_requires_a_feasible_anchor_and_no_finite_blocker ... ok
+test sparse_lp_route_solves_wyndor_with_global_bound_and_duals ... ok
+test ball_support_matches_cauchy_schwarz_oracle ... ok
+test objective_offset_does_not_erase_a_conic_gap_or_change_argmin ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\convex_qp.rs ($BUILD_OUTPUT\validation\debug\deps\convex_qp-3166ceb82b5bf01c.exe)
+
+running 11 tests
+test finite_but_unscalable_warm_duals_are_rejected_explicitly ... ok
+test infeasible_linear_constraints_remain_distinct_from_qp_nonconvergence ... ok
+test indefinite_quadratic_is_not_mislabeled_convex ... ok
+test cancellation_preserves_a_verified_qp_point_and_the_termination_reason ... ok
+test qp_zero_budgets_do_not_fabricate_optimality ... ok
+test positive_definite_non_diagonally_dominant_matrix_is_supported ... ok
+test primal_and_dual_warm_start_is_used_and_reduces_iterations ... ok
+test semidefinite_coupled_objective_with_box_and_equality ... ok
+test active_inequality_qp_finds_feasible_boundary_and_multiplier ... ok
+test cross_term_equality_qp_has_independent_primal_dual_solution ... ok
+test interrupted_qp_incumbent_and_gap_are_invariant_to_objective_offset ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\validation\debug\deps\deep_review-00b649f7b645f8fe.exe)
+
+running 19 tests
+test integer_optimum_outside_exact_f64_integer_range_is_not_falsely_certified ... ok
+test lost_continuous_translation_residual_does_not_claim_zero_gap ... ok
+test compensated_fixed_offset_does_not_change_feasible_region ... ok
+test objective_cancellation_keeps_a_meaningful_reduced_cost ... ok
+test a_linear_free_coordinate_gives_a_genuine_unbounded_separable_qp ... ok
+test cancellation_does_not_validate_an_actually_infeasible_constraint ... ok
+test odd_integer_optimum_inside_exact_f64_range_is_a_control ... ok
+test quadratic_limits_and_unsupported_classes_do_not_report_an_optimum ... ok
+test rhs_and_fixed_offsets_are_aggregated_in_a_single_compensated_sum ... ok
+test significant_unrepresentable_working_cost_is_a_numerical_failure ... ok
+test a_large_objective_constant_does_not_change_the_integer_argmax ... ok
+test requested_mip_gap_keeps_best_found_and_direction_correct ... ok
+test tiny_reduced_cost_does_not_claim_zero_gap_over_a_wide_interval ... ok
+test permuting_fixed_variables_is_a_legitimate_control ... ok
+test separable_qp_matches_independent_sum_of_squares_identities ... ok
+test objective_unit_scaling_does_not_change_the_optimal_point ... ok
+test node_limited_offset_pairs_keep_identical_incumbents_and_termination ... ok
+test randomized_bounded_lps_match_an_exact_rational_vertex_oracle ... ok
+test mixed_integer_models_and_interrupted_bounds_match_an_exact_interval_oracle ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests\discrete.rs ($BUILD_OUTPUT\validation\debug\deps\discrete-0d933def9f8b8333.exe)
+
+running 4 tests
+test missing_bounds_or_ambiguous_sos_weights_are_explicit_errors ... ok
+test sos2_adjacency_follows_weights_and_not_input_indices ... ok
+test sos1_allows_at_most_one_nonzero_variable ... ok
+test bounded_indicator_enforces_both_active_values_and_equality ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\exact_bridge.rs ($BUILD_OUTPUT\validation\debug\deps\exact_bridge-1ecef28785159580.exe)
+
+running 1 test
+test finite_scenario_cvar_epigraph_survives_exact_original_arithmetic ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\integer_rounding.rs ($BUILD_OUTPUT\validation\debug\deps\integer_rounding-ee46c39ff6c21661.exe)
+
+running 3 tests
+test interrupted_near_integral_rounding_retains_incumbent_and_the_unclosed_bound ... ok
+test feasible_rounding_cannot_close_an_lp_node_with_a_material_objective_gap ... ok
+test mixed_conic_near_integral_relaxations_never_certify_the_rounded_zero_point ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\mixed_conic.rs ($BUILD_OUTPUT\validation\debug\deps\mixed_conic-ba7cd933040e2859.exe)
+
+running 5 tests
+test node_limit_preserves_integer_incumbent_and_valid_relaxation_bound ... ok
+test binary_conic_epigraph_honors_integrality_and_exact_norm ... ok
+test owned_auto_route_solves_integer_quadratic_without_relaxing_integrality ... ok
+test integer_infeasibility_is_separate_from_unbounded_relaxation ... ok
+test mixed_integer_quadratic_matches_independent_square_enumeration ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_math-27bde3337c8fc491.exe)
+
+running 23 tests
+test copula::tests::unit_declaration_rejects_unknown_configuration ... ok
+test copula::tests::matrices_and_singular_limits ... ok
+test copula::tests::archimedean_conditional_inversion_and_independence ... ok
+test distributions::tests::degenerate_and_parameter_cases ... ok
+test parameterization::tests::reconstructs_families_from_two_independent_percentiles ... ok
+test psi_aliases::tests::lognormal_conventions_and_exponential_mean_are_distinct ... ok
+test psi_aliases::tests::histogram_and_general_preserve_normalized_probability_mass ... ok
+test psi_aliases::tests::double_triangle_matches_its_two_independent_cdf_branches ... ok
+test distributions::tests::normal_quantiles_match_independent_constants ... ok
+test risk::tests::cancellation_and_subnormal_tails_keep_small_terms ... ok
+test distributions::tests::inverse_cdf_semantics_and_support ... ok
+test psi_aliases::tests::minimum_extreme_is_the_correct_gumbel_reflection ... ok
+test psi_aliases::tests::rescaled_beta_subjective_moments_and_erf_have_independent_oracles ... ok
+test psi_aliases::tests::weighted_and_equal_support_lists_have_correct_atoms ... ok
+test risk::tests::discrete_boundary_mass_is_fractional ... ok
+test random::tests::index_domains_are_checked ... ok
+test psi_aliases::tests::custom_cumulative_is_not_equal_weight_empirical_interpolation ... ok
+test special::tests::gamma_beta_known_identities ... ok
+test random::tests::addresses_are_repeatable_and_order_independent ... ok
+test risk::tests::empirical_convention_and_domains ... ok
+test distributions::tests::discrete_tables_are_stable_near_endpoints ... ok
+test sobol::tests::published_three_dimensional_net_and_shifted_v2_manifest ... ok
+test sobol::tests::generated_primitive_polynomials_and_first_net ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\catalog.rs ($BUILD_OUTPUT\validation\debug\deps\catalog-2265eba96aff4947.exe)
+
+running 8 tests
+test extended_extreme_ranges_are_correct_or_explicit_errors ... ok
+test half_integer_and_transformed_family_cdfs_match_independent_erf_references ... ok
+test public_domains_reject_malformed_or_excessive_inputs ... ok
+test extended_families_match_independent_identities ... ok
+test baseline_added_families_match_independent_closed_forms ... ok
+test modifiers_preserve_discrete_atoms_and_compound_identity ... ok
+test addressed_skew_normal_mc_matches_independent_population_moments ... ok
+test every_catalog_family_roundtrips_and_samples_reproducibly ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\validation\debug\deps\deep_review-5840fa8411eb6f26.exe)
+
+running 18 tests
+test binomial_small_exact_distribution_and_discrete_inverse_boundary ... ok
+test degenerate_supports_and_boundary_cdfs_are_consistent ... ok
+test discrete_limits_are_explicit_and_degenerate_large_counts_remain_exact ... ok
+test empirical_quantiles_do_not_interpolate_and_cvar_integrates_boundary_mass ... ok
+test lognormal_interior_quantile_does_not_silently_return_zero ... ok
+test maximum_seed_and_address_extremes_are_open_interval_and_repeatable ... ok
+test rng_v2_removes_alpha_v1_coordinate_cancellation_family ... ok
+test normal_cdf_standardization_does_not_overflow_before_division ... ok
+test weibull_quantile_avoids_overflow_before_scale_restores_finite_answer ... ok
+test normal_tail_quantiles_match_independent_reference_constants ... ok
+test positive_continuous_interior_quantile_underflow_is_explicit ... ok
+test rng_v2_has_explicit_reproducibility_vectors ... ok
+test triangular_extreme_branch_ratios_remain_finite_and_correct ... ok
+test triangular_scale_invariance_and_conditional_tail_probabilities ... ok
+test weibull_cdf_preserves_finite_log_ratio_when_division_overflows_or_underflows ... ok
+test weibull_extreme_shape_distinguishes_adjacent_values_near_scale ... ok
+test normal_quantile_keeps_finite_answer_after_cancelling_large_terms ... ok
+test discrete_quantiles_bracket_probabilities_at_large_allowed_parameters ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\density.rs ($BUILD_OUTPUT\validation\debug\deps\density-29cc0af738b68e20.exe)
+
+running 2 tests
+test negative_scale_and_truncation_use_correct_density_measure ... ok
+test independent_density_identities_and_discrete_normalization ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\elicitation.rs ($BUILD_OUTPUT\validation\debug\deps\elicitation-67a87d0b4192ae99.exe)
+
+running 3 tests
+test generalized_triangle_recovers_independent_asymmetric_models_and_endpoints ... ok
+test vary_actual_bounds_uses_the_declared_base_as_mode ... ok
+test myerson_preserves_named_percentiles_for_both_skew_directions ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\extreme_density.rs ($BUILD_OUTPUT\validation\debug\deps\extreme_density-b1409092ebd534ad.exe)
+
+running 4 tests
+test reciprocal_narrow_large_bounds_do_not_round_into_outside_support ... ok
+test heavy_student_t_tails_are_inverted_before_upper_cdf_rounding ... ok
+test beta_prime_and_f_invert_complementary_tails_before_rounding_unit_coordinates ... ok
+test stable_log_densities_keep_finite_large_logarithms ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\johnson_moments.rs ($BUILD_OUTPUT\validation\debug\deps\johnson_moments-43c279fb96673641.exe)
+
+running 5 tests
+test evaluation_and_cancel_budgets_do_not_manufacture_fits ... ok
+test normal_lognormal_boundary_and_invalid_moments_are_distinct ... ok
+test full_su_inverse_matches_population_moments_and_independent_source_quantiles ... ok
+test deterministic_population_moments_match_independent_scipy_fixtures ... ok
+test full_sb_inverse_matches_population_moments_and_original_quantiles ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.34s
+
+     Running tests\json_contract.rs ($BUILD_OUTPUT\validation\debug\deps\json_contract-3ffa51d68d1b232a.exe)
+
+running 2 tests
+test floating_support_boundaries_keep_their_rust_ieee_bits_through_json ... ok
+test nested_distribution_replay_preserves_parameters_and_strict_fields ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\metalog.rs ($BUILD_OUTPUT\validation\debug\deps\metalog-1b9c1d801b11c050.exe)
+
+running 11 tests
+test global_certificate_is_required_even_when_center_samples_look_plausible ... ok
+test inverse_cdf_removes_large_location_before_comparing_small_tail_changes ... ok
+test moment_fit_is_separate_from_ols_and_checks_the_requested_subfamily ... ok
+test numerical_endpoint_failures_are_not_silent_atoms ... ok
+test bounded_and_lower_transforms_match_uniform_and_loglogistic_identities ... ok
+test ols_centers_large_offsets_before_estimating_small_scale ... ok
+test spt_preserves_three_quantiles_in_each_supported_bound_mode ... ok
+test ols_recovers_independent_coefficients_and_is_labeled_not_mle ... ok
+test original_ten_term_basis_order_has_an_independent_expanded_oracle ... ok
+test two_term_logistic_matches_independent_quantile_cdf_and_density ... ok
+test density_integrates_to_the_corresponding_independent_cdf_mass ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests\multivariate.rs ($BUILD_OUTPUT\validation\debug\deps\multivariate-e26259a7d1b2391f.exe)
+
+running 3 tests
+test covariance_map_has_an_independent_linear_algebra_oracle ... ok
+test invalid_covariances_resources_and_lognormal_endpoints_are_explicit ... ok
+test normal_and_latent_lognormal_population_moments_match_reproducible_draws ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests\nominal.rs ($BUILD_OUTPUT\validation\debug\deps\nominal-74611fcefe464824.exe)
+
+running 3 tests
+test arithmetic_lognormal_conversion_preserves_mean_and_extreme_finite_inputs ... ok
+test baseline17_means_have_the_same_canonical_spreadsheet_semantics ... ok
+test median_fallback_is_visible_and_large_offset_averages_remain_finite ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\numerical_review.rs ($BUILD_OUTPUT\validation\debug\deps\numerical_review-6becda9a3b9c132a.exe)
+
+running 9 tests
+test cauchy_log_density_uses_log_scale_before_squaring_huge_finite_values ... ok
+test beta_prime_cdf_does_not_erase_representable_tail_mass ... ok
+test inverse_gaussian_and_small_shape_beta_match_independent_anchors ... ok
+test reflected_copula_conditional_cdf_includes_the_selected_reflection ... ok
+test multivariate_transform_reconstructs_covariance_and_handles_zero_rank ... ok
+test skew_normal_log_density_does_not_turn_a_finite_tail_into_zero_mass ... ok
+test reflected_discrete_quantile_respects_probability_mass_at_the_boundary ... ok
+test skew_cdf_matches_an_independent_small_tail_anchor ... ok
+test sobol_v2_matches_independent_scipy_64_dimensional_digital_net ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\reference_families.rs ($BUILD_OUTPUT\validation\debug\deps\reference_families-eaec7b10dbb0ca73.exe)
+
+running 2 tests
+test every_added_reference_family_has_an_independent_cdf_anchor ... ok
+test new_density_and_tail_identities_are_independent ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\reference_functions.rs ($BUILD_OUTPUT\validation\debug\deps\reference_functions-1814ffea462a3cae.exe)
+
+running 40 tests
+test malformed_alt_claims_do_not_return_fabricated_distributions ... ok
+test psi_cauchy_alt_two_percentiles_preserve_independent_tangent_anchors ... ok
+test psi_erf_alt_variance_and_percentile_are_not_exponential_scale ... ok
+test psi_cauchy_native_parameter_convention_has_independent_quartiles ... ok
+test psi_chi_square_alt_variance_and_percentile_match_df_two_exponential ... ok
+test psi_hyp_secant_alt_uses_the_documented_location_scale_convention ... ok
+test psi_exponential_alt_variance_and_percentile_preserve_mean_convention ... ok
+test psi_inv_normal_alt_mean_variance_and_native_lambda_have_independent_cdf_anchors ... ok
+test psi_inv_normal_native_mean_shape_have_independent_gaussian_anchor ... ok
+test psi_laplace_alt_percentile_and_stddev_match_exponential_tails ... ok
+test psi_johnson_su_native_shapes_location_scale_have_independent_normal_anchor ... ok
+test psi_laplace_native_location_scale_have_independent_tail_anchors ... ok
+test psi_levy_alt_preserves_independent_normal_tail_anchor ... ok
+test psi_beta_gen_alt_four_percentiles_recover_independent_beta_polynomial ... ok
+test psi_max_extreme_alt_mean_mode_and_variance_use_gumbel_constants ... ok
+test psi_max_extreme_native_location_scale_have_independent_exponential_anchor ... ok
+test psi_min_extreme_alt_mean_and_scale_have_the_correct_reflection ... ok
+test psi_logistic_alt_mean_and_variance_determine_independent_quartiles ... ok
+test psi_log_normal_alt_mixed_arithmetic_claims_do_not_confuse_log_parameters ... ok
+test psi_normal_alt_supports_both_mixed_parameter_forms ... ok
+test psi_frechet_alt_all_percentile_native_combinations_preserve_power_exponential_geometry ... ok
+test psi_fatigue_life_alt_all_percentile_native_combinations_preserve_gaussian_geometry ... ok
+test psi_gamma_alt_supports_two_quantiles_and_all_native_moment_pairs ... ok
+test psi_normal_skew_is_myerson_percentile_geometry_not_azzalini_shape ... ok
+test psi_pareto2_alt_recovers_lomax_quantiles_and_native_shape ... ok
+test psi_pareto_alt_recovers_independent_power_quantiles_and_native_scale ... ok
+test psi_log_logistic_alt_three_parameters_preserve_nonzero_location ... ok
+test psi_pearson5_native_shape_scale_have_independent_inverse_exponential_anchor ... ok
+test psi_pearson6_alt_mathematical_three_claim_core_matches_beta_prime_polynomial ... ok
+test psi_pearson5_alt_recovers_inverse_exponential_quantiles ... ok
+test psi_rayleigh_alt_all_three_claims_use_sigma_not_weibull_scale ... ok
+test psi_uniform_alt_endpoint_and_percentile_forms_are_distinct ... ok
+test shifted_reference_constructors_preserve_native_order_and_bounds ... ok
+test psi_student_alt_percentile_recovers_cauchy_df_one_and_rejects_median ... ok
+test psi_rayleigh_native_sigma_has_independent_chisquare_anchor ... ok
+test psi_weibull_alt_mathematical_two_claim_core_preserves_power_exponential_cdf ... ok
+test psi_triangular_alt_three_percentiles_cover_both_piecewise_branches ... ok
+test psi_pert_alt_three_percentiles_and_native_moments_preserve_weight_four ... ok
+test inverse_parameter_contracts_reject_unknown_fields_and_enforce_budgets ... ok
+test psi_inv_normal_alt_two_quantiles_match_independent_scipy_values ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\time_series.rs ($BUILD_OUTPUT\validation\debug\deps\time_series-96c6aaebcaf1d3d9.exe)
+
+running 10 tests
+test addressed_paths_are_prefix_stable_and_trial_binding_sensitive ... ok
+test arch_garch_and_egarch_match_independent_conditional_variance_algebra ... ok
+test aparch_power_two_zero_asymmetry_is_garch_and_leverage_changes_variance ... ok
+test arma_recursions_match_independent_two_step_algebra ... ok
+test malformed_domains_limits_numeric_errors_and_cancellation_are_explicit ... ok
+test tssip_replays_whole_columns_without_rng ... ok
+test no_op_configurations_reject_unknown_fields_instead_of_ignoring_them ... ok
+test integration_and_seasonality_have_explicit_initial_conditions_and_order ... ok
+test json_configuration_variants_and_full_width_addresses_are_strict ... ok
+test gaussian_ar2_population_variance_matches_yule_walker_not_source_typo ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_model-5198d6c308f40e25.exe)
+
+running 11 tests
+test tests::binary_defaults_are_real_domain_bounds ... ok
+test tests::candidate_rounding_requires_revalidation ... ok
+test tests::insufficient_memory_and_oversized_names_are_rejected ... ok
+test tests::empty_and_integer_empty_domains_are_detected ... ok
+test tests::large_finite_objective_is_valid_arithmetic ... ok
+test tests::duplicate_and_symmetric_quadratic_coefficients_aggregate ... ok
+test tests::negative_free_and_fixed_variables_are_valid ... ok
+test tests::lengths_nonfinite_values_and_overflow_are_structured_errors ... ok
+test tests::numeric_options_are_validated_but_zero_work_budgets_are_allowed ... ok
+test tests::original_rows_bounds_and_integrality_are_checked_separately ... ok
+test tests::schema_handles_and_nonfinite_input_are_rejected ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\validation\debug\deps\deep_review-3d7151d6062446d6.exe)
+
+running 12 tests
+test binary_intersections_and_integer_holes_are_not_relaxed ... ok
+test exact_zero_and_nonzero_tiny_coefficients_survive_the_right_way ... ok
+test every_nonfinite_numeric_position_is_rejected ... ok
+test canonicalization_does_not_erase_a_representable_residual_coefficient ... ok
+test integer_precision_policy_does_not_restrict_large_continuous_values ... ok
+test invalid_zero_coefficient_handles_are_still_invalid ... ok
+test independently_computed_cross_objective_and_all_relation_residuals ... ok
+test original_objective_dot_offset_and_rhs_share_compensation ... ok
+test option_domains_and_original_integer_validation_are_strict ... ok
+test shared_compensated_helpers_are_checked_and_preserve_cancellation ... ok
+test variable_and_name_limits_are_checked ... ok
+test excessive_term_count_is_rejected_before_normalization ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\exact_products.rs ($BUILD_OUTPUT\validation\debug\deps\exact_products-e7983a26278480dd.exe)
+
+running 8 tests
+test duplicate_coefficient_rounding_is_never_silently_a_different_model ... ok
+test outward_enclosures_and_exact_sign_do_not_invent_underflowed_zero ... ok
+test original_objective_and_row_keep_product_residual_before_cancellation ... ok
+test quadratic_products_cancel_before_intermediate_overflow_or_underflow ... ok
+test python_fraction_oracle_fixtures_match_all_result_bits_and_permutations ... ok
+test every_finite_exponent_identity_and_sign_roundtrip_is_preserved ... ok
+test zero_sign_rounding_limits_and_error_poison_are_explicit ... ok
+test maximum_supported_term_carry_and_full_exponent_span_are_exact ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_simulation-3e703fc993054482.exe)
+
+running 11 tests
+test advanced::strict_input_tests::unit_declarations_do_not_discard_unknown_fields ... ok
+test fitting::strict_input_tests::unit_fit_families_reject_unknown_parameters ... ok
+test tests::constant_and_single_observation_statistics ... ok
+test tests::invalid_trials_outputs_and_shape_are_errors ... ok
+test tests::cancellation_has_no_fake_statistics_and_can_return_partial_data ... ok
+test tests::elementary_fits_report_mle_parameters_without_gof_claims ... ok
+test tests::streaming_large_offset_moments_do_not_use_difference_of_squares ... ok
+test tests::lhs_occupies_each_stratum_once_in_each_dimension ... ok
+test tests::seed_repeatability_and_same_trial_reads ... ok
+test tests::memory_estimates_bound_retention_and_lhs_before_allocating ... ok
+test tests::fixed_seed_moments_match_analytic_references ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests\advanced.rs ($BUILD_OUTPUT\validation\debug\deps\advanced-0c65e399d909503a.exe)
+
+running 7 tests
+test budgets_cancellation_and_arity_do_not_produce_claims ... ok
+test skipped_invalid_attempts_are_reported_without_readdressing ... ok
+test bounded_mc_stopping_is_simultaneous_and_validates_claims ... ok
+test advanced_legacy_preserves_v2_and_sobol_is_addressed ... ok
+test negative_clayton_countermonotonic_boundary_and_student_singular_limit ... ok
+test gaussian_spearman_and_archimedean_have_expected_dependence ... ok
+test multivariate_archimedean_frailties_match_pair_cdfs_and_margins ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests\deep_review.rs ($BUILD_OUTPUT\validation\debug\deps\deep_review-67ad1eba8e76e309.exe)
+
+running 11 tests
+test compensated_online_mean_retains_small_terms_between_cancelling_large_values ... ok
+test failed_observation_does_not_corrupt_prior_online_summary ... ok
+test cancelled_setup_does_not_evaluate_or_return_fake_summary ... ok
+test fits_obey_mle_and_degenerate_domains ... ok
+test fitting_exponential_does_not_require_representable_sample_variance ... ok
+test fitting_uniform_does_not_require_representable_sample_variance ... ok
+test normal_mle_can_return_finite_standard_deviation_when_variance_overflows ... ok
+test very_wide_streaming_output_is_budgeted_before_the_second_trial ... ok
+test variance_is_translation_and_order_invariant_for_representable_two_point_data ... ok
+test lhs_exactly_covers_prime_sized_strata_with_maximum_seed ... ok
+test streaming_mode_handles_large_trial_count_under_small_memory_budget ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests\evaluator_cancellation.rs ($BUILD_OUTPUT\validation\debug\deps\evaluator_cancellation-e5e5281055fb9afe.exe)
+
+running 2 tests
+test an_interrupted_evaluator_never_admits_its_current_row ... ok
+test cancellation_before_the_first_return_has_no_fake_statistics ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\fitting.rs ($BUILD_OUTPUT\validation\debug\deps\fitting-9b38299fabbba3fb.exe)
+
+running 4 tests
+test closed_form_mles_and_information_criteria_match_direct_algebra ... ok
+test ranking_reports_failures_and_resources_do_not_become_scores ... ok
+test bootstrap_refits_and_detects_known_misspecification_repeatably ... ok
+test genuine_bounded_numerical_fit_recovers_quantile_grid_parameters ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests\intervals.rs ($BUILD_OUTPUT\validation\debug\deps\intervals-248f73d9950a1a46.exe)
+
+running 4 tests
+test interval_degeneracy_and_invalid_inputs_are_explicit ... ok
+test student_t_mean_interval_matches_an_independent_reference ... ok
+test qmc_and_lhs_intervals_use_replicate_means_not_pointwise_variance ... ok
+test large_mc_sample_uses_an_explicit_large_df_critical_approximation ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\numerical_review.rs ($BUILD_OUTPUT\validation\debug\deps\numerical_review-ef93a91cc09742b7.exe)
+
+running 9 tests
+test bootstrap_gof_refits_parameters_and_is_reproducible_with_lossless_seed ... ok
+test information_criteria_do_not_rank_incompatible_mass_and_density_likelihoods ... ok
+test lhs_replicate_intervals_reject_reused_seed_even_if_metadata_replicate_differs ... ok
+test normal_likelihood_aic_bic_use_population_mle_and_declared_parameter_count ... ok
+test checkpoint_only_intervals_are_not_published_at_data_adaptive_cancellation_times ... ok
+test resampling_preserves_intact_vectors_and_shuffle_preserves_all_cells ... ok
+test bounded_stopping_uses_a_verified_mc_checkpoint_and_refuses_incompatible_samplers ... ok
+test fixed_sample_intervals_match_independent_student_critical_values ... ok
+test copula_simulation_matches_analytic_margins_quadrants_and_kendall_tau ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+     Running tests\parameter_grid.rs ($BUILD_OUTPUT\validation\debug\deps\parameter_grid-06812fcd8a98fb02.exe)
+
+running 3 tests
+test grid_limits_and_cancellation_precede_evaluator_work ... ok
+test cartesian_parameter_values_are_constant_and_result_coordinates_are_unique ... ok
+test common_random_numbers_and_distinct_seeds_have_explicit_repeatable_semantics ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\resampling.rs ($BUILD_OUTPUT\validation\debug\deps\resampling-27856bf10bb8fc66.exe)
+
+running 3 tests
+test resampling_rejects_ragged_nonfinite_cancelled_or_unbudgeted_work ... ok
+test resampling_preserves_intact_source_rows_or_columns_and_replays_exact_trials ... ok
+test shuffle_is_a_full_multiset_permutation_without_replacement ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\lib.rs ($BUILD_OUTPUT\validation\debug\deps\solvercraft_types-a6929d7ee4333838.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_compile
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_engines
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_math
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_model
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_simulation
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests solvercraft_types
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

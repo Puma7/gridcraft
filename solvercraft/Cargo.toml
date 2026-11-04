@@ -1,0 +1,31 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.149", features = ["float_roundtrip"] }
+web-time = "=0.2.4"
+solvercraft-types = { path = "crates/types" }
+solvercraft-model = { path = "crates/model" }
+solvercraft-math = { path = "crates/math" }
+solvercraft-compile = { path = "crates/compile" }
+solvercraft-engines = { path = "crates/engines" }
+solvercraft-simulation = { path = "crates/simulation" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+todo = "deny"
+unimplemented = "deny"
+

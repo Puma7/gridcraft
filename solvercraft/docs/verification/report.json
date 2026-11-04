@@ -1,0 +1,97 @@
+{
+  "baseline_commit": "981fad14e0b90a7906a02f29785a6d0eb214fee6",
+  "scope": "standalone Solvercraft workspace; full Gridcraft and actual WASM execution not verified",
+  "checks": [
+    {
+      "name": "format",
+      "exit_code": 0,
+      "seconds": 1.053
+    },
+    {
+      "name": "tests",
+      "exit_code": 0,
+      "seconds": 8.34,
+      "passed": 136,
+      "failed": 0,
+      "ignored": 0
+    },
+    {
+      "name": "clippy",
+      "exit_code": 0,
+      "seconds": 5.226
+    },
+    {
+      "name": "release",
+      "exit_code": 0,
+      "seconds": 17.659
+    }
+  ],
+  "cli_examples": {
+    "lp_objective": 36.0,
+    "lp_values": [
+      2.0,
+      6.0
+    ],
+    "simulation_trials": 10000,
+    "simulation_mean": 73.33318691254172,
+    "cvar_decision": [
+      1.0
+    ],
+    "cvar_loss": 1.0,
+    "nonlinear_values": [
+      0.6931471797286779
+    ],
+    "nonlinear_objective": 2.7640218831192376e-18,
+    "heuristic_values": [
+      2.999999999996823,
+      -2.0000000000002625
+    ],
+    "heuristic_objective": 3.439470930288735e-12,
+    "capabilities": {
+      "implementation": "pure Rust",
+      "optimization": [
+        "linear",
+        "mixed_integer_linear",
+        "separable_convex_quadratic_bounds",
+        "smooth_continuous_finite_bounds_ad",
+        "finite_bounds_differential_evolution"
+      ],
+      "risk": [
+        "finite_scenario_expected_loss",
+        "finite_scenario_cvar",
+        "box_robust_linear_counterpart"
+      ],
+      "schema_version": 1,
+      "simulation": [
+        "monte_carlo",
+        "latin_hypercube"
+      ],
+      "status": "alpha; numerical and platform limits documented",
+      "unavailable": [
+        "grg",
+        "general_qp",
+        "socp",
+        "global_nonlinear_proof",
+        "copulas",
+        "sobol",
+        "basis_sensitivity",
+        "general_smooth_nonlinear_constraints"
+      ],
+      "version": "0.1.0"
+    }
+  },
+  "status": "passed",
+  "compiler": "rustc 1.91.1 (ed61e7d7e 2025-11-07)",
+  "additional_checks": {
+    "linux_cross_check": {
+      "target": "x86_64-unknown-linux-gnu",
+      "result": "passed; compile check only, no Linux execution"
+    },
+    "gridcraft_patch_check": {
+      "result": "passed",
+      "baseline": "981fad14e0b90a7906a02f29785a6d0eb214fee6"
+    },
+    "full_gridcraft_build": "not executed: incomplete source snapshot, unavailable toolchain/dependency network",
+    "wasm_execution": "not executed"
+  }
+}

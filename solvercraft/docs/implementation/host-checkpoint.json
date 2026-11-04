@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "checkpoint": "2026-10-31-host-ordered-ir-manifest-chart",
+  "scope": "Owned host production source frozen; independent runtime/whole CI evidence recorded separately. Hashes are not build attestation.",
+  "sources": [
+    {
+      "path": "apps/gridcraft-web/Cargo.toml",
+      "sha256": "d023a634c3c5b601e2aecb2f548f8007d5e73ca50ee89b112f2d6be62a973cd8",
+      "canonical_lf_sha256": "50c6a96f62b2233208c87662d2fd32617af490e12ff011c960852b382ab825be",
+      "bytes": 1185
+    },
+    {
+      "path": "apps/gridcraft-web/index.html",
+      "sha256": "c725ae58794bb0263614693b3a7492e50c5ba806212afcd756f83f6a54bab674",
+      "canonical_lf_sha256": "314cbfef400ea131370364b59efc949aba8711bec2d39b3aa1b8b681e6810e19",
+      "bytes": 1050
+    },
+    {
+      "path": "apps/gridcraft-web/src/solvercraft_worker.rs",
+      "sha256": "dbfeac2fa8952565fc264adeec6795e93a507d86fbea59079ddc1ab179e0c38d",
+      "canonical_lf_sha256": "dbfeac2fa8952565fc264adeec6795e93a507d86fbea59079ddc1ab179e0c38d",
+      "bytes": 262
+    },
+    {
+      "path": "crates/calc/src/eval.rs",
+      "sha256": "923590a4e765c9b8e537cf701776790b55deb09452d077406ed90dbde158801b",
+      "canonical_lf_sha256": "923590a4e765c9b8e537cf701776790b55deb09452d077406ed90dbde158801b",
+      "bytes": 28129
+    },
+    {
+      "path": "crates/calc/src/eval/call.rs",
+      "sha256": "40128aef3bdfc3eadc322f6b1bd61b5ab283775d8b5386cff8266cb05d3a6a08",
+      "canonical_lf_sha256": "40128aef3bdfc3eadc322f6b1bd61b5ab283775d8b5386cff8266cb05d3a6a08",
+      "bytes": 20437
+    },
+    {
+      "path": "crates/calc/src/eval/solvercraft.rs",
+      "sha256": "2f7010d6003f1575e67e99c9f282d10dc30ca7bb2cbd46089bf084eca53302d4",
+      "canonical_lf_sha256": "2f7010d6003f1575e67e99c9f282d10dc30ca7bb2cbd46089bf084eca53302d4",
+      "bytes": 12694
+    },
+    {
+      "path": "crates/calc/src/eval/special.rs",
+      "sha256": "c36376e6455832e147c0987e98f4bad0f382aecd09096dc52c98af3115d3f398",
+      "canonical_lf_sha256": "c36376e6455832e147c0987e98f4bad0f382aecd09096dc52c98af3115d3f398",
+      "bytes": 6832
+    },
+    {
+      "path": "crates/calc/src/lib.rs",
+      "sha256": "f4f52412bf410f3dc5b9f8c55ac3fd82c13886b7c10a3dc7b8cfa7e0d1560da6",
+      "canonical_lf_sha256": "f4f52412bf410f3dc5b9f8c55ac3fd82c13886b7c10a3dc7b8cfa7e0d1560da6",
+      "bytes": 619
+    },
+    {
+      "path": "crates/calc/src/recalc.rs",
+      "sha256": "d8e0175b3d6af06081c3168b2f76ffb82d3d7823676d307041bf341f7e7c4bef",
+      "canonical_lf_sha256": "d8e0175b3d6af06081c3168b2f76ffb82d3d7823676d307041bf341f7e7c4bef",
+      "bytes": 34751
+    },
+    {
+      "path": "crates/engine/Cargo.toml",
+      "sha256": "4c40291e85eb3d356e7785f79473f7151befc21707e763dd5ff8d46fb6ebda8a",
+      "canonical_lf_sha256": "4c40291e85eb3d356e7785f79473f7151befc21707e763dd5ff8d46fb6ebda8a",
+      "bytes": 1148
+    },
+    {
+      "path": "crates/engine/src/cmd.rs",
+      "sha256": "87a7bd08209630fac8b1b8fed42cfdb2cc254c9651893f9d2e424b7cb7437a9f",
+      "canonical_lf_sha256": "87a7bd08209630fac8b1b8fed42cfdb2cc254c9651893f9d2e424b7cb7437a9f",
+      "bytes": 25769
+    },
+    {
+      "path": "crates/engine/src/cmd/solver.rs",
+      "sha256": "dc8f0961b3d4dbdfb25808bfa68cf2549f4c289e1b8f0e25d7c9fda1975036f8",
+      "canonical_lf_sha256": "dc8f0961b3d4dbdfb25808bfa68cf2549f4c289e1b8f0e25d7c9fda1975036f8",
+      "bytes": 15489
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft.rs",
+      "sha256": "8b087d4b043f86f0a32676c3167b69f327f924151748d095609fb086d09a7d02",
+      "canonical_lf_sha256": "8b087d4b043f86f0a32676c3167b69f327f924151748d095609fb086d09a7d02",
+      "bytes": 57631
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/host_tests.rs",
+      "sha256": "25cc8ea6d2e58fea11f17b1cab601f6f415619d4116e3745404d55d67a5672d9",
+      "canonical_lf_sha256": "25cc8ea6d2e58fea11f17b1cab601f6f415619d4116e3745404d55d67a5672d9",
+      "bytes": 32061
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/jobs.rs",
+      "sha256": "61ba82e9b9b3fd1c901a390216bc4472e148bb33ddf352cf9676f57334b96f78",
+      "canonical_lf_sha256": "61ba82e9b9b3fd1c901a390216bc4472e148bb33ddf352cf9676f57334b96f78",
+      "bytes": 10827
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/jobs_web.rs",
+      "sha256": "14114b73d0bab090b549129766d2b957409776c2124cb54a8cdef45b743dc2eb",
+      "canonical_lf_sha256": "14114b73d0bab090b549129766d2b957409776c2124cb54a8cdef45b743dc2eb",
+      "bytes": 24174
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/legacy.rs",
+      "sha256": "e478681cda71f1cafe140428602fe7ecac16bcc9e2968bfd879b413b3a194d81",
+      "canonical_lf_sha256": "e478681cda71f1cafe140428602fe7ecac16bcc9e2968bfd879b413b3a194d81",
+      "bytes": 9802
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/manifest.rs",
+      "sha256": "cf3eb6fb81a82a128b7b708c1d1287b533512466786c7385a76d213dcce0ebbe",
+      "canonical_lf_sha256": "cf3eb6fb81a82a128b7b708c1d1287b533512466786c7385a76d213dcce0ebbe",
+      "bytes": 2580
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/parameters.rs",
+      "sha256": "d4fce1722892039d2770f876e48278585b9f4579071f17dd4a8fd7569a0e8d8d",
+      "canonical_lf_sha256": "d4fce1722892039d2770f876e48278585b9f4579071f17dd4a8fd7569a0e8d8d",
+      "bytes": 5934
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/registry.rs",
+      "sha256": "e73a59a9c3950d3b51e11c53b09e8498d44334844f6d69905d5d851636bbf2fd",
+      "canonical_lf_sha256": "e73a59a9c3950d3b51e11c53b09e8498d44334844f6d69905d5d851636bbf2fd",
+      "bytes": 24278
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/reports.rs",
+      "sha256": "38951260e5671e4314668df241457f5764ad6afb2612c5bac84d3970c0ab72b1",
+      "canonical_lf_sha256": "38951260e5671e4314668df241457f5764ad6afb2612c5bac84d3970c0ab72b1",
+      "bytes": 7699
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/simulation_ir.rs",
+      "sha256": "2dabef381b102c8d9bd6adcc2691ea198570a9473e497884889dd0b1db53f8dd",
+      "canonical_lf_sha256": "2dabef381b102c8d9bd6adcc2691ea198570a9473e497884889dd0b1db53f8dd",
+      "bytes": 16566
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/simulation_ir/tests.rs",
+      "sha256": "d87f34cd8c7a4d6bd2129864a47b781973e048631c5d1005333cf4732e2e9d52",
+      "canonical_lf_sha256": "d87f34cd8c7a4d6bd2129864a47b781973e048631c5d1005333cf4732e2e9d52",
+      "bytes": 9654
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/worksheet.rs",
+      "sha256": "f6acac32b6c88599840cfd7f0f8e63a8bb3f869b07a1c546b42a9d636794b5c2",
+      "canonical_lf_sha256": "f6acac32b6c88599840cfd7f0f8e63a8bb3f869b07a1c546b42a9d636794b5c2",
+      "bytes": 7182
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft/worksheet_tests.rs",
+      "sha256": "4eb339c6c0f8be53e2bdf248af6e49516d899006fcb424154cae4c8b7d86344c",
+      "canonical_lf_sha256": "4eb339c6c0f8be53e2bdf248af6e49516d899006fcb424154cae4c8b7d86344c",
+      "bytes": 4166
+    },
+    {
+      "path": "crates/engine/src/lib.rs",
+      "sha256": "9a3b5186874b374e4feb36304b5b8b02fa269d23623aacb3a79ce686c8b03cb3",
+      "canonical_lf_sha256": "9a3b5186874b374e4feb36304b5b8b02fa269d23623aacb3a79ce686c8b03cb3",
+      "bytes": 52832
+    },
+    {
+      "path": "crates/engine/tests/it/solvercraft_deep_review.rs",
+      "sha256": "026251f6b905e6d7165bd4615492e8dd115ce04cdf3dab628f0408045d601d1a",
+      "canonical_lf_sha256": "026251f6b905e6d7165bd4615492e8dd115ce04cdf3dab628f0408045d601d1a",
+      "bytes": 10462
+    },
+    {
+      "path": "crates/ui-egui/src/app.rs",
+      "sha256": "f6bd0a794f81ec41a5c34246d1c6f4c7c80d56f3462121345cdf9621d78db954",
+      "canonical_lf_sha256": "f6bd0a794f81ec41a5c34246d1c6f4c7c80d56f3462121345cdf9621d78db954",
+      "bytes": 25541
+    },
+    {
+      "path": "crates/ui-egui/src/app/commands.rs",
+      "sha256": "7804d790559fbc6fd6fa6926396f3924cb3de7179795517d42755efbee11c58c",
+      "canonical_lf_sha256": "7804d790559fbc6fd6fa6926396f3924cb3de7179795517d42755efbee11c58c",
+      "bytes": 17674
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs.rs",
+      "sha256": "8365ba125b6e02d245e3bda19d6a86a335f6b320f7e089e54e1d6bd77108ed27",
+      "canonical_lf_sha256": "8365ba125b6e02d245e3bda19d6a86a335f6b320f7e089e54e1d6bd77108ed27",
+      "bytes": 55299
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs/analysis.rs",
+      "sha256": "96138a0bd4074e8feac17bfab4caff919bf01929cc25f09a07f9c4e85d8d7adc",
+      "canonical_lf_sha256": "96138a0bd4074e8feac17bfab4caff919bf01929cc25f09a07f9c4e85d8d7adc",
+      "bytes": 26375
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs/show.rs",
+      "sha256": "de5794abbe8bce7468e89eb03b06d5b3df5f124dea72045ed47d996d65ced940",
+      "canonical_lf_sha256": "de5794abbe8bce7468e89eb03b06d5b3df5f124dea72045ed47d996d65ced940",
+      "bytes": 32556
+    },
+    {
+      "path": "crates/ui-egui/src/keytips/keytip_table/generated.rs",
+      "sha256": "79b91bd259e72187fcb61e7231d0fb05b91c5bfc705a881b1deeb880e59beac0",
+      "canonical_lf_sha256": "79b91bd259e72187fcb61e7231d0fb05b91c5bfc705a881b1deeb880e59beac0",
+      "bytes": 40366
+    },
+    {
+      "path": "crates/ui-egui/src/lib.rs",
+      "sha256": "4bf351ffa823ec6e8d1f893b23222373adbf887d9bf8e089a68b888113ed81c2",
+      "canonical_lf_sha256": "d02d0dc3970e32f4933f7fa3b0a4ba237831460f6156cb22c1b58677854974ad",
+      "bytes": 13678
+    },
+    {
+      "path": "crates/ui-egui/src/panes.rs",
+      "sha256": "b7bb5708bd61115bd649f06509e18d61f4d65ee4b70aef6ac9dbdd9141f2e3bd",
+      "canonical_lf_sha256": "a717828441da2c33852f66f8c5a6d3654cc91f78c1d817a4d9d47b48c8d622ec",
+      "bytes": 15786
+    },
+    {
+      "path": "crates/ui-egui/src/ribbon/data.rs",
+      "sha256": "5764a79e590412fcde64708e10ba8c1e21b495379bef7acd8cf30d40bb59036b",
+      "canonical_lf_sha256": "5764a79e590412fcde64708e10ba8c1e21b495379bef7acd8cf30d40bb59036b",
+      "bytes": 5950
+    },
+    {
+      "path": "crates/ui-egui/src/solvercraft.rs",
+      "sha256": "bfff476f119281619b5d8bff6760d521d8269e25d6e2d1300f66e0a8d6c89170",
+      "canonical_lf_sha256": "bfff476f119281619b5d8bff6760d521d8269e25d6e2d1300f66e0a8d6c89170",
+      "bytes": 41377
+    },
+    {
+      "path": "crates/ui-egui/src/solvercraft/report.rs",
+      "sha256": "62763c0932ee4e7bee6eceb74a92888d28559ce125f7a47e5bd1158e3e32a269",
+      "canonical_lf_sha256": "62763c0932ee4e7bee6eceb74a92888d28559ce125f7a47e5bd1158e3e32a269",
+      "bytes": 2664
+    },
+    {
+      "path": "crates/ui-egui/tests/it/keytips_generated.rs",
+      "sha256": "a086a2da76aab76a53395b39eccdaa3e2c142ec43d2aa0438a622e2cbe32fa78",
+      "canonical_lf_sha256": "a086a2da76aab76a53395b39eccdaa3e2c142ec43d2aa0438a622e2cbe32fa78",
+      "bytes": 90064
+    },
+    {
+      "path": "crates/xlsx/src/passthrough.rs",
+      "sha256": "aa87022bb3f0c5dc9b923b6dd86713b59f95455a36251a0a7a0662e097617d11",
+      "canonical_lf_sha256": "28313d6c05ff9a27790483f0264d69777905cb354dd80e1f8a40d6302f356b7e",
+      "bytes": 8318
+    },
+    {
+      "path": "crates/xlsx/src/passthrough/read.rs",
+      "sha256": "8b8c46d2846d34f91c11e018638362f35d4388813e58f07160e5f7bfa5c6974f",
+      "canonical_lf_sha256": "8b8c46d2846d34f91c11e018638362f35d4388813e58f07160e5f7bfa5c6974f",
+      "bytes": 32421
+    }
+  ],
+  "executed": {
+    "focused_engine_unit": 40,
+    "focused_engine_integration": 13,
+    "native_engine_ui_all_target_clippy_seconds": 23.34,
+    "worker_wasm_check_seconds": 10.62,
+    "engine_wasm_clippy_seconds": 6.65,
+    "actual_native_chart_data_unit": 9,
+    "independent_actual_native_ui": 6,
+    "active_parity_catalog": "276/292",
+    "active_keytips_generation": true,
+    "full_engine_library_parallel": 679,
+    "full_engine_library_test_seconds": 14.35,
+    "full_engine_library_logical_processors": 24,
+    "full_engine_library_test_threads": "default; RUST_TEST_THREADS unset",
+    "engine_test_fixture_all_target_clippy_seconds": 54.31
+  },
+  "pending": [
+    "independent final rebuilt actual Trunk Worker seven cases",
+    "whole frozen host CI"
+  ],
+  "test_environment": {
+    "TEMP": "$WORKSPACE_ROOT/solvercraft-temp/grid-host-tests",
+    "TMP": "same as TEMP",
+    "reason": "Default sandbox package temp is outside writable roots."
+  }
+}

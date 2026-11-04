@@ -1,0 +1,90 @@
+{
+  "schema": "solvercraft.native-ui-controls.v1",
+  "candidate": "final5",
+  "gate": {
+    "name": "host-ui",
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "gridcraft-ui-egui",
+      "--test",
+      "solvercraft_acceptance",
+      "--locked"
+    ],
+    "cwd": "$CHECKOUT_ROOT",
+    "log": "$EVIDENCE_ROOT\\gates-final5-host\\host-ui.log",
+    "exit_code": 0,
+    "timed_out": false,
+    "elapsed_seconds": 126.91628149998724,
+    "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+    "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+    "source_changed_during_run": false,
+    "accepted": true,
+    "passed": 6,
+    "failed": 0,
+    "ignored": 0,
+    "test_summary_targets": 1
+  },
+  "chart_gate": {
+    "name": "host-charts",
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "gridcraft-ui-egui",
+      "--lib",
+      "solvercraft::tests",
+      "--locked"
+    ],
+    "cwd": "$CHECKOUT_ROOT",
+    "log": "$EVIDENCE_ROOT\\gates-final5-host\\host-charts.log",
+    "exit_code": 0,
+    "timed_out": false,
+    "elapsed_seconds": 21.728011700004572,
+    "source_digest_before": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+    "source_digest_after": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+    "source_changed_during_run": false,
+    "accepted": true,
+    "passed": 9,
+    "failed": 0,
+    "ignored": 0,
+    "test_summary_targets": 1
+  },
+  "raw_source_digest_sha256": "fcc9d93350d3c5d3342b02c775096867d01c0e7addfdc9099ac0160cb460ecfe",
+  "canonical_source_digest_sha256": "9188b27559e9f23fabe2faa8c353c2e5fdca1bc6ab113955375ccd46111e88bb",
+  "versions": {
+    "cargo": {
+      "exit_code": 0,
+      "output": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)"
+    },
+    "rustc": {
+      "exit_code": 0,
+      "output": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: x86_64-pc-windows-msvc\nrelease: 1.95.0\nLLVM version: 22.1.2"
+    },
+    "cargo_fmt": {
+      "exit_code": 0,
+      "output": "rustfmt 1.9.0-stable (59807616e1 2026-04-14)"
+    },
+    "rustfmt": {
+      "exit_code": 0,
+      "output": "rustfmt 1.9.0-stable (59807616e1 2026-04-14)"
+    },
+    "clippy": {
+      "exit_code": 0,
+      "output": "clippy 0.1.95 (59807616e1 2026-04-14)"
+    }
+  },
+  "scope": [
+    "Actual ribbon Solvercraft immediately right of Solver",
+    "Read-only preview, explicit apply and one-step undo",
+    "Stale preview invalidation and German labels",
+    "English/German by light/dark: focus, Tab, Shift+Tab, pane-confined typing and Ctrl+Enter",
+    "Actual saved-model controls and five selectable charts; automatic single-factor Tornado comparison",
+    "Eight render-used numerical chart contracts plus one retained-result lifecycle test, including extreme scales, CDF atom mass, paired scatter rows and full-run summaries"
+  ],
+  "logs": {
+    "controls": "gates-final/host/host-ui.txt",
+    "charts": "gates-final/host/host-charts.txt"
+  }
+}

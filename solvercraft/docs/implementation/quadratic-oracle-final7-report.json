@@ -1,0 +1,753 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/quadratic-oracle-final7-report.json",
+  "full_local_report_sha256": "fac9651bb40bf5d2afad1d4434bc54a2a39ceb3fc726a5df887ccbd395dc9947",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "results": {
+    "executable_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+    "passed": 20,
+    "failed": 0
+  },
+  "case_results": [
+    {
+      "case": 0,
+      "oracle_values": [
+        0.03973509933774842,
+        0.01324503311258265
+      ],
+      "oracle_objective": 0.013245033112581586,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.039735099337777954,
+            0.01324503311253719
+          ],
+          "objective": 0.01324503311216296,
+          "best_bound": 0.013245033112776352,
+          "relative_gap": 6.133930169349711e-13,
+          "max_violation": 1.663823259631346e-14,
+          "statistics": {
+            "evaluations": 90,
+            "iterations": 90,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 4.1862520394619906e-13,
+      "original_max_violation": 1.6638600219831545e-14,
+      "value_error": 4.5460163411448207e-14,
+      "passed": true,
+      "case_index": 0,
+      "synthetic_request_canonical_json_sha256": "13ad9db10e3782a6b98b4f97bf3ec489d4d28d05e40872ffb9e6c47e6f07fd17"
+    },
+    {
+      "case": 1,
+      "oracle_values": [
+        0.11180030257186087,
+        -0.028668683812405536,
+        -0.37919818456883514
+      ],
+      "oracle_objective": -2.027099092284418,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.11180030254680004,
+            -0.028668683755009697,
+            -0.37919818452966686
+          ],
+          "objective": -2.0270990919642684,
+          "best_bound": -2.0270990922917353,
+          "relative_gap": 1.438088239373746e-10,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 3.201496845406382e-10,
+      "original_max_violation": 0.0,
+      "value_error": 5.739583808228588e-11,
+      "passed": true,
+      "case_index": 1,
+      "synthetic_request_canonical_json_sha256": "0fc2a107537900bedebf45cda757ee7d32807b30fff1f5a56caa16ec97e20434"
+    },
+    {
+      "case": 2,
+      "oracle_values": [
+        0.22857142857142865,
+        0.2857142857142857
+      ],
+      "oracle_objective": -0.44285714285714284,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.2285714266440475,
+            0.28571428647623603
+          ],
+          "objective": -0.44285714285714284,
+          "best_bound": -0.4428571428592869,
+          "relative_gap": 2.1440627051561023e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 70,
+            "iterations": 70,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 5.551115123125783e-17,
+      "original_max_violation": 0.0,
+      "value_error": 1.9273811435738253e-09,
+      "passed": true,
+      "case_index": 2,
+      "synthetic_request_canonical_json_sha256": "8a4dd4039974480c6d8904fd049090fb3add03aab3d12583977b014f76e673f1"
+    },
+    {
+      "case": 3,
+      "oracle_values": [
+        -0.43670264965652567,
+        2.4999999999999987,
+        2.2924435721295375
+      ],
+      "oracle_objective": 24.772264474975454,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.43670264942844694,
+            2.499999998533193,
+            2.2924435711319875
+          ],
+          "objective": 24.772264463440013,
+          "best_bound": 24.772264475126534,
+          "relative_gap": 4.864870340641179e-10,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 130,
+            "iterations": 130,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.1535448152244498e-08,
+      "original_max_violation": 0.0,
+      "value_error": 1.4668057879418939e-09,
+      "passed": true,
+      "case_index": 3,
+      "synthetic_request_canonical_json_sha256": "caf4cd09b01239d13f5b0130e12cf4a7692f1e226de5b5056da7d8c715c02fa9"
+    },
+    {
+      "case": 4,
+      "oracle_values": [
+        0.09999999999999978,
+        -0.3
+      ],
+      "oracle_objective": -0.4500000000000013,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.0999999999998031,
+            -0.300000000000398
+          ],
+          "objective": -0.45000000000342033,
+          "best_bound": -0.45000000000453877,
+          "relative_gap": 7.713370172440564e-13,
+          "max_violation": 9.97105176203661e-13,
+          "statistics": {
+            "evaluations": 150,
+            "iterations": 150,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 3.419042826635632e-12,
+      "original_max_violation": 9.972023207183156e-13,
+      "value_error": 3.980149543281186e-13,
+      "passed": true,
+      "case_index": 4,
+      "synthetic_request_canonical_json_sha256": "358fb48eb02ac74840ffe2b493d496902c9212201324a57e174049e995a06885"
+    },
+    {
+      "case": 5,
+      "oracle_values": [
+        -0.5240017945266936,
+        0.38582323912068195,
+        0.3310901749663526
+      ],
+      "oracle_objective": -0.2946388515029166,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.5240017945267323,
+            0.3858232391207793,
+            0.3310901749664154
+          ],
+          "objective": -0.29463885150278774,
+          "best_bound": -0.2946388515118097,
+          "relative_gap": 5.8407791140814574e-12,
+          "max_violation": 1.454392162258955e-12,
+          "statistics": {
+            "evaluations": 80,
+            "iterations": 80,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.287303597052869e-13,
+      "original_max_violation": 1.453948073049105e-12,
+      "value_error": 9.736655925962623e-14,
+      "passed": true,
+      "case_index": 5,
+      "synthetic_request_canonical_json_sha256": "129df1ebabe8c3559c376fc157def81a851bc27a339f4917111f140f87a57565"
+    },
+    {
+      "case": 6,
+      "oracle_values": [
+        -0.14141414141414138,
+        -0.585858585858586
+      ],
+      "oracle_objective": 3.9040404040404044,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.1414141417325033,
+            -0.5858585861769477
+          ],
+          "objective": 3.904040404040404,
+          "best_bound": 3.904040404045871,
+          "relative_gap": 2.2741640503475507e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 20,
+            "iterations": 20,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 4.440892098500626e-16,
+      "original_max_violation": 0.0,
+      "value_error": 3.183619201596599e-10,
+      "passed": true,
+      "case_index": 6,
+      "synthetic_request_canonical_json_sha256": "8a8f100ac86ec131a32e448d02a180979b96e97be7202ca9e3ab0b816cfb6577"
+    },
+    {
+      "case": 7,
+      "oracle_values": [
+        -0.5925925925925926,
+        -1.5,
+        -1.5
+      ],
+      "oracle_objective": -8.87037037037037,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.5925925926933198,
+            -1.499999999921194,
+            -1.5000000000667444
+          ],
+          "objective": -8.870370370431152,
+          "best_bound": -8.870370370438645,
+          "relative_gap": 7.055001744050092e-13,
+          "max_violation": 6.674438779441516e-11,
+          "statistics": {
+            "evaluations": 110,
+            "iterations": 110,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 6.077982561691897e-11,
+      "original_max_violation": 6.674438779441516e-11,
+      "value_error": 1.0072720435516658e-10,
+      "passed": true,
+      "case_index": 7,
+      "synthetic_request_canonical_json_sha256": "3966ab44c0d0401db6da934bbb33394f511e6bb5b1b5a8ac4dd96077b68bdb27"
+    },
+    {
+      "case": 8,
+      "oracle_values": [
+        -1.3333333333333333,
+        -1.5
+      ],
+      "oracle_objective": -0.020833333333332593,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.3333333333534416,
+            -1.5000000000092688
+          ],
+          "objective": -0.02083333333874014,
+          "best_bound": -0.020833333357331174,
+          "relative_gap": 9.199623880444898e-12,
+          "max_violation": 9.268807943385582e-12,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 5.404787728480187e-12,
+      "original_max_violation": 9.268807943385582e-12,
+      "value_error": 2.0108359422010835e-11,
+      "passed": true,
+      "case_index": 8,
+      "synthetic_request_canonical_json_sha256": "110b8df18732b25e9fc4b13b9381a7b34c08e1630de7a15acc04aa940b9e595a"
+    },
+    {
+      "case": 9,
+      "oracle_values": [
+        0.34414853713428356,
+        0.22805701425356337,
+        -0.14122280570142534
+      ],
+      "oracle_objective": 5.200440735183796,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.3441485371345,
+            0.2280570142534978,
+            -0.14122280570168988
+          ],
+          "objective": 5.200440735186692,
+          "best_bound": 5.200440735193669,
+          "relative_gap": 2.3644594227298427e-12,
+          "max_violation": 1.5740186931623157e-11,
+          "statistics": {
+            "evaluations": 90,
+            "iterations": 90,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 2.8963498266421084e-12,
+      "original_max_violation": 1.574029795392562e-11,
+      "value_error": 2.6453839119255917e-13,
+      "passed": true,
+      "case_index": 9,
+      "synthetic_request_canonical_json_sha256": "6ab14ac976934be8a186559535a6e4b759fa9da9b95fd89b7988527b403a7670"
+    },
+    {
+      "case": 10,
+      "oracle_values": [
+        0.0,
+        0.7407407407407407
+      ],
+      "oracle_objective": -1.2037037037037033,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.227086331367757e-13,
+            0.7407407407407596
+          ],
+          "objective": -1.2037037037048672,
+          "best_bound": -1.2037037037121254,
+          "relative_gap": 1.959712392358688e-12,
+          "max_violation": 2.4541726627355144e-12,
+          "statistics": {
+            "evaluations": 150,
+            "iterations": 150,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.1639578190170141e-12,
+      "original_max_violation": 2.4541726627355144e-12,
+      "value_error": 1.227086331367757e-13,
+      "passed": true,
+      "case_index": 10,
+      "synthetic_request_canonical_json_sha256": "0f190362101912d54ce26cee2509244d62c2a82e4f58faf99463f003a167f2f4"
+    },
+    {
+      "case": 11,
+      "oracle_values": [
+        -1.2639225181598066,
+        0.4309927360774815,
+        -0.3292978208232448
+      ],
+      "oracle_objective": -1.9909200968523013,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.2639225179504725,
+            0.4309927364130852,
+            -0.3292978206466455
+          ],
+          "objective": -1.9909200968523002,
+          "best_bound": -1.9909200968688907,
+          "relative_gap": 3.4993807873993873e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.3322676295501878e-15,
+      "original_max_violation": 0.0,
+      "value_error": 3.356037114876642e-10,
+      "passed": true,
+      "case_index": 11,
+      "synthetic_request_canonical_json_sha256": "4e4ae7d5fd98aa3b563c1628013bbf52962c8d8a3c46ea62f7cdf0f9df465f9a"
+    },
+    {
+      "case": 12,
+      "oracle_values": [
+        0.8888888888888891,
+        -1.2222222222222223
+      ],
+      "oracle_objective": 7.830246913580247,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.8888888888878627,
+            -1.2222222222240493
+          ],
+          "objective": 7.83024691358422,
+          "best_bound": 7.830246913598358,
+          "relative_gap": 2.9269775101940453e-12,
+          "max_violation": 8.55993054216242e-11,
+          "statistics": {
+            "evaluations": 100,
+            "iterations": 100,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 3.97282207131866e-12,
+      "original_max_violation": 8.560263609069807e-11,
+      "value_error": 1.8269830093231576e-12,
+      "passed": true,
+      "case_index": 12,
+      "synthetic_request_canonical_json_sha256": "e869aef0c7dc23e73e1ee81f35d58470cd561aeac1c44e05ad02e2ea06ec7abd"
+    },
+    {
+      "case": 13,
+      "oracle_values": [
+        0.20740063956144358,
+        0.13522156235724075,
+        -0.0858839652809502
+      ],
+      "oracle_objective": 3.146299680219278,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.20740063987666102,
+            0.13522156248161132,
+            -0.08588396473883142
+          ],
+          "objective": 3.146299680219278,
+          "best_bound": 3.146299680218754,
+          "relative_gap": 5.236228117766473e-13,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 20,
+            "iterations": 20,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 0.0,
+      "original_max_violation": 0.0,
+      "value_error": 5.421187804222072e-10,
+      "passed": true,
+      "case_index": 13,
+      "synthetic_request_canonical_json_sha256": "5f130a9697d5e4e3a5658f9683840ba49c5868e404e24d491ac75c0bcb69ff1c"
+    },
+    {
+      "case": 14,
+      "oracle_values": [
+        1.0285714285714287,
+        1.0857142857142854
+      ],
+      "oracle_objective": -6.5285714285714285,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            1.0285714291451715,
+            1.0857142850310009
+          ],
+          "objective": -6.5285714285714285,
+          "best_bound": -6.528571428594235,
+          "relative_gap": 2.274166926311334e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 0.0,
+      "original_max_violation": 0.0,
+      "value_error": 6.832845400595033e-10,
+      "passed": true,
+      "case_index": 14,
+      "synthetic_request_canonical_json_sha256": "dbf672525f531b60f22e4ab5b8fd062d94758e9d787d8439bcb169e64e3510e5"
+    },
+    {
+      "case": 15,
+      "oracle_values": [
+        -0.06060606060606044,
+        0.3030303030303029,
+        0.3030303030303031
+      ],
+      "oracle_objective": 5.840909090909091,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.06060606060605418,
+            0.30303030303030287,
+            0.30303030303031114
+          ],
+          "objective": 5.840909090909109,
+          "best_bound": 5.840909090915918,
+          "relative_gap": 3.2565834087259374e-12,
+          "max_violation": 8.271161533457416e-16,
+          "statistics": {
+            "evaluations": 40,
+            "iterations": 40,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.7763568394002505e-14,
+      "original_max_violation": 8.257283745649602e-16,
+      "value_error": 8.049116928532385e-15,
+      "passed": true,
+      "case_index": 15,
+      "synthetic_request_canonical_json_sha256": "0bc3470321a36461fc2c4969bb2963ba305a2f6941f9a4ee5a26b2e1f9d67929"
+    },
+    {
+      "case": 16,
+      "oracle_values": [
+        2.5,
+        -1.5000000000000002
+      ],
+      "oracle_objective": -22.375,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            2.4999999999686495,
+            -1.5000000000769538
+          ],
+          "objective": -22.375000000038483,
+          "best_bound": -22.37500000007362,
+          "relative_gap": 1.3321834420185357e-12,
+          "max_violation": 7.695377668426318e-11,
+          "statistics": {
+            "evaluations": 140,
+            "iterations": 140,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 3.8482994568767026e-11,
+      "original_max_violation": 7.695377668426318e-11,
+      "value_error": 7.695355463965825e-11,
+      "passed": true,
+      "case_index": 16,
+      "synthetic_request_canonical_json_sha256": "90d7f5865f06263e1ba6d76388440b9360cadfa65aa3b0fb40fcebf0cb8aaa43"
+    },
+    {
+      "case": 17,
+      "oracle_values": [
+        -1.0470219435736676,
+        0.7210031347962382,
+        -0.884012539184953
+      ],
+      "oracle_objective": -3.665360501567398,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -1.0470219435831714,
+            0.7210031348330592,
+            -0.8840125391803099
+          ],
+          "objective": -3.6653605015876605,
+          "best_bound": -3.6653605016003734,
+          "relative_gap": 1.6060541675388765e-12,
+          "max_violation": 4.07053279971592e-10,
+          "statistics": {
+            "evaluations": 190,
+            "iterations": 190,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 2.0262014288618957e-11,
+      "original_max_violation": 4.070521697485674e-10,
+      "value_error": 3.6820990700903167e-11,
+      "passed": true,
+      "case_index": 17,
+      "synthetic_request_canonical_json_sha256": "d5e2a2a6a8b62bdc4c0a9154dc6076414d6011fb1b3083c2a097c3d52872d226"
+    },
+    {
+      "case": 18,
+      "oracle_values": [
+        0.3783783783783784,
+        2.5
+      ],
+      "oracle_objective": 18.011824324324323,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            0.378378378377301,
+            2.4999999999960636
+          ],
+          "objective": 18.0118243243085,
+          "best_bound": 18.011824324362966,
+          "relative_gap": 4.0309047649950785e-12,
+          "max_violation": 0.0,
+          "statistics": {
+            "evaluations": 50,
+            "iterations": 50,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.582378672537743e-11,
+      "original_max_violation": 0.0,
+      "value_error": 3.936406756110955e-12,
+      "passed": true,
+      "case_index": 18,
+      "synthetic_request_canonical_json_sha256": "fe2b964e48caf7f07f98c5b026cbe10c82241dc9da2a183747507283cc8d5d2f"
+    },
+    {
+      "case": 19,
+      "oracle_values": [
+        -0.21772259065895286,
+        1.5052913785805,
+        -1.2212501763792867
+      ],
+      "oracle_objective": -8.238923380838157,
+      "actual": {
+        "result": {
+          "termination": "completed",
+          "feasibility": "feasible",
+          "optimality": "optimal",
+          "values": [
+            -0.2177225906589431,
+            1.5052913785805073,
+            -1.2212501763793022
+          ],
+          "objective": -8.238923380838347,
+          "best_bound": -8.238923380907028,
+          "relative_gap": 5.287663867470995e-12,
+          "max_violation": 6.303389132481529e-15,
+          "statistics": {
+            "evaluations": 60,
+            "iterations": 60,
+            "nodes": 0
+          },
+          "engine": "solvercraft-proximal-admm-qp-0.2"
+        }
+      },
+      "objective_error": 1.900701818158268e-13,
+      "original_max_violation": 6.304790031225385e-15,
+      "value_error": 1.554312234475219e-14,
+      "passed": true,
+      "case_index": 19,
+      "synthetic_request_canonical_json_sha256": "16c25e24ca889ef7cb2304e72a436f3c0f37187834c0027441ffe005c72bae4e"
+    }
+  ],
+  "seed_decimal": "20261031"
+}

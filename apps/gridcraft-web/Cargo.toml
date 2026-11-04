@@ -5,6 +5,7 @@ version.workspace = true
 edition.workspace = true
 license.workspace = true
 publish = false
+default-run = "gridcraft-web"
 
 [lints]
 workspace = true
@@ -12,6 +13,10 @@ workspace = true
 [[bin]]
 name = "gridcraft-web"
 path = "src/main.rs"
+
+[[bin]]
+name = "gridcraft-solver-worker"
+path = "src/solvercraft_worker.rs"
 
 [dependencies]
 gridcraft-engine = { workspace = true }

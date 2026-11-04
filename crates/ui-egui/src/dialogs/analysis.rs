@@ -258,6 +258,10 @@ pub(super) fn solver(ui: &mut egui::Ui, d: &mut Dialog, confirm: &mut bool, open
     ui.horizontal(|ui| {
         ui.label("Select a Solving Method:");
         let label = |m: &str| match m {
+            "auto" => "Automatic",
+            "branch_and_bound" => "Integer branch and bound",
+            "projected_gradient" => "Projected gradient",
+            "differential_evolution" => "Differential evolution (heuristic)",
             "simplex" => "Simplex LP",
             "evolutionary" => "Evolutionary",
             _ => "GRG Nonlinear",
@@ -265,7 +269,12 @@ pub(super) fn solver(ui: &mut egui::Ui, d: &mut Dialog, confirm: &mut bool, open
         craft_ui::ComboBox::from_id_salt("solverMethod")
             .selected_text(label(&method))
             .show_ui(ui, |ui| {
-                for m in ["grg", "simplex", "evolutionary"] {
+                let methods: &[&str] = if d.name == "solvercraft" {
+                    &["auto", "simplex", "branch_and_bound", "projected_gradient", "differential_evolution"]
+                } else {
+                    &["grg", "simplex", "evolutionary"]
+                };
+                for &m in methods {
                     if ui.selectable_label(method == m, label(m)).clicked() {
                         d.values.insert("method".into(), json!(m));
                     }
@@ -278,6 +287,10 @@ pub(super) fn solver(ui: &mut egui::Ui, d: &mut Dialog, confirm: &mut bool, open
         egui::RichText::new(match method.as_str() {
             "simplex" => "Simplex LP: for linear models; integer and binary constraints by branch and bound.",
             "evolutionary" => "Evolutionary: a genetic search for models that aren't smooth; every variable cell needs bounds.",
+            "auto" => "Structural analysis selects a supported linear, quadratic or local nonlinear method.",
+            "branch_and_bound" => "Linear relaxation and integer branch and bound.",
+            "projected_gradient" => "A smooth local search with variable bounds only.",
+            "differential_evolution" => "A bounded heuristic; the best found solution is not a global optimality proof.",
             _ => "GRG Nonlinear: a local optimum of a smooth model, from the current values.",
         })
         .small(),
@@ -341,4 +354,204 @@ pub(super) fn solver_results(app: &mut SheetApp, ui: &mut egui::Ui, d: &mut Dial
         }
         *open = false;
     }
+}
+
+fn solvercraft_text(d: &Dialog, key: &str) -> String {
+    d.values.get(key).map(|x| x.as_str().map(str::to_string).unwrap_or_else(|| x.to_string())).unwrap_or_default()
+}
+fn solvercraft_field(ui: &mut egui::Ui, d: &mut Dialog, key: &str, label: &str) {
+    ui.horizontal(|ui| {
+        ui.label(label);
+        let mut value = solvercraft_text(d, key);
+        if ui.add(egui::TextEdit::singleline(&mut value).desired_width(230.0)).accessible_name(label).changed() {
+            d.values.insert(key.into(), json!(value));
+        }
+    });
+}
+/// The first integrated Solvercraft surface: model input and non-mutating previews.
+pub(super) fn solvercraft(app: &mut SheetApp, ui: &mut egui::Ui, d: &mut Dialog, confirm: &mut bool, open: &mut bool) {
+    let simulation = d.tab == "simulation";
+    ui.horizontal(|ui| {
+        if ui.selectable_label(!simulation, "Optimization").clicked() {
+            d.tab = "optimization".into();
+        }
+        if ui.selectable_label(simulation, "Simulation").clicked() {
+            d.tab = "simulation".into();
+        }
+    });
+    ui.separator();
+    if let Some(sheet) = d.values.get("sheet").and_then(Json::as_str) {
+        ui.label(format!("Model sheet: {sheet}"));
+    }
+    if d.tab != "simulation" {
+        d.command = Some("solvercraft.solve");
+        ui.label(egui::RichText::new("Preview first, then apply. This run uses a fixed computational budget.").small());
+        solver(ui, d, confirm, open);
+    } else {
+        d.command = Some("solvercraft.simulate");
+        ui.label("Describe one uncertain input and the output cells to measure.");
+        solvercraft_field(ui, d, "simulationInput", "Input cell:");
+        let family = solvercraft_text(d, "distribution");
+        ui.horizontal(|ui| {
+            ui.label("Distribution:");
+            craft_ui::ComboBox::from_id_salt("solvercraftDistribution").selected_text(&family).show_ui(ui, |ui| {
+                for value in ["uniform", "normal", "triangular", "exponential", "bernoulli"] {
+                    if ui.selectable_label(family == value, value).clicked() {
+                        d.values.insert("distribution".into(), json!(value));
+                    }
+                }
+            });
+        });
+        match family.as_str() {
+            "normal" => {
+                solvercraft_field(ui, d, "parameter1", "Mean:");
+                solvercraft_field(ui, d, "parameter2", "Standard deviation:");
+            }
+            "triangular" => {
+                solvercraft_field(ui, d, "parameter1", "Minimum:");
+                solvercraft_field(ui, d, "parameter2", "Most likely:");
+                solvercraft_field(ui, d, "parameter3", "Maximum:");
+            }
+            "exponential" => solvercraft_field(ui, d, "parameter1", "Rate:"),
+            "bernoulli" => solvercraft_field(ui, d, "parameter1", "Probability:"),
+            _ => {
+                solvercraft_field(ui, d, "parameter1", "Minimum:");
+                solvercraft_field(ui, d, "parameter2", "Maximum:");
+            }
+        }
+        solvercraft_field(ui, d, "simulationOutputs", "Output cells:");
+        solvercraft_field(ui, d, "trials", "Trials:");
+        solvercraft_field(ui, d, "seed", "Seed:");
+        let latin = d.values.get("latinHypercube").and_then(Json::as_bool).unwrap_or(false);
+        let mut enabled = latin;
+        if ui.checkbox(&mut enabled, "Latin Hypercube sampling").changed() {
+            d.values.insert("latinHypercube".into(), json!(enabled));
+        }
+        ui.label(egui::RichText::new("This bounded run previews results; it does not change your worksheet.").small());
+        ui.horizontal(|ui| {
+            if ui.button("Simulate").clicked() {
+                *confirm = true;
+            }
+            if ui.button("Close").clicked() {
+                *open = false;
+            }
+        });
+    }
+    // The surface shares no mathematical implementation with the engine.
+    let _ = app;
+}
+
+pub(super) fn solvercraft_results(app: &mut SheetApp, ui: &mut egui::Ui, d: &mut Dialog, open: &mut bool) {
+    let envelope = Json::Object(d.values.clone());
+    let result = envelope.get("result").cloned().unwrap_or(Json::Null);
+    ui.horizontal(|ui| {
+        ui.strong("Termination:");
+        ui.label(result.get("termination").and_then(Json::as_str).unwrap_or("unknown"));
+    });
+    if let Some(feasible) = result.get("feasibility").and_then(Json::as_str) {
+        ui.label(format!("Feasibility: {feasible}"));
+        ui.label(format!("Optimality: {}", result.get("optimality").and_then(Json::as_str).unwrap_or("unknown")));
+        if let Some(objective) = result.get("objective").and_then(Json::as_f64) {
+            ui.strong(format!("Objective: {objective:.10}"));
+        }
+        if let Some(gap) = result.get("relative_gap").and_then(Json::as_f64) {
+            ui.label(format!("Relative gap: {:.6}%", gap * 100.0));
+        }
+        let bindings = envelope.get("bindings").and_then(Json::as_array);
+        if let Some(values) = result.get("values").and_then(Json::as_array) {
+            egui::ScrollArea::vertical().max_height(180.0).show(ui, |ui| {
+                egui::Grid::new("solvercraftValues").striped(true).show(ui, |ui| {
+                    for (i, value) in values.iter().enumerate() {
+                        let binding = bindings.and_then(|v| v.get(i));
+                        let sheet = binding.and_then(|b| b.get("sheet")).and_then(Json::as_str).unwrap_or("");
+                        let cell = binding.and_then(|b| b.get("cell")).and_then(Json::as_str).unwrap_or("");
+                        ui.label(format!("{sheet}!{cell}"));
+                        ui.monospace(value.to_string());
+                        ui.end_row();
+                    }
+                });
+            });
+        }
+    }
+    if let Some(summaries) = result.get("summaries").and_then(Json::as_array) {
+        ui.label(format!("Completed trials: {}", result.get("completed_trials").and_then(Json::as_u64).unwrap_or(0)));
+        let outputs = envelope.get("outputs").and_then(Json::as_array);
+        egui::Grid::new("solvercraftSummaries").striped(true).show(ui, |ui| {
+            for text in ["Output", "Mean", "Std. dev.", "Minimum", "Maximum"] {
+                ui.strong(text);
+            }
+            ui.end_row();
+            for (i, summary) in summaries.iter().enumerate() {
+                ui.label(outputs.and_then(|a| a.get(i)).and_then(Json::as_str).unwrap_or("Output"));
+                let mean = summary.get("mean").and_then(Json::as_f64).unwrap_or(0.0);
+                let minimum = summary.get("minimum").and_then(Json::as_f64).unwrap_or(0.0);
+                let maximum = summary.get("maximum").and_then(Json::as_f64).unwrap_or(0.0);
+                ui.label(format!("{mean:.6}"));
+                ui.label(summary.get("variance").and_then(Json::as_f64).map(|v| format!("{:.6}", v.sqrt())).unwrap_or_else(|| "—".into()));
+                ui.label(format!("{minimum:.6}"));
+                ui.label(format!("{maximum:.6}"));
+                ui.end_row();
+            }
+        });
+        if let Some(samples) = result.get("samples").and_then(Json::as_array) {
+            let values: Vec<f64> = samples
+                .iter()
+                .filter_map(|row| row.as_array().and_then(|r| r.first()).and_then(Json::as_f64))
+                .filter(|v| v.is_finite())
+                .take(100_000)
+                .collect();
+            solvercraft_histogram(ui, &values);
+        }
+    }
+    if let Some(warnings) = result.get("warnings").and_then(Json::as_array) {
+        for warning in warnings.iter().filter_map(Json::as_str) {
+            ui.label(warning);
+        }
+    }
+    ui.separator();
+    let applicable = result.get("feasibility").and_then(Json::as_str) == Some("feasible")
+        && envelope.get("bindings").and_then(Json::as_array).is_some_and(|a| !a.is_empty());
+    ui.horizontal(|ui| {
+        if applicable && ui.button("Apply solution").clicked() {
+            match app.run("solvercraft.result.apply", envelope.clone()) {
+                Ok(_) => *open = false,
+                Err(e) => app.message = Some(("Solvercraft".into(), crate::clean_error(&e))),
+            }
+        }
+        if ui.button("Close").clicked() {
+            *open = false;
+        }
+    });
+}
+
+fn solvercraft_histogram(ui: &mut egui::Ui, values: &[f64]) {
+    if values.is_empty() {
+        return;
+    }
+    let low = values.iter().copied().fold(f64::INFINITY, f64::min);
+    let high = values.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+    let mut counts = [0_u32; 24];
+    let scale = low.abs().max(high.abs()).max(1.0);
+    let low_scaled = low / scale;
+    let span = high / scale - low_scaled;
+    for value in values {
+        let index = if span > 0.0 { (((value / scale - low_scaled) / span * 24.0).floor() as usize).min(23) } else { 12 };
+        if let Some(count) = counts.get_mut(index) {
+            *count = count.saturating_add(1);
+        }
+    }
+    ui.label("First output — frequency");
+    let (rect, _) = ui.allocate_exact_size(egui::vec2(430.0, 130.0), egui::Sense::hover());
+    let max = counts.iter().copied().max().unwrap_or(1).max(1) as f32;
+    let color = crate::theme::Tokens::get(ui.ctx()).accent;
+    let width = rect.width() / 24.0;
+    for (i, count) in counts.iter().enumerate() {
+        let x = rect.left() + i as f32 * width;
+        let bar = egui::Rect::from_min_max(
+            egui::pos2(x + 1.0, rect.bottom() - rect.height() * (*count as f32 / max)),
+            egui::pos2(x + width - 1.0, rect.bottom()),
+        );
+        ui.painter().rect_filled(bar, 0.0, color);
+    }
+    ui.label(format!("{low:.6} to {high:.6}"));
 }

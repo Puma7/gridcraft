@@ -1,0 +1,78 @@
+warning: patch `egui_demo_lib v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_extras v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_inspection v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+warning: patch `egui_system_font_provider v0.37.0 (https://github.com/storytold/egui.git?rev=6d518fc799681571963842f95b55a6b68431b15a#6d518fc7)` was not used in the crate graph
+help: Check that the patched package version and available features are compatible
+      with the dependency requirements. If the patch has a different version from
+      what is locked in the Cargo.lock file, run `cargo update` to use the new
+      version. This may also occur with an optional dependency that is not enabled.
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_types-3g2z6s1kh3fub\s-hnq7d34d8d-07oknqx-working`
+
+   Compiling gridcraft-core v0.14.2 ($CHECKOUT_ROOT\crates\core)
+warning: `solvercraft-types` (lib) generated 1 warning
+   Compiling solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_model-030rjxmg1y0tz\s-hnq7d44a1j-03k8ar2-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_compile-1zqc9ppt422l1\s-hnq7d4i9c8-1tbjcax-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+   Compiling solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_core-2dc51b1vue6mp\s-hnq7pe0jza-0rfwd1t-working`
+
+   Compiling gridcraft-formula v0.14.2 ($CHECKOUT_ROOT\crates\formula)
+   Compiling gridcraft-functions v0.14.2 ($CHECKOUT_ROOT\crates\functions)
+   Compiling gridcraft-numfmt v0.14.2 ($CHECKOUT_ROOT\crates\numfmt)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_math-2a3azcatsrut5\s-hnq7pe3y6s-07njhzo-working`
+
+warning: `gridcraft-core` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_formula-0c4r3i4gqhlyn\s-hnq7peb62c-1rn3pis-working`
+
+   Compiling gridcraft-model v0.14.2 ($CHECKOUT_ROOT\crates\model)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_numfmt-0km765vfnzyng\s-hnq7pehwsc-0tmhjb6-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_engines-2id6yqnez11z5\s-hnq7pe80sa-0tqncw5-working`
+
+warning: `gridcraft-formula` (lib) generated 1 warning
+   Compiling solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_functions-2y5dxsnzho53h\s-hnq7peemt8-0xlwmyw-working`
+
+warning: `gridcraft-numfmt` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_model-27wqny769i7ig\s-hnq7peq2ly-1546j46-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft_simulation-1z1cxc31uj7au\s-hnq7pf747o-0oef7dv-working`
+
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: `gridcraft-functions` (lib) generated 1 warning
+   Compiling gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+   Compiling gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+   Compiling solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: `gridcraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_calc-0gflckm64ev48\s-hnq7ph2xjm-0e2jbme-working`
+
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: `solvercraft-engines` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\solvercraft-2x7o8ppkpoa51\s-hnq7ph8kgg-0y4hx62-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_xlsx-2hehzj4y06n1f\s-hnq7pgl2zp-0frsg16-working`
+
+   Compiling gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_chart-2ugdt09qw04e6\s-hnq7pi9rhy-1r1u7mr-working`
+
+warning: `gridcraft-xlsx` (lib) generated 1 warning
+   Compiling gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+warning: `gridcraft-chart` (lib) generated 1 warning
+warning: `gridcraft-calc` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\gridcraft_engine-09ppkshxv2izs\s-hnq7pnu6t0-0b2x8mi-working`
+
+warning: `solvercraft` (lib) generated 1 warning
+warning: `gridcraft-engine` (lib) generated 1 warning
+   Compiling xtask v0.14.2 ($CHECKOUT_ROOT\xtask)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\host-validation\debug\incremental\xtask-1fqh58gk73r3v\s-hnq7qwhfw3-1qg5tyj-working`
+
+warning: `xtask` (bin "xtask") generated 1 warning
+    Finished `dev` profile [optimized + debuginfo] target(s) in 1m 35s
+     Running `$BUILD_OUTPUT\host-validation\debug\xtask.exe assets`
+error: git ls-files failed: fatal: not a git repository (or any of the parent directories): .git
+
+error: process didn't exit successfully: `$BUILD_OUTPUT\host-validation\debug\xtask.exe assets` (exit code: 1)

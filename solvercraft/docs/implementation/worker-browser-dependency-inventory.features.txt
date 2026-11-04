@@ -1,0 +1,680 @@
+solvercraft-worker-browser-tests v0.1.0 ($SDK_ROOT\tests\worker-browser)
+â”œâ”€â”€ gridcraft-engine feature "default"
+â”‚   â””â”€â”€ gridcraft-engine v0.14.2 ($CHECKOUT_ROOT\crates\engine)
+â”‚       â”œâ”€â”€ gridcraft-calc feature "default"
+â”‚       â”‚   â””â”€â”€ gridcraft-calc v0.14.2 ($CHECKOUT_ROOT\crates\calc)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ gridcraft-core v0.14.2 ($CHECKOUT_ROOT\crates\core)
+â”‚       â”‚       â”‚       â”œâ”€â”€ chrono feature "clock"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ chrono v0.4.45
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ num-traits v0.2.19
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   [build-dependencies]
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ autocfg feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â””â”€â”€ autocfg v1.5.1
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ windows-link feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ windows-link v0.2.1
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ chrono feature "iana-time-zone"
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ chrono feature "now"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ chrono feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ chrono feature "alloc"
+â”‚       â”‚       â”‚       â”‚   â”‚           â””â”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ chrono feature "winapi"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ chrono feature "windows-link"
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ chrono v0.4.45 (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ chrono feature "std" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ serde v1.0.229
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ serde_core feature "result"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ serde_core v1.0.229
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ serde_derive feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ serde_derive v1.0.229 (proc-macro)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ proc-macro2 feature "proc-macro"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ proc-macro2 v1.0.107
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚       â””â”€â”€ unicode-ident feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚           â””â”€â”€ unicode-ident v1.0.27
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ quote feature "proc-macro"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â”œâ”€â”€ quote v1.0.47
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â”‚   â””â”€â”€ proc-macro2 v1.0.107 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ proc-macro2 feature "proc-macro" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ syn feature "clone-impls"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚       â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚       â”œâ”€â”€ quote v1.0.47 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚       â””â”€â”€ unicode-ident feature "default" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ syn feature "derive"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ syn feature "parsing"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ syn feature "printing"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”‚   â””â”€â”€ syn v3.0.9 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â””â”€â”€ syn feature "proc-macro"
+â”‚       â”‚       â”‚       â”‚   â”‚               â”œâ”€â”€ syn v3.0.9 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚               â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚               â””â”€â”€ quote feature "proc-macro" (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ serde feature "std"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ serde v1.0.229 (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ serde_core feature "std"
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ serde_core v1.0.229
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ serde v1.0.229 (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ serde feature "serde_derive"
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ serde v1.0.229 (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "rc"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ serde v1.0.229 (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ serde_core feature "rc"
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ serde_core v1.0.229
+â”‚       â”‚       â”‚       â””â”€â”€ thiserror feature "default"
+â”‚       â”‚       â”‚           â”œâ”€â”€ thiserror v2.0.21
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ thiserror-impl feature "default"
+â”‚       â”‚       â”‚           â”‚       â””â”€â”€ thiserror-impl v2.0.21 (proc-macro)
+â”‚       â”‚       â”‚           â”‚           â”œâ”€â”€ proc-macro2 feature "default"
+â”‚       â”‚       â”‚           â”‚           â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+â”‚       â”‚       â”‚           â”‚           â”‚   â””â”€â”€ proc-macro2 feature "proc-macro" (*)
+â”‚       â”‚       â”‚           â”‚           â”œâ”€â”€ quote feature "default"
+â”‚       â”‚       â”‚           â”‚           â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+â”‚       â”‚       â”‚           â”‚           â”‚   â””â”€â”€ quote feature "proc-macro" (*)
+â”‚       â”‚       â”‚           â”‚           â””â”€â”€ syn feature "default"
+â”‚       â”‚       â”‚           â”‚               â”œâ”€â”€ syn v3.0.9 (*)
+â”‚       â”‚       â”‚           â”‚               â”œâ”€â”€ syn feature "clone-impls" (*)
+â”‚       â”‚       â”‚           â”‚               â”œâ”€â”€ syn feature "derive" (*)
+â”‚       â”‚       â”‚           â”‚               â”œâ”€â”€ syn feature "parsing" (*)
+â”‚       â”‚       â”‚           â”‚               â”œâ”€â”€ syn feature "printing" (*)
+â”‚       â”‚       â”‚           â”‚               â””â”€â”€ syn feature "proc-macro" (*)
+â”‚       â”‚       â”‚           â””â”€â”€ thiserror feature "std"
+â”‚       â”‚       â”‚               â””â”€â”€ thiserror v2.0.21 (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-formula feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ gridcraft-formula v0.14.2 ($CHECKOUT_ROOT\crates\formula)
+â”‚       â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "rc" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ thiserror feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-functions feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ gridcraft-functions v0.14.2 ($CHECKOUT_ROOT\crates\functions)
+â”‚       â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ regex feature "perf"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex v1.13.1
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ aho-corasick v1.1.5
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-automata feature "alloc"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ regex-automata v0.4.18
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ aho-corasick v1.1.5 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-automata feature "meta"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”œâ”€â”€ regex-automata feature "nfa-pikevm"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”‚   â””â”€â”€ regex-automata feature "nfa-thompson"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”‚       â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â”‚       â””â”€â”€ regex-automata feature "alloc" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ regex-automata feature "syntax"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚       â””â”€â”€ regex-automata feature "alloc" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-automata feature "nfa-pikevm" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-automata feature "syntax" (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex feature "perf-backtrack"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-automata feature "nfa-backtrack"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ regex-automata feature "nfa-thompson" (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex feature "perf-cache"
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex feature "perf-dfa"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-automata feature "hybrid"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ regex-automata feature "alloc" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ regex-automata feature "nfa-thompson" (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex feature "perf-inline"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-automata feature "perf-inline"
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex feature "perf-literal"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-automata feature "perf-literal"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ regex-automata feature "perf-literal-multisubstring"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”‚   â””â”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ regex-automata feature "perf-literal-substring"
+â”‚       â”‚       â”‚       â”‚   â”‚           â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚           â””â”€â”€ aho-corasick feature "perf-literal"
+â”‚       â”‚       â”‚       â”‚   â”‚               â””â”€â”€ aho-corasick v1.1.5 (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ regex feature "perf-onepass"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ regex-automata feature "dfa-onepass"
+â”‚       â”‚       â”‚       â”‚           â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ regex-automata feature "nfa-thompson" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ regex feature "std"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ aho-corasick feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ aho-corasick v1.1.5 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ memchr feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ memchr feature "alloc"
+â”‚       â”‚       â”‚       â”‚   â”‚           â””â”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ memchr feature "std" (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ regex-automata feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ aho-corasick feature "std" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ memchr feature "std" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ regex-automata feature "alloc" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ regex-syntax feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ regex-syntax feature "std" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ regex feature "unicode"
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-age"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-age"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-age"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-age" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-bool"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-bool"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-bool"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-bool" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-case"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-case"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-case"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-case" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-gencat"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-gencat"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-gencat"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-gencat" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-perl"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-perl"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-perl"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-word-boundary"
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-perl" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-script"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-script"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-script"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-script" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex feature "unicode-segment"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex v1.13.1 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-segment"
+â”‚       â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”‚   â””â”€â”€ regex-syntax feature "unicode-segment"
+â”‚       â”‚       â”‚           â”‚   â”‚       â””â”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode-segment" (*)
+â”‚       â”‚       â”‚           â”œâ”€â”€ regex-automata feature "unicode"
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata v0.4.18 (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-age" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-bool" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-case" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-gencat" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-perl" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-script" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-segment" (*)
+â”‚       â”‚       â”‚           â”‚   â”œâ”€â”€ regex-automata feature "unicode-word-boundary" (*)
+â”‚       â”‚       â”‚           â”‚   â””â”€â”€ regex-syntax feature "unicode"
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax v0.8.11
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-age" (*)
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-bool" (*)
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-case" (*)
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-gencat" (*)
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-perl" (*)
+â”‚       â”‚       â”‚           â”‚       â”œâ”€â”€ regex-syntax feature "unicode-script" (*)
+â”‚       â”‚       â”‚           â”‚       â””â”€â”€ regex-syntax feature "unicode-segment" (*)
+â”‚       â”‚       â”‚           â””â”€â”€ regex-syntax feature "unicode" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-model feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ gridcraft-model v0.14.2 ($CHECKOUT_ROOT\crates\model)
+â”‚       â”‚       â”‚       â”œâ”€â”€ sha2 v0.11.1
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ cfg-if feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ cfg-if v1.0.5
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ cpufeatures feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ cpufeatures v0.3.1
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ digest feature "default"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ digest v0.11.3
+â”‚       â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ block-buffer feature "default"
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ block-buffer v0.12.1
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ hybrid-array feature "default"
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚           â””â”€â”€ hybrid-array v0.4.15
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚               â”œâ”€â”€ typenum feature "const-generics"
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚               â”‚   â””â”€â”€ typenum v1.20.1
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚               â””â”€â”€ typenum feature "default"
+â”‚       â”‚       â”‚       â”‚       â”‚   â”‚                   â””â”€â”€ typenum v1.20.1
+â”‚       â”‚       â”‚       â”‚       â”‚   â””â”€â”€ crypto-common feature "default"
+â”‚       â”‚       â”‚       â”‚       â”‚       â””â”€â”€ crypto-common v0.2.2
+â”‚       â”‚       â”‚       â”‚       â”‚           â””â”€â”€ hybrid-array feature "default" (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ digest feature "block-api"
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ digest v0.11.3 (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "rc" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ thiserror feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ gridcraft-formula feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde_json feature "default"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ serde_json v1.0.154
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ serde_core v1.0.229
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ itoa feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ itoa v1.0.18
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ zmij feature "default"
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ zmij v1.0.23
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ serde_json feature "std"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ serde_json v1.0.154 (*)
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ serde_core feature "std" (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ memchr feature "std" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ serde_json feature "float_roundtrip"
+â”‚       â”‚       â”‚           â””â”€â”€ serde_json v1.0.154 (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-numfmt feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ gridcraft-numfmt v0.14.2 ($CHECKOUT_ROOT\crates\numfmt)
+â”‚       â”‚       â”‚       â””â”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ log feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ log v0.4.34
+â”‚       â”‚       â”œâ”€â”€ solvercraft-math feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ solvercraft-math v0.1.0 ($SDK_ROOT\crates\math)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ solvercraft-types feature "default"
+â”‚       â”‚       â”‚           â””â”€â”€ solvercraft-types v0.1.0 ($SDK_ROOT\crates\types)
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚               â””â”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â””â”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”œâ”€â”€ serde feature "rc" (*)
+â”‚       â”œâ”€â”€ thiserror feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-formula feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-functions feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-model feature "default" (*)
+â”‚       â”œâ”€â”€ serde_json feature "default" (*)
+â”‚       â”œâ”€â”€ serde_json feature "float_roundtrip" (*)
+â”‚       â”œâ”€â”€ gridcraft-numfmt feature "default" (*)
+â”‚       â”œâ”€â”€ log feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-chart feature "default"
+â”‚       â”‚   â””â”€â”€ gridcraft-chart v0.14.2 ($CHECKOUT_ROOT\crates\chart)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-calc feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”œâ”€â”€ serde feature "rc" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-model feature "default" (*)
+â”‚       â”‚       â””â”€â”€ gridcraft-numfmt feature "default" (*)
+â”‚       â”œâ”€â”€ gridcraft-pdf feature "default"
+â”‚       â”‚   â””â”€â”€ gridcraft-pdf v0.14.2 ($CHECKOUT_ROOT\crates\pdf)
+â”‚       â”œâ”€â”€ gridcraft-xlsx feature "default"
+â”‚       â”‚   â””â”€â”€ gridcraft-xlsx v0.14.2 ($CHECKOUT_ROOT\crates\xlsx)
+â”‚       â”‚       â”œâ”€â”€ aes v0.9.3
+â”‚       â”‚       â”‚   â”œâ”€â”€ cpufeatures feature "default" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ cipher feature "default"
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ cipher v0.5.2
+â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ crypto-common feature "default" (*)
+â”‚       â”‚       â”‚   â”‚       â””â”€â”€ inout feature "default"
+â”‚       â”‚       â”‚   â”‚           â””â”€â”€ inout v0.2.2
+â”‚       â”‚       â”‚   â”‚               â””â”€â”€ hybrid-array feature "default" (*)
+â”‚       â”‚       â”‚   â””â”€â”€ cpubits feature "default"
+â”‚       â”‚       â”‚       â””â”€â”€ cpubits v0.1.1
+â”‚       â”‚       â”œâ”€â”€ sha1 v0.11.0
+â”‚       â”‚       â”‚   â”œâ”€â”€ cfg-if feature "default" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ cpufeatures feature "default" (*)
+â”‚       â”‚       â”‚   â””â”€â”€ digest feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ sha2 v0.11.1 (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-core feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ thiserror feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-formula feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ gridcraft-model feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ quick-xml feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ quick-xml v0.41.0
+â”‚       â”‚       â”‚       â””â”€â”€ memchr feature "default"
+â”‚       â”‚       â”‚           â”œâ”€â”€ memchr v2.8.3
+â”‚       â”‚       â”‚           â””â”€â”€ memchr feature "std" (*)
+â”‚       â”‚       â””â”€â”€ zip feature "deflate"
+â”‚       â”‚           â”œâ”€â”€ zip v3.0.0
+â”‚       â”‚           â”‚   â”œâ”€â”€ flate2 v1.1.10
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ crc32fast v1.5.3
+â”‚       â”‚           â”‚   â”‚   â”‚   â””â”€â”€ cfg-if feature "default" (*)
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ miniz_oxide feature "default"
+â”‚       â”‚           â”‚   â”‚   â”‚   â”œâ”€â”€ miniz_oxide v0.9.1
+â”‚       â”‚           â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ adler2 v2.0.1
+â”‚       â”‚           â”‚   â”‚   â”‚   â”‚   â””â”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚           â”‚   â”‚   â”‚   â””â”€â”€ miniz_oxide feature "with-alloc"
+â”‚       â”‚           â”‚   â”‚   â”‚       â””â”€â”€ miniz_oxide v0.9.1 (*)
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ miniz_oxide feature "simd"
+â”‚       â”‚           â”‚   â”‚   â”‚   â”œâ”€â”€ miniz_oxide v0.9.1 (*)
+â”‚       â”‚           â”‚   â”‚   â”‚   â””â”€â”€ miniz_oxide feature "simd-adler32"
+â”‚       â”‚           â”‚   â”‚   â”‚       â””â”€â”€ miniz_oxide v0.9.1 (*)
+â”‚       â”‚           â”‚   â”‚   â””â”€â”€ zlib-rs feature "rust-allocator"
+â”‚       â”‚           â”‚   â”‚       â””â”€â”€ zlib-rs v0.6.8
+â”‚       â”‚           â”‚   â”œâ”€â”€ memchr feature "default" (*)
+â”‚       â”‚           â”‚   â”œâ”€â”€ crc32fast feature "default"
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ crc32fast v1.5.3 (*)
+â”‚       â”‚           â”‚   â”‚   â””â”€â”€ crc32fast feature "std"
+â”‚       â”‚           â”‚   â”‚       â””â”€â”€ crc32fast v1.5.3 (*)
+â”‚       â”‚           â”‚   â”œâ”€â”€ indexmap feature "default"
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ indexmap v2.14.2
+â”‚       â”‚           â”‚   â”‚   â”‚   â”œâ”€â”€ equivalent v1.0.3
+â”‚       â”‚           â”‚   â”‚   â”‚   â””â”€â”€ hashbrown v0.17.1
+â”‚       â”‚           â”‚   â”‚   â””â”€â”€ indexmap feature "std"
+â”‚       â”‚           â”‚   â”‚       â””â”€â”€ indexmap v2.14.2 (*)
+â”‚       â”‚           â”‚   â””â”€â”€ zopfli feature "default"
+â”‚       â”‚           â”‚       â”œâ”€â”€ zopfli v0.8.3
+â”‚       â”‚           â”‚       â”‚   â”œâ”€â”€ crc32fast v1.5.3 (*)
+â”‚       â”‚           â”‚       â”‚   â”œâ”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚           â”‚       â”‚   â”œâ”€â”€ log feature "default" (*)
+â”‚       â”‚           â”‚       â”‚   â””â”€â”€ bumpalo feature "default"
+â”‚       â”‚           â”‚       â”‚       â””â”€â”€ bumpalo v3.20.3
+â”‚       â”‚           â”‚       â”œâ”€â”€ zopfli feature "gzip"
+â”‚       â”‚           â”‚       â”‚   â””â”€â”€ zopfli v0.8.3 (*)
+â”‚       â”‚           â”‚       â”œâ”€â”€ zopfli feature "std"
+â”‚       â”‚           â”‚       â”‚   â”œâ”€â”€ zopfli v0.8.3 (*)
+â”‚       â”‚           â”‚       â”‚   â”œâ”€â”€ crc32fast feature "std" (*)
+â”‚       â”‚           â”‚       â”‚   â””â”€â”€ simd-adler32 feature "std"
+â”‚       â”‚           â”‚       â”‚       â””â”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚           â”‚       â””â”€â”€ zopfli feature "zlib"
+â”‚       â”‚           â”‚           â””â”€â”€ zopfli v0.8.3 (*)
+â”‚       â”‚           â”œâ”€â”€ zip feature "deflate-flate2-zlib-rs"
+â”‚       â”‚           â”‚   â”œâ”€â”€ zip v3.0.0 (*)
+â”‚       â”‚           â”‚   â”œâ”€â”€ zip feature "deflate-flate2"
+â”‚       â”‚           â”‚   â”‚   â”œâ”€â”€ zip v3.0.0 (*)
+â”‚       â”‚           â”‚   â”‚   â””â”€â”€ zip feature "_deflate-any"
+â”‚       â”‚           â”‚   â”‚       â””â”€â”€ zip v3.0.0 (*)
+â”‚       â”‚           â”‚   â”œâ”€â”€ zip feature "flate2"
+â”‚       â”‚           â”‚   â”‚   â””â”€â”€ zip v3.0.0 (*)
+â”‚       â”‚           â”‚   â””â”€â”€ flate2 feature "zlib-rs"
+â”‚       â”‚           â”‚       â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚           â”‚       â””â”€â”€ flate2 feature "any_zlib"
+â”‚       â”‚           â”‚           â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚           â”‚           â””â”€â”€ flate2 feature "any_impl"
+â”‚       â”‚           â”‚               â””â”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚           â””â”€â”€ zip feature "deflate-zopfli"
+â”‚       â”‚               â”œâ”€â”€ zip v3.0.0 (*)
+â”‚       â”‚               â”œâ”€â”€ zip feature "_deflate-any" (*)
+â”‚       â”‚               â””â”€â”€ zip feature "zopfli"
+â”‚       â”‚                   â””â”€â”€ zip v3.0.0 (*)
+â”‚       â”œâ”€â”€ image feature "jpeg"
+â”‚       â”‚   â””â”€â”€ image v0.25.10
+â”‚       â”‚       â”œâ”€â”€ zune-core v0.5.3
+â”‚       â”‚       â”œâ”€â”€ num-traits feature "default"
+â”‚       â”‚       â”‚   â”œâ”€â”€ num-traits v0.2.19 (*)
+â”‚       â”‚       â”‚   â””â”€â”€ num-traits feature "std"
+â”‚       â”‚       â”‚       â””â”€â”€ num-traits v0.2.19 (*)
+â”‚       â”‚       â”œâ”€â”€ bytemuck feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ bytemuck v1.25.2
+â”‚       â”‚       â”œâ”€â”€ bytemuck feature "extern_crate_alloc"
+â”‚       â”‚       â”‚   â””â”€â”€ bytemuck v1.25.2
+â”‚       â”‚       â”œâ”€â”€ byteorder-lite feature "default"
+â”‚       â”‚       â”‚   â”œâ”€â”€ byteorder-lite v0.1.0
+â”‚       â”‚       â”‚   â””â”€â”€ byteorder-lite feature "std"
+â”‚       â”‚       â”‚       â””â”€â”€ byteorder-lite v0.1.0
+â”‚       â”‚       â”œâ”€â”€ moxcms feature "default"
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms v0.8.1
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ num-traits feature "default" (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ pxfm feature "default"
+â”‚       â”‚       â”‚   â”‚       â””â”€â”€ pxfm v0.1.30
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "avx_luts"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms feature "avx"
+â”‚       â”‚       â”‚   â”‚   â”‚   â””â”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "lut"
+â”‚       â”‚       â”‚   â”‚       â””â”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "avx_shaper_fixed_point_paths"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "avx" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "avx_shaper_paths"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "avx" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "lut" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "neon_luts"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms feature "lut" (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "neon"
+â”‚       â”‚       â”‚   â”‚       â””â”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "neon_shaper_fixed_point_paths"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "neon" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "neon_shaper_paths"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "neon" (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "sse_luts"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms feature "lut" (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "sse"
+â”‚       â”‚       â”‚   â”‚       â””â”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”œâ”€â”€ moxcms feature "sse_shaper_fixed_point_paths"
+â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚   â”‚   â””â”€â”€ moxcms feature "sse" (*)
+â”‚       â”‚       â”‚   â””â”€â”€ moxcms feature "sse_shaper_paths"
+â”‚       â”‚       â”‚       â”œâ”€â”€ moxcms v0.8.1 (*)
+â”‚       â”‚       â”‚       â””â”€â”€ moxcms feature "sse" (*)
+â”‚       â”‚       â”œâ”€â”€ png feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ png v0.18.1
+â”‚       â”‚       â”‚       â”œâ”€â”€ crc32fast feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ flate2 feature "default"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ flate2 feature "runtime_detection"
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ crc32fast feature "std" (*)
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ zlib-rs feature "std"
+â”‚       â”‚       â”‚       â”‚   â”‚       â”œâ”€â”€ zlib-rs v0.6.8
+â”‚       â”‚       â”‚       â”‚   â”‚       â””â”€â”€ zlib-rs feature "rust-allocator" (*)
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ flate2 feature "rust_backend"
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚       â”‚       â”‚       â”œâ”€â”€ flate2 feature "any_impl" (*)
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ flate2 feature "miniz_oxide"
+â”‚       â”‚       â”‚       â”‚           â”œâ”€â”€ flate2 v1.1.10 (*)
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ flate2 feature "any_impl" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ bitflags feature "default"
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ bitflags v2.13.2
+â”‚       â”‚       â”‚       â”œâ”€â”€ fdeflate feature "default"
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ fdeflate v0.3.7
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ simd-adler32 feature "default"
+â”‚       â”‚       â”‚       â”‚           â”œâ”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚       â”‚       â”‚           â”œâ”€â”€ simd-adler32 feature "const-generics"
+â”‚       â”‚       â”‚       â”‚           â”‚   â””â”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚       â”‚       â”‚           â””â”€â”€ simd-adler32 feature "std" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ miniz_oxide feature "default"
+â”‚       â”‚       â”‚       â”‚   â”œâ”€â”€ miniz_oxide v0.8.9
+â”‚       â”‚       â”‚       â”‚   â”‚   â”œâ”€â”€ adler2 v2.0.1
+â”‚       â”‚       â”‚       â”‚   â”‚   â””â”€â”€ simd-adler32 v0.3.10
+â”‚       â”‚       â”‚       â”‚   â””â”€â”€ miniz_oxide feature "with-alloc"
+â”‚       â”‚       â”‚       â”‚       â””â”€â”€ miniz_oxide v0.8.9 (*)
+â”‚       â”‚       â”‚       â””â”€â”€ miniz_oxide feature "simd"
+â”‚       â”‚       â”‚           â”œâ”€â”€ miniz_oxide v0.8.9 (*)
+â”‚       â”‚       â”‚           â””â”€â”€ miniz_oxide feature "simd-adler32"
+â”‚       â”‚       â”‚               â””â”€â”€ miniz_oxide v0.8.9 (*)
+â”‚       â”‚       â””â”€â”€ zune-jpeg feature "default"
+â”‚       â”‚           â”œâ”€â”€ zune-jpeg v0.5.15
+â”‚       â”‚           â”‚   â””â”€â”€ zune-core feature "default"
+â”‚       â”‚           â”‚       â””â”€â”€ zune-core v0.5.3
+â”‚       â”‚           â”œâ”€â”€ zune-jpeg feature "neon"
+â”‚       â”‚           â”‚   â””â”€â”€ zune-jpeg v0.5.15 (*)
+â”‚       â”‚           â”œâ”€â”€ zune-jpeg feature "std"
+â”‚       â”‚           â”‚   â”œâ”€â”€ zune-jpeg v0.5.15 (*)
+â”‚       â”‚           â”‚   â””â”€â”€ zune-core feature "std"
+â”‚       â”‚           â”‚       â””â”€â”€ zune-core v0.5.3
+â”‚       â”‚           â””â”€â”€ zune-jpeg feature "x86"
+â”‚       â”‚               â””â”€â”€ zune-jpeg v0.5.15 (*)
+â”‚       â”œâ”€â”€ image feature "png"
+â”‚       â”‚   â””â”€â”€ image v0.25.10 (*)
+â”‚       â”œâ”€â”€ solvercraft feature "default"
+â”‚       â”‚   â””â”€â”€ solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”œâ”€â”€ serde_json feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ serde_json feature "float_roundtrip" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-math feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-compile feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ solvercraft-compile v0.1.0 ($SDK_ROOT\crates\compile)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ solvercraft-model feature "default"
+â”‚       â”‚       â”‚           â””â”€â”€ solvercraft-model v0.1.0 ($SDK_ROOT\crates\model)
+â”‚       â”‚       â”‚               â””â”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-model feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-engines feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ solvercraft-model feature "default" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ clarabel feature "serde"
+â”‚       â”‚       â”‚           â””â”€â”€ clarabel v0.11.1
+â”‚       â”‚       â”‚               â”œâ”€â”€ num-traits feature "default" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde_json feature "default" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde_json feature "float_roundtrip" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ cfg-if feature "default" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ amd feature "default"
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ amd v0.2.2
+â”‚       â”‚       â”‚               â”‚       â””â”€â”€ num-traits feature "default" (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ derive_builder feature "default"
+â”‚       â”‚       â”‚               â”‚   â”œâ”€â”€ derive_builder v0.11.2
+â”‚       â”‚       â”‚               â”‚   â”‚   â””â”€â”€ derive_builder_macro feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚       â””â”€â”€ derive_builder_macro v0.11.2 (proc-macro)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”œâ”€â”€ derive_builder_core feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚   â””â”€â”€ derive_builder_core v0.11.2
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ proc-macro2 feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ quote feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ darling feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”œâ”€â”€ darling v0.14.4
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”œâ”€â”€ darling_core feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚   â””â”€â”€ darling_core v0.14.4
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ proc-macro2 feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ quote feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ fnv feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ fnv v1.0.7
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ fnv feature "std"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â””â”€â”€ fnv v1.0.7
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ ident_case feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ ident_case v1.0.1
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ strsim feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ strsim v0.10.0
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ syn feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn v1.0.109
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ unicode-ident feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "clone-impls"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "derive"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "parsing"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”œâ”€â”€ syn feature "printing"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â”œâ”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚   â””â”€â”€ syn feature "quote"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â”‚       â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ syn feature "proc-macro"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â”œâ”€â”€ quote feature "proc-macro" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚       â””â”€â”€ syn feature "quote" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”œâ”€â”€ syn feature "extra-traits"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â”‚   â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚       â””â”€â”€ syn feature "full"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â”‚           â””â”€â”€ syn v1.0.109 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚   â””â”€â”€ darling_macro feature "default"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚       â””â”€â”€ darling_macro v0.14.4 (proc-macro)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â”œâ”€â”€ quote feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â”œâ”€â”€ darling_core feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â”‚           â””â”€â”€ syn feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚   â””â”€â”€ darling feature "suggestions"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚       â”œâ”€â”€ darling v0.14.4 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚       â””â”€â”€ darling_core feature "suggestions"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚           â”œâ”€â”€ darling_core v0.14.4 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚           â””â”€â”€ darling_core feature "strsim"
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”‚               â””â”€â”€ darling_core v0.14.4 (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ syn feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â”œâ”€â”€ syn feature "extra-traits" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”‚       â””â”€â”€ syn feature "full" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”œâ”€â”€ syn feature "default" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â”œâ”€â”€ syn feature "extra-traits" (*)
+â”‚       â”‚       â”‚               â”‚   â”‚           â””â”€â”€ syn feature "full" (*)
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ derive_builder feature "std"
+â”‚       â”‚       â”‚               â”‚       â””â”€â”€ derive_builder v0.11.2 (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ enum_dispatch feature "default"
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ enum_dispatch v0.3.13 (proc-macro)
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ proc-macro2 feature "default" (*)
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ quote feature "default" (*)
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ once_cell feature "default"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ once_cell v1.21.4
+â”‚       â”‚       â”‚               â”‚       â”‚   â””â”€â”€ once_cell feature "std"
+â”‚       â”‚       â”‚               â”‚       â”‚       â”œâ”€â”€ once_cell v1.21.4
+â”‚       â”‚       â”‚               â”‚       â”‚       â””â”€â”€ once_cell feature "alloc"
+â”‚       â”‚       â”‚               â”‚       â”‚           â”œâ”€â”€ once_cell v1.21.4
+â”‚       â”‚       â”‚               â”‚       â”‚           â””â”€â”€ once_cell feature "race"
+â”‚       â”‚       â”‚               â”‚       â”‚               â””â”€â”€ once_cell v1.21.4
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ syn feature "default"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ syn v2.0.119
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â”œâ”€â”€ proc-macro2 v1.0.107 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â”œâ”€â”€ quote v1.0.47 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â””â”€â”€ unicode-ident feature "default" (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "clone-impls"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "derive"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "parsing"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â”œâ”€â”€ syn feature "printing"
+â”‚       â”‚       â”‚               â”‚       â”‚   â”‚   â””â”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚   â””â”€â”€ syn feature "proc-macro"
+â”‚       â”‚       â”‚               â”‚       â”‚       â”œâ”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”‚       â”‚       â”œâ”€â”€ proc-macro2 feature "proc-macro" (*)
+â”‚       â”‚       â”‚               â”‚       â”‚       â””â”€â”€ quote feature "proc-macro" (*)
+â”‚       â”‚       â”‚               â”‚       â””â”€â”€ syn feature "full"
+â”‚       â”‚       â”‚               â”‚           â””â”€â”€ syn v2.0.119 (*)
+â”‚       â”‚       â”‚               â”œâ”€â”€ itertools feature "default"
+â”‚       â”‚       â”‚               â”‚   â”œâ”€â”€ itertools v0.11.0
+â”‚       â”‚       â”‚               â”‚   â”‚   â””â”€â”€ either v1.19.0
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ itertools feature "use_std"
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ itertools v0.11.0 (*)
+â”‚       â”‚       â”‚               â”‚       â”œâ”€â”€ itertools feature "use_alloc"
+â”‚       â”‚       â”‚               â”‚       â”‚   â””â”€â”€ itertools v0.11.0 (*)
+â”‚       â”‚       â”‚               â”‚       â””â”€â”€ either feature "use_std"
+â”‚       â”‚       â”‚               â”‚           â”œâ”€â”€ either v1.19.0
+â”‚       â”‚       â”‚               â”‚           â””â”€â”€ either feature "std"
+â”‚       â”‚       â”‚               â”‚               â””â”€â”€ either v1.19.0
+â”‚       â”‚       â”‚               â”œâ”€â”€ lazy_static feature "default"
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ lazy_static v1.5.1
+â”‚       â”‚       â”‚               â”œâ”€â”€ serde-big-array feature "default"
+â”‚       â”‚       â”‚               â”‚   â””â”€â”€ serde-big-array v0.5.1
+â”‚       â”‚       â”‚               â”‚       â””â”€â”€ serde v1.0.229 (*)
+â”‚       â”‚       â”‚               â””â”€â”€ thiserror feature "default"
+â”‚       â”‚       â”‚                   â””â”€â”€ thiserror v1.0.69
+â”‚       â”‚       â”‚                       â””â”€â”€ thiserror-impl feature "default"
+â”‚       â”‚       â”‚                           â””â”€â”€ thiserror-impl v1.0.69 (proc-macro)
+â”‚       â”‚       â”‚                               â”œâ”€â”€ proc-macro2 feature "default" (*)
+â”‚       â”‚       â”‚                               â”œâ”€â”€ quote feature "default" (*)
+â”‚       â”‚       â”‚                               â””â”€â”€ syn feature "default" (*)
+â”‚       â”‚       â”œâ”€â”€ solvercraft-simulation feature "default"
+â”‚       â”‚       â”‚   â””â”€â”€ solvercraft-simulation v0.1.0 ($SDK_ROOT\crates\simulation)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "default" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ serde feature "derive" (*)
+â”‚       â”‚       â”‚       â”œâ”€â”€ solvercraft-math feature "default" (*)
+â”‚       â”‚       â”‚       â””â”€â”€ solvercraft-types feature "default" (*)
+â”‚       â”‚       â””â”€â”€ web-time feature "default"
+â”‚       â”‚           â””â”€â”€ web-time v0.2.4
+â”‚       â””â”€â”€ web-time feature "default"
+â”‚           â””â”€â”€ web-time v1.1.0
+â””â”€â”€ serde_json feature "default" (*)

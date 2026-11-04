@@ -1,0 +1,246 @@
+{
+  "algorithm": "SHA-256 of UTF-8 text with CRLF/CR normalized to LF",
+  "inventory_sha256": "9c1c8e4ff13c82fe37f61dc078e7d5d1e06ee9a5c7533b4ca2f621a56dfe246d",
+  "files": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "70d35a35039788dfa9969447c08ce0c904570f12b80adbf2d5bae00785a7716a"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "51de25c52c5c51e4c2881d9d64b1e5f8aad05dcfac6d064e369631ce5da5d04d"
+    },
+    {
+      "path": "crates/engine/Cargo.toml",
+      "sha256": "03a8e76f140bbfbb6e268d41ae681bbb4f061bfc40276ec80885c0527b6614d0"
+    },
+    {
+      "path": "crates/engine/src/cmd/solvercraft.rs",
+      "sha256": "772ddfc32badc0309aab9beb8567e5780f8d67f522a5f432797177e7371fe532"
+    },
+    {
+      "path": "crates/engine/src/cmd.rs",
+      "sha256": "87a7bd08209630fac8b1b8fed42cfdb2cc254c9651893f9d2e424b7cb7437a9f"
+    },
+    {
+      "path": "crates/engine/tests/it/main.rs",
+      "sha256": "05f61c993b0380de7cd8a0e54a2555862582158cef69ad968fd0a26b47a92962"
+    },
+    {
+      "path": "crates/engine/tests/it/solvercraft_deep_review.rs",
+      "sha256": "40bfcb2ba255cee8a71a7446383050cb9b83c4b1bda012deac4e9e9d4cf5aa71"
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs/analysis.rs",
+      "sha256": "96138a0bd4074e8feac17bfab4caff919bf01929cc25f09a07f9c4e85d8d7adc"
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs/show.rs",
+      "sha256": "de5794abbe8bce7468e89eb03b06d5b3df5f124dea72045ed47d996d65ced940"
+    },
+    {
+      "path": "crates/ui-egui/src/dialogs.rs",
+      "sha256": "8365ba125b6e02d245e3bda19d6a86a335f6b320f7e089e54e1d6bd77108ed27"
+    },
+    {
+      "path": "crates/ui-egui/src/ribbon/data.rs",
+      "sha256": "bd09bfb3f21248dda385b0ed20316022c030ee60a670c97f9a45269e127f4a3f"
+    },
+    {
+      "path": "solvercraft/Cargo.lock",
+      "sha256": "9fa114654de4360151d9a0348b7ab25056fd54d69014c797497c703b8e61bb23"
+    },
+    {
+      "path": "solvercraft/Cargo.toml",
+      "sha256": "62d8cf4345eea8cfe405858e3e24d421607135a81457859673b290297018e392"
+    },
+    {
+      "path": "solvercraft/crates/cli/Cargo.toml",
+      "sha256": "b216cea0be4cfd32a14b73a9093cc6efb8a31c5dba54f26da5f4829d9610e859"
+    },
+    {
+      "path": "solvercraft/crates/cli/src/main.rs",
+      "sha256": "83fb9e60d2c8d5828c5fe6fa9f79c3ac3aa8234a3c72cde1e37aaf5ced24786b"
+    },
+    {
+      "path": "solvercraft/crates/cli/tests/end_to_end.rs",
+      "sha256": "b178793c07a4af3ad3523c0da8d2596bae37fc8915761893c80acc0e26bb677a"
+    },
+    {
+      "path": "solvercraft/crates/compile/Cargo.toml",
+      "sha256": "cb4c8cbad30a48e645664884c03a1a6c60b7b3f4a0d6f226deda4aed99b8d58d"
+    },
+    {
+      "path": "solvercraft/crates/compile/src/autodiff.rs",
+      "sha256": "2da5859c9c1a604b67c3b94a64fe2cc820c6bcb9c1981573d3b893f3bd4299d5"
+    },
+    {
+      "path": "solvercraft/crates/compile/src/lib.rs",
+      "sha256": "c02b7db5ffbe6ab64dcd15ba16f30894ace73e969667e6efb58b4156854415ab"
+    },
+    {
+      "path": "solvercraft/crates/compile/src/tests.rs",
+      "sha256": "632fad4f041d1acdf525885acfa66602ea7726dbe98ea4d84db5806ab07fe90c"
+    },
+    {
+      "path": "solvercraft/crates/compile/tests/deep_review.rs",
+      "sha256": "b6d9b8f8e2161de08b5b4d7ec850be22996b99f5c660d8bd4441d79465c22c2d"
+    },
+    {
+      "path": "solvercraft/crates/engines/Cargo.toml",
+      "sha256": "f5b6017d472de434a3c987420bf8c655926405707945671bb6de2bacf9de83a3"
+    },
+    {
+      "path": "solvercraft/crates/engines/src/lib.rs",
+      "sha256": "0edcfb617367a5fc03f32cda11ccfc87f6e36c5c776e9929ffe6f8983a8e9bae"
+    },
+    {
+      "path": "solvercraft/crates/engines/src/separable_qp.rs",
+      "sha256": "83784cb66e11993dc151091eca789d353cb3a712d40ee18280a9529bc484eb73"
+    },
+    {
+      "path": "solvercraft/crates/engines/src/simplex.rs",
+      "sha256": "76cb5708917ecdef168ef933bf7d6d2f0c6b442f8c0454a49ab3a23243260729"
+    },
+    {
+      "path": "solvercraft/crates/engines/src/tests.rs",
+      "sha256": "431c21859a312d2a0e1763fcd36fe1f9b7d761fb49621826552acf55a3c84551"
+    },
+    {
+      "path": "solvercraft/crates/engines/tests/deep_review.rs",
+      "sha256": "bad764fb465a59aaee6859720cd51b43d6dd2f12278d1b97e2ffc53ba0d19b99"
+    },
+    {
+      "path": "solvercraft/crates/math/Cargo.toml",
+      "sha256": "c12cdbff9115ca7c188ac9bf4950119ae576c9c57ab817cf43f8579e2a097fe8"
+    },
+    {
+      "path": "solvercraft/crates/math/src/distributions.rs",
+      "sha256": "3a4887005a73d3d25f3828e16ce493df0630f175a91df48cdba1f945d7b21536"
+    },
+    {
+      "path": "solvercraft/crates/math/src/lib.rs",
+      "sha256": "d9feb450cdc3ca1b3589b7c55255b69dbd66c975bbfc378cade848eaa926410d"
+    },
+    {
+      "path": "solvercraft/crates/math/src/random.rs",
+      "sha256": "5b3009f5ab4dd0433099f1f6be716a0d3e386e0e4ffe2d8cc59f90881f35d53e"
+    },
+    {
+      "path": "solvercraft/crates/math/src/risk.rs",
+      "sha256": "d07498b43dff94f59b46cb6cda78407491ae42a7185c6c613a2ed939c4313ff9"
+    },
+    {
+      "path": "solvercraft/crates/math/tests/deep_review.rs",
+      "sha256": "fd6fe45ea2c015e747e2e6abbfe30def738eb4ac56fd0536cc9741101f9d4fc2"
+    },
+    {
+      "path": "solvercraft/crates/model/Cargo.toml",
+      "sha256": "92982a567852011b04ef0d23d52ce649bdd6e5788ff9767c6ebe56fefced98f3"
+    },
+    {
+      "path": "solvercraft/crates/model/src/lib.rs",
+      "sha256": "1fa424800d57b1f5f7744cf17e5458333c3a1ca20356bfc15a07fa707af4f3a4"
+    },
+    {
+      "path": "solvercraft/crates/model/src/tests.rs",
+      "sha256": "9929831195727c7eeabdc79626b9dcd15cf1a2e02de30adc43fe5baa52fa4a31"
+    },
+    {
+      "path": "solvercraft/crates/model/tests/deep_review.rs",
+      "sha256": "4663716a23f2d3aea6f3d01aef8180c7d3988ea3934f8a7e1c75a61806a0679a"
+    },
+    {
+      "path": "solvercraft/crates/simulation/Cargo.toml",
+      "sha256": "752902e0381a3e780e8056c206d56338923a3949dacfe7488c0eece62c23e457"
+    },
+    {
+      "path": "solvercraft/crates/simulation/src/lib.rs",
+      "sha256": "dab48a4fc30120f086f5d12b6a2309ea303d320e44900471e9b2bf4536d72817"
+    },
+    {
+      "path": "solvercraft/crates/simulation/src/statistics.rs",
+      "sha256": "d6016bdac33369ee3bfcd23a4d4f75a574f3f15cdf86989ebb7cde67355cf3a8"
+    },
+    {
+      "path": "solvercraft/crates/simulation/src/tests.rs",
+      "sha256": "3dac1a8dc6ac4a5b428ba26913ff5d6c7b45a83173821f2c2450c79cf977a286"
+    },
+    {
+      "path": "solvercraft/crates/simulation/tests/deep_review.rs",
+      "sha256": "3ab8ec62a883633a8ece27b901d52e775f41ae84a6c156f65a1a02cf79556f65"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/Cargo.toml",
+      "sha256": "520bf196dae153fc6304acc3e04e0c12a3946d083ad27b13f5ded1ba2cadb091"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/heuristic.rs",
+      "sha256": "26b5905ce075aa3bc53557d358708657eb7b242a12686624a7c73e8b6a28f8f5"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/heuristic_tests.rs",
+      "sha256": "aeab0610385a97cce9988a9d3fa7dd8104abaecffbcb01379c1b2758cf74a4cc"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/jobs.rs",
+      "sha256": "063dbf65c6f7e32fd4f83124ab4bc02e1da9cc7b2b36281adb84b42e57bda6e3"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/lib.rs",
+      "sha256": "cbb7ee03a133025e4a21d7b9d1dd7917be58eb95ce81984b2f908f4414901d25"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/nonlinear.rs",
+      "sha256": "2cff3f7ccb88522ecb88ddc68a44f59c04168ac66c9c0b7a155a9c5207ff7b8d"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/nonlinear_tests.rs",
+      "sha256": "e0b74f043f170ea26a3da1715549b28dcc28a061dd40b9c5375fa916a9a1bbc2"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/provenance.rs",
+      "sha256": "226760ca0908e7c09b85422990b2bc0517914655bf40854973eb7a9e9e0faff3"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/risk.rs",
+      "sha256": "dbb77ccce215af177bba14a37ccf4cdfe092bb67856757d5950d755c9d2f592f"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/src/runtime_tests.rs",
+      "sha256": "4ac0ca310a18e23a95df8c563fdc773f0304cfac664c468de3763fc5a13be4b7"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/tests/independent.rs",
+      "sha256": "5558ca95dd06efcfbf05523334fa1685819eac7d9719c223f94c6e1237c019a0"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/tests/job_runtime_e2e.rs",
+      "sha256": "d2d1c17eda01ba2aad5086301867741fd8af612c282725a04ed0ea1b2e5dc605"
+    },
+    {
+      "path": "solvercraft/crates/solvercraft/tests/runtime_review.rs",
+      "sha256": "b8baada142d7979889fd5fb2983fa1a37406a4de1fc36c1aafb845498da46314"
+    },
+    {
+      "path": "solvercraft/crates/types/Cargo.toml",
+      "sha256": "4d09780ecde1ce1baefffe16f58fcaaa86c0655ca224393af43f6e6a3a7b3bf8"
+    },
+    {
+      "path": "solvercraft/crates/types/src/lib.rs",
+      "sha256": "133512f6ea8fd4f9e3740242c572eeac73153972a4d58ed4dbe186df687ae6a7"
+    },
+    {
+      "path": "solvercraft/rustfmt.toml",
+      "sha256": "03f945039b4c4b12085bf1011107562407ed9145a5ea637404c81893bcc9375a"
+    },
+    {
+      "path": "solvercraft/tests/e2e/linear_oracle.py",
+      "sha256": "2b95a8cce766634e50e7b3fa7dc315c20c5351e002bd57af7080fb14d457bddd"
+    },
+    {
+      "path": "xtask/src/layers.rs",
+      "sha256": "1d0663b4170fa6868ff47ff708abe0c4b112ecc65d20f185f524f6cdb3ca876b"
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "schema": "solvercraft.numerical-expansion-public.v1",
+  "date": "2026-11-02",
+  "base_commit": "e50da565f44f5f9e9f68a1281033e98e6ef312fc",
+  "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba",
+  "canonical_code_files": 857,
+  "canonicalization": "Sorted relative Rust/TOML/lock/Python paths; CRLF normalized to LF. Not a complete binary-input manifest.",
+  "publication_scope": "Fixed public fields and synthetic mathematical requests only. No environment, argv, local paths or arbitrary diagnostic dumps.",
+  "native_tests": {
+    "sdk": {
+      "passed": 752,
+      "failed": 0,
+      "ignored": 0
+    },
+    "host": {
+      "passed": 2915,
+      "failed": 0,
+      "ignored": 1
+    }
+  },
+  "final_gates": [
+    {
+      "check": "sdk-fmt",
+      "exit_code": 0,
+      "seconds": 1.44,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    },
+    {
+      "check": "sdk-tests",
+      "exit_code": 0,
+      "seconds": 268.11,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    },
+    {
+      "check": "sdk-clippy",
+      "exit_code": 0,
+      "seconds": 11.89,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    },
+    {
+      "check": "host-ci",
+      "exit_code": 0,
+      "seconds": 358.0,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    },
+    {
+      "check": "cli-mcp-release",
+      "exit_code": 0,
+      "seconds": 43.14,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    },
+    {
+      "check": "app-release",
+      "exit_code": 0,
+      "seconds": 149.01,
+      "source_stable": true,
+      "canonical_code_sha256": "fdebe74b82d87d10d247e90222d998c3cde87ca19dbac23750ba71d44ca996ba"
+    }
+  ],
+  "distribution_before": {
+    "schema": "solvercraft.systematic-distribution-oracle.v1",
+    "counts": {
+      "parameterizations": 1171,
+      "quantile_passes": 16007,
+      "cdf_passes": 16357,
+      "logdensity_passes": 16475,
+      "explicit_refusals": 70,
+      "oracle_unavailable": 1404,
+      "tail_accuracy_targets": 520,
+      "closed_form_quantile_references": 3278
+    },
+    "family_parameterizations": {
+      "gamma": 45,
+      "beta": 119,
+      "invgamma": 44,
+      "weibull_min": 26,
+      "fisk": 26,
+      "pareto": 26,
+      "lomax": 26,
+      "invweibull": 26,
+      "fatiguelife": 26,
+      "t": 34,
+      "chi2": 14,
+      "f": 52,
+      "skewnorm": 83,
+      "invgauss": 28,
+      "johnsonsu": 53,
+      "johnsonsb": 53,
+      "lognorm": 79,
+      "burr12": 40,
+      "burr": 40,
+      "betaprime": 40,
+      "norm": 34,
+      "cauchy": 34,
+      "logistic": 16,
+      "laplace": 16,
+      "gumbel_r": 16,
+      "gumbel_l": 16,
+      "hypsecant": 16,
+      "uniform": 1,
+      "triang": 17,
+      "rayleigh": 1,
+      "levy": 1,
+      "reciprocal": 1,
+      "expon": 1,
+      "bernoulli": 3,
+      "nbinom": 35,
+      "binom": 39,
+      "logser": 7,
+      "poisson": 9,
+      "randint": 1,
+      "hypergeom": 19,
+      "empirical_reference": 1,
+      "categorical_reference": 1,
+      "powerlaw": 1,
+      "truncnorm": 5
+    },
+    "scipy": "1.18.1",
+    "numpy": "2.5.4",
+    "probe_sha256": "04f48ab1d96a00d2b9719360bee4d2ec0ac3916e23fa5c92147a3c2361e42f88",
+    "harness_sha256": "fafdbc40a74486ad3a46e8aee7cebc38c6345639b94dc45c13da8e0bd8750c0b",
+    "source_stable": true,
+    "failure_count": 328,
+    "reference_qualification": "90-digit elementary inverse/CDF formulas; exact symmetric medians; direct small-tail reference checks; independent positive normal/skew-normal quadrature; unresolved reference quantiles excluded"
+  },
+  "distribution_after": {
+    "schema": "solvercraft.systematic-distribution-oracle.v1",
+    "counts": {
+      "parameterizations": 1171,
+      "quantile_passes": 16112,
+      "cdf_passes": 16538,
+      "logdensity_passes": 16519,
+      "explicit_refusals": 68,
+      "oracle_unavailable": 1404,
+      "tail_accuracy_targets": 0,
+      "closed_form_quantile_references": 3278
+    },
+    "family_parameterizations": {
+      "gamma": 45,
+      "beta": 119,
+      "invgamma": 44,
+      "weibull_min": 26,
+      "fisk": 26,
+      "pareto": 26,
+      "lomax": 26,
+      "invweibull": 26,
+      "fatiguelife": 26,
+      "t": 34,
+      "chi2": 14,
+      "f": 52,
+      "skewnorm": 83,
+      "invgauss": 28,
+      "johnsonsu": 53,
+      "johnsonsb": 53,
+      "lognorm": 79,
+      "burr12": 40,
+      "burr": 40,
+      "betaprime": 40,
+      "norm": 34,
+      "cauchy": 34,
+      "logistic": 16,
+      "laplace": 16,
+      "gumbel_r": 16,
+      "gumbel_l": 16,
+      "hypsecant": 16,
+      "uniform": 1,
+      "triang": 17,
+      "rayleigh": 1,
+      "levy": 1,
+      "reciprocal": 1,
+      "expon": 1,
+      "bernoulli": 3,
+      "nbinom": 35,
+      "binom": 39,
+      "logser": 7,
+      "poisson": 9,
+      "randint": 1,
+      "hypergeom": 19,
+      "empirical_reference": 1,
+      "categorical_reference": 1,
+      "powerlaw": 1,
+      "truncnorm": 5
+    },
+    "scipy": "1.18.1",
+    "numpy": "2.5.4",
+    "probe_sha256": "6ef348ae62dbdb7acdecb683fc07a4d594e87064304679ea6531eec46a4adeb7",
+    "harness_sha256": "fafdbc40a74486ad3a46e8aee7cebc38c6345639b94dc45c13da8e0bd8750c0b",
+    "source_stable": true,
+    "failure_count": 0,
+    "reference_qualification": "90-digit elementary inverse/CDF formulas; exact symmetric medians; direct small-tail reference checks; independent positive normal/skew-normal quadrature; unresolved reference quantiles excluded"
+  },
+  "cli_before": {
+    "schema": "solvercraft.independent-process-oracles.v1",
+    "seed": 2026110207,
+    "binary_sha256": "ef1034b5eff99a3545ad952ab9f911e5bc5a6876f1b231b4218221f64909f446",
+    "numpy_version": "2.5.4",
+    "scipy_version": "1.18.1",
+    "matrix": {
+      "lp_cases": 512,
+      "integer_cases": 256,
+      "qp_cases": 160,
+      "simulation_seeds": 3,
+      "simulation_trials": 16384,
+      "sobol_replicates": 16,
+      "qualify_refusals": true
+    },
+    "counts": {
+      "passed": 1519,
+      "failed": 0,
+      "explicit_rejection": 1,
+      "honest_inconclusive": 3
+    },
+    "case_request_fingerprint_sha256": "89e496c524d85a695846676dd2038f3fb9fe008a404d683254581c4f1c28381b",
+    "noncomputed_cases": [
+      {
+        "case": "exact-cancellation-solve-sparse",
+        "command": "solve-sparse",
+        "status": "honest_inconclusive",
+        "request_sha256": "de84fa170ed913ea35e0812be223da2f786d0c0f1af89be0158b1963f074bce4",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "completed"
+      },
+      {
+        "case": "phase-I-feasible-cancellation",
+        "command": "solve",
+        "status": "honest_inconclusive",
+        "request_sha256": "eb1a6f596bf1548de280a3c0f54f5ad5f57bd5989e3d8a57122508acb66ccd4b",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "numerical_failure"
+      },
+      {
+        "case": "bounded-recession-cancellation",
+        "command": "solve",
+        "status": "honest_inconclusive",
+        "request_sha256": "63f79914a335e05043ff9b744ff6e5febe249895f6c9335ad36f84affcefe0e6",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "numerical_failure"
+      },
+      {
+        "case": "unrepresentable-positive-variance",
+        "command": "simulate",
+        "status": "explicit_rejection",
+        "request_sha256": "70a7c735873bd62707caf58ba8c5bfb54cdb86f90edcd19d7b47b391dce99975"
+      }
+    ]
+  },
+  "cli_after": {
+    "schema": "solvercraft.independent-process-oracles.v1",
+    "seed": 2026110207,
+    "binary_sha256": "34a04ddc7e8b12eb06d2160c6a88d95446fe8fc8c730f14d023bceb078808129",
+    "numpy_version": "2.5.4",
+    "scipy_version": "1.18.1",
+    "matrix": {
+      "lp_cases": 512,
+      "integer_cases": 256,
+      "qp_cases": 160,
+      "simulation_seeds": 3,
+      "simulation_trials": 16384,
+      "sobol_replicates": 16,
+      "qualify_refusals": true
+    },
+    "counts": {
+      "passed": 1519,
+      "failed": 0,
+      "explicit_rejection": 1,
+      "honest_inconclusive": 3
+    },
+    "case_request_fingerprint_sha256": "89e496c524d85a695846676dd2038f3fb9fe008a404d683254581c4f1c28381b",
+    "noncomputed_cases": [
+      {
+        "case": "exact-cancellation-solve-sparse",
+        "command": "solve-sparse",
+        "status": "honest_inconclusive",
+        "request_sha256": "de84fa170ed913ea35e0812be223da2f786d0c0f1af89be0158b1963f074bce4",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "completed"
+      },
+      {
+        "case": "phase-I-feasible-cancellation",
+        "command": "solve",
+        "status": "honest_inconclusive",
+        "request_sha256": "eb1a6f596bf1548de280a3c0f54f5ad5f57bd5989e3d8a57122508acb66ccd4b",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "numerical_failure"
+      },
+      {
+        "case": "bounded-recession-cancellation",
+        "command": "solve",
+        "status": "honest_inconclusive",
+        "request_sha256": "63f79914a335e05043ff9b744ff6e5febe249895f6c9335ad36f84affcefe0e6",
+        "reason": "No claimed mathematical result at the configured numerical/work limit",
+        "termination": "numerical_failure"
+      },
+      {
+        "case": "unrepresentable-positive-variance",
+        "command": "simulate",
+        "status": "explicit_rejection",
+        "request_sha256": "70a7c735873bd62707caf58ba8c5bfb54cdb86f90edcd19d7b47b391dce99975"
+      }
+    ]
+  },
+  "sdk_browser": {
+    "actual_browser": true,
+    "exit_code": 0,
+    "runner_exit_code": 0,
+    "test_wasm_sha256": "6472c189dd092eca72629b37bf7623fe17951f101d70097e63a2941f519d6f6a",
+    "results": {
+      "passed": 20,
+      "failed": 0,
+      "ignored": 0
+    },
+    "test_results": [
+      "test browser_solves_wyndor_and_validates_original_constraints ... ok",
+      "test browser_solves_a_coupled_convex_quadratic_with_original_residuals ... ok",
+      "test browser_samples_deterministically_with_loss_tail_statistics ... ok",
+      "test browser_risk_variance_and_zero_confidence_cvar_match_closed_forms ... ok",
+      "test browser_retains_a_unit_improvement_after_large_objective_cancellation ... ok",
+      "test browser_rejects_native_thread_jobs_without_panicking ... ok",
+      "test browser_rejects_inexact_division_before_it_can_change_an_identity_constraint ... ok",
+      "test browser_randomized_sobol_integrates_a_smooth_product ... ok",
+      "test browser_preserves_tiny_positive_endpoint_mass_and_rounded_affine_atoms ... ok",
+      "test browser_optimizes_finite_scenario_tail_risk ... ok",
+      "test browser_nonlinear_method_reports_stationarity_separately_from_global_optimality ... ok",
+      "test browser_lhs_keeps_a_discrete_mixture_on_its_exact_atoms ... ok",
+      "test browser_latin_hypercube_preserves_all_strata ... ok",
+      "test browser_honors_binary_domains ... ok",
+      "test browser_handles_large_seed_json_without_javascript_precision_loss ... ok",
+      "test browser_executes_clarabel_socp_with_a_cauchy_schwarz_oracle ... ok",
+      "test browser_does_not_round_nonrepresentable_positive_variance_to_zero ... ok",
+      "test browser_constrained_nonlinear_rechecks_the_original_exponential_inequality ... ok",
+      "test browser_compiler_retains_integer_product_residuals ... ok",
+      "test browser_autodiff_rejects_a_nondifferentiable_point ... ok"
+    ]
+  },
+  "worker_attempts": [
+    {
+      "candidate": "predivision-expanded",
+      "attempt": "initial",
+      "qualified_timing_failure": {
+        "guard_ms": 25,
+        "observed_ms": 31
+      },
+      "actual_browser": true,
+      "exit_code": 1,
+      "runner_exit_code": 1,
+      "test_wasm_sha256": "d75de9e22768f2f050446bfc684ae53981abdf7d15a558d49215192b6c279ee3",
+      "results": {
+        "passed": 8,
+        "failed": 1,
+        "ignored": 0
+      },
+      "test_results": [
+        "test hard_cancel_and_deadline_never_invent_an_unreceived_incumbent ... ok",
+        "test editing_the_live_workbook_makes_worker_result_stale_without_changing_its_snapshot ... ok",
+        "test actual_worker_solves_preview_apply_undo_and_rejects_stale_cross_document_use ... ok",
+        "test actual_worker_simulation_preserves_calc_rounding_for_each_output_and_trial ... ok",
+        "test actual_worker_auto_miqp_honors_the_original_integer_domain ... ok",
+        "test actual_trunk_app_canvas_loads_and_renders_in_the_same_browser ... ok",
+        "test actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors ... ok",
+        "test actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals ... ok"
+      ],
+      "worker_timing": {
+        "admission_ms": 1.5299999999999998,
+        "startup_ms": 85.655,
+        "worker_compute_ms": 30.805
+      }
+    },
+    {
+      "candidate": "predivision-expanded",
+      "attempt": "single unchanged full repeat after builds",
+      "actual_browser": true,
+      "exit_code": 0,
+      "runner_exit_code": 0,
+      "test_wasm_sha256": "d75de9e22768f2f050446bfc684ae53981abdf7d15a558d49215192b6c279ee3",
+      "results": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "test_results": [
+        "test hard_cancel_and_deadline_never_invent_an_unreceived_incumbent ... ok",
+        "test editing_the_live_workbook_makes_worker_result_stale_without_changing_its_snapshot ... ok",
+        "test actual_worker_solves_preview_apply_undo_and_rejects_stale_cross_document_use ... ok",
+        "test actual_worker_simulation_reports_progress_while_window_timers_remain_responsive ... ok",
+        "test actual_worker_simulation_preserves_calc_rounding_for_each_output_and_trial ... ok",
+        "test actual_worker_auto_miqp_honors_the_original_integer_domain ... ok",
+        "test actual_trunk_app_canvas_loads_and_renders_in_the_same_browser ... ok",
+        "test actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors ... ok",
+        "test actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals ... ok"
+      ],
+      "worker_timing": {
+        "admission_ms": 0.745,
+        "startup_ms": 24.6,
+        "worker_compute_ms": 12.33
+      },
+      "worker_sim_timing": {
+        "admission_ms": 0.735,
+        "heartbeat_ticks": 160,
+        "max_observed_progress_gap_ms": 58.0,
+        "max_status_ms": 1.0,
+        "max_window_heartbeat_gap_ms": 17.0,
+        "observed_progress_updates": 32,
+        "startup_ms": 25.94,
+        "worker_compute_ms": 1579.29
+      }
+    },
+    {
+      "candidate": "final-division-guard",
+      "attempt": "fresh final-source verification",
+      "actual_browser": true,
+      "exit_code": 0,
+      "runner_exit_code": 0,
+      "test_wasm_sha256": "f5e303353f58e4a9bc7b24cdc5f7442ad2ec5e83812c99462eb935f808531623",
+      "results": {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      "test_results": [
+        "test hard_cancel_and_deadline_never_invent_an_unreceived_incumbent ... ok",
+        "test editing_the_live_workbook_makes_worker_result_stale_without_changing_its_snapshot ... ok",
+        "test actual_worker_solves_preview_apply_undo_and_rejects_stale_cross_document_use ... ok",
+        "test actual_worker_simulation_reports_progress_while_window_timers_remain_responsive ... ok",
+        "test actual_worker_simulation_preserves_calc_rounding_for_each_output_and_trial ... ok",
+        "test actual_worker_auto_miqp_honors_the_original_integer_domain ... ok",
+        "test actual_trunk_app_canvas_loads_and_renders_in_the_same_browser ... ok",
+        "test actual_browser_imports_twelve_additional_psi_cores_with_independent_cdf_anchors ... ok",
+        "test actual_browser_imports_nineteen_psi_signatures_and_preserves_vendor_context_refusals ... ok"
+      ],
+      "worker_timing": {
+        "admission_ms": 0.8899999999999999,
+        "startup_ms": 22.685,
+        "worker_compute_ms": 12.63
+      },
+      "worker_sim_timing": {
+        "admission_ms": 0.785,
+        "heartbeat_ticks": 160,
+        "max_observed_progress_gap_ms": 58.0,
+        "max_status_ms": 1.0,
+        "max_window_heartbeat_gap_ms": 12.0,
+        "observed_progress_updates": 32,
+        "startup_ms": 22.41,
+        "worker_compute_ms": 1563.7050000000002
+      }
+    }
+  ],
+  "worker_aggregate_all_attempts_passed": false,
+  "worker_build": {
+    "accepted": true,
+    "exit_code": 0,
+    "source_changed_during_build": false,
+    "source_digest_sha256": "d3a54bc062cce71e219ec5e7439a4e23e14d08b1bec302f61d7cd3b712b750a4",
+    "trunk_sha256": "209f218e2c01516ef4e59b97ab73b879ff2180c73f4187fa152b15532e8eecae"
+  },
+  "worker_test_build": {
+    "accepted": true,
+    "exit_code": 0,
+    "source_changed_during_build": false,
+    "source_digest_sha256": "cd7884bf4d584c4ebcf41a558397ca0b561bd50084c217df73144b6a293af3f3",
+    "artifact_sha256": "f5e303353f58e4a9bc7b24cdc5f7442ad2ec5e83812c99462eb935f808531623"
+  },
+  "browser_setup_attempt": {
+    "actual_browser": false,
+    "qualification": "One final-source attempt could not start isolated ChromeDriver with restricted local socket access; the subsequent authorized local-connection run executed all 20 bodies. The failed setup is not a numerical or browser test pass."
+  },
+  "initial_build_launch": {
+    "exit_code": 2,
+    "qualification": "Initial local launch rejected the inherited NO_COLOR=1 flag; runner uses supported true subsequently. A reconstructed fixed-field note is retained locally; no product edit was made for this setup correction."
+  },
+  "release_admission": {
+    "optimized_mcp_tests": {
+      "passed": 20,
+      "failed": 0,
+      "ignored": 0
+    },
+    "x64_pe_admission": true,
+    "app_version": "Solvercraft 0.14.2"
+  },
+  "artifacts": {
+    "binary_sha256": {
+      "solvercraft.exe": "cfa3e4942eee94eea1b0fad1239b6f60d29e2117d47eebb0427ba083bdbb5d03",
+      "solvercraft-cli.exe": "34a04ddc7e8b12eb06d2160c6a88d95446fe8fc8c730f14d023bceb078808129",
+      "solvercraft-mcp.exe": "2a5b3e0a49d61cb203913a30dc450d350504106e294e28df9487bdbdedd0c6bb"
+    },
+    "assets": {
+      "Solvercraft-Windows.zip": {
+        "bytes": 2210919,
+        "sha256": "520d06de022f04b516662b913f01fc489e6eb5efbc9a7c10f41845ad212274e4"
+      },
+      "solvercraft-0.14.2-windows-x64-portable.zip": {
+        "bytes": 47203913,
+        "sha256": "8cbb03bd68cce129c2ab7b3333101b1128c55d48f7858ab7de74e0f7c3a945b3",
+        "entries": 702,
+        "uncompressed_bytes": 100347104
+      }
+    }
+  },
+  "scoped_counts_included_in_native_total": true,
+  "original_requirements_unchanged": true,
+  "no_complete_vendor_or_all_f64_correctness_claim": true
+}

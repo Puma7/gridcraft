@@ -1,0 +1,36 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/trunk-final7-build-report.json",
+  "full_local_report_sha256": "29544fea82d8da5b7d87c6180c9163f1751de063b889c03ca45430ea4b80eaa8",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "accepted": true,
+  "results": {
+    "source_digest_sha256": "bbccda90389e42737aea7fd74528ebf468076c3e1c973b39861794e5e9327630",
+    "exit_code": 0,
+    "elapsed_seconds": 25.86739850003505,
+    "source_changed_during_build": false,
+    "accepted": true
+  },
+  "artifact_hashes": [
+    "209f218e2c01516ef4e59b97ab73b879ff2180c73f4187fa152b15532e8eecae"
+  ]
+}

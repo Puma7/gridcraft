@@ -1,0 +1,64 @@
+{
+  "model": {
+    "schema_version": 1,
+    "name": "Wyndor production",
+    "variables": [
+      {
+        "name": "product_a",
+        "lower": 0.0,
+        "upper": 4.0,
+        "kind": "continuous"
+      },
+      {
+        "name": "product_b",
+        "lower": 0.0,
+        "upper": 6.0,
+        "kind": "continuous"
+      }
+    ],
+    "objective": {
+      "direction": "maximize",
+      "offset": 0.0,
+      "linear": [
+        {
+          "variable": 0,
+          "coefficient": 3.0
+        },
+        {
+          "variable": 1,
+          "coefficient": 5.0
+        }
+      ],
+      "quadratic": []
+    },
+    "constraints": [
+      {
+        "name": "shared_capacity",
+        "terms": [
+          {
+            "variable": 0,
+            "coefficient": 3.0
+          },
+          {
+            "variable": 1,
+            "coefficient": 2.0
+          }
+        ],
+        "relation": "less_equal",
+        "rhs": 18.0
+      }
+    ]
+  },
+  "options": {
+    "method": "auto",
+    "max_evaluations": 100000,
+    "max_iterations": 100000,
+    "max_nodes": 10000,
+    "max_memory_bytes": 268435456,
+    "feasibility_tolerance": 1e-07,
+    "integrality_tolerance": 1e-07,
+    "optimality_tolerance": 1e-08,
+    "relative_gap": 0.0,
+    "seed": "0"
+  }
+}

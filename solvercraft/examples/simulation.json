@@ -1,0 +1,35 @@
+{
+  "inputs": [
+    {
+      "kind": "normal",
+      "mean": 100,
+      "std_dev": 10
+    },
+    {
+      "kind": "triangular",
+      "low": 10,
+      "mode": 20,
+      "high": 50
+    }
+  ],
+  "options": {
+    "trials": 10000,
+    "seed": "42",
+    "method": "latin_hypercube",
+    "retain_samples": true,
+    "max_memory_bytes": 33554432
+  },
+  "outputs": [
+    {
+      "op": "subtract",
+      "left": {
+        "op": "variable",
+        "index": 0
+      },
+      "right": {
+        "op": "variable",
+        "index": 1
+      }
+    }
+  ]
+}

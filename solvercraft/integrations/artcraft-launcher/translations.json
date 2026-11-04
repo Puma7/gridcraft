@@ -1,0 +1,112 @@
+{
+  "cs": [
+    "Optimalizace a simulace",
+    "Optimalizace a simulace přímo v počítači.",
+    "Řeš numerické modely a spouštěj simulace pomocí společného SDK v Rustu. Desktopová aplikace a místní nástroje pro agenty používají stejný výpočetní modul.",
+    "Optimalizuj modely",
+    "Řeš podporované lineární a celočíselné modely s jasně uvedeným stavem výsledku.",
+    "Simuluj nejistotu",
+    "Používej simulaci Monte Carlo s nastaveným seedem a prohlížej statistické souhrny.",
+    "Pracuj s místními agenty",
+    "Používej samostatný nástroj MCP přes stdio s místním spuštěním na vyžádání."
+  ],
+  "de": [
+    "Optimierung und Simulation",
+    "Optimierung und Simulation auf deinem Computer.",
+    "Löse numerische Modelle und führe Simulationen mit einem gemeinsamen Rust-SDK aus. Die Desktop-App und die lokalen Agentenwerkzeuge verwenden denselben Rechenkern.",
+    "Modelle optimieren",
+    "Löse unterstützte lineare und ganzzahlige Modelle mit klar ausgewiesenem Ergebnisstatus.",
+    "Unsicherheit simulieren",
+    "Nutze Monte-Carlo-Simulation mit festgelegtem Seed und prüfe statistische Zusammenfassungen.",
+    "Mit lokalen Agenten arbeiten",
+    "Nutze das eigenständige MCP-Werkzeug über stdio mit lokaler Ausführung bei Bedarf."
+  ],
+  "es": [
+    "Optimización y simulación",
+    "Optimización y simulación en tu equipo.",
+    "Resuelve modelos numéricos y ejecuta simulaciones con un SDK compartido en Rust. La aplicación de escritorio y las herramientas locales para agentes usan el mismo motor de cálculo.",
+    "Optimiza modelos",
+    "Resuelve los modelos lineales y enteros admitidos con un estado del resultado explícito.",
+    "Simula la incertidumbre",
+    "Usa simulaciones de Monte Carlo con una semilla definida y consulta los resúmenes estadísticos.",
+    "Trabaja con agentes locales",
+    "Usa la herramienta MCP independiente por stdio con ejecución local bajo demanda."
+  ],
+  "fr": [
+    "Optimisation et simulation",
+    "Optimisation et simulation sur ton ordinateur.",
+    "Résous des modèles numériques et lance des simulations avec un SDK Rust partagé. L’application de bureau et les outils locaux pour agents utilisent le même moteur de calcul.",
+    "Optimiser les modèles",
+    "Résous les modèles linéaires et entiers pris en charge avec un état du résultat explicite.",
+    "Simuler l’incertitude",
+    "Utilise la simulation de Monte-Carlo avec une graine définie et consulte les résumés statistiques.",
+    "Travailler avec des agents locaux",
+    "Utilise l’outil MCP autonome via stdio avec une exécution locale à la demande."
+  ],
+  "hu": [
+    "Optimalizálás és szimuláció",
+    "Optimalizálás és szimuláció a saját számítógépeden.",
+    "Oldj meg numerikus modelleket, és futtass szimulációkat közös Rust SDK-val. Az asztali alkalmazás és a helyi agenteszközök ugyanazt a számítási motort használják.",
+    "Modellek optimalizálása",
+    "Oldd meg a támogatott lineáris és egészértékű modelleket egyértelmű eredményállapottal.",
+    "Bizonytalanság szimulálása",
+    "Használj rögzített kezdőértékű Monte Carlo-szimulációt, és tekintsd át a statisztikai összesítéseket.",
+    "Munka helyi ágensekkel",
+    "Használd az önálló MCP-eszközt stdio-kapcsolaton keresztül, igény szerinti helyi futtatással."
+  ],
+  "ja": [
+    "最適化とシミュレーション",
+    "自分のコンピューターで最適化とシミュレーション。",
+    "共通のRust SDKを使って数値モデルを解き、シミュレーションを実行できます。デスクトップアプリとローカルエージェント用ツールは同じ計算エンジンを使います。",
+    "モデルを最適化",
+    "対応する線形モデルや整数モデルを解き、結果の状態を明確に表示します。",
+    "不確実性をシミュレーション",
+    "シードを指定したモンテカルロシミュレーションを実行し、統計の要約を確認できます。",
+    "ローカルエージェントと連携",
+    "必要なときにローカルで実行する独立したMCPツールをstdio経由で使えます。"
+  ],
+  "pl": [
+    "Optymalizacja i symulacja",
+    "Optymalizacja i symulacja na twoim komputerze.",
+    "Rozwiązuj modele numeryczne i uruchamiaj symulacje za pomocą wspólnego SDK w Rust. Aplikacja komputerowa i lokalne narzędzia dla agentów używają tego samego silnika obliczeniowego.",
+    "Optymalizuj modele",
+    "Rozwiązuj obsługiwane modele liniowe i całkowitoliczbowe z jasno określonym stanem wyniku.",
+    "Symuluj niepewność",
+    "Korzystaj z symulacji Monte Carlo z określonym ziarnem i przeglądaj podsumowania statystyczne.",
+    "Pracuj z lokalnymi agentami",
+    "Korzystaj z samodzielnego narzędzia MCP przez stdio z lokalnym uruchamianiem na żądanie."
+  ],
+  "pt-BR": [
+    "Otimização e simulação",
+    "Otimização e simulação no seu computador.",
+    "Resolva modelos numéricos e execute simulações com um SDK compartilhado em Rust. O aplicativo de desktop e as ferramentas locais para agentes usam o mesmo mecanismo de cálculo.",
+    "Otimize modelos",
+    "Resolva os modelos lineares e inteiros compatíveis com um estado de resultado explícito.",
+    "Simule incertezas",
+    "Use a simulação de Monte Carlo com uma semente definida e confira os resumos estatísticos.",
+    "Trabalhe com agentes locais",
+    "Use a ferramenta MCP independente por stdio com execução local sob demanda."
+  ],
+  "ru": [
+    "Оптимизация и моделирование",
+    "Оптимизация и моделирование на твоём компьютере.",
+    "Решай численные модели и запускай моделирование с общим SDK на Rust. Настольное приложение и локальные инструменты для агентов используют один вычислительный движок.",
+    "Оптимизация моделей",
+    "Решай поддерживаемые линейные и целочисленные модели с явно указанным статусом результата.",
+    "Моделирование неопределённости",
+    "Используй моделирование Монте-Карло с заданным зерном и изучай статистические сводки.",
+    "Работа с локальными агентами",
+    "Используй отдельный инструмент MCP через stdio с локальным запуском по требованию."
+  ],
+  "zh-CN": [
+    "优化与模拟",
+    "在你的电脑上进行优化与模拟。",
+    "使用共享的 Rust SDK 求解数值模型并运行模拟。桌面应用和本地智能体工具使用同一个计算引擎。",
+    "优化模型",
+    "求解支持的线性和整数模型，并明确显示结果状态。",
+    "模拟不确定性",
+    "使用指定随机种子的蒙特卡洛模拟，并查看统计摘要。",
+    "与本地智能体协作",
+    "通过 stdio 使用独立的 MCP 工具，按需在本地运行。"
+  ]
+}

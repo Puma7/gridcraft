@@ -1,0 +1,899 @@
+{
+  "schema_version": 1,
+  "provenance": "Synthetic analytic cases authored for Solvercraft. Expected results derived independently of implementation.",
+  "cases": [
+    {
+      "id": "wyndor",
+      "model": {
+        "schema_version": 1,
+        "name": "Wyndor",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 3
+            },
+            {
+              "variable": 1,
+              "coefficient": 5
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "x-cap",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 4
+          },
+          {
+            "name": "y-cap",
+            "terms": [
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 6
+          },
+          {
+            "name": "mix",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 3
+              },
+              {
+                "variable": 1,
+                "coefficient": 2
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 18
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 36,
+        "values": [
+          2,
+          6
+        ]
+      },
+      "rationale": "At y=6 the mix constraint gives x<=2; inspect vertices of the feasible polygon.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "alternative-optima",
+      "model": {
+        "schema_version": 1,
+        "name": "Alternative optima",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            },
+            {
+              "variable": 1,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "sum",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              },
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 1
+      },
+      "rationale": "Every feasible point with x+y=1 is optimal; no unique vector asserted.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "binary-triangle",
+      "model": {
+        "schema_version": 1,
+        "name": "Binary triangle",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "binary"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": 1,
+            "kind": "binary"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            },
+            {
+              "variable": 1,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "capacity",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 2
+              },
+              {
+                "variable": 1,
+                "coefficient": 2
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 3
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 1
+      },
+      "rationale": "Enumerating four binary assignments proves objective 1.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "continuous-triangle",
+      "model": {
+        "schema_version": 1,
+        "name": "Continuous triangle",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": 1,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            },
+            {
+              "variable": 1,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "capacity",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 2
+              },
+              {
+                "variable": 1,
+                "coefficient": 2
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 3
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 1.5
+      },
+      "rationale": "The relaxation permits x+y=1.5.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "inconsistent-rows",
+      "model": {
+        "schema_version": 1,
+        "name": "Inconsistent rows",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "lower",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "greater_equal",
+            "rhs": 2
+          },
+          {
+            "name": "upper",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "infeasible"
+      },
+      "rationale": "The two rows imply 2<=x<=1.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "unbounded-continuous",
+      "model": {
+        "schema_version": 1,
+        "name": "Unbounded continuous",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": []
+      },
+      "expected": {
+        "optimality": "unbounded"
+      },
+      "rationale": "For any finite x>=0, x+1 is feasible and improves the maximization objective.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "free-negative",
+      "model": {
+        "schema_version": 1,
+        "name": "Free negative variable",
+        "variables": [
+          {
+            "name": "x",
+            "lower": null,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "floor",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "greater_equal",
+            "rhs": -3
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": -3,
+        "values": [
+          -3
+        ]
+      },
+      "rationale": "No non-negativity may be introduced for a free variable.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "upper-only-negative",
+      "model": {
+        "schema_version": 1,
+        "name": "Upper only negative",
+        "variables": [
+          {
+            "name": "x",
+            "lower": null,
+            "upper": -2,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": []
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": -2,
+        "values": [
+          -2
+        ]
+      },
+      "rationale": "The finite upper bound is attainable; x is otherwise unbounded below.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "fixed-and-free",
+      "model": {
+        "schema_version": 1,
+        "name": "Fixed and free",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 2,
+            "upper": 2,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": null,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 3
+            },
+            {
+              "variable": 1,
+              "coefficient": -1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "y-cap",
+            "terms": [
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 4
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 2,
+        "values": [
+          2,
+          4
+        ]
+      },
+      "rationale": "With x=2, minimize 6-y over y<=4.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "equality-pair",
+      "model": {
+        "schema_version": 1,
+        "name": "Equality pair",
+        "variables": [
+          {
+            "name": "x",
+            "lower": null,
+            "upper": null,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": null,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            },
+            {
+              "variable": 1,
+              "coefficient": 2
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "sum",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              },
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "equal",
+            "rhs": 3
+          },
+          {
+            "name": "difference",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              },
+              {
+                "variable": 1,
+                "coefficient": -1
+              }
+            ],
+            "relation": "equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 4,
+        "values": [
+          2,
+          1
+        ]
+      },
+      "rationale": "The two linear equations uniquely determine x=2,y=1.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "objective-offset",
+      "model": {
+        "schema_version": 1,
+        "name": "Objective offset",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 3,
+            "upper": 4,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 100,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": []
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 103,
+        "values": [
+          3
+        ]
+      },
+      "rationale": "The lower bound minimizes x+100.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "bounded-large-objective",
+      "model": {
+        "schema_version": 1,
+        "name": "Bounded large objective",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": -1e+16
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": []
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": -1e+16,
+        "values": [
+          1
+        ]
+      },
+      "rationale": "Magnitude is not an unboundedness certificate; finite interval gives exact finite optimum.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "integer-equality-infeasible",
+      "model": {
+        "schema_version": 1,
+        "name": "Integer equality infeasible",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "integer"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 0
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "half",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "equal",
+            "rhs": 0.5
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "infeasible"
+      },
+      "rationale": "Neither integer 0 nor 1 satisfies x=0.5.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "unbounded-relaxation-infeasible-mip",
+      "model": {
+        "schema_version": 1,
+        "name": "Unbounded relaxation but infeasible MIP",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 1,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "half",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              }
+            ],
+            "relation": "equal",
+            "rhs": 0.5
+          }
+        ]
+      },
+      "expected": {
+        "forbidden_optimality": [
+          "unbounded",
+          "optimal"
+        ],
+        "permitted_feasibility": [
+          "infeasible",
+          "unknown"
+        ]
+      },
+      "rationale": "No integer point exists, even though the LP relaxation has an improving y-ray.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "zero-objective-feasibility",
+      "model": {
+        "schema_version": 1,
+        "name": "Zero objective feasibility",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": 1,
+            "kind": "continuous"
+          },
+          {
+            "name": "y",
+            "lower": 0,
+            "upper": 1,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "minimize",
+          "offset": 0,
+          "linear": [],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "cover",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1
+              },
+              {
+                "variable": 1,
+                "coefficient": 1
+              }
+            ],
+            "relation": "greater_equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 0
+      },
+      "rationale": "Every feasible point has the same objective; no unique point asserted.",
+      "required_for_alpha": true
+    },
+    {
+      "id": "small-pivot-challenge",
+      "model": {
+        "schema_version": 1,
+        "name": "Small but finite pivot",
+        "variables": [
+          {
+            "name": "x",
+            "lower": 0,
+            "upper": null,
+            "kind": "continuous"
+          }
+        ],
+        "objective": {
+          "direction": "maximize",
+          "offset": 0,
+          "linear": [
+            {
+              "variable": 0,
+              "coefficient": 1
+            }
+          ],
+          "quadratic": []
+        },
+        "constraints": [
+          {
+            "name": "scaled-cap",
+            "terms": [
+              {
+                "variable": 0,
+                "coefficient": 1e-10
+              }
+            ],
+            "relation": "less_equal",
+            "rhs": 1
+          }
+        ]
+      },
+      "expected": {
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "objective": 10000000000.0,
+        "values": [
+          10000000000.0
+        ]
+      },
+      "rationale": "A fixed pivot threshold must not turn an attainable finite optimum into unboundedness; challenge for numerical scaling.",
+      "required_for_alpha": false
+    }
+  ],
+  "simulation_reference_cases": [
+    {
+      "id": "constant",
+      "input": {
+        "kind": "constant",
+        "value": 7
+      },
+      "expected": {
+        "mean": 7,
+        "variance": 0
+      }
+    },
+    {
+      "id": "uniform-analytic",
+      "input": {
+        "kind": "uniform",
+        "low": 2,
+        "high": 8
+      },
+      "expected": {
+        "population_mean": 5,
+        "population_variance": 3
+      }
+    },
+    {
+      "id": "discrete-cvar-atom",
+      "losses": [
+        0,
+        0,
+        0,
+        10
+      ],
+      "confidence": 0.5,
+      "expected": {
+        "value_at_risk": 0,
+        "conditional_value_at_risk": 5
+      },
+      "rationale": "Worst 50% consists of one loss 10 and one loss 0; conditioning on all observations >= VaR incorrectly averages all four."
+    }
+  ]
+}

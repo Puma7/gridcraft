@@ -1,0 +1,309 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final6",
+  "artifact": "solvercraft/docs/implementation/dependency-final6-inventory.json",
+  "full_local_report_sha256": "13e1ea8e2a30e503e35182fd38c34f83c387ac501520d197ac2ea9d81cff55b1",
+  "raw_code_input_sha256": "c4a349613fcb95e65a56429acd34c08a7f129102edb346c545854026e11795a7",
+  "canonical_code_input_sha256": "0ed5c92fd31d137b68115df67e910fd50ff8ef7a145896da86d1578b2eb43d76",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only. Full original diagnostics remain local; no paths, environment, command-line, driver/session dumps or arbitrary stdout/stderr are included.",
+  "lock_sha256": "79800cf020305f03248c135fc325309e3b4160f0a704c7d2404bd4e40b6a30b5",
+  "packages": [
+    {
+      "name": "amd",
+      "version": "0.2.2",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "name": "autocfg",
+      "version": "1.5.1",
+      "license": "Apache-2.0 OR MIT"
+    },
+    {
+      "name": "bumpalo",
+      "version": "3.20.3",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "cfg-if",
+      "version": "1.0.5",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "clarabel",
+      "version": "0.11.1",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "darling",
+      "version": "0.14.4",
+      "license": "MIT"
+    },
+    {
+      "name": "darling_core",
+      "version": "0.14.4",
+      "license": "MIT"
+    },
+    {
+      "name": "darling_macro",
+      "version": "0.14.4",
+      "license": "MIT"
+    },
+    {
+      "name": "derive_builder",
+      "version": "0.11.2",
+      "license": "MIT/Apache-2.0"
+    },
+    {
+      "name": "derive_builder_core",
+      "version": "0.11.2",
+      "license": "MIT/Apache-2.0"
+    },
+    {
+      "name": "derive_builder_macro",
+      "version": "0.11.2",
+      "license": "MIT/Apache-2.0"
+    },
+    {
+      "name": "either",
+      "version": "1.19.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "enum_dispatch",
+      "version": "0.3.13",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "fnv",
+      "version": "1.0.7",
+      "license": "Apache-2.0 / MIT"
+    },
+    {
+      "name": "futures-core",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "futures-task",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "futures-util",
+      "version": "0.3.34",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "ident_case",
+      "version": "1.0.1",
+      "license": "MIT/Apache-2.0"
+    },
+    {
+      "name": "itertools",
+      "version": "0.11.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "itoa",
+      "version": "1.0.18",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "js-sys",
+      "version": "0.3.107",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "lazy_static",
+      "version": "1.5.1",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "memchr",
+      "version": "2.8.3",
+      "license": "Unlicense OR MIT"
+    },
+    {
+      "name": "num-traits",
+      "version": "0.2.19",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "once_cell",
+      "version": "1.21.4",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "pin-project-lite",
+      "version": "0.2.17",
+      "license": "Apache-2.0 OR MIT"
+    },
+    {
+      "name": "proc-macro2",
+      "version": "1.0.107",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "quote",
+      "version": "1.0.47",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "rustversion",
+      "version": "1.0.23",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "serde",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "serde-big-array",
+      "version": "0.5.1",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "serde_core",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "serde_derive",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.149",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "slab",
+      "version": "0.4.12",
+      "license": "MIT"
+    },
+    {
+      "name": "solvercraft",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-cli",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-compile",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-engines",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-math",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-model",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-simulation",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "solvercraft-types",
+      "version": "0.1.0",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "strsim",
+      "version": "0.10.0",
+      "license": "MIT"
+    },
+    {
+      "name": "syn",
+      "version": "1.0.109",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "syn",
+      "version": "2.0.119",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "syn",
+      "version": "3.0.9",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "thiserror",
+      "version": "1.0.69",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "thiserror-impl",
+      "version": "1.0.69",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "unicode-ident",
+      "version": "1.0.27",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0"
+    },
+    {
+      "name": "wasm-bindgen",
+      "version": "0.2.130",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "wasm-bindgen-macro",
+      "version": "0.2.130",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "wasm-bindgen-macro-support",
+      "version": "0.2.130",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "wasm-bindgen-shared",
+      "version": "0.2.130",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "web-time",
+      "version": "0.2.4",
+      "license": "MIT OR Apache-2.0"
+    },
+    {
+      "name": "zmij",
+      "version": "1.0.19",
+      "license": "MIT"
+    }
+  ],
+  "package_count": 56,
+  "license_details": "See solvercraft/licenses/THIRD_PARTY.md and checked-in lockfiles; machine-local metadata/paths omitted."
+}

@@ -86,9 +86,19 @@ pub fn precedents(wb: &Workbook, sheet: usize, e: &Expr) -> (Vec<Area>, bool) {
 }
 
 fn is_special(n: &str) -> bool {
+    if super::solvercraft::distribution_arity(n).is_some() {
+        return true;
+    }
     matches!(
         n,
         "IF" | "IFS"
+            | "SC.NORMAL"
+            | "SC.UNIFORM"
+            | "SC.TRIANGULAR"
+            | "SC.OUTPUT"
+            | "SC.MEAN"
+            | "SC.QUANTILE"
+            | "SC.CVAR"
             | "IFERROR"
             | "IFNA"
             | "CHOOSE"
@@ -125,6 +135,62 @@ fn is_special(n: &str) -> bool {
 
 /// Names of functions the evaluator implements itself (merged into the function list for UI).
 pub const SPECIAL_FUNCTIONS: &[&str] = &[
+    "SC.PSI.UNIFORM",
+    "SC.PSI.INTUNIFORM",
+    "SC.PSI.NORMAL",
+    "SC.PSI.LOGNORMAL",
+    "SC.PSI.LOGNORM2",
+    "SC.PSI.TRIANGULAR",
+    "SC.PSI.PERT",
+    "SC.PSI.BETA",
+    "SC.PSI.GAMMA",
+    "SC.PSI.EXPONENTIAL",
+    "SC.PSI.WEIBULL",
+    "SC.PSI.BERNOULLI",
+    "SC.PSI.BINOMIAL",
+    "SC.PSI.POISSON",
+    "SC.PSI.NEGBINOMIAL",
+    "SC.PSI.GEOMETRIC",
+    "SC.PSI.DISUNIFORM",
+    "SC.PSI.DISCRETE",
+    "SC.PSI.CUMUL",
+    "SC.PSI.LEVY",
+    "SC.PSI.CHISQUARE",
+    "SC.PSI.ERLANG",
+    "SC.PSI.FDIST",
+    "SC.PSI.KUMARASWAMY",
+    "SC.PSI.LOGISTIC",
+    "SC.PSI.MAXEXTREME",
+    "SC.PSI.MINEXTREME",
+    "SC.PSI.RAYLEIGH",
+    "SC.PSI.RECIPROCAL",
+    "SC.PSI.STUDENT",
+    "SC.PSI.HYPSECANT",
+    "SC.PSI.METALOG",
+    "SC.DISCRETEUNIFORM",
+    "SC.LOGNORMAL",
+    "SC.LOGNORMALMEAN",
+    "SC.BETAPERT",
+    "SC.BETA",
+    "SC.GAMMA",
+    "SC.EXPONENTIAL",
+    "SC.WEIBULL",
+    "SC.BERNOULLI",
+    "SC.BINOMIAL",
+    "SC.POISSON",
+    "SC.NEGATIVEBINOMIAL",
+    "SC.GEOMETRIC",
+    "SC.EMPIRICAL",
+    "SC.EMPIRICALCONTINUOUS",
+    "SC.CATEGORICAL",
+    "SC.CUMUL",
+    "SC.NORMAL",
+    "SC.UNIFORM",
+    "SC.TRIANGULAR",
+    "SC.OUTPUT",
+    "SC.MEAN",
+    "SC.QUANTILE",
+    "SC.CVAR",
     "IF",
     "IFS",
     "IFERROR",

@@ -1,0 +1,140 @@
+# Typed reference parameterizations and executable function mapping
+
+`crates/math/src/reference_functions.rs` supplies typed inverse parameterizations
+for the mathematical cores of the 28 frozen Alt families and explicit native
+location/bounds/order conversions. `crates/math/tests/reference_functions.rs`
+has **40 executed tests**, including independent CDF formulas and additional
+percentiles not used during fitting. Windows Rust 1.95 tests and all-target
+Clippy passed. This does not establish PSI worksheet property/default parity.
+
+`reference-implementation.json` has one row per frozen function, with source
+hash/pages, actual executable test selectors, native/browser status, guarantee
+and remaining gap. Its R046 scope is **111** distribution/Alt/custom/special/
+time-series entries. The other 161 entries remain in the full-reference/R091 inventory, not as
+additional R046 distribution requirements or an implicit mandatory R081 import list.
+
+The final6 [original-scope audit](../qa/original-scope-audit.md) maps all 111
+mathematical capability names to positive cases in the actual SDK 630 run
+(73 test bodies, 13 source files) and records the source hashes/log lines. R046
+has bounded mathematical acceptance. Exact Pearson 6Alt/WeibullAlt vendor arity
+remains open; that does not erase the executed mathematical constructors.
+The historical final6 R081 assessment accepted its nineteen top-level conversion
+forms/policies, with native and real-browser evidence and disclosed outside
+value loss. It does not promote these typed constructors to worksheet aliases.
+
+## Final7: qualified 31-form worksheet expansion
+
+Twelve additional scalar core adapters bring the active registry to 31; they do
+not create new Alt constructors or alter the 111 mathematical/272 reference
+scopes. The exact additions and required arities are in
+[reference-gaps.md](reference-gaps.md). The enlarged contract now has actual
+final7 native/SDK/browser qualification: all ten host stages with 2904 passed,
+zero failed and one existing ignored; SDK 630, UI 6, charts 8 numerical+1 lifecycle,
+Chrome SDK 13 and first-attempt Worker 9 all passed. The old 19 and new 12 import
+bodies both passed. The new 4096-trial seed 42 prefix checked 24 empirical CDF
+anchors with maximum error 0.020751953125 below tolerance 0.054792830314635735.
+These are scoped empirical results, not full-vendor or universal tail guarantees.
+The [final7 summary](final7-verification-summary.json) and [actual worker report](browser-worker-final7-report.json) identify this run. Raw code/input SHA-256: `8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065`; LF-canonical SHA-256: `dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472`. Historical final6 evidence remains separately labelled below.
+
+Current native PSI evidence comprises 31 separately named positive forms and 9 negative/policy groups (40 engine tests), plus 37 Calc tests. These selectors are present in the [final7 native test excerpt](gates-final7/host/host-ci.txt). The [CDF-prefix witness](psi-core12-cdf-final7-report.json) records the 24 comparisons and their outside-value basis. These public files are compact projections/excerpts, not complete private diagnostic dumps.
+
+
+
+HypSecant requires a genuine parameter conversion: the frozen guide's native
+beta is the standard deviation, while the SDK HyperbolicSecant has variance
+`pi^2 * scale^2 / 4`. Use `beta * FRAC_2_PI`, not `(2 * beta) / pi`, to avoid an
+unnecessary intermediate overflow. Kumaraswamy requires all four arguments:
+`X = min + (max-min)*Y`, with Y on [0,1]. This is affine in the sampled Y, not a
+claim of affine dependence on its shape parameters. Shared SDK validation still
+bounds df/k at 10000, Kumaraswamy shapes to [1e-4,1e4] and requires finite positive
+width. These are numerical capacities, not additional vendor domain claims.
+
+Student df=1 is a labelled median fallback, while df=2 has analytic mean 0 even
+though its variance is undefined. FDist denominator df<=2 uses median fallback;
+a larger denominator uses its finite mean. Levy always uses a labelled median
+fallback. All are explicit SC outside-value policies, not vendor display-state
+compatibility. Basis labels must be retained even when a mean and median happen
+to have the same numerical value.
+
+The canonical immutable `gridcraft_calc::PSI_CORE_SIGNATURES` registry supplies
+`legacy_name`, `worksheet_name` and `required_arguments` for all 31 forms. Calc
+decoding, known-function recognition, host import and reported capabilities use
+this shared contract rather than separate name/arity maps. Its counts are vendor
+required core arguments; the optional numeric SC nominal override is not a
+vendor property or an extra imported PSI argument.
+
+## Public mathematical contracts
+
+`Claim` is a strict tagged enum for percentile probability/value, mean, variance,
+standard deviation, location, scale, shape(s), lower/upper bound and mode. Native
+selector meanings are explicit: e.g. Inverse-Gaussian `Scale` means lambda;
+lognormal mean/std claims are arithmetic moments. Unknown fields, duplicate
+selectors, invalid probabilities and inconsistent claims return errors.
+
+| API | Covered reference cores | Method |
+|---|---|---|
+| `location_scale` | Normal, Uniform, Cauchy, Logistic, Laplace, HypSecant, Levy, MaxExtreme, MinExtreme Alt | Affine 2 x2 parameter equations, original CDF check |
+| `scale_only` | Erf, Exponential, Rayleigh Alt | Scale/moment identities, original CDF check |
+| `shape_only` | ChiSquare, Student Alt | Bounded CDF root; ChiSquare variance identity |
+| `shape_scale` | Gamma, Pearson 5, Pareto, Pareto 2 Alt | Native/moment identities or bounded one-dimensional shape root |
+| `location_shape_scale` | FatigueLife, Frechet, LogLogistic Alt | Three percentiles or native/percentile mixtures; affine elimination plus bounded shape root |
+| `inverse_gaussian` | InvNormal Alt | Mean/variance/lambda identities or bounded shape-ratio root |
+| `lognormal` | LogNormal Alt | Log-space identities; arithmetic-mean quadratic or bounded std root |
+| `bounded` | BetaGen, Pert, Triangular Alt mathematical claims | Damped Gauss-Newton/Levenberg-Marquardt parameter equations, original claims postchecked |
+| `bounded(BetaPrime,...)` | Mathematically identified Pearson 6 alternative | Three explicit claims, rather than inventing the frozen two-claim default |
+| `weibull` | Mathematically identified Weibull alternative | Two explicit claims, rather than inventing the frozen one-claim default |
+
+`burr12`, `dagum`, `fatigue_life`, `frechet`, `johnson_sb`, `kumaraswamy`,
+`log_logistic` and `pareto` preserve the reference's native location, min/max and
+parameter order. `normal_skew` implements the Myerson percentile geometry with
+the fixed total tail probability, separately from Azzalini's `SkewNormal` DTO.
+Its width correction and unresolved vendor documentation are explicit below.
+
+## Numerical domains, budgets and guarantees
+
+Closed-form solutions must validate the returned distribution and original CDF
+anchors. One-dimensional roots are bracketed on positive shape [1e-4, 1e4] in log
+coordinates, with finite grids, capped bisection, evaluation limits and cancel
+checks. The first bracketed valid parameterization is the documented numerical
+selection policy; no global uniqueness guarantee is made. Different inverse
+formulations can be non-identifiable. In particular, a lognormal percentile plus
+arithmetic mean can have two positive log scales, and a triangular CDF's single
+branch cannot identify both bounds and its mode. These are explicit errors.
+
+The small nonlinear fit uses at most four parameters, normalized values,
+positive log-shapes/scales and a logistic interior mode. It solves damped normal
+equations with checked pivots and bounds each update. Five deterministic starts,
+the configured residual-evaluation limit (maximum 100,000), and iteration limit
+(maximum 256) bound work. Normalized location is restricted to [-100,100], width
+log to [-20, 20], Beta shapes to [1e-4, 1e4] and interior-mode logit to [-18, 18].
+These limits are explicit numerical scope, not the entire vendor domain.
+
+Successful numerical fits must preserve all original percentile claims, pass a
+local Jacobian rank check and independently verify native parameters/moments of
+the actual rounded returned distribution. Variance is checked in relative std
+units, so a large location cannot hide a wrong tiny positive variance. A
+regression covers that case. CDF checks allow 3e-7 to accommodate the legacy
+normal CDF approximation. No numerical rank check proves global uniqueness.
+Convergence failures, incompatible claims, ambiguous parameters, cancellation
+and budgets return structured errors; they are not relabeled as successful fits.
+
+BetaGen four-percentile tests compare extra anchors against the independent
+Beta(2, 3) CDF polynomial. Pert tests use Beta(2, 4)'s polynomial and canonical
+weight 4. Triangular tests cover both branches and explicitly reject three
+single-branch percentiles by the inverse-CDF identity. FatigueLife tests use
+Gaussian score geometry; InvNormal two-quantile tests use independent SciPy
+constants. Other cases use tangent, exponential, power and normal identities.
+
+The nonlinear parameter algorithm is implemented independently from the primary
+method of Marquardt (1963), https://doi.org/10.1137/0111030. No vendor code,
+licensed implementation, reference PDF or copied manual prose is included.
+
+## Remaining compatibility questions
+
+The frozen source and current official help leave Pearson 6Alt/WeibullAlt arity
+underdetermined, and print a non-translation-consistent NormalSkew width.
+[reference-open-questions.md](reference-open-questions.md) records exact sources,
+questions and the SDK's explicit choices. The mathematical constructors do not
+invent an undocumented PSI default or register these ambiguous names as worksheet
+aliases. Optional properties, omitted/empty arguments, outside-simulation values,
+cell metadata, fitting defaults and host integration remain separate R081 work.

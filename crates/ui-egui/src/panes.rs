@@ -27,6 +27,7 @@ pub fn show(app: &mut SheetApp, ui: &mut Ui) {
                 "watch" => "Watch Window",
                 "selection" => "Selection",
                 "formatChart" => "Format Chart Area",
+                "solvercraft" => "Solvercraft",
                 _ => "",
             };
             ui.label(egui::RichText::new(title).font(theme::ui_bold(15.0)));
@@ -37,6 +38,9 @@ pub fn show(app: &mut SheetApp, ui: &mut Ui) {
                     }
                     app.grid.pane = None;
                 }
+                if pane == "solvercraft" {
+                    crate::solvercraft::microgrid_button(app, ui);
+                }
             });
         });
         ui.separator();
@@ -45,6 +49,7 @@ pub fn show(app: &mut SheetApp, ui: &mut Ui) {
             "watch" => watch(app, ui),
             "selection" => selection(app, ui),
             "formatChart" => format_chart(app, ui),
+            "solvercraft" => crate::solvercraft::show(app, ui),
             _ => {}
         });
     });

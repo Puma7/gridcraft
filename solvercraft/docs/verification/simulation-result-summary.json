@@ -1,0 +1,51 @@
+{
+  "options": {
+    "max_memory_bytes": 33554432,
+    "method": "latin_hypercube",
+    "retain_samples": true,
+    "seed": "42",
+    "trials": 10000
+  },
+  "result": {
+    "completed_trials": 10000,
+    "samples": "10000 retained rows verified; omitted in this report",
+    "sampling_version": "solvercraft-addressed-mix64-v1",
+    "summaries": [
+      {
+        "conditional_value_at_risk_95": 99.36787032321914,
+        "count": 10000,
+        "maximum": 115.99038704301881,
+        "mean": 73.33318691254172,
+        "minimum": 22.03783588459673,
+        "quantiles": [
+          [
+            0.05,
+            51.26507848077673
+          ],
+          [
+            0.25,
+            64.43222830341375
+          ],
+          [
+            0.5,
+            73.89576605085935
+          ],
+          [
+            0.75,
+            82.40210952088168
+          ],
+          [
+            0.95,
+            94.55884482901982
+          ]
+        ],
+        "value_at_risk_95": 94.55884482901982,
+        "variance": 174.15889434687625
+      }
+    ],
+    "termination": "completed",
+    "warnings": []
+  },
+  "schema_version": 1,
+  "version": "0.1.0"
+}

@@ -19,6 +19,7 @@ pub mod review;
 pub mod sheet;
 pub mod slicer;
 pub mod solver;
+pub mod solvercraft;
 pub mod spelling;
 pub mod stash;
 pub mod view;
@@ -148,6 +149,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
         v.extend(draw::specs());
         v.extend(spelling::specs());
         v.extend(solver::specs());
+        v.extend(solvercraft::specs());
         v.extend(pivot::specs());
         v.extend(slicer::specs());
         v.extend(whatif::specs());
@@ -373,12 +375,25 @@ pub(crate) fn commit<R>(d: &mut DocState, f: impl FnOnce(&mut Ctx) -> Result<R>)
         edits: Vec::new(),
     };
     let r = f(&mut ctx)?;
-    let Ctx { mut wb, changed, structural, mut fit_rows, protection_checked, edits, .. } = ctx;
+    let Ctx { mut wb, mut changed, structural, mut fit_rows, protection_checked, edits, .. } = ctx;
     if !protection_checked {
         check_protection(&d.wb, &wb, &d.unlocked_ranges)?;
     }
     if !structural {
         check_arrays(&d.wb, &wb)?;
+    }
+    if !wb.simulation_statistics.is_empty() && std::sync::Arc::ptr_eq(&wb.simulation_statistics, &d.wb.simulation_statistics) {
+        let previous = std::mem::take(&mut wb.simulation_statistics);
+        for &(sheet, cell) in previous.keys() {
+            changed.push((sheet, cell));
+            if !structural
+                && wb.calc.mode == gridcraft_model::CalcMode::Manual
+                && let Some(value) = wb.sheet_mut(sheet).and_then(|sheet| sheet.cells.get_mut(cell))
+                && value.formula.is_some()
+            {
+                value.value = gridcraft_core::Value::Error(gridcraft_core::CellError::NA);
+            }
+        }
     }
     if let Some(log) = d.touched.as_mut() {
         for (si, c) in changed.iter().take(TOUCH_LOG_LIMIT.saturating_sub(log.len())) {

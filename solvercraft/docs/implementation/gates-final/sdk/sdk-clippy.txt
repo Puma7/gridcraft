@@ -1,0 +1,229 @@
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_types-1d868o2gd7nlc\s-hnqcmkhbn4-0us7nhn-working`
+
+warning: `solvercraft-types` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_math-1malzqofigp4h\s-hnqcmmd1pn-07h7qpi-working`
+
+warning: `solvercraft-math` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_model-32elvod9ld550\s-hnqcmml1k2-007miky-working`
+
+warning: `solvercraft-model` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_simulation-0kt64ildj6u82\s-hnqcmo58mc-1ghcc35-working`
+
+warning: `solvercraft-simulation` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_compile-0jqqg2y6gyrhj\s-hnqcmowg2w-0fpkxm7-working`
+
+warning: `solvercraft-compile` (lib) generated 1 warning
+    Checking solvercraft-engines v0.1.0 ($SDK_ROOT\crates\engines)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\multi_output_validation-05hsjashv9spt\s-hnqcmznhwb-07x1a1i-working`
+
+warning: `solvercraft-compile` (test "multi_output_validation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_catalog-0cpwpbpjl1ojt\s-hnqcmsvcw4-0hnhsqi-working`
+
+warning: `solvercraft-compile` (test "reference_catalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_engines-1osgudu4e0mle\s-hnqe0krpf9-1ua0iq6-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_engines-207co0t1bfyi6\s-hnqe0kvnf4-0lp736s-working`
+
+warning: `solvercraft-engines` (lib) generated 1 warning
+    Checking solvercraft v0.1.0 ($SDK_ROOT\crates\solvercraft)
+warning: `solvercraft-engines` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft-22n2qy4ani701\s-hnqe0lvhb3-0z6wpgf-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-2d6ghzfn2a0ap\s-hnqe0lzmsi-0bknnyz-working`
+
+warning: `solvercraft-engines` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\mixed_conic-1mufrp9tvhmko\s-hnqe0mu0o2-04ytaoj-working`
+
+warning: `solvercraft-engines` (test "mixed_conic") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft-19e0kgwwzfrlq\s-hnqe0nc4w7-1joypjk-working`
+
+warning: `solvercraft` (lib) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\ellipsoid_precision-3tfflseup1uxe\s-hnqe0otx7p-0cbk8ph-working`
+
+warning: `solvercraft` (test "ellipsoid_precision") generated 1 warning
+    Checking solvercraft-cli v0.1.0 ($SDK_ROOT\crates\cli)
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_cli-3m0ohv61gv0qs\s-hnqe0p9vwx-04boosr-working`
+
+warning: `solvercraft-cli` (bin "solvercraft-cli") generated 1 warning
+warning: `solvercraft` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\nonlinear_workflows-1rvlur2i522k5\s-hnqe0qall0-0ov52iq-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced_process-3bbsvbpmq7nqu\s-hnqe0qf0he-0ex77s7-working`
+
+warning: `solvercraft` (test "nonlinear_workflows") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\end_to_end-1omnmrhhw75ip\s-hnqe0qno68-1fopa4t-working`
+
+warning: `solvercraft-cli` (test "advanced_process") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_cli-0ks2623nv20xc\s-hnqe0qyoz0-0emcfcq-working`
+
+warning: `solvercraft-cli` (test "end_to_end") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\api_review-0tk84zdbzoavl\s-hnqe0r9wma-0aox4je-working`
+
+warning: `solvercraft` (test "api_review") generated 1 warning
+warning: `solvercraft-cli` (bin "solvercraft-cli" test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\run_manifest-1j9q03jgf5bf0\s-hnqe0rt0js-16t90he-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\contracts_e2e-2vstfhcs4c2yk\s-hnqe0rx7kr-1dytwyj-working`
+
+warning: `solvercraft` (test "run_manifest") generated 1 warning
+warning: `solvercraft` (test "contracts_e2e") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\saa_risk-17a0cykp8ozk9\s-hnqe0satra-09aludb-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\api_review-12rlgj5kyhtkx\s-hnqe0sfdjs-0yu8tx9-working`
+
+warning: `solvercraft` (test "saa_risk") generated 1 warning
+warning: `solvercraft-cli` (test "api_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\workflow_review-2563655qr4eux\s-hnqe0so0s4-0m4wski-working`
+
+warning: `solvercraft` (test "workflow_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\artcraft_layout-0jnu0nujvn5jt\s-hnqe0swjf0-01y7bxh-working`
+
+warning: `solvercraft` (example "artcraft_layout") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\johnson_independent-37p5apz4ndy8a\s-hnqe0t6dr3-1misl3d-working`
+
+warning: `solvercraft` (test "johnson_independent") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\stochastic-3ri5bj7ljci67\s-hnqe0tghw7-1nv0g49-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\ellipsoid-0qqvgl4z7zkth\s-hnqe0tn25h-0sldy9k-working`
+
+warning: `solvercraft` (test "stochastic") generated 1 warning
+warning: `solvercraft` (test "ellipsoid") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\independent-1fuhp5p3zsnw2\s-hnqe0tx0ch-078q5lc-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\owned_control-35qyuy4py936e\s-hnqe0u0xlu-1v9jo2a-working`
+
+warning: `solvercraft` (test "independent") generated 1 warning
+warning: `solvercraft` (test "owned_control") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\catalog_inputs-07kul55yknyl0\s-hnqe0udpgg-00s9xt4-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\runtime_review-1q5myplb8bl56\s-hnqe0uht7j-1dbbm8m-working`
+
+warning: `solvercraft` (test "catalog_inputs") generated 1 warning
+warning: `solvercraft` (test "runtime_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\global_review-1gokbjm7us2jo\s-hnqe0urksk-1xgivvp-working`
+
+warning: `solvercraft` (test "global_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced_models-1siov7g28hrp3\s-hnqe0uwksf-1vfcvdy-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\manifests-281d8zda1mklt\s-hnqe0v1z6a-1mbyslx-working`
+
+warning: `solvercraft` (test "advanced_models") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\job_runtime_e2e-1lli1rum4iec2\s-hnqe0vak1l-1w2lukk-working`
+
+warning: `solvercraft-cli` (test "manifests") generated 1 warning
+warning: `solvercraft` (test "job_runtime_e2e") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\server_e2e-14to2tfq7jdia\s-hnqe0vtsu9-0cb2q3a-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\discrete-1z2s00gtqxnfy\s-hnqe0w0hqh-07liz45-working`
+
+warning: `solvercraft` (test "server_e2e") generated 1 warning
+warning: `solvercraft-engines` (test "discrete") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\admission-2lj0ajzp386c1\s-hnqe0wd4q0-1gc1e4s-working`
+
+warning: `solvercraft-engines` (test "admission") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\convex_qp-0v1ogywwgriz3\s-hnqe0wlp5w-02155qy-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\conic-0asz3m7s7vlnh\s-hnqe0wrcxx-1gx2l7h-working`
+
+warning: `solvercraft-engines` (test "convex_qp") generated 1 warning
+warning: `solvercraft-engines` (test "conic") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\basis-1su52yzr0ehxk\s-hnqe0x7g7u-1x29l1z-working`
+
+warning: `solvercraft-engines` (test "basis") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\exact_bridge-3i2w7v7rvmx1h\s-hnqe0xj1nw-0foi3bi-working`
+
+warning: `solvercraft-engines` (test "exact_bridge") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-1crupwpfwqauu\s-hnqcmzw127-1rtr6ho-working`
+
+warning: `solvercraft-compile` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\advanced-1gnfwlpbo023i\s-hnqcn13dfb-0iqxjka-working`
+
+warning: `solvercraft-simulation` (test "advanced") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\resampling-2o8u9eqil17c0\s-hnqcn1ekoy-0mmuy9v-working`
+
+warning: `solvercraft-simulation` (test "resampling") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\intervals-2na495eh016je\s-hnqcmzz8bt-0r5gx2u-working`
+
+warning: `solvercraft-simulation` (test "intervals") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\numerical_review-03mznim8dbeuz\s-hnqcn1849n-0nypaow-working`
+
+warning: `solvercraft-simulation` (test "numerical_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\fitting-3314kvv5yhnt0\s-hnqcn0w9hg-01qvc7l-working`
+
+warning: `solvercraft-simulation` (test "fitting") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\evaluator_cancellation-3t2kvqr1ov3kz\s-hnqcmpepn9-1ms5v25-working`
+
+warning: `solvercraft-simulation` (test "evaluator_cancellation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\parameter_grid-3fllyv295vyay\s-hnqcn1isig-18vloow-working`
+
+warning: `solvercraft-simulation` (test "parameter_grid") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-0t6fbw3pljg13\s-hnqcn0rk2i-0b8k9vi-working`
+
+warning: `solvercraft-simulation` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_compile-31ox3puzr2nun\s-hnqcn72hob-0y1aaj2-working`
+
+warning: `solvercraft-compile` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\exact_products-0p48fm2ggs0ls\s-hnqcn6mnem-1xg8k10-working`
+
+warning: `solvercraft-model` (test "exact_products") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-03uditcrylgw3\s-hnqcn6anlz-1v5mrol-working`
+
+warning: `solvercraft-model` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\multivariate-1a3zqftoato3d\s-hnqcn3kzz3-1v1786b-working`
+
+warning: `solvercraft-math` (test "multivariate") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\deep_review-0acsc60f58moi\s-hnqcn3vapd-1gx204a-working`
+
+warning: `solvercraft-math` (test "deep_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\metalog-1p1if9iw4jptf\s-hnqcn3r0hu-064eagq-working`
+
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\certificate_review-2mbiuwyzeg2hb\s-hnqe0xrg12-0te3kma-working`
+
+warning: `solvercraft-math` (test "metalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\extreme_density-0pbrq5lsmbewh\s-hnqcn5nfaz-0mv4190-working`
+
+warning: `solvercraft-math` (test "extreme_density") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_math-2pgq33p7756d5\s-hnqcn7kqk1-0pn5agg-working`
+
+warning: `solvercraft-math` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\nominal-1w6vb9s0mbm3d\s-hnqcn37g5b-1z03mmp-working`
+
+warning: `solvercraft-math` (test "nominal") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\elicitation-2lmjmss8nwiqp\s-hnqcn4n2hw-0ac155f-working`
+
+warning: `solvercraft-math` (test "elicitation") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\catalog-19qsm5es3ou0d\s-hnqcn3ej0e-0pg3a5h-working`
+
+warning: `solvercraft-math` (test "catalog") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\density-3pnfwklf2v616\s-hnqcn5zr5z-12u59oj-working`
+
+warning: `solvercraft-math` (test "density") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_simulation-19l4xkcsd8it3\s-hnqcn47t5x-0rtamgi-working`
+
+warning: `solvercraft-simulation` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_functions-2ify0xx17scrb\s-hnqcn5hsz7-1i1cxbq-working`
+
+warning: `solvercraft-math` (test "reference_functions") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\reference_families-37gatba9giyzo\s-hnqcn66lfv-162sufo-working`
+
+warning: `solvercraft-math` (test "reference_families") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\numerical_review-09aoymef56do9\s-hnqcn5uxbb-06ry5v9-working`
+
+warning: `solvercraft-math` (test "numerical_review") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\json_contract-3asu5c1ffpzdt\s-hnqcn4d0ep-1ymybkt-working`
+
+warning: `solvercraft-math` (test "json_contract") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\time_series-2s61nmlhnm88h\s-hnqcn59pwl-0b317hf-working`
+
+warning: `solvercraft-math` (test "time_series") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\johnson_moments-3k47agz3payfi\s-hnqcn421uc-0afi57t-working`
+
+warning: `solvercraft-math` (test "johnson_moments") generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_model-192nlnirh5g5j\s-hnqcn7q64t-1rso6s7-working`
+
+warning: `solvercraft-model` (lib test) generated 1 warning
+warning: hard linking files in the incremental compilation cache failed. copying files instead. consider moving the cache directory to a file system which supports hard linking in session dir `\\?\$BUILD_OUTPUT\validation\debug\incremental\solvercraft_types-1svjyilcfqgn9\s-hnqcmkpmik-1suguml-working`
+
+warning: `solvercraft-types` (lib test) generated 1 warning
+warning: `solvercraft-engines` (test "certificate_review") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 24.54s

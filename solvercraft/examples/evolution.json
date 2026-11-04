@@ -1,0 +1,57 @@
+{
+  "model": {
+    "name": "Nonsmooth bounded search",
+    "variables": [
+      {
+        "name": "x",
+        "lower": -5,
+        "upper": 5,
+        "kind": "continuous"
+      },
+      {
+        "name": "y",
+        "lower": -5,
+        "upper": 5,
+        "kind": "continuous"
+      }
+    ],
+    "direction": "minimize",
+    "objective": {
+      "op": "add",
+      "left": {
+        "op": "abs",
+        "value": {
+          "op": "subtract",
+          "left": {
+            "op": "variable",
+            "index": 0
+          },
+          "right": {
+            "op": "constant",
+            "value": 3
+          }
+        }
+      },
+      "right": {
+        "op": "abs",
+        "value": {
+          "op": "add",
+          "left": {
+            "op": "variable",
+            "index": 1
+          },
+          "right": {
+            "op": "constant",
+            "value": 2
+          }
+        }
+      }
+    },
+    "constraints": []
+  },
+  "options": {
+    "method": "differential_evolution",
+    "max_evaluations": 20000,
+    "seed": "42"
+  }
+}

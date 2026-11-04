@@ -1,0 +1,319 @@
+{
+  "schema": "solvercraft.public-evidence-projection.v1",
+  "candidate": "final7",
+  "artifact": "solvercraft/docs/implementation/exact-binary-oracle-final7-report.json",
+  "full_local_report_sha256": "b4e8df4833f327abcc1cc04681c5f42c0c54c86b8939ce1fb0a8d96e24bdd834",
+  "raw_code_input_sha256": "8d74eebf83ef7986d0dd5cb302ce159413b49d7e51c5327947a2d8444e505065",
+  "canonical_code_input_sha256": "dc58726c5be86ddda8e5c6bfffdfe25507a29b66bedd51e50f376bcfbc3ad472",
+  "code_input_files": 791,
+  "release_binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+  "versions": {
+    "rust": "1.95.0",
+    "rustfmt": "1.9.0",
+    "clippy": "0.1.95",
+    "chrome": "156.0.8078.74",
+    "chromedriver": "156.0.8078.80",
+    "wasm_bindgen": "0.2.130",
+    "trunk": "0.21.14",
+    "solvercraft": "0.1.0",
+    "python": "3.12.6",
+    "numpy": "2.2.0",
+    "psutil": "7.2.1"
+  },
+  "publication_scope": "Fixed public fields only; full original diagnostics remain private. No local paths/environment/argv/driver/session dumps/arbitrary stdout/stderr/full source maps.",
+  "compiled_reference_matrix_sha256": "b71c419a21c70fde8c9f0ac54efc43a16373b47dd567ee00e901e20b01344108",
+  "results": {
+    "harness_sha256": "7c342e2c727d706ca30ab96dfa2e62399e285adac153dc0458f9c1dfd8b4ad79",
+    "binary_sha256": "68a6ab8da2646ddb82ca312b6c8977e8c3cf596ed802b8f343e92d51d662c6e1",
+    "passed": true,
+    "exact_optimal_cases": 3,
+    "node_limit_controls": 1
+  },
+  "case_results": [
+    {
+      "request_wire_sha256": "48e2a096f5beb38b394282603c8a29a9309d34cc365fc9496e7f767a5fccbf43",
+      "request_canonical_json_sha256": "660f4296a6a7e45c817b23f41a6a6f6efb5b587634f13c6728d5a53cde111a47",
+      "effective_options": {
+        "method": "auto",
+        "max_evaluations": 100000,
+        "max_iterations": 100000,
+        "max_nodes": 10000,
+        "max_memory_bytes": 268435456,
+        "feasibility_tolerance": 1e-07,
+        "integrality_tolerance": 1e-07,
+        "optimality_tolerance": 1e-08,
+        "relative_gap": 0.0,
+        "seed": "0"
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": 500.0,
+        "best_bound": 500.0,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1"
+      },
+      "elapsed_seconds": 0.18550259998301044,
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 0
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": 500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": 500
+      },
+      "passed": true,
+      "case_index": 0,
+      "synthetic_request_canonical_json_sha256": "660f4296a6a7e45c817b23f41a6a6f6efb5b587634f13c6728d5a53cde111a47",
+      "objective_context": {
+        "direction": "maximize",
+        "offset": 0,
+        "linear": [
+          {
+            "variable": 0,
+            "coefficient": 1000000000000
+          },
+          {
+            "variable": 1,
+            "coefficient": 500
+          }
+        ]
+      },
+      "seed_supplied": false
+    },
+    {
+      "request_wire_sha256": "38bb59c690e33437925f9568fb51f8440891c9f59e07b9c0702a0e5b6d205963",
+      "request_canonical_json_sha256": "31f5153d1bd174a312d5b53463cec33893b725aa7a8b68533cb72319dce6e935",
+      "effective_options": {
+        "method": "auto",
+        "max_evaluations": 100000,
+        "max_iterations": 100000,
+        "max_nodes": 10000,
+        "max_memory_bytes": 268435456,
+        "feasibility_tolerance": 1e-07,
+        "integrality_tolerance": 1e-07,
+        "optimality_tolerance": 1e-08,
+        "relative_gap": 0.0,
+        "seed": "0"
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": 1.00000000000005e+16,
+        "best_bound": 1.00000000000005e+16,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1"
+      },
+      "elapsed_seconds": 0.26864919997751713,
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 10000000000000000
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": 10000000000000500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": 10000000000000500
+      },
+      "passed": true,
+      "case_index": 1,
+      "synthetic_request_canonical_json_sha256": "31f5153d1bd174a312d5b53463cec33893b725aa7a8b68533cb72319dce6e935",
+      "objective_context": {
+        "direction": "maximize",
+        "offset": 10000000000000000,
+        "linear": [
+          {
+            "variable": 0,
+            "coefficient": 1000000000000
+          },
+          {
+            "variable": 1,
+            "coefficient": 500
+          }
+        ]
+      },
+      "seed_supplied": false
+    },
+    {
+      "request_wire_sha256": "569d6998ff44ee8d47758dccaa979c0c527fb9d5c6217e07ee3ef255be99fd74",
+      "request_canonical_json_sha256": "23537732c2097a69929d593a9906b6d1a6b1fa8ac2b75462ea2ec3ff89019490",
+      "effective_options": {
+        "method": "auto",
+        "max_evaluations": 100000,
+        "max_iterations": 100000,
+        "max_nodes": 10000,
+        "max_memory_bytes": 268435456,
+        "feasibility_tolerance": 1e-07,
+        "integrality_tolerance": 1e-07,
+        "optimality_tolerance": 1e-08,
+        "relative_gap": 0.0,
+        "seed": "0"
+      },
+      "actual": {
+        "termination": "completed",
+        "feasibility": "feasible",
+        "optimality": "optimal",
+        "values": [
+          0.0,
+          1.0
+        ],
+        "objective": -500.0,
+        "best_bound": -500.0,
+        "relative_gap": 0.0,
+        "max_violation": 0.0,
+        "statistics": {
+          "evaluations": 3,
+          "iterations": 5,
+          "nodes": 3
+        },
+        "engine": "solvercraft-dense-simplex-0.1"
+      },
+      "elapsed_seconds": 0.16871830000309274,
+      "enumerated_feasible_points": [
+        {
+          "point": [
+            0,
+            0
+          ],
+          "objective": 0
+        },
+        {
+          "point": [
+            0,
+            1
+          ],
+          "objective": -500
+        }
+      ],
+      "expected": {
+        "point": [
+          0,
+          1
+        ],
+        "objective": -500
+      },
+      "passed": true,
+      "case_index": 2,
+      "synthetic_request_canonical_json_sha256": "23537732c2097a69929d593a9906b6d1a6b1fa8ac2b75462ea2ec3ff89019490",
+      "objective_context": {
+        "direction": "minimize",
+        "offset": 0,
+        "linear": [
+          {
+            "variable": 0,
+            "coefficient": -1000000000000
+          },
+          {
+            "variable": 1,
+            "coefficient": -500
+          }
+        ]
+      },
+      "seed_supplied": false
+    }
+  ],
+  "request_snapshots_checked_after_control": true,
+  "node_limit_control": {
+    "request_wire_sha256": "5573987da677b6ba57d3199c345303976e7cedb6910a707f80466a053c0a85f6",
+    "request_canonical_json_sha256": "9ad5ff36b91cd02d30b4fc47998d584c2198866468fc1dafd3ad94c63302412f",
+    "effective_options": {
+      "method": "auto",
+      "max_evaluations": 100000,
+      "max_iterations": 100000,
+      "max_nodes": 1,
+      "max_memory_bytes": 268435456,
+      "feasibility_tolerance": 1e-07,
+      "integrality_tolerance": 1e-07,
+      "optimality_tolerance": 1e-08,
+      "relative_gap": 0.0,
+      "seed": "0"
+    },
+    "actual": {
+      "termination": "node_limit",
+      "feasibility": "feasible",
+      "optimality": "best_found",
+      "values": [
+        0.0,
+        0.0
+      ],
+      "objective": 0.0,
+      "best_bound": 1000.0000000000001,
+      "relative_gap": 1.0,
+      "max_violation": 0.0,
+      "statistics": {
+        "evaluations": 1,
+        "iterations": 2,
+        "nodes": 1
+      },
+      "engine": "solvercraft-dense-simplex-0.1"
+    },
+    "elapsed_seconds": 0.14324800000758842,
+    "passed": true,
+    "same_model_as_case_index": 0,
+    "objective_context": {
+      "direction": "maximize",
+      "offset": 0,
+      "linear": [
+        {
+          "variable": 0,
+          "coefficient": 1000000000000
+        },
+        {
+          "variable": 1,
+          "coefficient": 500
+        }
+      ]
+    },
+    "seed_supplied": false
+  }
+}

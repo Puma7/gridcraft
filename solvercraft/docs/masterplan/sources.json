@@ -1,0 +1,167 @@
+{
+  "accessed_date": "2026-10-31",
+  "sources": [
+    {
+      "id": "G1",
+      "title": "Gridcraft Repository, Cargo und README",
+      "url": "https://github.com/Puma7/gridcraft/tree/981fad14e0b90a7906a02f29785a6d0eb214fee6",
+      "evidence": "GitHub connector: Repositorymetadaten, vollständiger Baum, Cargo.toml und README gelesen",
+      "scope": "Version, Lizenz, Architektur"
+    },
+    {
+      "id": "G2",
+      "title": "Gridcraft AGENTS.md",
+      "url": "https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/AGENTS.md",
+      "evidence": "vollständig gelesen",
+      "scope": "Arbeitsregeln, Lizenz-/Assetpolitik, Quality Gates"
+    },
+    {
+      "id": "G3",
+      "title": "Bestehender Solver",
+      "url": "https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/crates/engine/src/cmd/solver.rs",
+      "evidence": "vollständig gelesen",
+      "scope": "Methoden, Grenzen, API und Ergebnisschema"
+    },
+    {
+      "id": "G4",
+      "title": "Solver-Unterdateien",
+      "url": "https://github.com/Puma7/gridcraft/tree/981fad14e0b90a7906a02f29785a6d0eb214fee6/crates/engine/src/cmd/solver",
+      "evidence": "model.rs, lp.rs, nlp.rs, evolutionary.rs, problem.rs, reports.rs und tests.rs abgerufen; relevante Abschnitte ausgewertet",
+      "scope": "Baseline, Speicherung, Berichtumfang und Tests"
+    },
+    {
+      "id": "G5",
+      "title": "What-if Trial",
+      "url": "https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/crates/engine/src/cmd/whatif.rs",
+      "evidence": "abgerufen, Trial-Abschnitt gelesen",
+      "scope": "Snapshot und Calc"
+    },
+    {
+      "id": "G6",
+      "title": "Daten-Ribbon und Solverdialog",
+      "url": "https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/crates/ui-egui/src/ribbon/data.rs",
+      "evidence": "Ribbon und dialogs/analysis.rs abgerufen; relevante Abschnitte gelesen",
+      "scope": "Schaltflächenposition, Dialoganbindung"
+    },
+    {
+      "id": "G7",
+      "title": "Layer-Regeln",
+      "url": "https://github.com/Puma7/gridcraft/blob/981fad14e0b90a7906a02f29785a6d0eb214fee6/xtask/src/layers.rs",
+      "evidence": "abgerufen; Registry, Präfixbehandlung und Abhängigkeitsregeln gelesen",
+      "scope": "Erforderliche Architekturänderungen"
+    },
+    {
+      "id": "G8",
+      "title": "Calc und Preserved-Modelldaten",
+      "url": "https://github.com/Puma7/gridcraft/tree/981fad14e0b90a7906a02f29785a6d0eb214fee6/crates",
+      "evidence": "calc/lib.rs, calc/recalc.rs und model/preserved.rs abgerufen und relevante APIs gelesen",
+      "scope": "Evalkontext und OPC-Persistenzansatz"
+    },
+    {
+      "id": "O1",
+      "title": "legacy PSI Produktübersicht",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentliche Produktseite geöffnet",
+      "scope": "Referenzfamilien"
+    },
+    {
+      "id": "O2",
+      "title": "legacy PSI Optimization",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentliche Produktseite geöffnet",
+      "scope": "Modellanalyse und Optimierungsfunktionen"
+    },
+    {
+      "id": "O3",
+      "title": "legacy PSI Simulation",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentliche Produktseite geöffnet",
+      "scope": "Simulationsfamilien, Fitting und Diagramme"
+    },
+    {
+      "id": "O4",
+      "title": "Produktvergleich",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentliche Vergleichsseite geöffnet",
+      "scope": "Produkt-/Jahrgangsunterschiede"
+    },
+    {
+      "id": "O5",
+      "title": "SDK Engines",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentlicher Suchbeleg und Produktbeschreibung",
+      "scope": "Problemklassen und Plug-in-Konzept"
+    },
+    {
+      "id": "O6",
+      "title": "Engine Guide 2025 Q4",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "190-seitiges PDF zugänglich, ausgewählte Abschnitte; nicht Seite für Seite vollständig analysiert",
+      "scope": "Enginefamilien und proprietäre Komponenten"
+    },
+    {
+      "id": "O7",
+      "title": "Stochastische Konzepte und Recourse",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "Suchbelege zu einschlägigen Abschnitten, zusätzlich Engine-Guide-Belege; keine vollständige Handbuchlektüre",
+      "scope": "Simulation Optimization, robuste und stochastische Modelle"
+    },
+    {
+      "id": "O8",
+      "title": "Random Number Generators",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "öffentlicher Suchbeleg",
+      "scope": "MC, LHS, randomisierte Sobol-Verfahren, Streams"
+    },
+    {
+      "id": "O9",
+      "title": "PsiCopula",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "ausführlicher Onlinehilfe-Suchbeleg",
+      "scope": "Copulatypen und Parameter"
+    },
+    {
+      "id": "O10",
+      "title": "PSI Reference 2021 und identifizierte neuere Version",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "PSI-Familien und Suchbelege; 2025-Q1-PDF beim direkten Abruf über Größenlimit",
+      "scope": "Funktionsfamilien; Inventarisierung in SC-00 offen",
+      "newer_url": "internal:legacy-psi-reference"
+    },
+    {
+      "id": "O11",
+      "title": "PsiTriangular",
+      "url": "internal:legacy-psi-reference",
+      "evidence": "Onlinehilfe-Suchbeleg",
+      "scope": "Argumentreihenfolge Minimum, Modus, Maximum"
+    },
+    {
+      "id": "E1",
+      "title": "microlp",
+      "url": "https://github.com/Specy/microlp",
+      "evidence": "README per GitHub gelesen und docs.rs Suchbeleg; noch kein lokaler Build",
+      "scope": "Rust/WASM-LP/MILP-Kandidat, Apache-2.0; numerische Grenzen"
+    },
+    {
+      "id": "E2",
+      "title": "Clarabel",
+      "url": "https://clarabel.org/stable/",
+      "evidence": "offizielle Dokumentation geöffnet, Repository-README gelesen; noch kein lokaler Build",
+      "scope": "Konvexe QP und Kegel, native Rust-Implementierung, Apache-2.0"
+    },
+    {
+      "id": "E3",
+      "title": "HiGHS",
+      "url": "https://highs.dev/",
+      "evidence": "offizielle Projektseite geöffnet, Repository-README abgerufen",
+      "scope": "LP/MIP/QP, C++, MIT"
+    },
+    {
+      "id": "E4",
+      "title": "argmin",
+      "url": "https://www.argmin-rs.org/book/",
+      "evidence": "offizielle Dokumentations-Suchbelege",
+      "scope": "Framework und Komponenten; Constraintfähigkeiten vor Übernahme prüfen"
+    }
+  ]
+}
