@@ -3,11 +3,13 @@ use crate::{SheetApp, i18n::Language};
 use serde_json::{Value as Json, json};
 use std::collections::HashMap;
 use std::sync::Arc;
+mod builder;
+mod distribution;
 mod import;
 mod microgrid;
 mod report;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 struct Parameter {
     cell: String,
     low: f64,
@@ -47,11 +49,15 @@ struct State {
     time_seconds: u64,
     parameter_grid: Vec<Parameter>,
     compare_parameters: bool,
+    parameters_edited: bool,
     worksheet_bindings: bool,
     imported_settings: bool,
     psi_import: import::State,
     analysis: Option<Arc<Json>>,
     guide: Option<microgrid::Guide>,
+    editor: builder::Editor,
+    chart_output: usize,
+    chart_other: usize,
 }
 impl Default for State {
     fn default() -> Self {
@@ -59,17 +65,17 @@ impl Default for State {
             name: "Model 1".into(),
             selected: None,
             kind: "optimization".into(),
-            objective: "B1".into(),
-            variables: "A1".into(),
-            constraints: "A1 <= 10".into(),
+            objective: String::new(),
+            variables: String::new(),
+            constraints: String::new(),
             constraint_left: String::new(),
             constraint_op: "<=".into(),
             constraint_right: String::new(),
             goal: "max".into(),
             method: "auto".into(),
             nonnegative: true,
-            inputs: r#"[{"cell":"A1","distribution":{"kind":"uniform","low":0.0,"high":1.0}}]"#.into(),
-            outputs: "B1".into(),
+            inputs: "[]".into(),
+            outputs: String::new(),
             trials: 1000,
             seed: "0".into(),
             request: json!({}),
@@ -84,13 +90,17 @@ impl Default for State {
             chart: "Histogram".into(),
             target: "0".into(),
             time_seconds: 60,
-            parameter_grid: vec![Parameter { cell: "C1".into(), low: 1.0, base: 2.0, high: 3.0 }],
+            parameter_grid: Vec::new(),
             compare_parameters: false,
+            parameters_edited: false,
             worksheet_bindings: false,
             imported_settings: false,
             psi_import: import::State::default(),
             analysis: None,
             guide: None,
+            editor: builder::Editor::default(),
+            chart_output: 0,
+            chart_other: 1,
         }
     }
 }
@@ -108,9 +118,12 @@ fn help(ui: &mut egui::Ui, name: &str, text: &str) {
     }
 }
 
-fn field(ui: &mut egui::Ui, title: &str, value: &mut String) {
+fn field(ui: &mut egui::Ui, title: &str, value: &mut String) -> egui::Response {
     ui.label(title);
-    ui.add(egui::TextEdit::singleline(value).desired_width(f32::INFINITY)).accessible_name(title);
+    ui.add(egui::TextEdit::singleline(value).desired_width(f32::INFINITY).char_limit(131_072)).accessible_name(title)
+}
+fn numeric_input(value: f64) -> String {
+    if value != 0.0 && !(1e-6..1e15).contains(&value.abs()) { format!("{value:e}") } else { value.to_string() }
 }
 fn text_or_json(text: &str) -> Result<Json, String> {
     if text.trim_start().starts_with('[') { serde_json::from_str(text).map_err(|e| e.to_string()) } else { Ok(json!(text)) }
@@ -158,7 +171,7 @@ fn draft(state: &State) -> Result<Json, String> {
         request["options"]["trials"] = json!(state.trials);
         request["options"]["seed"] = json!(state.seed);
         request["options"]["retain_samples"] = json!(true);
-        if state.compare_parameters {
+        if state.compare_parameters && !state.parameter_grid.is_empty() && (state.parameters_edited || request.get("parameter_cases").is_none()) {
             let baseline = state.parameter_grid.iter().map(|p| json!({"cell":p.cell,"value":p.base})).collect::<Vec<_>>();
             let mut cases = vec![json!({"name":"Base","values":baseline})];
             for (i, parameter) in state.parameter_grid.iter().enumerate() {
@@ -173,7 +186,9 @@ fn draft(state: &State) -> Result<Json, String> {
             request["parameter_cases"] = json!(cases);
             request["parameter_grid"] =
                 json!(state.parameter_grid.iter().map(|p| json!({"cell":p.cell,"low":p.low,"base":p.base,"high":p.high})).collect::<Vec<_>>());
-        } else if let Some(object) = request.as_object_mut() {
+        } else if !state.compare_parameters
+            && let Some(object) = request.as_object_mut()
+        {
             object.remove("parameter_cases");
             object.remove("parameter_grid");
         }
@@ -232,6 +247,9 @@ fn constraint_text(value: &Json) -> String {
 }
 
 fn load(state: &mut State, model: Json) {
+    state.editor = builder::Editor::default();
+    state.chart_output = 0;
+    state.chart_other = 1;
     state.applied_revision = None;
     state.job = None;
     state.preview = None;
@@ -242,7 +260,7 @@ fn load(state: &mut State, model: Json) {
     state.kind = model["kind"].as_str().unwrap_or("optimization").into();
     state.request = model["request"].clone();
     let p = &state.request;
-    state.objective = p["objective"].as_str().unwrap_or("B1").into();
+    state.objective = p["objective"].as_str().unwrap_or("").into();
     state.variables = variable_text(&p["variables"]);
     state.constraints = constraint_text(&p["constraints"]);
     state.constraint_left.clear();
@@ -253,12 +271,18 @@ fn load(state: &mut State, model: Json) {
     state.method = p["method"].as_str().unwrap_or("auto").into();
     state.nonnegative = p["nonNegative"].as_bool().unwrap_or(true);
     state.inputs = p["inputs"].to_string();
-    state.outputs = p["outputs"].as_str().map(str::to_string).unwrap_or_else(|| p["outputs"].to_string());
+    state.outputs = variable_text(&p["outputs"]);
     state.trials = p["options"]["trials"].as_u64().unwrap_or(1000);
-    state.seed = p["options"]["seed"].as_str().unwrap_or("0").into();
+    state.seed = p["options"]["seed"]
+        .as_str()
+        .map(str::to_owned)
+        .or_else(|| p["options"]["seed"].as_u64().map(|seed| seed.to_string()))
+        .unwrap_or_else(|| "0".into());
     state.imported_settings = false;
     state.worksheet_bindings = p.get("inputs").is_none() && p.get("outputs").is_none();
     state.compare_parameters = p.get("parameter_cases").is_some();
+    state.parameters_edited = false;
+    state.parameter_grid.clear();
     if let Some(grid) = p["parameter_grid"].as_array() {
         state.parameter_grid = grid
             .iter()
@@ -316,168 +340,6 @@ fn pick_reference(ui: &mut egui::Ui, title: &str, value: &mut String, selection:
     {
         *value = reference.to_owned();
     }
-}
-
-fn model_editor(app: &SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) {
-    let cell = selected_reference(app, true);
-    let range = selected_reference(app, false);
-    ui.horizontal_wrapped(|ui| {
-        ui.selectable_value(&mut state.kind, "optimization".into(), label(de, "Optimization", "Optimierung"));
-        ui.selectable_value(&mut state.kind, "simulation".into(), "Simulation");
-        help(
-            ui,
-            label(de, "Help with model types", "Hilfe zu Modelltypen"),
-            label(de, "Optimization finds values that satisfy constraints and improve a goal. Simulation measures how uncertain inputs affect outputs.", "Optimierung sucht Werte, die Nebenbedingungen erfüllen und ein Ziel verbessern. Simulation misst, wie unsichere Eingaben die Ausgaben beeinflussen."),
-        );
-    });
-    if state.kind == "optimization" {
-        field(ui, label(de, "Objective cell or formula", "Zielzelle oder Formel"), &mut state.objective);
-        pick_reference(ui, label(de, "Use selection as objective", "Markierung als Zielzelle"), &mut state.objective, cell.as_deref(), de);
-        ui.horizontal(|ui| {
-            ui.selectable_value(&mut state.goal, "min".into(), "Min");
-            ui.selectable_value(&mut state.goal, "max".into(), "Max");
-            ui.selectable_value(&mut state.goal, "value".into(), label(de, "Target", "Zielwert"));
-        });
-        if state.goal == "value" {
-            field(ui, label(de, "Target value", "Zielwert"), &mut state.target);
-        }
-        field(ui, label(de, "Decision cells", "Entscheidungszellen"), &mut state.variables);
-        // A JSON model may carry integer kinds and bounds. Preserve those
-        // descriptors until the user explicitly edits that field.
-        if !state.variables.trim_start().starts_with('[') {
-            pick_reference(
-                ui,
-                label(de, "Use selection as decision cells", "Markierung als Entscheidungszellen"),
-                &mut state.variables,
-                range.as_deref(),
-                de,
-            );
-        }
-        ui.horizontal_wrapped(|ui| {
-            ui.label(label(de, "Constraints", "Nebenbedingungen"));
-            help(
-                ui,
-                label(de, "Help with constraints", "Hilfe zu Nebenbedingungen"),
-                label(de, "Enter one condition per line, such as A1 <= 10. Use the sheet selection below to build a condition from cells on any sheet.", "Eine Bedingung pro Zeile eingeben, etwa A1 <= 10. Über die Blattauswahl unten lassen sich Zellen aus beliebigen Blättern einsetzen."),
-            );
-        });
-        ui.add(egui::TextEdit::multiline(&mut state.constraints).desired_rows(4).desired_width(f32::INFINITY))
-            .accessible_name("Solvercraft constraints");
-        ui.collapsing(label(de, "Add a constraint from the sheet", "Nebenbedingung aus dem Blatt hinzufügen"), |ui| {
-            field(ui, label(de, "Left cell or expression", "Linke Zelle oder Ausdruck"), &mut state.constraint_left);
-            pick_reference(ui, label(de, "Use selection on the left", "Markierung links einsetzen"), &mut state.constraint_left, cell.as_deref(), de);
-            ui.horizontal(|ui| {
-                for op in ["<=", "=", ">="] {
-                    ui.selectable_value(&mut state.constraint_op, op.into(), op);
-                }
-            });
-            field(ui, label(de, "Right cell or value", "Rechte Zelle oder Wert"), &mut state.constraint_right);
-            pick_reference(
-                ui,
-                label(de, "Use selection on the right", "Markierung rechts einsetzen"),
-                &mut state.constraint_right,
-                cell.as_deref(),
-                de,
-            );
-            let ready = !state.constraint_left.trim().is_empty() && !state.constraint_right.trim().is_empty();
-            if ui.add_enabled(ready, egui::Button::new(label(de, "Add constraint", "Nebenbedingung hinzufügen"))).clicked() {
-                match constraint_rows(&state.constraints) {
-                    Ok(mut rows) => {
-                        rows.push(json!({"lhs":state.constraint_left.trim(),"op":state.constraint_op,"rhs":state.constraint_right.trim()}));
-                        state.constraints = constraint_text(&json!(rows));
-                        state.constraint_left.clear();
-                        state.constraint_right.clear();
-                        state.error = None;
-                    }
-                    Err(error) => state.error = Some(error),
-                }
-            }
-        });
-        ui.checkbox(&mut state.nonnegative, label(de, "Unbounded variables are nonnegative", "Variablen ohne Untergrenze sind nichtnegativ"));
-        craft_ui::ComboBox::from_id_salt("solvercraft-method")
-            .selected_text(&state.method)
-            .show_ui(ui, |ui| {
-                for method in ["auto", "simplex", "branch_and_bound", "projected_gradient", "differential_evolution"] {
-                    ui.selectable_value(&mut state.method, method.into(), method);
-                }
-            })
-            .response
-            .accessible_name(label(de, "Solving method", "Lösungsmethode"));
-    } else {
-        ui.horizontal_wrapped(|ui| {
-            ui.checkbox(&mut state.worksheet_bindings, label(de, "Use worksheet declarations", "Deklarationen aus dem Blatt verwenden"));
-            help(
-                ui,
-                label(de, "Help with worksheet declarations", "Hilfe zu Blattdeklarationen"),
-                label(de, "Solvercraft finds distribution cells and SC.OUTPUT formulas in the workbook. Turn this off to specify cells manually.", "Solvercraft findet Verteilungszellen und SC.OUTPUT-Formeln in der Mappe. Zum manuellen Angeben von Zellen diese Option deaktivieren."),
-            );
-        });
-        if !state.worksheet_bindings {
-            let imported = state.imported_settings;
-            let mut edit_bindings = |ui: &mut egui::Ui| {
-                ui.label(label(de, "Inputs (JSON)", "Eingaben (JSON)"));
-                ui.add(egui::TextEdit::multiline(&mut state.inputs).desired_rows(4).desired_width(f32::INFINITY))
-                    .accessible_name("Solvercraft simulation inputs");
-                field(ui, label(de, "Output references or JSON array", "Ausgabereferenzen oder JSON-Array"), &mut state.outputs);
-                pick_reference(ui, label(de, "Use selection as outputs", "Markierung als Ausgaben"), &mut state.outputs, range.as_deref(), de);
-            };
-            if imported {
-                ui.collapsing(label(de, "Edit imported bindings", "Importierte Zellzuordnung bearbeiten"), edit_bindings);
-            } else {
-                edit_bindings(ui);
-            }
-        }
-        ui.horizontal(|ui| {
-            ui.label(label(de, "Trials", "Versuche"));
-            ui.add(egui::DragValue::new(&mut state.trials).range(1..=1_000_000)).accessible_name(label(de, "Trials", "Versuche"));
-        });
-        field(ui, "Seed", &mut state.seed);
-        ui.horizontal_wrapped(|ui| {
-            ui.checkbox(&mut state.compare_parameters, label(de, "Compare parameters", "Parameter vergleichen"));
-            help(
-                ui,
-                label(de, "Help with parameter comparisons", "Hilfe zum Parametervergleich"),
-                label(
-                    de,
-                    "Each comparison varies one parameter. The other parameters stay at their base values.",
-                    "Pro Vergleich ändert sich ein Parameter. Die übrigen Parameter behalten ihre Basiswerte.",
-                ),
-            );
-        });
-        if state.compare_parameters {
-            let mut remove = None;
-            for (i, p) in state.parameter_grid.iter_mut().enumerate() {
-                ui.push_id(i, |ui| {
-                    field(ui, label(de, "Parameter cell", "Parameterzelle"), &mut p.cell);
-                    pick_reference(ui, label(de, "Use selection as parameter", "Markierung als Parameter"), &mut p.cell, cell.as_deref(), de);
-                    ui.horizontal_wrapped(|ui| {
-                        for (name, value) in [("Low", &mut p.low), ("Base", &mut p.base), ("High", &mut p.high)] {
-                            ui.label(name);
-                            ui.add(egui::DragValue::new(value).speed(0.1).range(-1e100..=1e100))
-                                .accessible_name(format!("Parameter {} {name}", i + 1));
-                        }
-                        if ui.small_button(label(de, "Remove", "Entfernen")).clicked() {
-                            remove = Some(i);
-                        }
-                    });
-                });
-            }
-            if let Some(index) = remove {
-                state.parameter_grid.remove(index);
-            }
-            if ui.add_enabled(state.parameter_grid.len() < 15, egui::Button::new(label(de, "Add parameter", "Parameter hinzufügen"))).clicked() {
-                state.parameter_grid.push(Parameter { cell: "C1".into(), low: 0.0, base: 1.0, high: 2.0 });
-            }
-        }
-    }
-    ui.horizontal(|ui| {
-        ui.label(label(de, "Time limit (seconds)", "Zeitlimit (Sekunden)"));
-        ui.add(egui::DragValue::new(&mut state.time_seconds).range(1..=3600)).accessible_name(label(
-            de,
-            "Time limit seconds",
-            "Zeitlimit in Sekunden",
-        ));
-    });
 }
 
 fn poll_job(app: &mut SheetApp, state: &mut State, id: &str, now: f64) {
@@ -546,7 +408,12 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     });
     let current_uid = doc.uid.to_string();
     let current_revision = doc.revision.to_string();
-    let mut state = ui.ctx().data_mut(|m| m.get_temp::<State>(key)).unwrap_or_default();
+    let stored = ui.ctx().data_mut(|m| m.get_temp::<State>(key));
+    let fresh = stored.is_none();
+    let mut state = stored.unwrap_or_default();
+    if fresh {
+        refresh(app, &mut state);
+    }
     if let Some(preview) = &state.preview {
         state.status["stale"] = json!(
             preview["snapshot"]["document_uid"].as_str() != Some(&current_uid) || preview["snapshot"]["revision"].as_str() != Some(&current_revision)
@@ -558,6 +425,9 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
         refresh(app, &mut state);
     }
     ui.scope(|ui| {
+        // DragValue's default decimal precision can display tiny nonzero bounds
+        // as zero and then commit that rounded text when focus leaves the field.
+        ui.style_mut().number_formatter = egui::style::NumberFormatter::new(|value, _| numeric_input(value));
         let t = crate::theme::Tokens::get(ui.ctx());
         let visuals = ui.visuals_mut();
         visuals.widgets.inactive.weak_bg_fill = t.header_bg;
@@ -578,41 +448,22 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     ui.ctx().data_mut(|m| m.insert_temp(key, state));
 }
 fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current_revision: &str, de: bool) {
-    ui.horizontal(|ui| {
-        if ui.button(label(de, "Refresh models", "Modelle laden")).clicked() {
-            refresh(app, state)
-        }
-        if ui.button(label(de, "New", "Neu")).clicked() {
-            *state = State::default();
-            refresh(app, state)
-        }
-    });
-    let models = state.models.clone();
-    for model in models {
-        let id = model["id"].as_str().unwrap_or("");
-        let name = model["name"].as_str().unwrap_or("Model");
-        if ui.selectable_label(state.selected.as_deref() == Some(id), name).clicked() {
-            match app.run("solvercraft.model.get", json!({"id":id})) {
-                Ok(m) => load(state, m),
-                Err(e) => state.error = Some(e),
-            }
-        }
-    }
+    model_library(app, ui, state, de);
     ui.separator();
     field(ui, label(de, "Model name", "Modellname"), &mut state.name);
-    import::show(app, ui, state, current_revision, de);
-    job_history(app, ui, state, de);
     let before = draft(state).ok();
-    model_editor(app, ui, state, de);
+    builder::show(app, ui, state, de);
     if before != draft(state).ok() {
+        state.error = None;
         state.applied_revision = None;
         state.job = None;
         state.preview = None;
         state.analysis = None;
         state.status = Json::Null;
     }
+    let ready = builder::readiness(state, de);
     ui.horizontal(|ui| {
-        if ui.button(label(de, "Save model", "Modell speichern")).clicked() {
+        if ui.add_enabled(ready.is_none(), egui::Button::new(label(de, "Save model", "Modell speichern"))).clicked() {
             match draft(state) {
                 Ok(request) => {
                     let (command, params) = if let Some(id) = &state.selected {
@@ -647,8 +498,8 @@ fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current
     } else {
         label(de, "Run simulation", "Simulation berechnen")
     };
-    let start = ui.add_enabled_ui(!running, |ui| microgrid::primary(ui, action)).inner.on_hover_text("Ctrl+Enter").clicked()
-        || (!running && ui.input(|i| i.modifiers.ctrl && i.key_pressed(egui::Key::Enter)));
+    let start = ui.add_enabled_ui(!running && ready.is_none(), |ui| microgrid::primary(ui, action)).inner.on_hover_text("Ctrl+Enter").clicked()
+        || (!running && ready.is_none() && ui.input(|i| i.modifiers.ctrl && i.key_pressed(egui::Key::Enter)));
     if start {
         match draft(state) {
             Ok(request) => match app.run(
@@ -672,10 +523,7 @@ fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current
     if let Some(id) = state.job.clone() {
         let now = ui.input(|i| i.time);
         poll_job(app, state, &id, now);
-        ui.label(format!("Job {id}: {}", state.status["status"].as_str().unwrap_or("unknown")));
-        if let Some(progress) = state.status.get("progress").filter(|x| x.is_object()) {
-            ui.label(format!("{} · {} evaluations · {} nodes", progress["stage"].as_str().unwrap_or(""), progress["evaluations"], progress["nodes"]));
-        }
+        run_status(ui, state, de);
         if state.applied_revision.as_deref() == Some(current_revision) {
             ui.colored_label(
                 crate::theme::Tokens::get(ui.ctx()).accent_dark,
@@ -713,9 +561,10 @@ fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current
             let applicable = preview["result"]["feasibility"] == json!("feasible")
                 && preview["bindings"].as_array().is_some_and(|a| !a.is_empty())
                 && !state.status["stale"].as_bool().unwrap_or(true);
-            if ui
-                .add_enabled(applicable, egui::Button::new(label(de, "Apply solution (one undo step)", "Lösung übernehmen (ein Undo-Schritt)")))
-                .clicked()
+            if state.kind == "optimization"
+                && ui
+                    .add_enabled(applicable, egui::Button::new(label(de, "Apply solution (one undo step)", "Lösung übernehmen (ein Undo-Schritt)")))
+                    .clicked()
             {
                 match app.run("solvercraft.job.apply", json!({"id":id})) {
                     Ok(_) => {
@@ -746,13 +595,13 @@ fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current
                 });
             }
             result_sheet_button(app, ui, state, &id, de);
-            ui.collapsing(label(de, "Result details", "Ergebnisdetails"), |ui| {
-                result(ui, &preview, &mut state.chart);
-            });
-            match report::controls(app, ui, &preview, applicable && state.status["stale"] != json!(true), de) {
-                Ok(Some(report)) => state.analysis = Some(Arc::new(report)),
-                Err(error) => state.error = Some(error),
-                Ok(None) => {}
+            result(ui, &preview, state, de);
+            if preview["result"].get("objective").is_some() {
+                match report::controls(app, ui, &preview, applicable && state.status["stale"] != json!(true), de) {
+                    Ok(Some(report)) => state.analysis = Some(Arc::new(report)),
+                    Err(error) => state.error = Some(error),
+                    Ok(None) => {}
+                }
             }
             if let Some(analysis) = &state.analysis {
                 report::show(ui, analysis);
@@ -770,8 +619,69 @@ fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current
             }
         }
     }
+    ui.collapsing(label(de, "Import and run history", "Import und Laufhistorie"), |ui| {
+        import::show(app, ui, state, current_revision, de);
+        job_history(app, ui, state, de);
+    });
     if let Some(error) = &state.error {
         ui.colored_label(ui.visuals().error_fg_color, error);
+    }
+}
+fn model_library(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, de: bool) {
+    let models = state.models.clone();
+    let caption = models
+        .iter()
+        .find(|model| model["id"].as_str() == state.selected.as_deref())
+        .and_then(|model| model["name"].as_str())
+        .unwrap_or(label(de, "Saved models…", "Gespeicherte Modelle…"));
+    ui.horizontal(|ui| {
+        if ui.button(label(de, "New", "Neu")).clicked() {
+            *state = State::default();
+            refresh(app, state);
+            state.name = unused_model_name(&state.models);
+        }
+        if ui.small_button(label(de, "Reload", "Laden")).accessible_name(label(de, "Refresh models", "Modelle laden")).clicked() {
+            refresh(app, state);
+        }
+        craft_ui::ComboBox::from_id_salt("solvercraft-saved-models")
+            .width(ui.available_width().max(80.0))
+            .truncate()
+            .selected_text(caption)
+            .show_ui(ui, |ui| {
+                for model in &models {
+                    let Some(id) = model["id"].as_str() else { continue };
+                    if ui.selectable_label(state.selected.as_deref() == Some(id), model["name"].as_str().unwrap_or("Model")).clicked() {
+                        match app.run("solvercraft.model.get", json!({"id": id})) {
+                            Ok(model) => load(state, model),
+                            Err(error) => state.error = Some(error),
+                        }
+                    }
+                }
+            })
+            .response
+            .accessible_name(label(de, "Saved models", "Gespeicherte Modelle"));
+    });
+}
+fn unused_model_name(models: &[Json]) -> String {
+    for index in 1..=33 {
+        let name = format!("Model {index}");
+        if !models.iter().any(|model| model["name"].as_str().is_some_and(|existing| existing.eq_ignore_ascii_case(&name))) {
+            return name;
+        }
+    }
+    "New model".into()
+}
+fn run_status(ui: &mut egui::Ui, state: &State, de: bool) {
+    let caption = match state.status["status"].as_str() {
+        Some("queued") => label(de, "Preparing the calculation…", "Berechnung wird vorbereitet…"),
+        Some("running") => label(de, "Calculation running…", "Berechnung läuft…"),
+        Some("completed") => label(de, "Calculation complete", "Berechnung abgeschlossen"),
+        Some("failed") => label(de, "Calculation could not finish", "Berechnung konnte nicht abgeschlossen werden"),
+        _ => label(de, "Checking calculation status…", "Berechnungsstatus wird geprüft…"),
+    };
+    ui.strong(caption);
+    if let Some(progress) = state.status.get("progress").filter(|x| x.is_object()) {
+        ui.label(format!("{} · {} evaluations · {} nodes", progress["stage"].as_str().unwrap_or(""), progress["evaluations"], progress["nodes"]));
     }
 }
 /// Release retained result Arcs when their document actually closes. egui's
@@ -834,54 +744,135 @@ fn result_sheet_button(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State,
     }
 }
 
-fn result(ui: &mut egui::Ui, preview: &Json, chart: &mut String) {
+fn output_picker(ui: &mut egui::Ui, outputs: &[Json], selected: &mut usize, title: &str, id: &str) {
+    *selected = (*selected).min(outputs.len().saturating_sub(1));
+    ui.label(title);
+    craft_ui::ComboBox::from_id_salt(id)
+        .selected_text(outputs.get(*selected).and_then(Json::as_str).unwrap_or("Output"))
+        .show_ui(ui, |ui| {
+            for (index, output) in outputs.iter().enumerate() {
+                ui.selectable_value(selected, index, output.as_str().unwrap_or("Output"));
+            }
+        })
+        .response
+        .accessible_name(title);
+}
+fn result(ui: &mut egui::Ui, preview: &Json, state: &mut State, de: bool) {
+    let source = preview["cases"].as_array().and_then(|cases| cases.first()).map(|case| &case["preview"]).unwrap_or(preview);
+    let outputs = source["outputs"].as_array().map_or(&[][..], Vec::as_slice);
+    if !outputs.is_empty() {
+        output_picker(ui, outputs, &mut state.chart_output, label(de, "Result cell", "Ergebniszelle"), "solvercraft-output");
+    }
     if let Some(cases) = preview["cases"].as_array() {
-        parameter_results(ui, cases);
+        parameter_results(ui, cases, state.chart_output);
         return;
     }
     let result = &preview["result"];
     ui.separator();
-    if let Some(objective) = preview["request"]["objective"].as_str() {
-        ui.label(format!("Preview objective: {objective} · {}", preview["request"]["goal"].as_str().unwrap_or("max")));
-    }
-    ui.strong(result["termination"].as_str().unwrap_or("unknown"));
-    for field in ["objective", "feasibility", "optimality", "completed_trials"] {
-        if let Some(value) = result.get(field).filter(|v| !v.is_null()) {
-            ui.label(format!("{field}: {value}"));
-        }
-    }
-    if let Some(values) = preview.get("apply_values").unwrap_or(&result["values"]).as_array() {
-        for (i, value) in values.iter().enumerate() {
-            let binding = &preview["bindings"][i];
-            ui.monospace(format!("{}!{} = {value}", binding["sheet"].as_str().unwrap_or(""), binding["cell"].as_str().unwrap_or("")));
-        }
-    }
-    if let Some(summaries) = result["summaries"].as_array() {
-        for (i, summary) in summaries.iter().enumerate() {
-            ui.label(format!(
-                "{}: mean {} · min {} · max {}",
-                preview["outputs"][i].as_str().unwrap_or("output"),
-                summary["mean"],
-                summary["minimum"],
-                summary["maximum"]
+    result_notice(ui, result, de);
+    if let Some(objective) = result["objective"].as_f64() {
+        ui.strong(format!("{}  {}", label(de, "Calculated goal", "Berechneter Zielwert"), gridcraft_engine::core::number_to_text(objective)));
+        let status = match result["optimality"].as_str() {
+            Some("optimal") => label(de, "Optimal solution", "Optimale Lösung"),
+            Some("stationary") => label(de, "Local solution", "Lokale Lösung"),
+            _ => label(de, "Best solution found in this run", "Beste gefundene Lösung dieses Laufs"),
+        };
+        ui.label(status);
+        if state.status["stale"] != json!(true) {
+            ui.small(label(
+                de,
+                "Apply the solution to update the decision cells.",
+                "Übernimm die Lösung, um die veränderbaren Zellen zu aktualisieren.",
             ));
+        }
+    }
+    if let Some(count) = result["completed_trials"].as_u64() {
+        ui.strong(format!("{count} {}", label(de, "trials completed", "Versuche abgeschlossen")));
+        if result["termination"] != "completed" {
+            ui.colored_label(
+                crate::theme::Tokens::get(ui.ctx()).warning_ink,
+                label(
+                    de,
+                    "Partial simulation. These statistics use only the completed trials.",
+                    "Unvollständige Simulation. Die Statistik verwendet nur die abgeschlossenen Versuche.",
+                ),
+            );
+        }
+        if let Some(summary) = result["summaries"].get(state.chart_output) {
+            for (key, en, german) in [
+                ("mean", "Mean", "Mittelwert"),
+                ("minimum", "Minimum", "Minimum"),
+                ("maximum", "Maximum", "Maximum"),
+                ("value_at_risk_95", "95th percentile", "95. Perzentil"),
+            ] {
+                if let Some(value) = summary[key].as_f64() {
+                    ui.label(format!("{}  {}", label(de, en, german), gridcraft_engine::core::number_to_text(value)));
+                }
+            }
         }
     }
     if let Some(rows) = result["samples"].as_array() {
         craft_ui::ComboBox::from_id_salt("solvercraft-chart")
-            .selected_text(chart.as_str())
+            .selected_text(state.chart.as_str())
             .show_ui(ui, |ui| {
                 for kind in ["Histogram", "CDF", "Scatter", "Box", "Quantile bands"] {
-                    ui.selectable_value(chart, kind.into(), kind);
+                    ui.selectable_value(&mut state.chart, kind.into(), kind);
                 }
             })
             .response
             .accessible_name("Simulation chart type");
-        if chart == "Box" || chart == "Quantile bands" {
-            chart_quantiles(ui, &result["summaries"], chart);
-        } else {
-            chart_samples(ui, rows, chart);
+        if state.chart == "Scatter" {
+            output_picker(
+                ui,
+                outputs,
+                &mut state.chart_other,
+                label(de, "Compare with result cell", "Vergleichen mit Ergebniszelle"),
+                "solvercraft-other-output",
+            );
         }
+        if state.chart == "Box" {
+            chart_quantiles(ui, &json!([result["summaries"][state.chart_output]]), &state.chart);
+        } else if state.chart == "Quantile bands" {
+            chart_quantiles(ui, &result["summaries"], &state.chart);
+        } else {
+            chart_samples(ui, rows, &state.chart, state.chart_output, state.chart_other);
+        }
+    }
+    ui.collapsing(label(de, "Result details", "Ergebnisdetails"), |ui| {
+        for field in ["termination", "feasibility", "optimality", "completed_trials"] {
+            if let Some(value) = result.get(field).filter(|value| !value.is_null()) {
+                ui.label(format!("{field}: {value}"));
+            }
+        }
+        if let Some(values) = preview.get("apply_values").unwrap_or(&result["values"]).as_array() {
+            for (index, value) in values.iter().enumerate() {
+                let binding = &preview["bindings"][index];
+                ui.monospace(format!("{}!{} = {value}", binding["sheet"].as_str().unwrap_or(""), binding["cell"].as_str().unwrap_or("")));
+            }
+        }
+    });
+}
+fn result_notice(ui: &mut egui::Ui, result: &Json, de: bool) {
+    let message = match (result["feasibility"].as_str(), result["optimality"].as_str()) {
+        (Some("infeasible"), _) => Some(label(
+            de,
+            "No solution satisfies all conditions. Check the limits and conflicting conditions.",
+            "Keine Lösung erfüllt alle Bedingungen. Prüfe die Grenzen und widersprüchliche Bedingungen.",
+        )),
+        (_, Some("unbounded")) => Some(label(
+            de,
+            "The goal can improve without limit. Check the decision-cell bounds and conditions.",
+            "Der Zielwert kann sich unbegrenzt verbessern. Prüfe die Variablengrenzen und Bedingungen.",
+        )),
+        (Some("unknown"), _) => Some(label(
+            de,
+            "This run found no verified feasible solution. Review the model or increase the limits in Expert settings.",
+            "Dieser Lauf hat keine geprüfte zulässige Lösung gefunden. Prüfe das Modell oder erhöhe die Grenzen in den Experteneinstellungen.",
+        )),
+        _ => None,
+    };
+    if let Some(message) = message {
+        ui.colored_label(crate::theme::Tokens::get(ui.ctx()).danger, message);
     }
 }
 /// Unit coordinates retain tiny ranges and close large-offset differences.
@@ -894,11 +885,11 @@ fn unit_position(value: f64, low: f64, high: f64) -> f64 {
     let position = if span.is_finite() { (value - low) / span } else { (value * 0.5 - low * 0.5) / (high * 0.5 - low * 0.5) };
     position.clamp(0.0, 1.0)
 }
-fn sample_points(rows: &[Json], scatter: bool) -> Vec<(f64, f64)> {
+fn sample_points(rows: &[Json], scatter: bool, output: usize, other: usize) -> Vec<(f64, f64)> {
     rows.iter()
         .filter_map(|row| {
             let values = row.as_array()?;
-            Some((values.first()?.as_f64()?, if scatter { values.get(1)?.as_f64()? } else { 0.0 }))
+            Some((values.get(output)?.as_f64()?, if scatter { values.get(other)?.as_f64()? } else { 0.0 }))
         })
         .filter(|(x, y)| x.is_finite() && y.is_finite())
         .take(10_000)
@@ -920,12 +911,12 @@ fn cdf_steps(points: &[(f64, f64)]) -> Vec<(f64, f64)> {
     let count = values.len().max(1) as f64;
     values.into_iter().enumerate().map(|(index, value)| (value, (index + 1) as f64 / count)).collect()
 }
-fn chart_samples(ui: &mut egui::Ui, rows: &[Json], kind: &str) {
+fn chart_samples(ui: &mut egui::Ui, rows: &[Json], kind: &str, output: usize, other: usize) {
     if kind == "Scatter" && rows.first().and_then(Json::as_array).is_none_or(|row| row.len() < 2) {
         ui.label("Scatter requires two output columns.");
         return;
     }
-    let mut points = sample_points(rows, kind == "Scatter");
+    let mut points = sample_points(rows, kind == "Scatter", output, other);
     if points.is_empty() {
         return;
     }
@@ -1009,7 +1000,10 @@ fn chart_quantiles(ui: &mut egui::Ui, summaries: &Json, kind: &str) {
         for (value, height) in [(d[0], 10.0), (d[3], 25.0), (d[6], 10.0)] {
             painter.line_segment([egui::pos2(x(value), y - height), egui::pos2(x(value), y + height)], egui::Stroke::new(2.0, t.accent));
         }
-        ui.small(format!("Output1: min {:.6e}, Q25 {:.6e}, median {:.6e}, Q75 {:.6e}, max {:.6e}; min/max whiskers", d[0], d[2], d[3], d[4], d[6]));
+        ui.small(format!(
+            "Selected output: min {:.6e}, Q25 {:.6e}, median {:.6e}, Q75 {:.6e}, max {:.6e}; min/max whiskers",
+            d[0], d[2], d[3], d[4], d[6]
+        ));
     } else {
         let lo = data.iter().map(|d| d[1]).fold(f64::INFINITY, f64::min);
         let hi = data.iter().map(|d| d[5]).fold(f64::NEG_INFINITY, f64::max);
@@ -1032,9 +1026,11 @@ fn parameter_map(case: &Json) -> Option<HashMap<&str, f64>> {
         .collect::<Option<HashMap<_, _>>>()?;
     (map.len() == values.len()).then_some(map)
 }
-fn parameter_effects(cases: &[Json]) -> Vec<(String, f64)> {
+fn parameter_effects(cases: &[Json], output: usize) -> Vec<(String, f64)> {
     let Some(base) = cases.first() else { return Vec::new() };
-    let Some(base_mean) = base["preview"]["result"]["summaries"][0]["mean"].as_f64().filter(|value| value.is_finite()) else { return Vec::new() };
+    let Some(base_mean) = base["preview"]["result"]["summaries"][output]["mean"].as_f64().filter(|value| value.is_finite()) else {
+        return Vec::new();
+    };
     let Some(base_values) = parameter_map(base) else { return Vec::new() };
     let mut effects = cases
         .iter()
@@ -1047,14 +1043,14 @@ fn parameter_effects(cases: &[Json]) -> Vec<(String, f64)> {
                 return None;
             }
             let changed = values.iter().filter(|(cell, value)| base_values.get(*cell).is_none_or(|base| *base != **value)).count();
-            let delta = case["preview"]["result"]["summaries"][0]["mean"].as_f64()? - base_mean;
+            let delta = case["preview"]["result"]["summaries"][output]["mean"].as_f64()? - base_mean;
             (changed == 1 && delta.is_finite()).then(|| (case["name"].as_str().unwrap_or("Case").to_string(), delta))
         })
         .collect::<Vec<_>>();
     effects.sort_by(|left, right| right.1.abs().total_cmp(&left.1.abs()));
     effects
 }
-fn parameter_results(ui: &mut egui::Ui, cases: &[Json]) {
+fn parameter_results(ui: &mut egui::Ui, cases: &[Json], output: usize) {
     if cases.is_empty() {
         ui.label("No completed parameter cases.");
         return;
@@ -1063,14 +1059,14 @@ fn parameter_results(ui: &mut egui::Ui, cases: &[Json]) {
     for case in cases {
         let name = case["name"].as_str().unwrap_or("Case");
         let result = &case["preview"]["result"];
-        ui.label(format!("{name}: {} trials · mean {}", result["completed_trials"], result["summaries"][0]["mean"]));
+        ui.label(format!("{name}: {} trials · mean {}", result["completed_trials"], result["summaries"][output]["mean"]));
     }
-    let effects = parameter_effects(cases);
+    let effects = parameter_effects(cases, output);
     if effects.is_empty() {
         return;
     }
     let maximum = effects.iter().map(|e| e.1.abs()).fold(0.0_f64, f64::max);
-    ui.strong("Tornado: one-factor change in output1 mean from Base");
+    ui.strong("Tornado: one-factor change in selected output mean from Base");
     for (name, delta) in effects {
         ui.label(format!("{name}: {delta:+.6e}"));
         let (rect, _) = ui.allocate_exact_size(egui::vec2(ui.available_width().max(100.0), 14.0), egui::Sense::hover());
@@ -1121,6 +1117,25 @@ mod tests {
         let multiline = super::json!([{"cell":"'Two\nlines'!A1"}]);
         assert_eq!(super::variable_text(&multiline), multiline.to_string());
     }
+    #[test]
+    fn loading_simulations_preserves_numeric_seeds_and_custom_scenarios() {
+        let cases = json!([{"name":"Original case", "values":[{"cell":"C1","value":7.0}],"host_tag":"keep"}]);
+        let mut state = super::State::default();
+        super::load(
+            &mut state,
+            json!({"name":"Imported", "kind":"simulation", "request": {
+                "inputs":[{"cell":"A1","distribution":{"kind":"normal","mean":0.0,"std_dev":1.0}}],
+                "outputs":["B1","C1"], "options":{"trials":10,"seed":18446744073709551615_u64,"method":"latin_hypercube"},
+                "parameter_cases":cases
+            }}),
+        );
+        assert_eq!(state.seed, "18446744073709551615");
+        assert_eq!(state.outputs, "(B1,C1)");
+        let request = super::draft(&state).unwrap();
+        assert_eq!(request["options"]["seed"], "18446744073709551615");
+        assert_eq!(request["options"]["method"], "latin_hypercube");
+        assert_eq!(request["parameter_cases"], cases);
+    }
     use super::{Arc, State, cdf_steps, forget_closed, histogram_bins, json, parameter_effects, sample_points, summary_quantiles, unit_position};
     #[test]
     fn histogram_contract_places_boundaries_in_twenty_bins_and_retains_every_row() {
@@ -1139,11 +1154,17 @@ mod tests {
     #[test]
     fn scatter_contract_keeps_same_trial_pairs_when_sorted_and_skips_incomplete_rows() {
         let rows = [json!([2.0, 300.0]), json!([1.0, 100.0]), json!([3.0, 200.0]), json!([4.0])];
-        let mut points = sample_points(&rows, true);
+        let mut points = sample_points(&rows, true, 0, 1);
         points.sort_by(|left, right| left.0.total_cmp(&right.0));
         assert_eq!(points, vec![(1.0, 100.0), (2.0, 300.0), (3.0, 200.0)]);
         let coordinates = points.iter().map(|(x, y)| (unit_position(*x, 1.0, 3.0), unit_position(*y, 100.0, 300.0))).collect::<Vec<_>>();
         assert_eq!(coordinates, vec![(0.0, 0.0), (0.5, 1.0), (1.0, 0.5)]);
+    }
+    #[test]
+    fn charts_use_the_selected_output_and_keep_scatter_pairs_from_the_same_trial() {
+        let rows = [json!([2.0, 300.0]), json!([1.0, 100.0]), json!([3.0])];
+        assert_eq!(sample_points(&rows, false, 1, 0), vec![(300.0, 0.0), (100.0, 0.0)]);
+        assert_eq!(sample_points(&rows, true, 1, 0), vec![(300.0, 2.0), (100.0, 1.0)]);
     }
     fn summary_fixture() -> super::Json {
         json!({"count":20000,"minimum":-10.0,"maximum":100.0,"quantiles":[[0.05,0.0],[0.25,10.0],[0.5,20.0],[0.75,40.0],[0.95,80.0]]})
@@ -1177,7 +1198,7 @@ mod tests {
             case("Incomplete", 300.0, json!([{"cell":"C1","value":5}])),
             case("Unchanged", 100.0, json!([{"cell":"C1","value":10.0},{"cell":"D1","value":2.0}])),
         ];
-        assert_eq!(parameter_effects(&cases), vec![("High".to_string(), 10.0), ("Low".to_string(), -5.0)]);
+        assert_eq!(parameter_effects(&cases, 0), vec![("High".to_string(), 10.0), ("Low".to_string(), -5.0)]);
     }
     #[test]
     fn charts_keep_tiny_close_large_and_overflowing_axis_ranges() {
@@ -1197,12 +1218,12 @@ mod tests {
     #[test]
     fn histogram_and_cdf_ignore_unrelated_output_magnitude_and_scatter_uses_independent_axes() {
         let rows = [json!([1.0, 1e300]), json!([2.0, 1e300]), json!([3.0, 1e300])];
-        let points = sample_points(&rows, false);
+        let points = sample_points(&rows, false, 0, 1);
         assert_eq!(points, vec![(1.0, 0.0), (2.0, 0.0), (3.0, 0.0)]);
         let bins = histogram_bins(&points, 1.0, 3.0);
         assert_eq!(bins.iter().sum::<usize>(), 3);
         assert_eq!((bins[0], bins[10], bins[19]), (1, 1, 1));
-        let scatter = sample_points(&rows, true);
+        let scatter = sample_points(&rows, true, 0, 1);
         for (index, point) in scatter.iter().enumerate() {
             assert_eq!(unit_position(point.0, 1.0, 3.0), index as f64 / 2.0);
             assert_eq!(unit_position(point.1, 1e300, 1e300), 0.5);

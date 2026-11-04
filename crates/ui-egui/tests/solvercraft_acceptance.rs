@@ -28,6 +28,7 @@ fn value(harness: &common::Harness, reference: &str) -> Value {
 
 #[allow(clippy::disallowed_methods, reason = "This egui integration test is excluded on wasm; web_time aliases the native std clock.")]
 fn start_preview(h: &mut common::Harness) {
+    configure_optimization(h);
     h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
     h.run_steps(3);
     h.get_by_label("Calculate optimization").scroll_to_me();
@@ -39,6 +40,243 @@ fn start_preview(h: &mut common::Harness) {
         std::thread::sleep(Duration::from_millis(5));
     }
     assert!(h.query_by_label("Apply solution (one undo step)").is_some(), "preview did not complete within ten seconds");
+}
+
+fn configure_optimization(h: &mut common::Harness) {
+    let model = h
+        .state_mut()
+        .run(
+            "solvercraft.model.create",
+            json!({
+                "name": "Fixture optimization", "kind": "optimization",
+                "request": {"objective": "B1", "variables": "A1", "constraints": ["A1 <= 10"], "goal": "max"}
+            }),
+        )
+        .unwrap();
+    let ctx = h.ctx.clone();
+    gridcraft_ui_egui::solvercraft::open_model(h.state_mut(), &ctx, model["id"].as_str().unwrap()).unwrap();
+    h.run_steps(3);
+}
+
+fn click_control(h: &mut common::Harness, caption: &str) {
+    use egui::accesskit::Role;
+    h.query_by_role_and_label(Role::TextInput, caption)
+        .or_else(|| h.query_by_role_and_label(Role::Button, caption))
+        .or_else(|| h.query_by_role_and_label(Role::ComboBox, caption))
+        .unwrap_or_else(|| h.get_by_label(caption))
+        .scroll_to_me();
+    h.run_steps(5);
+    h.query_by_role_and_label(Role::TextInput, caption)
+        .or_else(|| h.query_by_role_and_label(Role::Button, caption))
+        .or_else(|| h.query_by_role_and_label(Role::ComboBox, caption))
+        .unwrap_or_else(|| h.get_by_label(caption))
+        .click();
+    h.run_steps(4);
+}
+
+fn type_control(h: &mut common::Harness, caption: &str, text: &str) {
+    click_control(h, caption);
+    h.key_press_modifiers(egui::Modifiers::COMMAND, egui::Key::A);
+    h.run_steps(2);
+    h.input_mut().events.push(egui::Event::Text(text.into()));
+    h.run_steps(3);
+    h.key_press(egui::Key::Tab);
+    h.run_steps(3);
+}
+
+#[allow(clippy::disallowed_methods, reason = "Native UI test waits on a bounded background job.")]
+fn wait_for_control(h: &mut common::Harness, caption: &str) {
+    let deadline = Instant::now() + Duration::from_secs(30);
+    while h.query_by_label(caption).is_none() && Instant::now() < deadline {
+        h.run_steps(4);
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    assert!(h.query_by_label(caption).is_some(), "missing completed run control: {caption}");
+}
+
+fn forget_jobs(h: &mut common::Harness) {
+    let jobs = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
+    for job in jobs["jobs"].as_array().unwrap() {
+        h.state_mut().run("solvercraft.job.forget", json!({"id": job["id"]})).unwrap();
+    }
+}
+
+#[test]
+fn a_user_builds_an_integer_optimization_without_json() {
+    let mut h = harness();
+    h.state_mut().run("range.setValues", json!({"range": "A1:C1", "values": [[0, 0, "=3*A1+5*B1"]]})).unwrap();
+    h.state_mut().run("ui.solvercraft", json!({"on": true})).unwrap();
+    h.run_steps(4);
+    assert!(h.get_by_label("Calculate optimization").accesskit_node().is_disabled());
+    h.state_mut().run("selection.set", json!({"cell": "C1"})).unwrap();
+    h.run_steps(3);
+    click_control(&mut h, "Use selection as objective");
+    click_control(&mut h, "Maximize");
+    h.state_mut().run("selection.set", json!({"range": "A1:B1"})).unwrap();
+    h.run_steps(3);
+    click_control(&mut h, "Use selection as decision cells");
+    click_control(&mut h, "Variable type 1");
+    click_control(&mut h, "Whole numbers");
+    click_control(&mut h, "Variable 1 lower enabled");
+    type_control(&mut h, "Variable 1 lower", "0");
+    click_control(&mut h, "Variable 1 upper enabled");
+    type_control(&mut h, "Variable 1 upper", "6");
+    click_control(&mut h, "Add a condition");
+    for (left, right) in [("A1", "4"), ("B1", "6"), ("3*A1+2*B1", "18")] {
+        type_control(&mut h, "Left cell or expression", left);
+        type_control(&mut h, "Right cell or value", right);
+        click_control(&mut h, "Add constraint");
+    }
+    // Edit and remove ordinary rows, then restore the intended third limit.
+    type_control(&mut h, "Limit or cell 3", "15");
+    type_control(&mut h, "Limit or cell 3", "18");
+    type_control(&mut h, "Left cell or expression", "A1");
+    type_control(&mut h, "Right cell or value", "100");
+    click_control(&mut h, "Add constraint");
+    click_control(&mut h, "Remove condition 4");
+    assert!(h.query_by_label("Solvercraft constraints").is_none());
+    assert!(h.query_by_label("Decision cells JSON").is_none());
+    click_control(&mut h, "Save model");
+    let models = h.state_mut().run("solvercraft.model.list", json!({})).unwrap();
+    let model = h.state_mut().run("solvercraft.model.get", json!({"id": models["models"][0]["id"]})).unwrap();
+    assert_eq!(model["request"]["variables"][0]["kind"], "integer");
+    assert_eq!(model["request"]["variables"][0]["upper"], 6.0);
+    assert_eq!(model["request"]["constraints"].as_array().unwrap().len(), 3);
+    click_control(&mut h, "Calculate optimization");
+    wait_for_control(&mut h, "Apply solution (one undo step)");
+    assert_eq!(value(&h, "A1"), Value::Number(0.0));
+    click_control(&mut h, "Apply solution (one undo step)");
+    assert_eq!(value(&h, "A1"), Value::Number(2.0));
+    assert_eq!(value(&h, "B1"), Value::Number(6.0));
+    assert_eq!(value(&h, "C1"), Value::Number(36.0));
+    forget_jobs(&mut h);
+}
+
+#[test]
+fn a_user_builds_a_simulation_and_selects_each_output_without_json() {
+    let mut h = harness();
+    h.state_mut().run("range.setValues", json!({"range": "A1:C1", "values": [[0, "=2*A1", "=100+A1"]]})).unwrap();
+    h.state_mut().run("ui.solvercraft", json!({"on": true})).unwrap();
+    h.run_steps(4);
+    click_control(&mut h, "Simulation");
+    assert!(h.get_by_label("Run simulation").accesskit_node().is_disabled());
+    h.state_mut().run("selection.set", json!({"cell": "A1"})).unwrap();
+    click_control(&mut h, "Add uncertain input");
+    click_control(&mut h, "Distribution 1");
+    click_control(&mut h, "Normal");
+    type_control(&mut h, "Input 1 · Mean", "10");
+    type_control(&mut h, "Input 1 · Standard deviation", "-1");
+    assert!(h.get_by_label("Run simulation").accesskit_node().is_disabled());
+    type_control(&mut h, "Input 1 · Standard deviation", "2");
+    h.state_mut().run("selection.set", json!({"range": "B1:C1"})).unwrap();
+    h.run_steps(3);
+    click_control(&mut h, "Use selection as outputs");
+    type_control(&mut h, "Number of simulation trials", "256");
+    assert!(h.query_by_label("Solvercraft simulation inputs").is_none());
+    assert!(h.query_by_label("Random seed").is_none());
+    click_control(&mut h, "Save model");
+    click_control(&mut h, "Run simulation");
+    wait_for_control(&mut h, "Simulation chart type");
+    assert!(
+        h.query_by_label("Apply solution (one undo step)").is_none(),
+        "simulation offers its result sheet instead of an unavailable optimization action"
+    );
+    let jobs = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
+    let preview = h.state_mut().run("solvercraft.job.result", json!({"id": jobs["jobs"][0]["id"]})).unwrap();
+    assert_eq!(preview["result"]["completed_trials"], 256);
+    assert_eq!(preview["request"]["inputs"][0]["distribution"], json!({"kind": "normal", "mean": 10.0, "std_dev": 2.0}));
+    let first_mean = preview["result"]["summaries"][0]["mean"].as_f64().unwrap();
+    let second_mean = preview["result"]["summaries"][1]["mean"].as_f64().unwrap();
+    assert!(h.query_by_label(&format!("Mean  {}", gridcraft_engine::core::number_to_text(first_mean))).is_some());
+    let second = preview["outputs"][1].as_str().unwrap();
+    click_control(&mut h, "Result cell");
+    click_control(&mut h, second);
+    assert!(h.query_by_label(&format!("Mean  {}", gridcraft_engine::core::number_to_text(second_mean))).is_some());
+    assert_eq!(value(&h, "A1"), Value::Number(0.0), "simulation leaves source inputs unchanged");
+    click_control(&mut h, "Create result sheet");
+    assert_eq!(value(&h, "C5"), Value::Number(256.0));
+    forget_jobs(&mut h);
+}
+
+#[test]
+fn focusing_numeric_bounds_does_not_change_their_values() {
+    let mut h = harness();
+    for (lower, upper) in [(1e-12, 2e-12), (1.234567890123456, 2e300)] {
+        let model = h
+            .state_mut()
+            .run(
+                "solvercraft.model.create",
+                json!({
+                "name": format!("Physical quantities {lower}"), "kind": "optimization",
+                "request": {"objective":"B1", "variables":[{"cell":"A1", "lower":lower, "upper":upper}], "goal":"max"}
+                    }),
+            )
+            .unwrap();
+        let ctx = h.ctx.clone();
+        gridcraft_ui_egui::solvercraft::open_model(h.state_mut(), &ctx, model["id"].as_str().unwrap()).unwrap();
+        h.run_steps(4);
+        for caption in ["Variable 1 lower", "Variable 1 upper"] {
+            click_control(&mut h, caption);
+            h.key_press(egui::Key::Tab);
+            h.run_steps(4);
+        }
+        click_control(&mut h, "Save model");
+        let saved = h.state_mut().run("solvercraft.model.get", json!({"id":model["id"]})).unwrap();
+        assert_eq!(saved["request"]["variables"][0]["lower"].as_f64(), Some(lower));
+        assert_eq!(saved["request"]["variables"][0]["upper"].as_f64(), Some(upper));
+    }
+}
+
+#[test]
+fn empirical_controls_follow_expert_edits_and_reject_incomplete_observations() {
+    let mut h = harness();
+    let model = h
+        .state_mut()
+        .run(
+            "solvercraft.model.create",
+            json!({
+                "name": "Observed demand", "kind": "simulation",
+                "request": {"inputs": [{"cell": "A1", "distribution": {"kind": "empirical", "values": [1.0, 2.0]}}], "outputs": "B1"}
+            }),
+        )
+        .unwrap();
+    let ctx = h.ctx.clone();
+    gridcraft_ui_egui::solvercraft::open_model(h.state_mut(), &ctx, model["id"].as_str().unwrap()).unwrap();
+    h.run_steps(4);
+    click_control(&mut h, "Expert settings");
+    click_control(&mut h, "Raw simulation configuration");
+    type_control(&mut h, "Solvercraft simulation inputs", r#"[{"cell":"A1","distribution":{"kind":"empirical","values":[10,20]}}]"#);
+    assert_eq!(h.get_by_label("Observed values 1").value().as_deref(), Some("10\n20"));
+    type_control(&mut h, "Observed values 1", "10\n-");
+    assert_eq!(h.get_by_label("Observed values 1").value().as_deref(), Some("10\n-"));
+    assert!(h.get_by_label("Run simulation").accesskit_node().is_disabled());
+    type_control(&mut h, "Observed values 1", "10\n30");
+    click_control(&mut h, "Save model");
+    let saved = h.state_mut().run("solvercraft.model.get", json!({"id":model["id"]})).unwrap();
+    assert_eq!(saved["request"]["inputs"][0]["distribution"]["values"], json!([10.0, 30.0]));
+}
+
+#[test]
+fn an_infeasible_custom_model_explains_why_no_solution_can_be_applied() {
+    let mut h = harness();
+    let model = h
+        .state_mut()
+        .run(
+            "solvercraft.model.create",
+            json!({
+                "name":"Conflicting limits", "kind":"optimization",
+                "request":{"objective":"B1","variables":"A1","constraints":["B1 <= 1","B1 >= 2"],"goal":"max"}
+            }),
+        )
+        .unwrap();
+    let ctx = h.ctx.clone();
+    gridcraft_ui_egui::solvercraft::open_model(h.state_mut(), &ctx, model["id"].as_str().unwrap()).unwrap();
+    h.run_steps(4);
+    click_control(&mut h, "Calculate optimization");
+    wait_for_control(&mut h, "No solution satisfies all conditions. Check the limits and conflicting conditions.");
+    assert!(h.get_by_label("Apply solution (one undo step)").accesskit_node().is_disabled());
+    assert_eq!(value(&h, "A1"), Value::Number(2.0));
+    forget_jobs(&mut h);
 }
 
 #[test]
@@ -61,13 +299,6 @@ fn ribbon_opens_the_real_pane_after_solver() {
 #[test]
 #[allow(clippy::disallowed_methods, reason = "Native-only UI test; web_time aliases the native monotonic clock.")]
 fn cold_storage_template_opens_and_runs_all_three_models() {
-    fn click(h: &mut common::Harness, label: &str) {
-        h.get_by_label(label).scroll_to_me();
-        h.run_steps(4);
-        h.get_by_label(label).click();
-        h.run_steps(4);
-    }
-
     fn wait_for(h: &mut common::Harness, label: &str) {
         let deadline = Instant::now() + Duration::from_secs(20);
         while h.query_by_label(label).is_none() && Instant::now() < deadline {
@@ -84,27 +315,28 @@ fn cold_storage_template_opens_and_runs_all_three_models() {
     let mut h = harness();
     h.state_mut().ui.ribbon_tab = "Data".into();
     h.run_steps(3);
-    click(&mut h, "Solvercraft");
-    click(&mut h, "Open Microgrid");
+    click_control(&mut h, "Solvercraft");
+    click_control(&mut h, "Open Microgrid");
     let doc = h.state().session.active().unwrap();
     let first_copy = doc.uid;
     assert!(doc.path.is_none());
     assert_eq!(doc.wb.active().unwrap().name, "Dashboard");
     assert_eq!(doc.wb.active().unwrap().charts.len(), 3);
     assert_eq!(h.state().session.documents().len(), 2);
-    click(&mut h, "Model settings");
-    assert!(h.query_by_label("1 · Optimize cost plan").is_some());
+    click_control(&mut h, "Model settings");
+    assert_eq!(h.get_by_label("Saved models").value().as_deref(), Some("1 · Optimize cost plan"));
 
     for (model, sheet, objective) in
         [("1 · Optimize cost plan", "CostPlan", 1069.3404838709675), ("2 · Optimize reserve plan", "ReservePlan", 1172.274494623656)]
     {
         // Start with a broken energy balance so the test verifies that Apply writes the solution.
         h.state_mut().run("cell.set", json!({"sheet": sheet, "cell": "E11", "input": "0"})).unwrap();
-        click(&mut h, model);
-        click(&mut h, "Calculate optimization");
+        click_control(&mut h, "Saved models");
+        click_control(&mut h, model);
+        click_control(&mut h, "Calculate optimization");
         wait_for(&mut h, "Apply solution (one undo step)");
         assert!(!h.get_by_label("Apply solution (one undo step)").accesskit_node().is_disabled());
-        click(&mut h, "Apply solution (one undo step)");
+        click_control(&mut h, "Apply solution (one undo step)");
         let wb = &h.state().session.active().unwrap().wb;
         let plan = wb.sheet(wb.sheet_index(sheet).unwrap()).unwrap();
         let Value::Number(cost) = plan.value(CellRef::parse("B7").unwrap()) else { panic!("missing objective") };
@@ -112,10 +344,11 @@ fn cold_storage_template_opens_and_runs_all_three_models() {
         assert_eq!(plan.value(CellRef::parse("N7").unwrap()), Value::Number(0.0));
     }
 
-    click(&mut h, "3 · Simulate both plans");
-    click(&mut h, "Run simulation");
+    click_control(&mut h, "Saved models");
+    click_control(&mut h, "3 · Simulate both plans");
+    click_control(&mut h, "Run simulation");
     wait_for(&mut h, "Create result sheet");
-    click(&mut h, "Create result sheet");
+    click_control(&mut h, "Create result sheet");
     assert_eq!(h.state().session.active().unwrap().wb.active().unwrap().name, "Solver Result 1");
     assert_eq!(value(&h, "C5"), Value::Number(4096.0));
     // Release retained jobs so this fixture does not consume the process-wide test quota.
@@ -124,7 +357,7 @@ fn cold_storage_template_opens_and_runs_all_three_models() {
         h.state_mut().run("solvercraft.job.forget", json!({"id": job["id"]})).unwrap();
     }
 
-    click(&mut h, "Open Microgrid");
+    click_control(&mut h, "Open Microgrid");
     let doc = h.state().session.active().unwrap();
     assert_ne!(doc.uid, first_copy);
     assert!(doc.path.is_none());
@@ -304,6 +537,7 @@ fn pane_keyboard_focus_and_preview_shortcut_work_in_both_themes_and_languages() 
     for language in [Language::En, Language::De] {
         for dark in [false, true] {
             let mut h = harness();
+            configure_optimization(&mut h);
             h.state_mut().ui.language = language;
             h.state_mut().ui.system_theme = false;
             h.state_mut().ui.dark = dark;
@@ -352,19 +586,18 @@ fn simulate_saved_model(h: &mut common::Harness, name: &str, request: serde_json
     h.run_steps(3);
     h.get_by_label("Refresh models").click();
     h.run_steps(2);
-    h.get_by_label(name).click();
+    click_control(h, "Saved models");
+    click_control(h, name);
     h.run_steps(2);
     h.get_by_label("Run simulation").scroll_to_me();
     h.run_steps(4);
     h.get_by_label("Run simulation").click();
     let deadline = Instant::now() + Duration::from_secs(10);
-    while h.query_by_label("Result details").is_none() && Instant::now() < deadline {
+    while h.query_by_label(ready_label).is_none() && Instant::now() < deadline {
         h.run_steps(4);
         std::thread::sleep(Duration::from_millis(5));
     }
-    h.get_by_label("Result details").scroll_to_me();
-    h.run_steps(4);
-    h.get_by_label("Result details").click();
+    h.get_by_label(ready_label).scroll_to_me();
     h.run_steps(12);
     assert!(h.query_by_label(ready_label).is_some(), "simulation did not expose {ready_label}");
     let list = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
@@ -421,7 +654,7 @@ fn simulation_chart_choices_and_parameter_tornado_use_completed_preview_data() {
     let mut h = harness();
     h.state_mut().run("cell.set", json!({"cell":"C1","input":"10"})).unwrap();
     h.state_mut().run("cell.set", json!({"cell":"B1","input":"=A1*C1"})).unwrap();
-    let title = "Tornado: one-factor change in output1 mean from Base";
+    let title = "Tornado: one-factor change in selected output mean from Base";
     let preview = simulate_saved_model(
         &mut h,
         "Tornado acceptance",
@@ -460,6 +693,10 @@ fn pane_reviews_legacy_formulas_before_conversion() {
     h.state_mut().run("cell.set", json!({"cell":"B1","input":"=2*A1+PsiOutput()"})).unwrap();
     h.state_mut().run("ui.solvercraft", json!({"on":true})).unwrap();
     h.run_steps(4);
+    h.get_by_label("Import and run history").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Import and run history").click();
+    h.run_steps(4);
     h.get_by_label("Import simulation formulas").click();
     h.run_steps(4);
     let hint = "Finds Psi formulas and embedded simulation settings. The scan leaves cells untouched.";
@@ -475,7 +712,7 @@ fn pane_reviews_legacy_formulas_before_conversion() {
         h.state().session.active().unwrap().wb.active().unwrap().cell(CellRef::parse("B1").unwrap()).unwrap().formula.as_ref().unwrap().text.clone()
     };
     assert_eq!(current_formula(&h), "2*A1+PSIOUTPUT()");
-    h.get_by_label("Convert supported cells").click();
+    click_control(&mut h, "Convert supported cells");
     h.run_steps(4);
     assert_eq!(current_formula(&h), "SC.OUTPUT(2*A1+0)");
     assert!(h.query_by_label("Run simulation").is_some());

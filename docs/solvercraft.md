@@ -4,6 +4,31 @@ Last updated: 2026-11-04. Status: development alpha; evidence is scoped to named
 
 Solvercraft adds optimization and simulation beside the existing Solver. The ribbon button opens a right task pane; programmatic engine, CLI and MCP calls execute commands without dialogs. The [independent Rust SDK](../solvercraft/README.md) owns mathematics and portable models. The host owns workbook bindings, exact spreadsheet simulation semantics, saved models and transactional application.
 
+## Build your own workbook model
+
+New models start with empty bindings. Optimization guides you through the target,
+the cells that may change, and the conditions they must satisfy. Each cell group
+has a number type and optional minimum and maximum. Conditions can be edited or
+removed individually. Cell selections are captured with their sheet names.
+
+Simulation guides you through uncertain inputs, calculated outputs and the trial
+count. Parameter forms cover 25 distribution families, including the 17 worksheet
+families, fixed values and several additional scalar families. Previews use the
+SDK's validated inverse CDF. Invalid parameters block calculation, and a valid
+distribution without a finite inverse-CDF preview remains usable for simulation.
+Observed values are entered one per line with a decimal point.
+
+**Expert settings** contains the solving method, sampling method, random seed,
+time limit, scenario comparisons and raw configuration. Existing complex
+distribution and variable metadata are preserved. Custom saved scenarios are
+retained until their comparison controls are explicitly changed. Simulation
+results expose a result-cell selector for statistics and charts and a second
+selection for scatter comparisons. Quantile bands compare all output columns.
+
+Missing required bindings and contradictory variable bounds are identified
+before starting. Workbook formulas, supported operations and final feasibility
+remain subject to the engine's normal validation.
+
 Choose **Data → Solvercraft → Open Microgrid** to open a fresh copy
 of the English template. The dashboard compares two daily energy plans for a
 fictional cold storage site. Select **Run full comparison** to optimize and apply
@@ -48,6 +73,7 @@ Public final6 evidence is available as [compact fixed-field reports and strict t
 | 2026-11-02 | minor | Add standalone Solvercraft app, reusable host SDK and on-demand independent MCP; link final7 selected import scope and reviewed launcher submission |
 | 2026-11-03 | minor | Add the built-in Cold Storage Microgrid template |
 | 2026-11-04 | minor | Guide the example through both optimizations and paired simulation, with progress and live result comparison |
+| 2026-11-04 | minor | Add general optimization and simulation forms, validated distribution previews and selectable result charts |
 
 ### Review and import simulation formulas
 

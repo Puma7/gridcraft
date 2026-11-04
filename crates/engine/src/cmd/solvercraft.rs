@@ -69,6 +69,9 @@ pub fn specs() -> Vec<CommandSpec> {
         cmd!(query "solvercraft.validate", "Validate Solvercraft model", [], None,
             "{objective: cell|formula, goal?: min|max|value, value?: number, variables: range|string[]|[{cell,kind?,lower?,upper?}], constraints?: [string|{lhs,op,rhs}], nonNegative?: true, options?: SolveOptions} -> {model,bindings,class}; alternatively {model: OptimizationModel}.",
             has_doc, validate),
+        cmd!(query "solvercraft.distribution.preview", "Preview a distribution", [], None,
+            "{distribution} -> validated distribution and bounded inverse-CDF preview points. Does not sample or change the workbook.",
+            always, distribution_preview),
         cmd!(query "solvercraft.solve", "Solvercraft", ["Data", "Analysis"], None,
             "Same parameters as solvercraft.validate. Returns a bounded synchronous preview {result,request,snapshot,bindings}; does not change cells. Use solvercraft.result.apply explicitly.",
             has_doc, solve),
@@ -96,6 +99,24 @@ pub fn specs() -> Vec<CommandSpec> {
 
 fn sdk_error(e: impl std::fmt::Display) -> EngineError {
     bad(SOLVE, e.to_string())
+}
+
+fn distribution_preview(_: &mut Session, p: &Json) -> Result<Json> {
+    let source = p.get("distribution").ok_or_else(|| bad(SOLVE, "Choose a distribution"))?;
+    if serde_json::to_vec(source).map_err(sdk_error)?.len() > 131_072 {
+        return Err(bad(SOLVE, "The distribution exceeds the preview size limit"));
+    }
+    let distribution: Distribution = serde_json::from_value(source.clone()).map_err(sdk_error)?;
+    ::solvercraft::math::validate_distribution(&distribution).map_err(sdk_error)?;
+    let mut points = Vec::new();
+    for index in 0..=32 {
+        let probability = 0.01 + f64::from(index) * 0.98 / 32.0;
+        match ::solvercraft::math::quantile(&distribution, probability) {
+            Ok(value) if value.is_finite() => points.push(json!([value, probability])),
+            _ => return Ok(json!({"valid": true, "points": [], "note": "A finite inverse-CDF preview is unavailable for this distribution."})),
+        }
+    }
+    Ok(json!({"valid": true, "points": points}))
 }
 
 fn capabilities(_: &mut Session, _: &Json) -> Result<Json> {

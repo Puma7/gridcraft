@@ -33,6 +33,25 @@ fn set(s: &mut Session, cell: &str, input: &str) {
 fn request() -> Json {
     json!({"objective":"B1","variables":"A1","constraints":["A1<=5"]})
 }
+
+#[test]
+fn distribution_preview_reuses_validated_quantiles_without_changing_a_document() {
+    let mut s = session();
+    set(&mut s, "A1", "17");
+    let before = Arc::clone(&s.doc().unwrap().wb);
+    let revision = s.doc().unwrap().revision;
+    let result = s.execute("solvercraft.distribution.preview", json!({"distribution": {"kind": "uniform", "low": 10, "high": 20}})).unwrap();
+    let points = result["points"].as_array().unwrap();
+    assert_eq!(points.len(), 33);
+    assert!((points[0][0].as_f64().unwrap() - 10.1).abs() < 1e-12);
+    assert!((points[32][0].as_f64().unwrap() - 19.9).abs() < 1e-12);
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+    assert_eq!(revision, s.doc().unwrap().revision);
+    for distribution in [json!({"kind":"uniform","low":10,"high":1}), json!({"kind":"normal","mean":0,"std_dev":-1}), json!({"kind":"unknown"})] {
+        assert!(s.execute("solvercraft.distribution.preview", json!({"distribution":distribution})).is_err());
+    }
+    assert!(Arc::ptr_eq(&before, &s.doc().unwrap().wb));
+}
 fn save(s: &mut Session, name: &str) -> Json {
     s.execute("solvercraft.model.create", json!({"name":name,"request":request()})).unwrap()
 }
