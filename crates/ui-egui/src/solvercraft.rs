@@ -4,6 +4,7 @@ use serde_json::{Value as Json, json};
 use std::collections::HashMap;
 use std::sync::Arc;
 mod import;
+mod microgrid;
 mod report;
 
 #[derive(Clone)]
@@ -38,6 +39,7 @@ struct State {
     job: Option<String>,
     status: Json,
     preview: Option<Arc<Json>>,
+    applied_revision: Option<String>,
     error: Option<String>,
     last_poll: f64,
     chart: String,
@@ -49,6 +51,7 @@ struct State {
     imported_settings: bool,
     psi_import: import::State,
     analysis: Option<Arc<Json>>,
+    guide: Option<microgrid::Guide>,
 }
 impl Default for State {
     fn default() -> Self {
@@ -75,6 +78,7 @@ impl Default for State {
             job: None,
             status: Json::Null,
             preview: None,
+            applied_revision: None,
             error: None,
             last_poll: f64::NEG_INFINITY,
             chart: "Histogram".into(),
@@ -86,6 +90,7 @@ impl Default for State {
             imported_settings: false,
             psi_import: import::State::default(),
             analysis: None,
+            guide: None,
         }
     }
 }
@@ -227,6 +232,7 @@ fn constraint_text(value: &Json) -> String {
 }
 
 fn load(state: &mut State, model: Json) {
+    state.applied_revision = None;
     state.job = None;
     state.preview = None;
     state.analysis = None;
@@ -494,8 +500,9 @@ fn poll_job(app: &mut SheetApp, state: &mut State, id: &str, now: f64) {
 
 pub(crate) fn microgrid_button(app: &mut SheetApp, ui: &mut egui::Ui) {
     let de = app.ui.language == Language::De;
+    let t = crate::theme::Tokens::get(ui.ctx());
     if ui
-        .button(label(de, "Open Microgrid", "Kühlcampus öffnen"))
+        .add(egui::Button::new(egui::RichText::new(label(de, "Open Microgrid", "Kühlcampus öffnen")).strong().color(t.on_accent)).fill(t.accent))
         .on_hover_text(label(
             de,
             "Open a fresh Cold Storage Microgrid example with two optimizations and a shared Monte Carlo simulation.",
@@ -546,13 +553,38 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
         );
     }
     let de = app.ui.language == Language::De;
+    if state.guide.is_none() && microgrid::matches(app) {
+        state.guide = Some(microgrid::Guide::default());
+        refresh(app, &mut state);
+    }
+    ui.scope(|ui| {
+        let t = crate::theme::Tokens::get(ui.ctx());
+        let visuals = ui.visuals_mut();
+        visuals.widgets.inactive.weak_bg_fill = t.header_bg;
+        visuals.widgets.inactive.bg_fill = t.header_bg;
+        visuals.widgets.hovered.weak_bg_fill = t.hover;
+        visuals.widgets.active.weak_bg_fill = t.pressed;
+        visuals.extreme_bg_color = t.input_bg;
+        if let Some(mut guide) = state.guide.take() {
+            microgrid::show(app, ui, &mut guide, de);
+            ui.add_enabled_ui(!guide.busy(), |ui| {
+                ui.collapsing(label(de, "Model settings", "Modelleinstellungen"), |ui| show_editor(app, ui, &mut state, &current_revision, de));
+            });
+            state.guide = Some(guide);
+        } else {
+            show_editor(app, ui, &mut state, &current_revision, de);
+        }
+    });
+    ui.ctx().data_mut(|m| m.insert_temp(key, state));
+}
+fn show_editor(app: &mut SheetApp, ui: &mut egui::Ui, state: &mut State, current_revision: &str, de: bool) {
     ui.horizontal(|ui| {
         if ui.button(label(de, "Refresh models", "Modelle laden")).clicked() {
-            refresh(app, &mut state)
+            refresh(app, state)
         }
         if ui.button(label(de, "New", "Neu")).clicked() {
-            state = State::default();
-            refresh(app, &mut state)
+            *state = State::default();
+            refresh(app, state)
         }
     });
     let models = state.models.clone();
@@ -561,18 +593,19 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
         let name = model["name"].as_str().unwrap_or("Model");
         if ui.selectable_label(state.selected.as_deref() == Some(id), name).clicked() {
             match app.run("solvercraft.model.get", json!({"id":id})) {
-                Ok(m) => load(&mut state, m),
+                Ok(m) => load(state, m),
                 Err(e) => state.error = Some(e),
             }
         }
     }
     ui.separator();
     field(ui, label(de, "Model name", "Modellname"), &mut state.name);
-    import::show(app, ui, &mut state, &current_revision, de);
-    job_history(app, ui, &mut state, de);
-    let before = draft(&state).ok();
-    model_editor(app, ui, &mut state, de);
-    if before != draft(&state).ok() {
+    import::show(app, ui, state, current_revision, de);
+    job_history(app, ui, state, de);
+    let before = draft(state).ok();
+    model_editor(app, ui, state, de);
+    if before != draft(state).ok() {
+        state.applied_revision = None;
         state.job = None;
         state.preview = None;
         state.analysis = None;
@@ -580,7 +613,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     }
     ui.horizontal(|ui| {
         if ui.button(label(de, "Save model", "Modell speichern")).clicked() {
-            match draft(&state) {
+            match draft(state) {
                 Ok(request) => {
                     let (command, params) = if let Some(id) = &state.selected {
                         ("solvercraft.model.update", json!({"id":id,"name":state.name,"kind":state.kind,"request":request}))
@@ -589,8 +622,8 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
                     };
                     match app.run(command, params) {
                         Ok(model) => {
-                            load(&mut state, model);
-                            refresh(app, &mut state)
+                            load(state, model);
+                            refresh(app, state)
                         }
                         Err(e) => state.error = Some(e),
                     }
@@ -602,7 +635,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
             match app.run("solvercraft.model.delete", json!({"id":state.selected})) {
                 Ok(_) => {
                     state.selected = None;
-                    refresh(app, &mut state)
+                    refresh(app, state)
                 }
                 Err(e) => state.error = Some(e),
             }
@@ -614,15 +647,16 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     } else {
         label(de, "Run simulation", "Simulation berechnen")
     };
-    let start = ui.add_enabled(!running, egui::Button::new(action)).on_hover_text("Ctrl+Enter").clicked()
+    let start = ui.add_enabled_ui(!running, |ui| microgrid::primary(ui, action)).inner.on_hover_text("Ctrl+Enter").clicked()
         || (!running && ui.input(|i| i.modifiers.ctrl && i.key_pressed(egui::Key::Enter)));
     if start {
-        match draft(&state) {
+        match draft(state) {
             Ok(request) => match app.run(
                 "solvercraft.job.start",
                 json!({"kind":state.kind,"request":request,"limits":{"max_time_millis":state.time_seconds.saturating_mul(1000)}}),
             ) {
                 Ok(job) => {
+                    state.applied_revision = None;
                     state.job = job["id"].as_str().map(str::to_string);
                     state.status = json!({"status":"queued"});
                     state.preview = None;
@@ -637,12 +671,17 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     }
     if let Some(id) = state.job.clone() {
         let now = ui.input(|i| i.time);
-        poll_job(app, &mut state, &id, now);
+        poll_job(app, state, &id, now);
         ui.label(format!("Job {id}: {}", state.status["status"].as_str().unwrap_or("unknown")));
         if let Some(progress) = state.status.get("progress").filter(|x| x.is_object()) {
             ui.label(format!("{} · {} evaluations · {} nodes", progress["stage"].as_str().unwrap_or(""), progress["evaluations"], progress["nodes"]));
         }
-        if state.status["stale"].as_bool() == Some(true) {
+        if state.applied_revision.as_deref() == Some(current_revision) {
+            ui.colored_label(
+                crate::theme::Tokens::get(ui.ctx()).accent_dark,
+                label(de, "Solution applied to the workbook.", "Lösung in die Arbeitsmappe übernommen."),
+            );
+        } else if state.status["stale"].as_bool() == Some(true) {
             ui.label(label(
                 de,
                 "Workbook changed: recalculate to apply. You can still archive this run.",
@@ -680,6 +719,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
             {
                 match app.run("solvercraft.job.apply", json!({"id":id})) {
                     Ok(_) => {
+                        state.applied_revision = app.session.active().map(|doc| doc.revision.to_string());
                         state.status["stale"] = json!(true);
                         state.error = None
                     }
@@ -705,7 +745,7 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
                     );
                 });
             }
-            result_sheet_button(app, ui, &mut state, &id, de);
+            result_sheet_button(app, ui, state, &id, de);
             ui.collapsing(label(de, "Result details", "Ergebnisdetails"), |ui| {
                 result(ui, &preview, &mut state.chart);
             });
@@ -733,7 +773,6 @@ pub fn show(app: &mut SheetApp, ui: &mut egui::Ui) {
     if let Some(error) = &state.error {
         ui.colored_label(ui.visuals().error_fg_color, error);
     }
-    ui.ctx().data_mut(|m| m.insert_temp(key, state));
 }
 /// Release retained result Arcs when their document actually closes. egui's
 /// temporary data map otherwise keeps per-document state beyond pane visibility.

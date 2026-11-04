@@ -92,6 +92,7 @@ fn cold_storage_template_opens_and_runs_all_three_models() {
     assert_eq!(doc.wb.active().unwrap().name, "Dashboard");
     assert_eq!(doc.wb.active().unwrap().charts.len(), 3);
     assert_eq!(h.state().session.documents().len(), 2);
+    click(&mut h, "Model settings");
     assert!(h.query_by_label("1 · Optimize cost plan").is_some());
 
     for (model, sheet, objective) in
@@ -132,6 +133,90 @@ fn cold_storage_template_opens_and_runs_all_three_models() {
 }
 
 #[test]
+#[allow(clippy::disallowed_methods, reason = "Native UI job test uses the monotonic native clock.")]
+fn guided_microgrid_runs_applies_and_updates_the_dashboard() {
+    let mut h = harness();
+    h.state_mut().run("file.new", json!({"sample": "cold-storage-microgrid"})).unwrap();
+    h.state_mut().run("ui.solvercraft", json!({"on": true})).unwrap();
+    h.state_mut().run("cell.set", json!({"sheet": "CostPlan", "cell": "E11", "input": "0"})).unwrap();
+    h.state_mut().run("cell.set", json!({"sheet": "Assumptions", "cell": "B25", "input": "0.45"})).unwrap();
+    h.run_steps(4);
+    assert!(h.query_by_label("Objective cell or formula").is_none());
+    h.get_by_label("Run full comparison").click();
+    let deadline = Instant::now() + Duration::from_secs(30);
+    while h.query_by_label("Results from this run").is_none() && Instant::now() < deadline {
+        h.run_steps(4);
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    assert!(h.query_by_label("Results from this run").is_some(), "the guided run did not finish");
+    let wb = &h.state().session.active().unwrap().wb;
+    for sheet in ["CostPlan", "ReservePlan"] {
+        let plan = wb.sheet(wb.sheet_index(sheet).unwrap()).unwrap();
+        assert_eq!(plan.value(CellRef::parse("N7").unwrap()), Value::Number(0.0));
+    }
+    let dashboard = wb.sheet(wb.sheet_index("Dashboard").unwrap()).unwrap();
+    let Value::Number(gap) = dashboard.value(CellRef::parse("C13").unwrap()) else { panic!("missing simulated gap") };
+    assert!((gap - 0.45).abs() <= 1.0 / 4096.0, "outage frequency must follow the changed probability: {gap}");
+    assert_eq!(dashboard.value(CellRef::parse("C50").unwrap()), Value::Number(gap));
+    h.get_by_label("Open result sheet").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Open result sheet").click();
+    h.run_steps(4);
+    assert_eq!(h.state().session.active().unwrap().wb.active().unwrap().name, "Solver Result 1");
+    assert_eq!(value(&h, "C5"), Value::Number(4096.0));
+    h.state_mut().run("edit.undo", json!({})).unwrap();
+    h.run_steps(4);
+    h.get_by_label("Open result sheet").click();
+    h.run_steps(4);
+    assert_eq!(h.state().session.active().unwrap().wb.active().unwrap().name, "Solver Result 1");
+    h.state_mut().run("cell.set", json!({"sheet": "Assumptions", "cell": "B25", "input": "0.1"})).unwrap();
+    h.run_steps(4);
+    assert!(h.query_by_label("Workbook changed. Run again to refresh the comparison.").is_some());
+    // A completed report can be reopened without disguising subsequently changed inputs.
+    h.get_by_label("Open result sheet").click();
+    h.run_steps(4);
+    assert!(h.query_by_label("Workbook changed. Run again to refresh the comparison.").is_some());
+    h.get_by_label("Run full comparison").scroll_to_me();
+    h.run_steps(4);
+    h.get_by_label("Run full comparison").click();
+    h.run_steps(4);
+    let deadline = Instant::now() + Duration::from_secs(30);
+    while h.query_by_label("Results from this run").is_none() && Instant::now() < deadline {
+        h.run_steps(4);
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    assert!(h.query_by_label("Results from this run").is_some());
+    assert!(h.query_by_label("Workbook changed. Run again to refresh the comparison.").is_none());
+    let wb = &h.state().session.active().unwrap().wb;
+    let dashboard = wb.sheet(wb.sheet_index("Dashboard").unwrap()).unwrap();
+    let Value::Number(gap) = dashboard.value(CellRef::parse("C13").unwrap()) else { panic!("missing refreshed gap") };
+    assert!((gap - 0.1).abs() <= 1.0 / 4096.0);
+    let jobs = h.state_mut().run("solvercraft.job.list", json!({})).unwrap();
+    assert_eq!(jobs["jobs"].as_array().unwrap().len(), 1, "completed optimizations release their retained jobs");
+    for job in jobs["jobs"].as_array().unwrap() {
+        h.state_mut().run("solvercraft.job.forget", json!({"id": job["id"]})).unwrap();
+    }
+}
+
+#[test]
+#[allow(clippy::disallowed_methods, reason = "Native UI job test uses the monotonic native clock.")]
+fn guided_microgrid_stops_when_inputs_change_during_a_run() {
+    let mut h = harness();
+    h.state_mut().run("file.new", json!({"sample": "cold-storage-microgrid"})).unwrap();
+    h.state_mut().run("ui.solvercraft", json!({"on": true})).unwrap();
+    h.run_steps(4);
+    h.get_by_label("Run full comparison").click();
+    h.run_steps(1);
+    h.state_mut().run("cell.set", json!({"sheet": "CostPlan", "cell": "E11", "input": "0"})).unwrap();
+    h.run_steps(20);
+    assert!(h.query_by_label("Workbook changed during the comparison. Run again to use the new inputs.").is_some());
+    let wb = &h.state().session.active().unwrap().wb;
+    assert_eq!(wb.sheet(wb.sheet_index("CostPlan").unwrap()).unwrap().value(CellRef::parse("E11").unwrap()), Value::Number(0.0));
+    // Closing the fixture cancels and releases its owned worker.
+    h.state_mut().run("file.close", json!({"force": true, "document": true})).unwrap();
+}
+
+#[test]
 fn pane_preview_requires_apply_and_reverts_in_one_undo_step() {
     let mut h = harness();
     start_preview(&mut h);
@@ -142,6 +227,7 @@ fn pane_preview_requires_apply_and_reverts_in_one_undo_step() {
     h.run_steps(3);
     h.get_by_label("Apply solution (one undo step)").click();
     h.run_steps(3);
+    assert!(h.query_by_label("Solution applied to the workbook.").is_some());
     assert_eq!(value(&h, "A1"), Value::Number(10.0));
     assert_eq!(value(&h, "B1"), Value::Number(20.0));
     h.get_by_label("Create result sheet").scroll_to_me();
